@@ -1,0 +1,78 @@
+ul.sugg-box {
+	border: 1px solid #777;
+	padding: 0.25em 0.25em 0 0.25em;
+	box-shadow: inset 1px 1px 2px rgba(0,0,0,0.25);
+	margin: 0;
+}
+input[type=text].sugg-input {
+	background-color: transparent;
+	border: none;
+}
+input[type=text].sugg-input:focus {
+	outline: none;
+}
+ul.sugg-box li {
+	list-style-type: none;
+	display: inline-block;
+	padding: 0;
+	margin: 0 0.25em 0.25em 0;
+	font: 11px/11px "Lucida Grande", Verdana, sans-serif;
+}
+ul.sugg-box li.sugg-tag {
+	border-radius: 0.6em;
+	background: #DEE7F8;
+	color: #000;
+	border: 1px solid #CAD8F3;
+	padding: 0.2em 0.4em;
+	cursor: default;
+}
+ul.sugg-box li.sugg-custom {
+	color: #018500;
+}
+ul.sugg-box li.sugg-tag:hover {
+	border-radius: 0.5em;
+	background-color: #bbcef1;
+	color: #000;
+	border: 1px solid #6d95e0;
+}
+ul.sugg-box li.sugg-focused,
+ul.sugg-box li.sugg-focused:hover {
+	background-color: #598BEC;
+	color: #fff;
+	border: 1px solid #598BEC;
+}
+ul.sugg-box li.sugg-tag .sugg-remove {
+	margin: 0 0 0 4px;
+	color: #939DB2;
+	font-weight: bold;
+	font-size: 10px;
+	vertical-align: middle;
+}
+ul.sugg-box li.sugg-tag .sugg-remove:hover {
+	color: #000;
+}
+ul.sugg-box li.sugg-focused .sugg-remove,
+ul.sugg-box li.sugg-focused .sugg-remove:hover {
+	color: #fff;
+}
+ul.sugg-list {
+	border: 1px solid #ccc;
+	border-top: none;
+	margin: 0;
+	padding: 0;
+	font: 11px/11px "Lucida Grande", Verdana, sans-serif;
+	box-shadow: 2px 2px 5px rgba(128,128,128,0.40);
+}
+ul.sugg-list li.sugg-item {
+	list-style-type: none;
+	margin: 0;
+	padding: 4px 8px;
+	border-top: 1px solid #ccc;
+	background-color: #fff;
+}
+ul.sugg-list li.sugg-item.sugg-selected {
+	background-color: #3674D4;
+	color: #fff;
+}
+
+
