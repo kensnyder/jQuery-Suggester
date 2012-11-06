@@ -1,4 +1,4 @@
-ul.sugg-box {
+.sugg-box {
 	border: 1px solid #777;
 	padding: 0.25em 0.25em 0 0.25em;
 	box-shadow: inset 1px 1px 2px rgba(0,0,0,0.25);
@@ -11,68 +11,73 @@ input[type=text].sugg-input {
 input[type=text].sugg-input:focus {
 	outline: none;
 }
-ul.sugg-box li {
+.sugg-box-item {
 	list-style-type: none;
 	display: inline-block;
 	padding: 0;
-	margin: 0 0.25em 0.25em 0;
-	font: 11px/11px "Lucida Grande", Verdana, sans-serif;
+	margin: 0 0.35em 0.35em 0;
+	font: 11px/100% "Lucida Grande", Verdana, sans-serif;
 }
-ul.sugg-box li.sugg-tag {
-	border-radius: 0.6em;
-	background: #DEE7F8;
+.sugg-tag {
+	border-radius: 0.85em;
+	background-color: #DDEEFE;
 	color: #000;
-	border: 1px solid #CAD8F3;
-	padding: 0.2em 0.4em;
+	border: 1px solid #C0D9E9;
+	padding: 0.1em 0.5em 0.3em 0.6em;
 	cursor: default;
 }
-ul.sugg-box li.sugg-custom {
-	color: #018500;
-}
-ul.sugg-box li.sugg-tag:hover {
-	border-radius: 0.5em;
+.sugg-tag:hover {
 	background-color: #bbcef1;
 	color: #000;
 	border: 1px solid #6d95e0;
 }
-ul.sugg-box li.sugg-focused,
-ul.sugg-box li.sugg-focused:hover {
+.sugg-tag.sugg-focused,
+.sugg-tag.sugg-focused:hover {
 	background-color: #598BEC;
 	color: #fff;
 	border: 1px solid #598BEC;
 }
-ul.sugg-box li.sugg-tag .sugg-remove {
-	margin: 0 0 0 4px;
-	color: #939DB2;
-	font-weight: bold;
-	font-size: 10px;
+.sugg-label {
 	vertical-align: middle;
 }
-ul.sugg-box li.sugg-tag .sugg-remove:hover {
+.sugg-remove {
+	margin: 0 0 0 0.4em;
+	color: #939DB2;
+	font-weight: bold;
+	vertical-align: middle;
+}
+.sugg-tag .sugg-remove:hover {
 	color: #000;
 }
-ul.sugg-box li.sugg-focused .sugg-remove,
-ul.sugg-box li.sugg-focused .sugg-remove:hover {
+.sugg-tag.sugg-focused .sugg-remove,
+.sugg-tag.sugg-focused .sugg-remove:hover {
 	color: #fff;
 }
-ul.sugg-list {
+.sugg-list {
 	border: 1px solid #ccc;
 	border-top: none;
 	margin: 0;
 	padding: 0;
-	font: 11px/11px "Lucida Grande", Verdana, sans-serif;
+	font: 11px/100% "Lucida Grande", Verdana, sans-serif;
 	box-shadow: 2px 2px 5px rgba(128,128,128,0.40);
 }
-ul.sugg-list li.sugg-item {
+.sugg-item {
 	list-style-type: none;
 	margin: 0;
-	padding: 4px 8px;
+	padding: 0.25em 0.5em;
 	border-top: 1px solid #ccc;
 	background-color: #fff;
+	cursor: default;
 }
-ul.sugg-list li.sugg-item.sugg-selected {
+.sugg-item.sugg-selected {
+	border-top: 1px solid #3674D4;
 	background-color: #3674D4;
 	color: #fff;
 }
-
-
+strong.sugg-match {
+	font-weight: bold;
+	background-color: #e7f0f7;
+}
+.sugg-item.sugg-selected strong.sugg-match {
+	background-color: transparent;
+}

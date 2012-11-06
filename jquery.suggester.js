@@ -22,8 +22,7 @@
 	$.Suggester = function() {
 		this.initialize.apply(this, Array.prototype.slice.call(arguments));
 	};
-	$.Suggester.defaultOptions = { 
-		initialTags: [],
+	$.Suggester.defaultOptions = {
 		idProperty: "id",            // name of object property that should be used as the id
 		labelProperty: "label",      // name of object property that should be used as the tag text
 		searchProperties: ["label"], // array of object property names that should be searched
@@ -40,17 +39,17 @@
 		placeholder: 'Enter tags...',
 		noSuggestions: '(Type a comma to create a new tag)',
 		template: // you can add more markup, change tag names, or add css classes, but all the sugg-* classes need to remain
-			'<div class="sugg-widget">' +
-				'<ul class="sugg-box">' +
-					'<li class="sugg-tag">' +
+			'<div class="sugg-widget">' + // this.$widget
+				'<ul class="sugg-box">' + // this.$box
+					'<li class="sugg-box-item sugg-tag">' + // this.$tagTemplate
 						'<span class="sugg-label">TAG TEXT GOES HERE</span><span class="sugg-remove" title="Click to remove">&times;</span>' +
 					'</li>' + 
-					'<li class="sugg-input-box">' +
-						'<input type="text" class="sugg-input" value="" />' +
+					'<li class="sugg-box-item sugg-input-wrapper">' + // this.$inputWrapper
+						'<input type="text" class="sugg-input" value="" />' + // this.$input
 					'</li>' +
 				'</ul>' +
-				'<ul class="sugg-list" style="display:none">' +
-					'<li class="sugg-item {record.cssClass}">{record.label}</li>' +
+				'<ul class="sugg-list" style="display:none">' + // this.$suggList
+					'<li class="sugg-item {record.cssClass}">{record.label}</li>' + // innerHTML is used as this.listItemTemplate
 				'</ul>' +
 			'</div>'
 		/* EVENT OPTIONS
@@ -64,51 +63,102 @@
 		 * onCustomTag
 		 */
 	};
-	// allows calling instance = $('selector').autosuggest('getInstance');
+	// Making Suggester a proper class allows two patterns:
+	// var instance = $('selector').suggester(options).suggester('getInstance');
+	// var instance = new $.Suggester('selector', options)
 	$.Suggester.prototype = {
+		/**
+		 * Constructor
+		 * @param {String|HTMLElement|jQuery} $textInput  The text input as a jQuery object, DOM element, or selector string
+		 * @param {Object} options  An object with data and options (See $.Suggester.defaultOptions for explaination of options)
+		 * @return {$.Suggester}
+		 */
 		initialize: function($textInput, options) {
+			// This is the original text input given
 			this.$originalInput = $($textInput);
+			if (this.$originalInput.length == 0) {
+				// no input found
+				return this;
+			}
+			// our options are default options plus given options
 			this.options = $.extend({}, $.Suggester.defaultOptions, options);
-			this.data = this.options.data || [];			
+			// the preloaded list of suggestion records
+			this.data = this.options.data || [];		
+			// a hash of tag id to $tag elements
 			this.tags = {};
+			// a hash of tag label to $tag elements
 			this.customTags = {};
+			// a hash of tag id to hidden input $input elements
 			this.hiddens = {};
+			// the name given to the hidden $input elements
 			this.hiddenName = this.$originalInput.attr('name') + '_ids';
+			// a hash of tag label to hidden $input elements
 			this.customHiddens = {};
+			// the name given to the hidden $input elements that are unknown tags
 			this.customHiddenName = this.options.customHiddenName || this.hiddenName + '_custom';
+			// the tag that is clicked to prepare for deletion
 			this.$focusedTag = false;
+			// the currently selected suggestion
 			this.$currentItem = false;
-			this._render();
+			// setup our pubsub system
 			this._setupPubsub();
+			// render our widget
+			this._render();
+			// setup event handlers
 			this._setupListeners();
+			// we're all done
 			this._publish('Initialize');
+			return this;
 		},
+		/**
+		 * Render the widget and get handles to key elements
+		 * @events
+		 *   BeforeRender - called after this.$widget is populated with this.options.template but before any sub elements are found
+		 *   AfterRender - called after this.$widget is inserted into the dom
+		 * @return {undefined}
+		 */
 		_render: function() {
+			// The full widget
 			this.$widget = $(this.options.template);
+			// BeforeRender callbacks now have the ability to modify this.$widget or any of its child elements
 			this._publish('BeforeRender');
+			// the container that tags and the input box are in
 			this.$box = this.$widget.find('.sugg-box');
+			// the template for tags
 			this.$tagTemplate = this.$box.find('.sugg-tag').remove();
+			// the text input used to type tags
 			this.$input = this.$box.find('.sugg-input');
-			this.$inputWrapper = this.$box.find('.sugg-input-box');
+			// the wrapper for that text input
+			this.$inputWrapper = this.$box.find('.sugg-input-wrapper');
+			// the list element that contains all suggestions
 			this.$suggList = this.$widget.find('.sugg-list');
+			// the template html to use for suggestions
 			this.listItemTemplate = this.$suggList.html();			
+			// we got that html, now empty it out
 			this.$suggList.html('');
-			this.$widget.insertBefore(this.$originalInput.hide());
+			// if the suggestion list should fly upwards instead of downwards, put the suggestion list before the input container in the dom tree
 			if (this.options.fly == 'up') {
 				this.$suggList.insertBefore(this.$box);
 			}
-			
-			var sugg = this;
-			$.each(this.options.initialTags, function() {
-				if (typeof this == 'object') {					
-					sugg.addId(this[sugg.options.labelProperty]);
-				}
-				else {
-					sugg.addTag(this);
-				}
-			});
+			// actually insert the widget
+			this.$widget.insertBefore(this.$originalInput.hide());
+			// get a list of tags to insert now based on the current value of the original input
+			// replace escaped commas with \u0001 such that tag labels can have commas
+			if (this.$originalInput.val().length) {
+				var existingTags = this.$originalInput.val().replace(/\\,/g, '\u0001').split(/,/g);
+				var sugg = this;
+				$.each(existingTags, function() {
+					// add each tag by its label; this.$originalInput will get repopulated automatically
+					sugg.addTag($.trim(this.replace(/\u0001/g, ',')));
+				});
+			}
+			// AfterRender callbacks now have access to the completed widget through this.$widget, this.$box, etc.
 			this._publish('AfterRender');
 		},
+		/**
+		 * Set up event handlers
+		 * @return {undefined}
+		 */
 		_setupListeners: function() {
 			var sugg = this;
 			// proxy our unfocus and removeFocused methods so we can bind and unbind to $(document)
@@ -131,7 +181,10 @@
 			// highlight suggestion on mouseover
 			this.$suggList.mouseover(function(evt) {	
 				var $target = $(evt.target);
-				if ($target.hasClass('sugg-match')) {
+				if ($target.hasClass('sugg-list')) {
+					return;
+				}
+				if (!$target.hasClass('sugg-item')) {
 					$target = $target.parents('.sugg-item');
 				}
 				if (!$target.hasClass('sugg-item')) {
@@ -139,10 +192,24 @@
 				}
 				sugg.deselectAllItems();
 				sugg.selectItem($target);
+				sugg.$currentItem = $target;
 			});
 			// add a tag when suggestion is clicked
-			this.$suggList.delegate('.sugg-item', 'click', function() {
-				sugg.addTag($(this).text());
+			this.$suggList.click(function(evt) {
+				// effectively delegate click to .sugg-item
+				var $target = $(evt.target);
+				if ($target.hasClass('sugg-list')) {
+					return;
+				}
+				if (!$target.hasClass('sugg-item')) {
+					$target = $target.parents('.sugg-item');
+				}
+				if (!$target.hasClass('sugg-item')) {
+					return;
+				}
+				sugg.addTag($target.text());
+				sugg.closeSuggestBox();
+				sugg.$input.val('')[0].focus();
 			});
 			// focus to text input field when a click comes outside of any tags
 			this.$box.click(function(evt) {
@@ -151,15 +218,24 @@
 					sugg.$input[0].focus();
 				}
 			});
-			this.$input.blur($.proxy(this, '_blur'));
 			this.$input.keydown($.proxy(this, '_keydown'))
 		},
+		/**
+		 * Focus on a previously added tag
+		 * @params {jQuery} $tag  The .sugg-tag element to focus
+		 * @return $.Suggester
+		 */
 		focus: function($tag) {
+			this.unfocus();
 			this.$focusedTag = $tag.addClass('sugg-focused');
-			var sugg = this;
-			$document.keydown(sugg.removeFocused).click(sugg.unfocus);
+			// remove tag if user presses delete or backspace
+			$document.keydown(this.removeFocused).click(this.unfocus);
 			return this;
 		},
+		/**
+		 * Unfocus the previously focussed tag
+		 * @return $.Suggester
+		 */
 		unfocus: function() {
 			$document.unbind('keydown', this.removeFocused).unbind('click', this.unfocus);
 			if (this.$focusedTag) {
@@ -168,35 +244,53 @@
 			this.$focusedTag = null;
 			return this;
 		},
+		/**
+		 * Remove the focused tag
+		 * @param {jQuery.Event} evt (optional)  Used to check if keypress is backspace or delete
+		 * @return $.Suggester
+		 */
 		removeFocused: function(evt) {
-			if (evt && evt.which && evt.which != 8 && evt.which != 46) {
-				// not delete or backspace key
-				return this;
-			}			
-			if (this.$focusedTag) {
-				this.removeLabel(this.$focusedTag.attr('data-label'));
-			}			
+			if (evt && evt.which && (evt.which == 8 || evt.which == 46)) {
+				// delete or backspace key								
+				if (this.$focusedTag) {
+					this.removeLabel(this.$focusedTag.attr('data-label'));
+				}
+				evt.preventDefault();
+			}	
 			this.unfocus();
 			return this;
 		},
-		_blur: function() {
-			this.closeSuggestBox();
-		},
+		/**
+		 * Handle keypresses while in tag input field
+		 * @param {jQuery.Event} evt
+		 * @return {undefined}
+		 */
 		_keydown: function(evt) {
+			var pubevent = this._publish('BeforeKeydown', {
+				event: evt,
+				cancellable: true
+			});
+			if (pubevent.isDefaultPrevented()) {
+				return;
+			}
 			switch (evt.which) {
 				case 38: // up
 					evt.preventDefault();
+					// unfocus any focused tags
 					this.unfocus();
+					// move selection up in suggestion box
 					this.moveSelection('up');
 					return;
 				case 40: // down
 					evt.preventDefault();
+					// unfocus any focused tags
 					this.unfocus();
+					// move selection down in suggestion box
 					this.moveSelection('down');
 					return;
 				case 8: // backspace
 					this.$currentItem = null;
-					// TODO: check for first position, not for value == ''
+					// TODO: check for first position, not for value == '' ?
 					if (this.$input.val() == '') {
 						evt.preventDefault();
 						var $lastTag = this.$inputWrapper.prev();
@@ -215,9 +309,13 @@
 						// go ahead and tab to next field
 						return;
 					}
-					// otherwise, continue as a comma
+					// otherwise, continue as a comma and create a new tag
 				case 188: // comma
 					evt.preventDefault();
+					if (this.$input.val() == '') {
+						// no value so do nothing
+						return;
+					}
 					this.$currentItem = null;
 					this.addTag(this.$input.val());
 					this.$input.val('');
@@ -228,16 +326,19 @@
 					return;
 				case 13: // return
 					if (this.$currentItem) {
+						// add the item that was selected via arrow or hover
 						this.addTag(this.$currentItem.text());
 						this.$input.val('');
 						this.closeSuggestBox();
 						this.$currentItem = null;
 					}
 					else if (this.options.preventSubmit) {
+						// don't let form submit
 						evt.preventDefault();
 					}
 					return;
-			}		
+			}
+			// clear timeout from key delay
 			clearTimeout(this.timeoutHandle);
 			this.$currentItem = null;
 			this.unfocus();
@@ -253,18 +354,29 @@
 			};
 			this.timeoutHandle = setTimeout(doSuggest, this.options.keyDelay || 0);
 		},
+		/**
+		 * Fetch suggestions from an ajax URL
+		 */
 		fetchResults: function(query) {
 			
 		},
+		/**
+		 * Move the selection up or down in the suggestion box
+		 */
 		moveSelection: function(direction) {
+			// find all the suggestion items
 			var $items = this.$suggList.find('.sugg-item');
 			var $nextItem;
 			if (this.$currentItem) {				
+				// if we already selected an item, go next or previous
 				$nextItem = (direction == 'down' ? this.$currentItem.next() : this.$currentItem.prev());
 			}
 			else {
+				// otherwise go to first or last item
 				$nextItem = (direction == 'down' ? $items.first() : $items.last());
 			}
+			// BeforeMove callback allows movement to be changed
+			// TODO: properly use BeforeMove evt to allow changing stuff
 			var evt = this._publish('BeforeMove', {
 				direction: direction,
 				current: this.$currentItem,
@@ -288,17 +400,40 @@
 			});
 			return this;
 		},
+		/**
+		 * Select a suggestion
+		 * @param {jQuery} $tag
+		 * @return {$.Suggester}
+		 */
 		selectItem: function($tag) {
 			$tag.addClass('sugg-selected');
+			return this;
 		},
+		/**
+		 * Deselect a suggestion
+		 * @param {jQuery} $tag
+		 * @return {$.Suggester}
+		 */		
 		deselectItem: function($tag) {
 			$tag.removeClass('sugg-selected');
+			return this;
 		},
+		/**
+		 * Deselect all suggestions
+		 * @return {$.Suggester}
+		 */			
 		deselectAllItems: function() {
 			this.$suggList.find('.sugg-item').removeClass('sugg-selected');
-			this.$currentItem = null;			
+			this.$currentItem = null;	
+			return this;
 		},
+		/**
+		 * Open suggestion list for the given text
+		 * @param {String} text
+		 * @return {$.Suggester}
+		 */
 		suggest: function(text) {	
+			// TODO: make async given that getResults may need to get it by ajax
 			var records = this.getResults(text);
 			if (records.length == 0) {
 				this.showEmptyText();
@@ -319,13 +454,19 @@
 				return this;
 			}			
 			this.$suggList.show();
-			$document.bind('click.sugg', function() {
-				// TODO: handle choosing a suggestion and up and down
+			$document.bind('click.sugg', function(evt) {
+				if ($(evt.target).parents('.sugg-list')[0] == sugg.$suggList[0]) {
+					return;
+				}
 				sugg.closeSuggestBox();
 			});
 			this._publish('AfterSuggest');
 			return this;
 		},
+		/**
+		 * Close the suggestion list
+		 * @return {$.Suggester} 
+		 */
 		closeSuggestBox: function() {
 			$document.unbind('click.sugg');
 			this.$suggList.hide();
@@ -342,14 +483,24 @@
 			this[prop] = value;
 			return this;
 		},
+		/**
+		 * Format a suggestion before display
+		 * @param {Object} record  The record that was suggested
+		 * @param {String} substr  The string that generated the list of suggestions
+		 * @return {String}  HTML to use as the item (e.g. '<li class="sugg-item">Suggestion</li>')
+		 */
 		_formatSuggestion: function(record, substr) {
 			var options = this.options;
 			var label = record[options.labelProperty];
+			// handle case insensitive replacements
+			var replacer = this.options.caseSensitive ? substr : new RegExp('(' + substr + ')', 'i');
+			var replacee = this.options.caseSensitive ? substr : '$1';
+			// allow replacements of all {record.field} matches in this.listItemTemplate
 			label = this.listItemTemplate.replace(/\{record\.(.+?)\}/g, function($0, $1) {
 				var replacement = record[$1];
 				if (typeof replacement == 'string' || !!replacement) {
-					if ($1 == options.labelProperty) {
-						replacement = replacement.replace(substr, '<strong class="sugg-match">' + substr + '</strong>');
+					if ($1 == options.labelProperty) {						
+						replacement = replacement.replace(replacer, '<strong class="sugg-match">' + replacee + '</strong>');
 					}
 					return replacement;
 				}
@@ -357,6 +508,11 @@
 			});		
 			return label;
 		},
+		/**
+		 * Get suggestion result records given some text
+		 * @param {String} text
+		 * @return {Array}  Array of Objects of matching records 
+		 */
 		getResults: function(text) {
 			text = ''+text;
 			var evt = this._publish('BeforeFilter', {
@@ -388,12 +544,22 @@
 			});
 			return results;
 		},
+		/**
+		 * Show the empty text to show user when no suggestions are found
+		 * @return {$.Suggester}
+		 */
 		showEmptyText: function() {
-			if (this.options.emptyTemplate) {
+			if (this.options.emptyText) {
 				this.$suggList.html(this.options.emptyTemplate);
 			}
 			this.closeSuggestBox();
+			return this;
 		},
+		/**
+		 * Add a tag by id
+		 * @param {String|Number}
+		 * @return {jQuery|undefined}
+		 */
 		addId: function(id) {
 			var record = this._findById(id);
 			if (record) {
@@ -416,7 +582,7 @@
 			}
 			if (evt.record) {
 				var id = evt.record[this.options.idProperty];
-				var label = evt.record[this.options.labelProperty];
+				label = evt.record[this.options.labelProperty];
 				$tag = this.add(id, label);							
 			}
 			else {

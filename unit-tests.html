@@ -205,20 +205,6 @@
 			strictEqual($('.sugg-list:visible').length, 0);
 		}, 1);
 	});
-	asyncTest("Close by blur", function() {
-		expect(3);
-		var sugg = new $.Suggester($input, {data:fixtures.planets,minChars:1,keyDelay:0});
-		sendKeys(sugg, ['V','e','n','u']);
-		setTimeout(function() {
-			strictEqual($('.sugg-item').length, 1);
-			strictEqual($('.sugg-item').eq(0).text(), 'Venus');
-			start();
-			sugg.$input.trigger({
-				type: 'blur'
-			});
-			strictEqual($('.sugg-list:visible').length, 0);
-		}, 1);
-	});
 	asyncTest("Close by Esc key", function() {
 		expect(3);
 		var sugg = new $.Suggester($input, {data:fixtures.planets,minChars:1,keyDelay:0});
