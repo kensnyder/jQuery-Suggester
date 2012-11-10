@@ -162,7 +162,17 @@
 		sendKey(document, 'DELETE');
 		strictEqual($form.find('input[type=hidden]').length, 0);
 		strictEqual($form.find('.sugg-label').length, 0);		
-	});	
+	});
+	asyncTest("Placeholders", function() {
+		expect(2);
+		var sugg = $input.suggester().suggester('getInstance');
+		strictEqual(sugg.$input.val(), sugg.options.placeholder);
+		sugg.focusInput();
+		setTimeout(function() {
+			strictEqual(sugg.$input.val(), '');
+			start();
+		}, 1);
+	});		
 		
 	module('Suggestions', config);
 	asyncTest("Too short for suggestion", function() {
@@ -278,6 +288,28 @@
 			strictEqual($input.val(), 'Mars');
 		}, 1);
 	});
+	asyncTest("Don't suggest an item that was already added", function() {
+		expect(2);
+		var sugg = new $.Suggester($input, {data:fixtures.planets,minChars:1,keyDelay:0});
+		sugg.addTag('Earth');
+		sendKeys(sugg, ['a','r']);
+		setTimeout(function() {
+			strictEqual($('.sugg-item').length, 1);
+			strictEqual($('.sugg-item').eq(0).text(), 'Mars');
+			start();
+		}, 1);
+	});	
+	asyncTest("Set options.matchAt to 0 to match at beginning of word", function() {
+		expect(3);
+		var sugg = new $.Suggester($input, {data:fixtures.planets,minChars:1,keyDelay:0,matchAt:0});
+		sendKeys(sugg, ['e']);
+		setTimeout(function() {
+			strictEqual($('.sugg-item').length, 2);
+			strictEqual($('.sugg-item').eq(0).text(), 'Earth');
+			strictEqual($('.sugg-item').eq(1).text(), 'Eres');
+			start();
+		}, 1);
+	});	
 	
 }(jQuery, QUnit));
 </script>

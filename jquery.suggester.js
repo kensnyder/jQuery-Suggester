@@ -23,22 +23,40 @@
 		this.initialize.apply(this, Array.prototype.slice.call(arguments));
 	};
 	$.Suggester.defaultOptions = {
-		idProperty: "id",            // name of object property that should be used as the id
-		labelProperty: "label",      // name of object property that should be used as the tag text
-		searchProperties: ["label"], // array of object property names that should be searched
-		reduceFunction: false,
-		matchAnywhere: true,
+		// name of object property that should be used as the id
+		idProperty: "id",            
+		// name of object property that should be used as the tag display text
+		labelProperty: "label",      
+		// array of object property names that should be searched
+		searchProperties: ["label"],
+		// where to match. anywhere|start|end or an integer
+		matchAt: 'anywhere',
+		// which way should the suggestion box fly
+		// if down, the suggestion box will exist before the input box
+		// a css class of fly-up or fly-down is applied to the widget element
 		fly: 'down',
-		ajaxUrl: false, // e.g. http://domain.com/suggestions/?query=%s
+		// url to call to get results. Use %s to indicate where search text should be inserted
+		// e.g. http://domain.com/suggestions/?query=%s
+		ajaxUrl: false, 
+		// if true, the first tag will be removed when a duplicate is typed in
 		preventDuplicates: true,
+		// if true, fine matches regardless of case
 		caseSensitive: false,
+		// the minimum number of characters a user must type before the suggestion box will appear
 		minChars: 3,
+		// the minimum number of milliseconds between keystrokes before the suggestion lookup begins
 		keyDelay: 400,
+		// if false, prevent the form from submitting when the user presses enter on the empty input
 		submitOnEnter: false,
+		// 
 		customHiddenName: false,
+		// placeholder text to display when no tags are present
 		placeholder: 'Enter tags...',
+		// message to show when there are no matches
 		noSuggestions: '(Type a comma to create a new tag)',
-		template: // you can add more markup, change tag names, or add css classes, but all the sugg-* classes need to remain
+		// the html used to generate the widget
+		// you can add more markup, change tag names, or add css classes, but all the sugg-* classes need to remain
+		template:
 			'<div class="sugg-widget">' + // this.$widget
 				'<ul class="sugg-box">' + // this.$box
 					'<li class="sugg-box-item sugg-tag">' + // this.$tagTemplate
@@ -74,14 +92,17 @@
 		 * @return {$.Suggester}
 		 */
 		initialize: function($textInput, options) {
+			// register our instance
+			$.Suggester.instances.push(this);
 			// This is the original text input given
 			this.$originalInput = $($textInput);
 			if (this.$originalInput.length == 0) {
-				// no input found
+				// no input found. User could explicitly call initialize later
+				// if not, there will likely be errors
 				return this;
 			}
 			// our options are default options plus given options
-			this.options = $.extend({}, $.Suggester.defaultOptions, options);
+			this._processOptions(options);
 			// the preloaded list of suggestion records
 			this.data = this.options.data || [];		
 			// a hash of tag id to $tag elements
@@ -107,8 +128,33 @@
 			// setup event handlers
 			this._setupListeners();
 			// we're all done
+			// Initialize callback now has access to the completed widget through this.$widget, this.$box, etc.
 			this._publish('Initialize');
 			return this;
+		},
+		/**
+		 * Set options and interpret options
+		 * 
+		 * @params {Object} options
+		 * @return {undefined}
+		 */
+		_processOptions: function(options) {
+			this.options = $.extend({}, $.Suggester.defaultOptions, options);
+			// interpret some overloaded options			
+			if (this.options.matchAt == 'start' || this.options.matchAt == 'beginning') {
+				this.options.matchAt = 0;
+			}
+		},
+		addData: function(data) {
+			this.data = this.data.concat(data);
+			return this;
+		},
+		setData: function(data) {
+			this.data = data;
+			return this;
+		},
+		getData: function(data) {
+			return this.data;
 		},
 		/**
 		 * Render the widget and get handles to key elements
@@ -119,7 +165,7 @@
 		 */
 		_render: function() {
 			// The full widget
-			this.$widget = $(this.options.template);
+			this.$widget = $(this.options.template).addClass('fly-' + this.options.fly);
 			// BeforeRender callbacks now have the ability to modify this.$widget or any of its child elements
 			this._publish('BeforeRender');
 			// the container that tags and the input box are in
@@ -127,7 +173,7 @@
 			// the template for tags
 			this.$tagTemplate = this.$box.find('.sugg-tag').remove();
 			// the text input used to type tags
-			this.$input = this.$box.find('.sugg-input');
+			this.$input = this.$box.find('.sugg-input')//.val(this.options.placeholder || '');
 			// the wrapper for that text input
 			this.$inputWrapper = this.$box.find('.sugg-input-wrapper');
 			// the list element that contains all suggestions
@@ -152,8 +198,6 @@
 					sugg.addTag($.trim(this.replace(/\u0001/g, ',')));
 				});
 			}
-			// AfterRender callbacks now have access to the completed widget through this.$widget, this.$box, etc.
-			this._publish('AfterRender');
 		},
 		/**
 		 * Set up event handlers
@@ -218,6 +262,7 @@
 					sugg.$input[0].focus();
 				}
 			});
+			// handle various actions associated with keypresses
 			this.$input.keydown($.proxy(this, '_keydown'))
 		},
 		/**
@@ -290,7 +335,7 @@
 					return;
 				case 8: // backspace
 					this.$currentItem = null;
-					// TODO: check for first position, not for value == '' ?
+					// TODO: check that cursor is in first position, not for value == '' ?
 					if (this.$input.val() == '') {
 						evt.preventDefault();
 						var $lastTag = this.$inputWrapper.prev();
@@ -338,6 +383,7 @@
 					}
 					return;
 			}
+			// other keys:
 			// clear timeout from key delay
 			clearTimeout(this.timeoutHandle);
 			this.$currentItem = null;
@@ -354,14 +400,30 @@
 			};
 			this.timeoutHandle = setTimeout(doSuggest, this.options.keyDelay || 0);
 		},
+		destroy: function() {
+			// "un"-render, but this.$originalInput should be populated
+			this.$originalInput.insertBefore(this.$widget).show();
+			this.$widget.remove();
+			// unregister our instance
+			var sugg = this;
+			$.each($.Suggester.instances, function(i) {
+				if (sugg === this) {
+					$.Suggester.instances = $.Suggester.instances.splice(i, 1);
+					return false;
+				}
+			});
+		},
 		/**
 		 * Fetch suggestions from an ajax URL
 		 */
-		fetchResults: function(query) {
+		fetchResults: function(text) {
 			
 		},
 		/**
 		 * Move the selection up or down in the suggestion box
+		 * @events
+		 *   BeforeMove
+		 *   AfterMove
 		 */
 		moveSelection: function(direction) {
 			// find all the suggestion items
@@ -382,17 +444,22 @@
 				current: this.$currentItem,
 				next: $nextItem
 			});
+			// allow BeforeMove callbacks to cancel movement
 			if (evt.isDefaultPrevented()) {
 				return this;
 			}
+			// deselect current item
 			if (this.$currentItem) {
 				this.deselectItem(this.$currentItem);
 			}
+			// move to next item
 			if ($nextItem) {
 				this.selectItem($nextItem);
 			}
+			// reset our current items
 			var $lastItem = this.currentItem;
 			this.$currentItem = $nextItem;
+			// trigger AfterMove callabacks
 			this._publish('AfterMove', {
 				direction: direction,
 				last: $lastItem,
@@ -472,10 +539,13 @@
 			this.$suggList.hide();
 			return this;
 		},
-//		focus: function() {
-//			this.$input[0].focus();
-//			return this;
-//		},
+		/**
+		 * Focus cursor on text box
+		 */
+		focusInput: function() {
+			this.$input[0].focus();
+			return this;
+		},
 		get: function(prop) {
 			return this[prop];
 		},
@@ -524,14 +594,19 @@
 			var sugg = this;
 			var results = [];
 			$.each(this._getData(), function(i, item) {	
+				if (sugg.tags[item[sugg.options.idProperty]] || sugg.tags[item[sugg.options.labelProperty]]) {
+					// tag already exists so don't suggest it
+					return;
+				}
 				$.each(sugg.options.searchProperties, function() {
 					var value = '' + (item[this] || '');
 					if (!sugg.options.caseSensitive) {
 						value = value.toLowerCase();
 					}
 					if (
-						(sugg.options.matchAnywhere && value.indexOf(evt.text) > -1) 
-						|| (!sugg.options.matchAnywhere && value.indexOf(evt.text) == 0) 
+						(sugg.options.matchAt == 'anywhere' && value.indexOf(evt.text) > -1) 
+						|| (sugg.options.matchAt == 'end' && value.indexOf(evt.text) == value.length - evt.text-length) 
+						|| (value.indexOf(evt.text) == sugg.options.matchAt) 
 					) {
 						results.push(item);
 						return false;
@@ -605,8 +680,9 @@
 			return $tag;
 		},
 		addCustom: function(label) {
-			if (this.options.preventDuplicates && label in this.customHiddens) {
-				return false;
+			if (this.options.preventDuplicates && this.customHiddens[label]) {
+				// duplicate: remove old and add new so that it will be at the end
+				this.removeLabel(label);
 			}
 			var $hidden = $('<input type="hidden" />').attr('name', this.customHiddenName+'[]').val(label);
 			this.customHiddens[label] = $hidden;
@@ -619,8 +695,9 @@
 			return $tag;
 		},
 		add: function(id, label) {
-			if (this.options.preventDuplicates && id in this.hiddens) {
-				return false;
+			if (this.options.preventDuplicates && this.hiddens[id]) {
+				// duplicate: remove old and add new so that it will be at the end
+				this.removeId(id);
 			}
 			var $hidden = $('<input type="hidden" />').attr('name', this.hiddenName+'[]').val(id);
 			this.hiddens[id] = $hidden;
@@ -643,6 +720,7 @@
 			var $tag = this.tags[id];
 			if ($tag) {
 				$tag.remove();
+				this.tags[id] = null;
 			}
 			var $hidden = this.hiddens[id];
 			if ($hidden) {
@@ -655,6 +733,7 @@
 		removeLabel: function(label) {
 			if (this.customTags[label]) {
 				this.customTags[label].remove();
+				this.customTags[label] = null;
 				this.customHiddens[label].remove();
 				this.customHiddens[label] = null;
 				return this;
@@ -710,6 +789,7 @@
 			this.bind = this.pubsub.bind;
 			this.unbind = this.pubsub.unbind;
 			this.trigger = this.pubsub.trigger;
+			this.one = this.pubsub.one;
 			// bind listeners passed in the options (e.g. onInitialize)
 			for (var name in this.options) {
 				if (name.match(/^on[A-Z0-9]/) && typeof this.options[name] == 'function') {
@@ -724,24 +804,24 @@
 			}
 			//this.trigger(evt);
 			return evt;
-//			if (options.defaultMethod || !evt.isDefaultPrevented()) {
-//				this[options.defaultMethod].apply(this, evt.args || []);
-//			}
-			
-			
-//			var pubsub = $(this);
-//			var suggester = this;
-//			$.each(['bind','unbind','trigger','triggerHandler','on','off','one'], function(i, name) {
-//				suggester[name] = function() {
-//					return pubsub[name].apply(pubsub, slice.call(arguments));
-//				};
-//			});
-						
 		},
 		getInstance: function() {
 			return this;
 		}	
 	};
+	//
+	// static methods
+	//
+	$.Suggester.instances = [];
+	$.Suggester.addData = function(data) {
+		$.each($.Suggester.instances, function() {
+			this.addData(data);
+		});
+		return this;
+	};
+	//
+	// jQuery plugin
+	//
 	$.fn.suggester = function(options) {		
 		if (typeof options == 'string' && typeof $.Suggester.prototype[options] == 'function') {
 			var args = Array.prototype.slice.call(arguments, 1);
