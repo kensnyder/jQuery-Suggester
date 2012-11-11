@@ -513,9 +513,18 @@
 		 * @param {String} text
 		 * @return {$.Suggester}
 		 */
-		suggest: function(text) {	
-			// TODO: make async given that getResults may need to get it by ajax
-			var records = this.getResults(text);
+		suggest: function(text) {
+			this._text = text;
+			if (this.options.ajaxUrl) {
+				// TODO: add option to support other transports
+				// TODO: abort on keypress
+				$.getJson(this.options.ajaxUrl.replace('%s', text), $.proxy(this.handleSuggestions, this));
+			}
+			else {
+				this.handleSuggestions(this.getResults(text));
+			}
+		},
+		handleSuggestions: function(records) {
 			if (records.length == 0) {
 				this.showEmptyText();
 				return this;
@@ -524,11 +533,11 @@
 			var sugg = this;
 			$.each(records, function() {
 				// TODO: format suggestion
-				html += sugg._formatSuggestion(this, text);
+				html += sugg._formatSuggestion(this, sugg._text);
 			});
 			this.$suggList.html(html);
 			var evt = this._publish('BeforeSuggest', {
-				text: text,
+				text: this._text,
 				cancellable: true
 			});
 			if (evt.isDefaultPrevented()) {
