@@ -54,6 +54,8 @@
 		noSuggestions: '(Type a comma to create a new tag)',
 		// stop looking for suggestions after this many are found (0 means no limit)		
 		maxSuggestions: 10,
+		// if true, wrap first matching substring in a suggestion with <strong class="sugg-match"></strong>
+		hightlightSubstring: true,
 		// the html used to generate the widget
 		// you can add more markup, change tag names, or add css classes, but all the sugg-* classes need to remain
 		template:
@@ -593,7 +595,7 @@
 				html = this.listItemTemplate.replace(/\{record\.(.+?)\}/g, function($0, $1) {
 					var replacement = evt.record[$1];
 					if (typeof replacement == 'string' || !!replacement) {
-						if ($1 == options.labelProperty) {						
+						if ($1 == options.labelProperty && options.hightlightSubstring) {						
 							replacement = replacement.replace(replacer, '<strong class="sugg-match">' + replacee + '</strong>');
 						}
 						return replacement;
