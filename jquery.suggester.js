@@ -448,7 +448,8 @@
 			var evt = this._publish('BeforeMove', {
 				direction: direction,
 				current: this.$currentItem,
-				next: $nextItem
+				next: $nextItem, 
+				cancellable:true
 			});
 			// allow BeforeMove callbacks to cancel movement
 			if (evt.isDefaultPrevented()) {
@@ -545,7 +546,7 @@
 		 */
 		closeSuggestBox: function() {
 			$document.unbind('click.sugg');
-			var evt = this._publish('BeforeClose');
+			var evt = this._publish('BeforeClose', {cancellable:true});
 			if (!evt.isDefaultPrevented()) {
 				this.$suggList.hide();
 			}
@@ -573,7 +574,7 @@
 		 */
 		_formatSuggestion: function(record, substr) {
 			var evt, options, label, replacer, replacee, html;
-			evt = this._publish('Format', {record:record, substr:substr, html:''});
+			evt = this._publish('Format', {record:record, substr:substr, html:'', cancellable:true});
 			if (evt.isDefaultPrevented()) {
 				html = evt.html;
 			}
@@ -653,7 +654,7 @@
 		/**
 		 * Add a tag by id
 		 * @param {String|Number}
-		 * @return {jQuery|undefined}
+		 * @return {jQuery|undefined} A jQuery object containing the new tag element
 		 */
 		addId: function(id) {
 			var record = this._findById(id);
@@ -715,18 +716,23 @@
 			return $tag;
 		},
 		add: function(id, label) {
-			if (this.options.preventDuplicates && this.hiddens[id]) {
-				// duplicate: remove old and add new so that it will be at the end
-				this.removeId(id);
+			var evt = this._publish('BeforeAdd', {id:id, label:label});
+			if (evt.preventDefault()) {
+				return undefined;
 			}
-			var $hidden = $('<input type="hidden" />').attr('name', this.hiddenName+'[]').val(id);
-			this.hiddens[id] = $hidden;
+			if (this.options.preventDuplicates && this.hiddens[evt.id]) {
+				// duplicate: remove old and add new so that it will be at the end
+				this.removeId(evt.id);
+			}
+			var $hidden = $('<input type="hidden" />').attr('name', this.hiddenName+'[]').val(evt.id);
+			this.hiddens[evt.id] = $hidden;
 			this.$widget.append($hidden);
-			var $tag = this.$tagTemplate.clone().attr('data-id', id).attr('data-label', label);
-			this.tags[id] = $tag;
-			$tag.find('.sugg-label').html(label);
+			var $tag = this.$tagTemplate.clone().attr('data-id', evt.id).attr('data-label', evt.label);
+			this.tags[evt.id] = $tag;
+			$tag.find('.sugg-label').html(evt.label);
 			this.$inputWrapper.before($tag);
 			this._populateOriginalInput();
+			this._publish('AfterAdd', {id:evt.id, label:evt.label, tag:$tag});
 			return $tag;
 		},
 		_populateOriginalInput: function() {
@@ -738,6 +744,10 @@
 		},
 		removeId: function(id) {
 			var $tag = this.tags[id];
+			var evt = this._publish('BeforeRemove', {tag:$tag, cancellable:true});
+			if (evt.isDefaultPrevented()) {
+				return undefined;
+			}
 			if ($tag) {
 				$tag.remove();
 				this.tags[id] = null;
@@ -748,14 +758,17 @@
 				// don't use `delete` here because compilers can't optimize the code
 				this.hiddens[id] = null;
 			}
+			this._publish('AfterRemove', {tag:$tag});
 			return this;
 		},
 		removeLabel: function(label) {
 			if (this.customTags[label]) {
+				this._publish('BeforeRemove', {tag:this.customTags[label]});
 				this.customTags[label].remove();
 				this.customTags[label] = null;
 				this.customHiddens[label].remove();
 				this.customHiddens[label] = null;
+				this._publish('AfterRemove');
 				return this;
 			}
 			else {
@@ -806,10 +819,10 @@
 		},
 		_setupPubsub: function() {
 			this.pubsub = $({});
-			this.bind = this.pubsub.bind;
-			this.unbind = this.pubsub.unbind;
-			this.trigger = this.pubsub.trigger;
-			this.one = this.pubsub.one;
+			this.bind = $.proxy(this.pubsub, 'bind');
+			this.unbind = $.proxy(this.pubsub, 'unbind');
+			this.trigger = $.proxy(this.pubsub, 'trigger');
+			this.one = $.proxy(this.pubsub, 'one');
 			// bind listeners passed in the options (e.g. onInitialize)
 			for (var name in this.options) {
 				if (name.match(/^on[A-Z0-9]/) && typeof this.options[name] == 'function') {
@@ -822,7 +835,7 @@
 			if (data) {
 				$.extend(evt, data);
 			}
-			//this.trigger(evt);
+			this.trigger(evt);
 			return evt;
 		},
 		getInstance: function() {
@@ -830,9 +843,17 @@
 		}	
 	};
 	//
-	// static methods
+	// static properties and methods
 	//
+	/**
+	 * a collection of all the instances
+	 */
 	$.Suggester.instances = [];
+	/**
+	 * Add data to all instances
+	 * @param {Object[]}  Add more data to all the registered instances
+	 * @return {$.Suggester}
+	 */
 	$.Suggester.addData = function(data) {
 		$.each($.Suggester.instances, function() {
 			this.addData(data);
@@ -843,10 +864,12 @@
 	// jQuery plugin
 	//
 	$.fn.suggester = function(options) {		
+		// handle where first arg is method name and additional args should be passed to that method
 		if (typeof options == 'string' && typeof $.Suggester.prototype[options] == 'function') {
 			var args = Array.prototype.slice.call(arguments, 1);
 			return $.Suggester.prototype[options].apply(this.data('SuggesterInstance'), args);
 		}
+		// create new instance but return the jQuery instance
 		return this.each(function(i) {			
 			var $elem = $(this);
 			var instance = new $.Suggester($elem, options);
