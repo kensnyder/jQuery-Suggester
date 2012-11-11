@@ -48,10 +48,8 @@
 		keyDelay: 400,
 		// if false, prevent the form from submitting when the user presses enter on the empty input
 		submitOnEnter: false,
-		// 
-		customHiddenName: false,
 		// placeholder text to display when no tags are present
-		placeholder: 'Enter tags...',
+		placeholder: '',
 		// message to show when there are no matches
 		noSuggestions: '(Type a comma to create a new tag)',
 		// the html used to generate the widget
@@ -116,7 +114,7 @@
 			// a hash of tag label to hidden $input elements
 			this.customHiddens = {};
 			// the name given to the hidden $input elements that are unknown tags
-			this.customHiddenName = this.options.customHiddenName || this.hiddenName + '_custom';
+			this.customHiddenName = this.$originalInput.attr('name') + '_custom';
 			// the tag that is clicked to prepare for deletion
 			this.$focusedTag = false;
 			// the currently selected suggestion
@@ -173,7 +171,7 @@
 			// the template for tags
 			this.$tagTemplate = this.$box.find('.sugg-tag').remove();
 			// the text input used to type tags
-			this.$input = this.$box.find('.sugg-input')//.val(this.options.placeholder || '');
+			this.$input = this.$box.find('.sugg-input').val(this.options.placeholder || '');
 			// the wrapper for that text input
 			this.$inputWrapper = this.$box.find('.sugg-input-wrapper');
 			// the list element that contains all suggestions
@@ -205,12 +203,19 @@
 		 */
 		_setupListeners: function() {
 			var sugg = this;
-			// proxy our unfocus and removeFocused methods so we can bind and unbind to $(document)
-			this.unfocus = $.proxy(this, 'unfocus');
-			this.removeFocused = $.proxy(this, 'removeFocused');
+			// proxy our unfocusTag and removeFocusedTag methods so we can bind and unbind to $(document)
+			this.unfocusTag = $.proxy(this, 'unfocusTag');
+			this.removeFocusedTag = $.proxy(this, 'removeFocusedTag');
+			// clear default text if focused on input
+			this.$input.focus(function() {
+				sugg.unfocusTag();
+				if (sugg.$input.val() == sugg.options.placeholder) {
+					sugg.$input.val('');
+				}
+			});
 			// remove tags when `X` is clicked
 			this.$box.delegate('.sugg-remove', 'click', function(evt) {
-				//sugg.unfocus();
+				sugg.unfocusTag();
 				evt.preventDefault();
 				evt.stopImmediatePropagation();
 				var label = $(this).parents('.sugg-tag').attr('data-label');
@@ -220,7 +225,7 @@
 			this.$box.delegate('.sugg-tag', 'click', function(evt) {	
 				// we have to stop propagation to $box click and to $document
 				evt.stopImmediatePropagation();
-				sugg.focus($(this));	
+				sugg.focusTag($(this));	
 			});
 			// highlight suggestion on mouseover
 			this.$suggList.mouseover(function(evt) {	
@@ -253,13 +258,14 @@
 				}
 				sugg.addTag($target.text());
 				sugg.closeSuggestBox();
-				sugg.$input.val('')[0].focus();
+				sugg.$input.val('');
+				sugg.focus();
 			});
 			// focus to text input field when a click comes outside of any tags
 			this.$box.click(function(evt) {
 				if (evt.target == sugg.$box[0]) {
-					sugg.unfocus();
-					sugg.$input[0].focus();
+					sugg.unfocusTag();
+					sugg.focus();
 				}
 			});
 			// handle various actions associated with keypresses
@@ -270,19 +276,19 @@
 		 * @params {jQuery} $tag  The .sugg-tag element to focus
 		 * @return $.Suggester
 		 */
-		focus: function($tag) {
-			this.unfocus();
+		focusTag: function($tag) {
+			this.unfocusTag();
 			this.$focusedTag = $tag.addClass('sugg-focused');
 			// remove tag if user presses delete or backspace
-			$document.keydown(this.removeFocused).click(this.unfocus);
+			$document.keydown(this.removeFocusedTag).click(this.unfocusTag);
 			return this;
 		},
 		/**
 		 * Unfocus the previously focussed tag
 		 * @return $.Suggester
 		 */
-		unfocus: function() {
-			$document.unbind('keydown', this.removeFocused).unbind('click', this.unfocus);
+		unfocusTag: function() {
+			$document.unbind('keydown', this.removeFocusedTag).unbind('click', this.unfocusTag);
 			if (this.$focusedTag) {
 				this.$focusedTag.removeClass('sugg-focused');
 			}
@@ -294,7 +300,7 @@
 		 * @param {jQuery.Event} evt (optional)  Used to check if keypress is backspace or delete
 		 * @return $.Suggester
 		 */
-		removeFocused: function(evt) {
+		removeFocusedTag: function(evt) {
 			if (evt && evt.which && (evt.which == 8 || evt.which == 46)) {
 				// delete or backspace key								
 				if (this.$focusedTag) {
@@ -302,7 +308,7 @@
 				}
 				evt.preventDefault();
 			}	
-			this.unfocus();
+			this.unfocusTag();
 			return this;
 		},
 		/**
@@ -322,14 +328,14 @@
 				case 38: // up
 					evt.preventDefault();
 					// unfocus any focused tags
-					this.unfocus();
+					this.unfocusTag();
 					// move selection up in suggestion box
 					this.moveSelection('up');
 					return;
 				case 40: // down
 					evt.preventDefault();
 					// unfocus any focused tags
-					this.unfocus();
+					this.unfocusTag();
 					// move selection down in suggestion box
 					this.moveSelection('down');
 					return;
@@ -387,7 +393,7 @@
 			// clear timeout from key delay
 			clearTimeout(this.timeoutHandle);
 			this.$currentItem = null;
-			this.unfocus();
+			this.unfocusTag();
 			var sugg = this;
 			var doSuggest = function() {
 				var text = sugg.$input.val();
@@ -401,7 +407,7 @@
 			this.timeoutHandle = setTimeout(doSuggest, this.options.keyDelay || 0);
 		},
 		destroy: function() {
-			// "un"-render, but this.$originalInput should be populated
+			// "un"-render; this.$originalInput should be already populated
 			this.$originalInput.insertBefore(this.$widget).show();
 			this.$widget.remove();
 			// unregister our instance
@@ -532,25 +538,28 @@
 		},
 		/**
 		 * Close the suggestion list
-		 * @return {$.Suggester} 
+		 * @return {$.Suggester}
+		 * @events
+		 *   BeforeClose - triggered before close. if preventDefault is called, it will not close
+		 *   AfterClose - triggered after suggest box closes
 		 */
 		closeSuggestBox: function() {
 			$document.unbind('click.sugg');
-			this.$suggList.hide();
+			var evt = this._publish('BeforeClose');
+			if (!evt.isDefaultPrevented()) {
+				this.$suggList.hide();
+			}
+			this._publish('AfterClose');
 			return this;
 		},
 		/**
 		 * Focus cursor on text box
 		 */
-		focusInput: function() {
+		focus: function() {
+			// trigger our jQuery-attached focus callback to clear out placeholder text if needed
+			this.$input.triggerHandler('focus');
+			// use the dom method to focus
 			this.$input[0].focus();
-			return this;
-		},
-		get: function(prop) {
-			return this[prop];
-		},
-		set: function(prop, value) {
-			this[prop] = value;
 			return this;
 		},
 		/**
@@ -558,25 +567,36 @@
 		 * @param {Object} record  The record that was suggested
 		 * @param {String} substr  The string that generated the list of suggestions
 		 * @return {String}  HTML to use as the item (e.g. '<li class="sugg-item">Suggestion</li>')
+		 * @events
+		 *   Format - callbacks can return the HTML to use to display a suggestion item; if it preventsDefault, the event's html property is used
+		 *   AfterFormat - able to alter the html after it has be constructed
 		 */
 		_formatSuggestion: function(record, substr) {
-			var options = this.options;
-			var label = record[options.labelProperty];
-			// handle case insensitive replacements
-			var replacer = this.options.caseSensitive ? substr : new RegExp('(' + substr + ')', 'i');
-			var replacee = this.options.caseSensitive ? substr : '$1';
-			// allow replacements of all {record.field} matches in this.listItemTemplate
-			label = this.listItemTemplate.replace(/\{record\.(.+?)\}/g, function($0, $1) {
-				var replacement = record[$1];
-				if (typeof replacement == 'string' || !!replacement) {
-					if ($1 == options.labelProperty) {						
-						replacement = replacement.replace(replacer, '<strong class="sugg-match">' + replacee + '</strong>');
+			var evt, options, label, replacer, replacee, html;
+			evt = this._publish('Format', {record:record, substr:substr, html:''});
+			if (evt.isDefaultPrevented()) {
+				html = evt.html;
+			}
+			else {
+				options = this.options;
+				label = record[options.labelProperty];
+				// handle case insensitive replacements
+				replacer = this.options.caseSensitive ? evt.substr : new RegExp('(' + evt.substr + ')', 'i');
+				replacee = this.options.caseSensitive ? evt.substr : '$1';
+				// allow replacements of all {record.field} matches in this.listItemTemplate
+				html = this.listItemTemplate.replace(/\{record\.(.+?)\}/g, function($0, $1) {
+					var replacement = evt.record[$1];
+					if (typeof replacement == 'string' || !!replacement) {
+						if ($1 == options.labelProperty) {						
+							replacement = replacement.replace(replacer, '<strong class="sugg-match">' + replacee + '</strong>');
+						}
+						return replacement;
 					}
-					return replacement;
-				}
-				return '';
-			});		
-			return label;
+					return '';
+				});
+			}
+			evt = this._publish('AfterFormat', {record:evt.record, substr:evt.substr, html:html});
+			return evt.html;
 		},
 		/**
 		 * Get suggestion result records given some text
@@ -834,358 +854,3 @@
 		});
 	};
 })(jQuery); 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-//	$.fn.autoSuggest = function(data, options) {
-//		var defaults = { 
-//			asHtmlID: false,
-//			startText: "Enter Name Here",
-//			emptyText: "No Results Found",
-//			preFill: {},
-//			limitText: "No More Selections Are Allowed",
-//			selectedItemProp: "value", //name of object property
-//			selectedValuesProp: "value", //name of object property
-//			searchObjProps: "value", //comma separated list of object property names
-//			queryParam: "q",
-//			retrieveLimit: false, //number for 'limit' param on ajax request
-//			extraParams: "",
-//			matchCase: false,
-//			minChars: 1,
-//			keyDelay: 400,
-//			resultsHighlight: true,
-//			neverSubmit: false,
-//			selectionLimit: false,
-//			showResultList: true,
-//		  	start: function(){},
-//		  	selectionClick: function(elem){},
-//		  	selectionAdded: function(elem){},
-//		  	selectionRemoved: function(elem){ elem.remove(); },
-//		  	formatList: false, //callback function
-//		  	beforeRetrieve: function(string){ return string; },
-//		  	retrieveComplete: function(data){ return data; },
-//		  	resultClick: function(data){},
-//		  	resultsComplete: function(){}
-//	  	};  
-	 	/*this.opts = $.extend(defaults, options);	 	
-		
-		var d_type = "object";
-		var d_count = 0;
-		if(typeof data == "string") {
-			d_type = "string";
-			var req_string = data;
-		} else {
-			var org_data = data;
-			for (k in data) if (data.hasOwnProperty(k)) d_count++;
-		}
-		if((d_type == "object" && d_count > 0) || d_type == "string"){
-			return this.each(function(x){
-				if(!this.opts.asHtmlID){
-					x = x+""+Math.floor(Math.random()*100); //this ensures there will be unique IDs on the page if autoSuggest() is called multiple times
-					var x_id = "as-input-"+x;
-				} else {
-					x = this.opts.asHtmlID;
-					var x_id = x;
-				}
-				this.opts.start.call(this);
-				var input = $(this);
-				input.attr("autocomplete","off").addClass("as-input").attr("id",x_id).val(this.opts.startText);
-				var input_focus = false;
-				
-				// Setup basic elements and render them to the DOM
-				input.wrap('<ul class="as-selections" id="as-selections-'+x+'"></ul>').wrap('<li class="as-original" id="as-original-'+x+'"></li>');
-				var selections_holder = $("#as-selections-"+x);
-				var org_li = $("#as-original-"+x);				
-				var results_holder = $('<div class="as-results" id="as-results-'+x+'"></div>').hide();
-				var results_ul =  $('<ul class="as-list"></ul>');
-				var values_input = $('<input type="hidden" class="as-values" name="as_values_'+x+'" id="as-values-'+x+'" />');
-				var prefill_value = "";
-				if(typeof this.opts.preFill == "string"){
-					var vals = this.opts.preFill.split(",");					
-					for(var i=0; i < vals.length; i++){
-						var v_data = {};
-						v_data[this.opts.selectedValuesProp] = vals[i];
-						if(vals[i] != ""){
-							add_selected_item(v_data, "000"+i);	
-						}		
-					}
-					prefill_value = this.opts.preFill;
-				} else {
-					prefill_value = "";
-					var prefill_count = 0;
-					for (k in this.opts.preFill) if (this.opts.preFill.hasOwnProperty(k)) prefill_count++;
-					if(prefill_count > 0){
-						for(var i=0; i < prefill_count; i++){
-							var new_v = this.opts.preFill[i][this.opts.selectedValuesProp];
-							if(new_v == undefined){ new_v = ""; }
-							prefill_value = prefill_value+new_v+",";
-							if(new_v != ""){
-								add_selected_item(this.opts.preFill[i], "000"+i);	
-							}		
-						}
-					}
-				}
-				if(prefill_value != ""){
-					input.val("");
-					var lastChar = prefill_value.substring(prefill_value.length-1);
-					if(lastChar != ","){ prefill_value = prefill_value+","; }
-					values_input.val(","+prefill_value);
-					$("li.as-selection-item", selections_holder).addClass("blur").removeClass("selected");
-				}
-				input.after(values_input);
-				selections_holder.click(function(){
-					input_focus = true;
-					input.focus();
-				}).mousedown(function(){ input_focus = false; }).after(results_holder);	
-
-				var timeout = null;
-				var prev = "";
-				var totalSelections = 0;
-				var tab_press = false;
-				
-				// Handle input field events
-				input.focus(function(){			
-					if($(this).val() == this.opts.startText && values_input.val() == ""){
-						$(this).val("");
-					} else if(input_focus){
-						$("li.as-selection-item", selections_holder).removeClass("blur");
-						if($(this).val() != ""){
-							results_ul.css("width",selections_holder.outerWidth());
-							results_holder.show();
-						}
-					}
-					input_focus = true;
-					return true;
-				}).blur(function(){
-					if($(this).val() == "" && values_input.val() == "" && prefill_value == ""){
-						$(this).val(this.opts.startText);
-					} else if(input_focus){
-						$("li.as-selection-item", selections_holder).addClass("blur").removeClass("selected");
-						results_holder.hide();
-					}				
-				}).keydown(function(e) {
-					// track last key pressed
-					lastKeyPressCode = e.keyCode;
-					first_focus = false;
-					switch(e.keyCode) {
-						case 38: // up
-							e.preventDefault();
-							moveSelection("up");
-							break;
-						case 40: // down
-							e.preventDefault();
-							moveSelection("down");
-							break;
-						case 8:  // delete
-							if(input.val() == ""){							
-								var last = values_input.val().split(",");
-								last = last[last.length - 2];
-								selections_holder.children().not(org_li.prev()).removeClass("selected");
-								if(org_li.prev().hasClass("selected")){
-									values_input.val(values_input.val().replace(","+last+",",","));
-									this.opts.selectionRemoved.call(this, org_li.prev());
-								} else {
-									this.opts.selectionClick.call(this, org_li.prev());
-									org_li.prev().addClass("selected");		
-								}
-							}
-							if(input.val().length == 1){
-								results_holder.hide();
-								 prev = "";
-							}
-							if($(":visible",results_holder).length > 0){
-								if (timeout){ clearTimeout(timeout); }
-								timeout = setTimeout(function(){ keyChange(); }, this.opts.keyDelay);
-							}
-							break;
-						case 9: case 188:  // tab or comma
-							tab_press = true;
-							var i_input = input.val().replace(/(,)/g, "");
-							if(i_input != "" && values_input.val().search(","+i_input+",") < 0 && i_input.length >= this.opts.minChars){	
-								e.preventDefault();
-								var n_data = {};
-								n_data[this.opts.selectedItemProp] = i_input;
-								n_data[this.opts.selectedValuesProp] = i_input;																				
-								var lis = $("li", selections_holder).length;
-								add_selected_item(n_data, "00"+(lis+1));
-								input.val("");
-							}
-						case 13: // return
-							tab_press = false;
-							var active = $("li.active:first", results_holder);
-							if(active.length > 0){
-								active.click();
-								results_holder.hide();
-							}
-							if(this.opts.neverSubmit || active.length > 0){
-								e.preventDefault();
-							}
-							break;
-						default:
-							if(this.opts.showResultList){
-								if(this.opts.selectionLimit && $("li.as-selection-item", selections_holder).length >= this.opts.selectionLimit){
-									results_ul.html('<li class="as-message">'+this.opts.limitText+'</li>');
-									results_holder.show();
-								} else {
-									if (timeout){ clearTimeout(timeout); }
-									timeout = setTimeout(function(){ keyChange(); }, this.opts.keyDelay);
-								}
-							}
-							break;
-					}
-				});
-				
-				function keyChange() {
-					// ignore if the following keys are pressed: [del] [shift] [capslock]
-					if( lastKeyPressCode == 46 || (lastKeyPressCode > 8 && lastKeyPressCode < 32) ){ return results_holder.hide(); }
-					var string = input.val().replace(/[\\]+|[\/]+/g,"");
-					if (string == prev) return;
-					prev = string;
-					if (string.length >= this.opts.minChars) {
-						selections_holder.addClass("loading");
-						if(d_type == "string"){
-							var limit = "";
-							if(this.opts.retrieveLimit){
-								limit = "&limit="+encodeURIComponent(this.opts.retrieveLimit);
-							}
-							if(this.opts.beforeRetrieve){
-								string = this.opts.beforeRetrieve.call(this, string);
-							}
-							$.getJSON(req_string+"?"+this.opts.queryParam+"="+encodeURIComponent(string)+limit+this.opts.extraParams, function(data){ 
-								d_count = 0;
-								var new_data = this.opts.retrieveComplete.call(this, data);
-								for (k in new_data) if (new_data.hasOwnProperty(k)) d_count++;
-								processData(new_data, string); 
-							});
-						} else {
-							if(this.opts.beforeRetrieve){
-								string = this.opts.beforeRetrieve.call(this, string);
-							}
-							processData(org_data, string);
-						}
-					} else {
-						selections_holder.removeClass("loading");
-						results_holder.hide();
-					}
-				}
-				var num_count = 0;
-				function processData(data, query){
-					if (!this.opts.matchCase){ query = query.toLowerCase(); }
-					var matchCount = 0;
-					results_holder.html(results_ul.html("")).hide();
-					for(var i=0;i<d_count;i++){				
-						var num = i;
-						num_count++;
-						var forward = false;
-						if(this.opts.searchObjProps == "value") {
-							var str = data[num].value;
-						} else {	
-							var str = "";
-							var names = this.opts.searchObjProps.split(",");
-							for(var y=0;y<names.length;y++){
-								var name = $.trim(names[y]);
-								str = str+data[num][name]+" ";
-							}
-						}
-						if(str){
-							if (!this.opts.matchCase){ str = str.toLowerCase(); }				
-							if(str.search(query) != -1 && values_input.val().search(","+data[num][this.opts.selectedValuesProp]+",") == -1){
-								forward = true;
-							}	
-						}
-						if(forward){
-							var formatted = $('<li class="as-result-item" id="as-result-item-'+num+'"></li>').click(function(){
-									var raw_data = $(this).data("data");
-									var number = raw_data.num;
-									if($("#as-selection-"+number, selections_holder).length <= 0 && !tab_press){
-										var data = raw_data.attributes;
-										input.val("").focus();
-										prev = "";
-										add_selected_item(data, number);
-										this.opts.resultClick.call(this, raw_data);
-										results_holder.hide();
-									}
-									tab_press = false;
-								}).mousedown(function(){ input_focus = false; }).mouseover(function(){
-									$("li", results_ul).removeClass("active");
-									$(this).addClass("active");
-								}).data("data",{attributes: data[num], num: num_count});
-							var this_data = $.extend({},data[num]);
-							if (!this.opts.matchCase){ 
-								var regx = new RegExp("(?![^&;]+;)(?!<[^<>]*)(" + query + ")(?![^<>]*>)(?![^&;]+;)", "gi");
-							} else {
-								var regx = new RegExp("(?![^&;]+;)(?!<[^<>]*)(" + query + ")(?![^<>]*>)(?![^&;]+;)", "g");
-							}
-							
-							if(this.opts.resultsHighlight){
-								this_data[this.opts.selectedItemProp] = this_data[this.opts.selectedItemProp].replace(regx,"<em>$1</em>");
-							}
-							if(!this.opts.formatList){
-								formatted = formatted.html(this_data[this.opts.selectedItemProp]);
-							} else {
-								formatted = this.opts.formatList.call(this, this_data, formatted);	
-							}
-							results_ul.append(formatted);
-							delete this_data;
-							matchCount++;
-							if(this.opts.retrieveLimit && this.opts.retrieveLimit == matchCount ){ break; }
-						}
-					}
-					selections_holder.removeClass("loading");
-					if(matchCount <= 0){
-						results_ul.html('<li class="as-message">'+this.opts.emptyText+'</li>');
-					}
-					results_ul.css("width", selections_holder.outerWidth());
-					results_holder.show();
-					this.opts.resultsComplete.call(this);
-				}
-				
-				function add_selected_item(data, num){
-					values_input.val(values_input.val()+data[this.opts.selectedValuesProp]+",");
-					var item = $('<li class="as-selection-item" id="as-selection-'+num+'"></li>').click(function(){
-							this.opts.selectionClick.call(this, $(this));
-							selections_holder.children().removeClass("selected");
-							$(this).addClass("selected");
-						}).mousedown(function(){ input_focus = false; });
-					var close = $('<a class="as-close">&times;</a>').click(function(){
-							values_input.val(values_input.val().replace(","+data[this.opts.selectedValuesProp]+",",","));
-							this.opts.selectionRemoved.call(this, item);
-							input_focus = true;
-							input.focus();
-							return false;
-						});
-					org_li.before(item.html(data[this.opts.selectedItemProp]).prepend(close));
-					this.opts.selectionAdded.call(this, org_li.prev());	
-				}
-				
-				function moveSelection(direction){
-					if($(":visible",results_holder).length > 0){
-						var lis = $("li", results_holder);
-						if(direction == "down"){
-							var start = lis.eq(0);
-						} else {
-							var start = lis.filter(":last");
-						}					
-						var active = $("li.active:first", results_holder);
-						if(active.length > 0){
-							if(direction == "down"){
-							start = active.next();
-							} else {
-								start = active.prev();
-							}	
-						}
-						lis.removeClass("active");
-						start.addClass("active");
-					}
-				}
-									
-			});
-		}*/
- 	

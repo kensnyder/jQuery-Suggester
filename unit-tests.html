@@ -165,9 +165,9 @@
 	});
 	asyncTest("Placeholders", function() {
 		expect(2);
-		var sugg = $input.suggester().suggester('getInstance');
+		var sugg = $input.suggester({placeholder:'Enter tags...'}).suggester('getInstance');
 		strictEqual(sugg.$input.val(), sugg.options.placeholder);
-		sugg.focusInput();
+		sugg.focus();
 		setTimeout(function() {
 			strictEqual(sugg.$input.val(), '');
 			start();
