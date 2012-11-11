@@ -163,6 +163,14 @@
 		strictEqual($form.find('input[type=hidden]').length, 0);
 		strictEqual($form.find('.sugg-label').length, 0);		
 	});
+	test("Pre-filled items", function() {
+		expect(3);
+		$input.val('Uranus,Jupiter');
+		var sugg = $input.suggester({data:fixtures.planets});
+		strictEqual($('.sugg-label').length, 2);
+		strictEqual($('.sugg-label').eq(0).text(), 'Uranus');
+		strictEqual($('.sugg-label').eq(1).text(), 'Jupiter');				
+	});
 	asyncTest("Placeholders", function() {
 		expect(2);
 		var sugg = $input.suggester({placeholder:'Enter tags...'}).suggester('getInstance');
@@ -198,6 +206,16 @@
 				strictEqual($('.sugg-item').length, 1);
 				strictEqual($('.sugg-item').eq(0).text(), 'Asteroid Belt');
 			}, 1);
+		}, 1);
+	});
+	asyncTest("maxSuggestions option", function() {
+		expect(2);
+		var sugg = $input.suggester({data:fixtures.planets,minChars:1,keyDelay:0,maxSuggestions:1}).suggester('getInstance');
+		sendKeys(sugg, ['O']);
+		setTimeout(function() {
+			strictEqual($('.sugg-item').length, 1);
+			strictEqual($('.sugg-item').eq(0).text(), 'Asteroid Belt');
+			start();
 		}, 1);
 	});
 	asyncTest("Close by clicking document", function() {

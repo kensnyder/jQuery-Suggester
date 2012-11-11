@@ -37,7 +37,7 @@
 		fly: 'down',
 		// url to call to get results. Use %s to indicate where search text should be inserted
 		// e.g. http://domain.com/suggestions/?query=%s
-		ajaxUrl: false, 
+		ajaxUrl: false, // TODO: support jsonp
 		// if true, the first tag will be removed when a duplicate is typed in
 		preventDuplicates: true,
 		// if true, fine matches regardless of case
@@ -52,6 +52,8 @@
 		placeholder: '',
 		// message to show when there are no matches
 		noSuggestions: '(Type a comma to create a new tag)',
+		// stop looking for suggestions after this many are found (0 means no limit)		
+		maxSuggestions: 10,
 		// the html used to generate the widget
 		// you can add more markup, change tag names, or add css classes, but all the sugg-* classes need to remain
 		template:
@@ -187,13 +189,16 @@
 			// actually insert the widget
 			this.$widget.insertBefore(this.$originalInput.hide());
 			// get a list of tags to insert now based on the current value of the original input
-			// replace escaped commas with \u0001 such that tag labels can have commas
-			if (this.$originalInput.val().length) {
-				var existingTags = this.$originalInput.val().replace(/\\,/g, '\u0001').split(/,/g);
+			// replaces escaped commas with \u0001 such that tag labels can have commas
+			// if JavaScript RegExp supported lookbehinds we wouldn't need this \u0001 deal
+			var startVal = this.$originalInput.val();
+			if (startVal) {
+				var existingTags = startVal.replace(/\\,/g, '\u0001,').split(/,/g);
+				this.$originalInput.val('');
 				var sugg = this;
 				$.each(existingTags, function() {
 					// add each tag by its label; this.$originalInput will get repopulated automatically
-					sugg.addTag($.trim(this.replace(/\u0001/g, ',')));
+					sugg.addTag($.trim(this.replace(/\u0001/g, '')));
 				});
 			}
 		},
@@ -274,7 +279,7 @@
 		/**
 		 * Focus on a previously added tag
 		 * @params {jQuery} $tag  The .sugg-tag element to focus
-		 * @return $.Suggester
+		 * @return {$.Suggester}
 		 */
 		focusTag: function($tag) {
 			this.unfocusTag();
@@ -285,7 +290,7 @@
 		},
 		/**
 		 * Unfocus the previously focussed tag
-		 * @return $.Suggester
+		 * @return {$.Suggester}
 		 */
 		unfocusTag: function() {
 			$document.unbind('keydown', this.removeFocusedTag).unbind('click', this.unfocusTag);
@@ -298,7 +303,7 @@
 		/**
 		 * Remove the focused tag
 		 * @param {jQuery.Event} evt (optional)  Used to check if keypress is backspace or delete
-		 * @return $.Suggester
+		 * @return {$.Suggester}
 		 */
 		removeFocusedTag: function(evt) {
 			if (evt && evt.which && (evt.which == 8 || evt.which == 46)) {
@@ -617,6 +622,7 @@
 			$.each(this._getData(), function(i, item) {	
 				if (sugg.tags[item[sugg.options.idProperty]] || sugg.tags[item[sugg.options.labelProperty]]) {
 					// tag already exists so don't suggest it
+					// skip loop
 					return;
 				}
 				$.each(sugg.options.searchProperties, function() {
@@ -626,13 +632,17 @@
 					}
 					if (
 						(sugg.options.matchAt == 'anywhere' && value.indexOf(evt.text) > -1) 
+						|| (value.indexOf(evt.text) == sugg.options.matchAt)
 						|| (sugg.options.matchAt == 'end' && value.indexOf(evt.text) == value.length - evt.text-length) 
-						|| (value.indexOf(evt.text) == sugg.options.matchAt) 
 					) {
 						results.push(item);
 						return false;
 					}
 				});
+				if (sugg.options.maxSuggestions > 0 && results.length >= sugg.options.maxSuggestions) {
+					// exit the loop
+					return false;
+				}
 			});
 			this._publish('AfterFilter', {
 				text: evt.text,
@@ -678,8 +688,7 @@
 			}
 			if (evt.record) {
 				var id = evt.record[this.options.idProperty];
-				label = evt.record[this.options.labelProperty];
-				$tag = this.add(id, label);							
+				$tag = this.add(id, evt.label);							
 			}
 			else {
 				evt = this._publish('BeforeAddTagCustom', {
@@ -689,7 +698,7 @@
 				if (evt.isDefaultPrevented()) {
 					return this;
 				}
-				$tag = this.addCustom(label);
+				$tag = this.addCustom(evt.label);
 				this._publish('AfterAddTagCustom', {
 					label: evt.label
 				});
