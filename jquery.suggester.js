@@ -16,7 +16,7 @@
  *   http://www.opensource.org/licenses/mit-license.php
  *   http://www.gnu.org/licenses/gpl.html
  */
-
+// TODO: fix up/down when there is only one suggestion
 (function($) { "use strict";
 	var $document = $(document);
 	$.Suggester = function() {
@@ -29,15 +29,23 @@
 		labelProperty: "label",      
 		// array of object property names that should be searched
 		searchProperties: ["label"],
-		// where to match. anywhere|start|end or an integer
+		// where to match when finding suggestions. anywhere|start|end or an integer
 		matchAt: 'anywhere',
 		// which way should the suggestion box fly
-		// if down, the suggestion box will exist before the input box
+		// if "up", the suggestion box will exist before the input box
 		// a css class of fly-up or fly-down is applied to the widget element
 		fly: 'down',
-		// url to call to get results. Use %s to indicate where search text should be inserted
-		// e.g. http://domain.com/suggestions/?query=%s
-		ajaxUrl: false, // TODO: support jsonp
+		// url to call to get json or jsonp results. Use %s to indicate where search text should be inserted
+		// e.g. http://example.com/myjson?query=%s
+		// e.g. http://example.com/myjsonp?query=%s&callback=%s
+		dataUrl: false,
+		// can be json or jsonp
+		// if json, url needs to have "callback" in the format http://example.com/myjsonp?query=%s&mycallback=%s
+		// to handle xml, you'll need to register a BeforeFetch and afterFetch or overwrite the fetchResults function
+		dataType: 'json',
+		// url to call to get jsonp results. Use first %s to indicate search text and second %s for callback
+		// e.g. 
+		jsonpUrl: false,
 		// if true, the first tag will be removed when a duplicate is typed in
 		preventDuplicates: true,
 		// if true, fine matches regardless of case
@@ -49,6 +57,7 @@
 		// if false, prevent the form from submitting when the user presses enter on the empty input
 		submitOnEnter: false,
 		// placeholder text to display when no tags are present
+		// e.g. "Enter tags..."
 		placeholder: '',
 		// message to show when there are no matches
 		noSuggestions: '(Type a comma to create a new tag)',
@@ -94,10 +103,11 @@
 		 * @return {$.Suggester}
 		 */
 		initialize: function($textInput, options) {
-			// register our instance
-			$.Suggester.instances.push(this);
 			// This is the original text input given
 			this.$originalInput = $($textInput);
+// TODO: handle if original input already has an instance .data('SuggesterInstance')		
+			// register our instance
+			$.Suggester.instances.push(this);
 			if (this.$originalInput.length == 0) {
 				// no input found. User could explicitly call initialize later
 				// if not, there will likely be errors
@@ -440,17 +450,33 @@
 			// TODO: add option to support other transports
 			// TODO: abort on keypress
 			this._searchTerm = text;
-			this._jqXHR = $.ajax(this.options.ajaxUrl.replace('%s', text), {
+			var params = {
 				context: this,
-				beforeSend: this._beforeFetch
-			});
-			this._jqXHR.done(this._afterFetch);
+				beforeSend: this._beforeFetch,
+				url: this.options.dataUrl.replace('%s', text)
+			};
+			if (this.options.dataType == 'json') {
+				params.dataType = 'json';
+			}
+			else if (this.options.dataType == 'jsonp') {
+				params.dataType = 'jsonp';
+				// jQuery replaces second question mark with callback name
+				params.url = params.url.replace('%s', '?');
+			}
+			else {
+				throw new Error('jQuery.Suggester#fetchResults: dataType must be json or jsonp.');
+			}
+			this._jqXHR = $.ajax(params).done(this._afterFetch);
 		},
 		_beforeFetch: function() {
-			this._publish('BeforeFetch', {
+			var evt = this._publish('BeforeFetch', {
 				jqXHR: this._jqXHR,
-				term: this._searchTerm
+				term: this._searchTerm,
+				cancellable: true
 			});
+			if (evt.isDefaultPrevented()) {
+				this._abortFetch();
+			}
 		},
 		_afterFetch: function(data) {
 			var evt = this._publish('AfterFetch', {
@@ -463,8 +489,7 @@
 			if (evt.isDefaultPrevented()) {
 				return;
 			}
-			var records = (typeof evt.data == 'Object' ? evt.data : $.parseJSON(evt.data));
-			this.handleSuggestions(records);
+			this.handleSuggestions(evt.data);
 		},
 		_abortFetch: function() {
 			if (this._jqXHR) {
@@ -554,7 +579,7 @@
 		 */
 		suggest: function(text) {
 			this._text = text;
-			if (this.options.ajaxUrl) {
+			if (this.options.dataUrl) {
 				this.fetchResults(text);
 			}
 			else {
