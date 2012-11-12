@@ -506,7 +506,7 @@
 			// find all the suggestion items
 			var $items = this.$suggList.find('.sugg-item');
 			var $nextItem;
-			if (this.$currentItem) {				
+			if (this.$currentItem && this.$currentItem.length) {				
 				// if we already selected an item, go next or previous
 				$nextItem = (direction == 'down' ? this.$currentItem.next() : this.$currentItem.prev());
 			}
@@ -527,20 +527,19 @@
 				return this;
 			}
 			// deselect current item
-			if (this.$currentItem) {
-				this.deselectItem(this.$currentItem);
+			if (evt.current && evt.current.length) {
+				this.deselectItem(evt.current);
 			}
 			// move to next item
-			if ($nextItem) {
-				this.selectItem($nextItem);
+			if (evt.next && evt.next.length) {
+				this.selectItem(evt.next);
 			}
 			// reset our current items
-			var $lastItem = this.currentItem;
-			this.$currentItem = $nextItem;
+			this.$currentItem = evt.next;
 			// trigger AfterMove callabacks
 			this._publish('AfterMove', {
 				direction: direction,
-				last: $lastItem,
+				last: evt.current,
 				current: this.$currentItem
 			});
 			return this;
