@@ -220,73 +220,80 @@
 		 */
 		_setupListeners: function() {
 			var sugg = this;
-			// proxy our unfocusTag and removeFocusedTag methods so we can bind and unbind to $(document)
+			// proxy some methods to always be bound to our instance
 			this.unfocusTag = $.proxy(this, 'unfocusTag');
 			this.removeFocusedTag = $.proxy(this, 'removeFocusedTag');
+			this.suggestIfNeeded = $.proxy(this, 'suggestIfNeeded');
 			// clear default text if focused on input
-			this.$input.focus(function() {
-				sugg.unfocusTag();
-				if (sugg.$input.val() == sugg.options.placeholder) {
-					sugg.$input.val('');
-				}
-			});
+			this.$input.focus($.proxy(this, '_onInputFocus'));
 			// remove tags when `X` is clicked
-			this.$box.delegate('.sugg-remove', 'click', function(evt) {
-				sugg.unfocusTag();
-				evt.preventDefault();
-				evt.stopImmediatePropagation();
-				var label = $(this).parents('.sugg-tag').attr('data-label');
-				sugg.removeLabel(label);
-			});
+			this.$box.delegate('.sugg-remove', 'click', $.proxy(this, '_onTagRemoveClick'));
 			// focus tags when clicked
-			this.$box.delegate('.sugg-tag', 'click', function(evt) {	
-				// we have to stop propagation to $box click and to $document
-				evt.stopImmediatePropagation();
-				sugg.focusTag($(this));	
-			});
+			this.$box.delegate('.sugg-tag', 'click', $.proxy(this, '_onTagClick'));
 			// highlight suggestion on mouseover
-			this.$suggList.mouseover(function(evt) {	
-				var $target = $(evt.target);
-				if ($target.hasClass('sugg-list')) {
-					return;
-				}
-				if (!$target.hasClass('sugg-item')) {
-					$target = $target.parents('.sugg-item');
-				}
-				if (!$target.hasClass('sugg-item')) {
-					return;
-				}
-				sugg.deselectAllItems();
-				sugg.selectItem($target);
-				sugg.$currentItem = $target;
-			});
+			this.$suggList.mouseover($.proxy(this, '_onListMouseover'));
 			// add a tag when suggestion is clicked
-			this.$suggList.click(function(evt) {
-				// effectively delegate click to .sugg-item
-				var $target = $(evt.target);
-				if ($target.hasClass('sugg-list')) {
-					return;
-				}
-				if (!$target.hasClass('sugg-item')) {
-					$target = $target.parents('.sugg-item');
-				}
-				if (!$target.hasClass('sugg-item')) {
-					return;
-				}
-				sugg.addTag($target.text());
-				sugg.closeSuggestBox();
-				sugg.$input.val('');
-				sugg.focus();
-			});
+			this.$suggList.click($.proxy(this, '_onListClick'));
 			// focus to text input field when a click comes outside of any tags
-			this.$box.click(function(evt) {
-				if (evt.target == sugg.$box[0]) {
-					sugg.unfocusTag();
-					sugg.focus();
-				}
-			});
+			this.$box.click($.proxy(this, '_onBoxClick'));
 			// handle various actions associated with keypresses
 			this.$input.keydown($.proxy(this, '_keydown'))
+		},
+		_onInputFocus: function(evt) {
+			this.unfocusTag();
+			if (this.$input.val() == this.options.placeholder) {
+				this.$input.val('');
+			}
+		},
+		_onTagRemoveClick: function(evt) {
+			this.unfocusTag();
+			evt.preventDefault();
+			evt.stopImmediatePropagation();
+			var label = $(evt.target).parents('.sugg-tag').attr('data-label');
+			this.removeLabel(label);
+		},
+		_onTagClick: function(evt) {
+			// we have to stop propagation to $box click and to $document
+			evt.stopImmediatePropagation();
+			this.focusTag($(evt.target));	
+		},
+		_onListMouseover: function(evt) {	
+			var $target = $(evt.target);
+			if ($target.hasClass('sugg-list')) {
+				return;
+			}
+			if (!$target.hasClass('sugg-item')) {
+				$target = $target.parents('.sugg-item');
+			}
+			if (!$target.hasClass('sugg-item')) {
+				return;
+			}
+			this.deselectAllItems();
+			this.selectItem($target);
+			this.$currentItem = $target;
+		},
+		_onListClick: function(evt) {
+			// effectively delegate click to .sugg-item
+			var $target = $(evt.target);
+			if ($target.hasClass('sugg-list')) {
+				return;
+			}
+			if (!$target.hasClass('sugg-item')) {
+				$target = $target.parents('.sugg-item');
+			}
+			if (!$target.hasClass('sugg-item')) {
+				return;
+			}
+			this.addTag($target.text());
+			this.closeSuggestBox();
+			this.$input.val('');
+			this.focus();
+		},
+		_onBoxClick: function(evt) {
+			if (evt.target == this.$box[0]) {
+				this.unfocusTag();
+				this.focus();
+			}
 		},
 		/**
 		 * Focus on a previously added tag
@@ -342,93 +349,114 @@
 				return;
 			}
 			switch (evt.which) {
-				case 38: // up
-					evt.preventDefault();
-					// unfocus any focused tags
-					this.unfocusTag();
-					// move selection up in suggestion box
-					this.moveSelection('up');
+				case 38: // Up
+					this._key_UP(evt);
 					return;
-				case 40: // down
-					evt.preventDefault();
-					// unfocus any focused tags
-					this.unfocusTag();
-					// move selection down in suggestion box
-					this.moveSelection('down');
+				case 40: // Down
+					this._key_DOWN(evt);
 					return;
-				case 8: // backspace
-					this.$currentItem = null;
-					// TODO: check that cursor is in first position, not for value == '' ?
-					if (this.$input.val() == '') {
-						evt.preventDefault();
-						var $lastTag = this.$inputWrapper.prev();
-						if (this.$focusedTag && this.$focusedTag[0] == $lastTag[0]) {
-							this.removeId($lastTag.attr('data-id'));
-						}
-						else {
-							this.$focusedTag = $lastTag;
-							$lastTag.addClass('sugg-focused');
-						}
-						return;
-					}
+				case 8: // Backspace
+					this._key_BACKSPACE(evt);
 					break;
 				case 9: // tab
-					if (this.$input.val() == '') {
-						// go ahead and tab to next field
-						return;
-					}
-					// otherwise, continue as a comma and create a new tag
 				case 188: // comma
-					evt.preventDefault();
-					if (this.$input.val() == '') {
-						// no value so do nothing
-						return;
-					}
-					this.$currentItem = null;
-					this.addTag(this.$input.val());
-					this.$input.val('');
-					this.closeSuggestBox();
+					this._key_TAB_COMMA(evt);
 					return;
 				case 27: // Esc
-					this.closeSuggestBox();
+					this._key_ESC(evt);
 					return;
-				case 13: // return
-					if (this.$currentItem) {
-						// add the item that was selected via arrow or hover
-						this.addTag(this.$currentItem.text());
-						this.$input.val('');
-						this.closeSuggestBox();
-						this.$currentItem = null;
-					}
-					else if (this.options.preventSubmit) {
-						// don't let form submit
-						evt.preventDefault();
-					}
+				case 13: // Enter
+					this._key_ENTER(evt);
 					return;
 			}
 			// any other key is pressed
-			// abort any outstanding xhr requests and clear timeout from key delay
-			this._abortFetch();
-			clearTimeout(this.timeoutHandle);
-			this.$currentItem = null;
+			this._key_other(evt);
+		},
+		_key_UP: function(evt) {
+			evt.preventDefault();
+			// unfocus any focused tags
 			this.unfocusTag();
-			var sugg = this;
-			var doSuggest = function() {
-				var text = sugg.$input.val();
-				if (text.length >= sugg.options.minChars) {				
-					sugg.suggest(text);
+			// move selection up in suggestion box
+			this.moveSelection('up');			
+		},
+		_key_DOWN: function(evt) {
+			evt.preventDefault();
+			// unfocus any focused tags
+			this.unfocusTag();
+			// move selection down in suggestion box
+			this.moveSelection('down');			
+		},
+		_key_BACKSPACE: function(evt) {
+			this.$currentItem = null;
+			// TODO: check that cursor is in first position, not for value == '' ?
+			if (this.$input.val() == '') {
+				evt.preventDefault();
+				var $lastTag = this.$inputWrapper.prev();
+				if (this.$focusedTag && this.$focusedTag[0] == $lastTag[0]) {
+					this.removeId($lastTag.attr('data-id'));
 				}
 				else {
-					sugg.closeSuggestBox();
+					this.$focusedTag = $lastTag;
+					$lastTag.addClass('sugg-focused');
 				}
-			};
-			this.timeoutHandle = setTimeout(doSuggest, this.options.keyDelay || 0);
+				return;
+			}			
 		},
-		_startKeyDelay: function() {
-			
+		_key_TAB_COMMA: function(evt) {
+			if (evt.which == 9) { // tab
+				
+				if (this.$input.val() == '') {
+					// go ahead and tab to next field
+					return;
+				}
+			}
+			evt.preventDefault();
+			if (this.$input.val() == '') {
+				// no value so do nothing
+				return;
+			}
+			this.$currentItem = null;
+			this.addTag(this.$input.val());
+			this.$input.val('');
+			this.closeSuggestBox();
+			return;			
 		},
-		_clearKeyDelay: function() {
-			
+		_key_ESC: function(evt) {
+			this.closeSuggestBox();			
+		},
+		_key_ENTER: function(evt) {
+			if (this.$currentItem) {
+				// add the item that was selected via arrow or hover
+				this.addTag(this.$currentItem.text());
+				this.$input.val('');
+				this.closeSuggestBox();
+				this.$currentItem = null;
+			}
+			else if (this.options.preventSubmit) {
+				// don't let form submit
+				evt.preventDefault();
+			}			
+		},
+		_key_other: function(evt) {
+			// abort any outstanding xhr requests and clear timeout from key delay
+			this._abortFetch();
+			// clear key delay
+			clearTimeout(this.timeoutHandle);
+			// remove suggestion box selection
+			this.$currentItem = null;
+			// unfocus any tags selected for deletion
+			this.unfocusTag();
+			// start the timeout
+			this.timeoutHandle = setTimeout(this.suggestIfNeeded, this.options.keyDelay || 0);			
+		},
+		suggestIfNeeded: function() {
+			var text = this.$input.val();
+			if (text.length >= this.options.minChars) {				
+				this.suggest(text);
+			}
+			else {
+				this.closeSuggestBox();
+			}			
 		},
 		destroy: function() {
 			// "un"-render; this.$originalInput should be already populated
