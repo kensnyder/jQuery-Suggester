@@ -23,6 +23,8 @@
 		this.initialize.apply(this, Array.prototype.slice.call(arguments));
 	};
 	$.Suggester.defaultOptions = {
+		// data to use instead of an ajax call
+		data: false,
 		// name of object property that should be used as the id
 		idProperty: "id",            
 		// name of object property that should be used as the tag display text
@@ -43,16 +45,13 @@
 		// if json, url needs to have "callback" in the format http://example.com/myjsonp?query=%s&mycallback=%s
 		// to handle xml, you'll need to register a BeforeFetch and afterFetch or overwrite the fetchResults function
 		dataType: 'json',
-		// url to call to get jsonp results. Use first %s to indicate search text and second %s for callback
-		// e.g. 
-		jsonpUrl: false,
 		// if true, the first tag will be removed when a duplicate is typed in
 		preventDuplicates: true,
 		// if true, fine matches regardless of case
 		caseSensitive: false,
 		// the minimum number of characters a user must type before the suggestion box will appear
 		minChars: 3,
-		// the minimum number of milliseconds between keystrokes before the suggestion lookup begins
+		// the number of milliseconds between keystrokes before the suggestion lookup begins
 		keyDelay: 400,
 		// if false, prevent the form from submitting when the user presses enter on the empty input
 		submitOnEnter: false,
@@ -61,7 +60,7 @@
 		placeholder: '',
 		// message to show when there are no matches
 		noSuggestions: '(Type a comma to create a new tag)',
-		// stop looking for suggestions after this many are found (0 means no limit)		
+		// only display this many suggestions
 		maxSuggestions: 10,
 		// if true, wrap first matching substring in a suggestion with <strong class="sugg-match"></strong>
 		hightlightSubstring: true,
@@ -272,9 +271,13 @@
 			this.removeLabel(label);
 		},
 		_onTagClick: function(evt) {
+			var $target = $(evt.target);
+			if (!$target.hasClass('sugg-tag')) {
+				$target = $target.parents('.sugg-tag');
+			}
 			// we have to stop propagation to $box click and to $document
 			evt.stopImmediatePropagation();
-			this.focusTag($(evt.target));	
+			this.focusTag($target);	
 		},
 		_onListMouseover: function(evt) {	
 			var $target = $(evt.target);
@@ -340,7 +343,7 @@
 		},
 		/**
 		 * Remove the focused tag
-		 * @param {jQuery.Event} evt (optional)  Used to check if keypress is backspace or delete
+		 * @param {jQuery.Event} evt (optional)  Used to check if $document keypress is backspace or delete
 		 * @return {$.Suggester}
 		 */
 		removeFocusedTag: function(evt) {
@@ -650,6 +653,7 @@
 				return this;
 			}			
 			this.$suggList.show();
+			this.$widget.addClass('sugg-list-open');
 			$document.bind('click.sugg', function(evt) {
 				if ($(evt.target).parents('.sugg-list')[0] == sugg.$suggList[0]) {
 					return;
@@ -671,6 +675,7 @@
 			var evt = this._publish('BeforeClose', {cancellable:true});
 			if (!evt.isDefaultPrevented()) {
 				this.$suggList.hide();
+				this.$widget.removeClass('sugg-list-open');
 			}
 			this._publish('AfterClose');
 			return this;
@@ -995,7 +1000,7 @@
 			var args = Array.prototype.slice.call(arguments, 1);
 			return $.Suggester.prototype[options].apply(this.data('SuggesterInstance'), args);
 		}
-		// create new instance but return the jQuery instance
+		// otherwise create new $.Suggester instance but return the jQuery instance
 		return this.each(function(i) {			
 			var $elem = $(this);
 			var instance = new $.Suggester($elem, options);
