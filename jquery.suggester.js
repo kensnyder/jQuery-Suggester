@@ -216,6 +216,7 @@
 			}
 			// actually insert the widget
 			this.$widget.insertBefore(this.$originalInput.hide());
+			// populate tags based on starting value of original input
 			this._handleStartValue();
 		},
 		_handleStartValue: function() {
@@ -238,7 +239,6 @@
 		 * @return {undefined}
 		 */
 		_setupListeners: function() {
-			var sugg = this;
 			// proxy some methods to always be bound to our instance
 			this.unfocusTag = $.proxy(this, 'unfocusTag');
 			this.removeFocusedTag = $.proxy(this, 'removeFocusedTag');
@@ -376,7 +376,7 @@
 					return;
 				case 8: // Backspace
 					this._key_BACKSPACE(evt);
-					break;
+					return;
 				case 9: // tab
 				case 188: // comma
 					this._key_TAB_COMMA(evt);
@@ -418,27 +418,25 @@
 					this.$focusedTag = $lastTag;
 					$lastTag.addClass('sugg-focused');
 				}
-				return;
 			}			
 		},
 		_key_TAB_COMMA: function(evt) {
 			if (evt.which == 9) { // tab
-				
 				if (this.$input.val() == '') {
 					// go ahead and tab to next field
 					return;
 				}
 			}
+			// tab or comma
 			evt.preventDefault();
 			if (this.$input.val() == '') {
-				// no value so do nothing
+				// no value so don't create a new tag
 				return;
 			}
 			this.$currentItem = null;
 			this.addTag(this.$input.val());
 			this.$input.val('');
 			this.closeSuggestBox();
-			return;			
 		},
 		_key_ESC: function(evt) {
 			this.closeSuggestBox();			
@@ -511,7 +509,7 @@
 				params.url = params.url.replace('%s', '?');
 			}
 			else {
-				throw new Error('jQuery.Suggester#fetchResults: dataType must be json or jsonp.');
+				throw new Error('jQuery.Suggester#fetchResults: options.dataType must be "json" or "jsonp".');
 			}
 			this._jqXHR = $.ajax(params).done(this._afterFetch);
 		},

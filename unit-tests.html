@@ -132,7 +132,7 @@
 		strictEqual($form.find('input[type=hidden]').length, 0);
 		strictEqual($form.find('.sugg-label').length, 0);
 	});	
-	test("addId() then remove by delete key", function() {
+	test("addId() then remove by backspace", function() {
 		var sugg = $input.suggester({data:planets}).suggester('getInstance');
 		var $tag = sugg.addId(1);
 		sendKeys(sugg, ['BACKSPACE']);
