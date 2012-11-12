@@ -81,15 +81,28 @@
 					'<li class="sugg-item {record.cssClass}">{record.label}</li>' + // innerHTML is used as this.listItemTemplate
 				'</ul>' +
 			'</div>'
-		/* EVENT OPTIONS
+		/* EVENTS
 		 * onInitialize
-		 * onBeforeAdd
-		 * onAfterAdd
 		 * onBeforeRender
-		 * onAfterRender
+		 * onBeforeKeydown
+		 * onBeforeFetch
+		 * onAfterFetch
+		 * onBeforeMove
+		 * onAfterMove
+		 * onBeforeSuggest
+		 * onAfterSuggest
+		 * onBeforeClose
+		 * onAfterClose
+		 * onBeforeFormat
+		 * onAfterFormat
+		 * onBeforeFilter
+		 * onAfterFilter
+		 * onBeforeAddTag
+		 * onAfterAddTag
+		 * onBeforeAddTagCustom
+		 * onAfterAddTagCustom
 		 * onBeforeRemove
 		 * onAfterRemove
-		 * onCustomTag
 		 */
 	};
 	// Making Suggester a proper class allows two patterns:
@@ -105,7 +118,10 @@
 		initialize: function($textInput, options) {
 			// This is the original text input given
 			this.$originalInput = $($textInput);
-// TODO: handle if original input already has an instance .data('SuggesterInstance')		
+			// Bail because original input already has an instance .data('SuggesterInstance')
+			if (this.$originalInput.data('SuggesterInstance')) {
+				return this;
+			}
 			// register our instance
 			$.Suggester.instances.push(this);
 			if (this.$originalInput.length == 0) {
@@ -200,6 +216,9 @@
 			}
 			// actually insert the widget
 			this.$widget.insertBefore(this.$originalInput.hide());
+			this._handleStartValue();
+		},
+		_handleStartValue: function() {
 			// get a list of tags to insert now based on the current value of the original input
 			// replaces escaped commas with \u0001 such that tag labels can have commas
 			// if JavaScript RegExp supported lookbehinds we wouldn't need this \u0001 deal
@@ -212,10 +231,10 @@
 					// add each tag by its label; this.$originalInput will get repopulated automatically
 					sugg.addTag($.trim(this.replace(/\u0001/g, '')));
 				});
-			}
+			}			
 		},
 		/**
-		 * Set up event handlers
+		 * Attach event handlers
 		 * @return {undefined}
 		 */
 		_setupListeners: function() {
@@ -679,7 +698,7 @@
 		 */
 		_formatSuggestion: function(record, substr) {
 			var evt, options, label, replacer, replacee, html;
-			evt = this._publish('Format', {record:record, substr:substr, html:'', cancellable:true});
+			evt = this._publish('BeforeFormat', {record:record, substr:substr, html:'', cancellable:true});
 			if (evt.isDefaultPrevented()) {
 				html = evt.html;
 			}
