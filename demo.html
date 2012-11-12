@@ -5,14 +5,14 @@
 	<title>jquery.suggester.js Demos</title>
 	<script src="./assets/js/jquery-1.8.0.min.js"></script>
 	<script src="./jquery.suggester.js"></script>
-	<script src="./assets/js/demo-fixtures.js"></script>
+	<script src="./assets/js/bodies.js"></script>
 	<link rel="stylesheet" href="./jquery.suggester.css" />
 </head>
 <body>
 <form class="sugg"><input type="text" name="suggestable" value="" /></form>
 <script>
 	var $input = $('input').suggester({
-		data: fixtures.planets,
+		data: bodies, // data from ./assets/js/bodies.js
 		keyDelay: 0,
 		minChars: 1
 	});

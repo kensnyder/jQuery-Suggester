@@ -6,7 +6,7 @@
 	<script src="./assets/js/jquery-1.8.0.min.js"></script>
 	<script src="./assets/js/qunit-1.10.0.js"></script>
 	<script src="./jquery.suggester.js"></script>
-	<script src="./assets/js/test-fixtures.js"></script>
+	<script src="./assets/js/planets.js"></script>
 	<script src="./assets/js/test-helpers.js"></script>
 	<link rel="stylesheet" href="./assets/css/qunit-1.10.0.css" />
 </head>
@@ -46,7 +46,7 @@
 		strictEqual($form.find('.sugg-label').html(), 'Custom');
 	});	
 	test("addId()", function() {
-		$input.suggester({data:fixtures.planets});
+		$input.suggester({data:planets});
 		var $tag = $input.suggester('addId', 1);
 		strictEqual($tag.attr('data-id'), '1');
 		strictEqual($tag.attr('data-label'), 'Sun');
@@ -54,7 +54,7 @@
 		strictEqual($form.find('.sugg-label').html(), 'Sun');
 	});
 	test("addTag()", function() {
-		$input.suggester({data:fixtures.planets});
+		$input.suggester({data:planets});
 		var $tag = $input.suggester('addTag', 'Pluto');
 		strictEqual($tag.attr('data-id'), '11');
 		strictEqual($tag.attr('data-label'), 'Pluto');
@@ -62,7 +62,7 @@
 		strictEqual($form.find('.sugg-label').html(), 'Pluto');
 	});	
 	test("Add by typing", function() {
-		var sugg = $input.suggester({data:fixtures.planets}).suggester('getInstance');
+		var sugg = $input.suggester({data:planets}).suggester('getInstance');
 		sugg.$input.val('Mars');
 		sendKey(sugg, ',');
 		strictEqual($form.find('input[type=hidden]').val(), '5');
@@ -70,7 +70,7 @@
 		strictEqual(sugg.$input.val(), '');	
 	});
 	test("Add by typing custom", function() {
-		var sugg = $input.suggester({data:fixtures.planets}).suggester('getInstance');
+		var sugg = $input.suggester({data:planets}).suggester('getInstance');
 		sugg.$input.val('Custom');
 		sendKey(sugg, ',');
 		strictEqual($form.find('input[type=hidden]').val(), 'Custom');
@@ -78,7 +78,7 @@
 		strictEqual(sugg.$input.val(), '');	
 	});
 	test("Original input value properly populated", function() {
-		var sugg = $input.suggester({data:fixtures.planets}).suggester('getInstance');
+		var sugg = $input.suggester({data:planets}).suggester('getInstance');
 		sugg.$input.val('Custom');
 		sendKey(sugg, ',');
 		sugg.$input.val('lname, fname');
@@ -89,7 +89,7 @@
 		strictEqual($input.val(), 'Custom,lname\\, fname,doe\\, john');
 	});
 	test("addId() then removeId()", function() {
-		$input.suggester({data:fixtures.planets});
+		$input.suggester({data:planets});
 		var $tag = $input.suggester('addId', 1);
 		strictEqual($tag.attr('data-id'), '1');
 		strictEqual($tag.attr('data-label'), 'Sun');
@@ -100,7 +100,7 @@
 		strictEqual($form.find('.sugg-label').length, 0);
 	});	
 	test("addId() then removeLabel()", function() {
-		$input.suggester({data:fixtures.planets});
+		$input.suggester({data:planets});
 		var $tag = $input.suggester('addId', 7);
 		strictEqual($tag.attr('data-id'), '7');
 		strictEqual($tag.attr('data-label'), 'Jupiter');
@@ -111,7 +111,7 @@
 		strictEqual($form.find('.sugg-label').length, 0);
 	});	
 	test("addTag() then removeLabel()", function() {
-		$input.suggester({data:fixtures.planets});
+		$input.suggester({data:planets});
 		var $tag = $input.suggester('addTag', 'Earth');
 		strictEqual($tag.attr('data-id'), '4');
 		strictEqual($tag.attr('data-label'), 'Earth');
@@ -122,7 +122,7 @@
 		strictEqual($form.find('.sugg-label').length, 0);
 	});	
 	test("addTag() with custom then removeLabel()", function() {
-		$input.suggester({data:fixtures.planets});
+		$input.suggester({data:planets});
 		var $tag = $input.suggester('addTag', 'Custom');
 		strictEqual($tag.attr('data-id'), '');
 		strictEqual($tag.attr('data-label'), 'Custom');
@@ -133,7 +133,7 @@
 		strictEqual($form.find('.sugg-label').length, 0);
 	});	
 	test("addId() then remove by delete key", function() {
-		var sugg = $input.suggester({data:fixtures.planets}).suggester('getInstance');
+		var sugg = $input.suggester({data:planets}).suggester('getInstance');
 		var $tag = sugg.addId(1);
 		sendKeys(sugg, ['BACKSPACE']);
 		strictEqual($tag.hasClass('sugg-focused'), true);
@@ -142,13 +142,13 @@
 		strictEqual($form.find('.sugg-label').length, 0);
 	});
 	test("addId() then click to select", function() {
-		var sugg = $input.suggester({data:fixtures.planets}).suggester('getInstance');
+		var sugg = $input.suggester({data:planets}).suggester('getInstance');
 		var $tag = sugg.addId(1);
 		$tag.trigger({type: 'click'});
 		strictEqual($tag.hasClass('sugg-focused'), true);
 	});	
 	test("addId() then remove by clicking `X`", function() {
-		var sugg = $input.suggester({data:fixtures.planets}).suggester('getInstance');
+		var sugg = $input.suggester({data:planets}).suggester('getInstance');
 		var $tag = sugg.addId(2);
 		$tag.find('.sugg-remove').trigger({type: 'click'});
 		strictEqual($form.find('input[type=hidden]').length, 0);
@@ -156,7 +156,7 @@
 	});
 	test("addId() then click to select, then delete key", function() {
 		expect(2);
-		var sugg = $input.suggester({data:fixtures.planets}).suggester('getInstance');
+		var sugg = $input.suggester({data:planets}).suggester('getInstance');
 		var $tag = sugg.addId(3);
 		$tag.trigger({type: 'click'});
 		sendKey(document, 'DELETE');
@@ -166,7 +166,7 @@
 	test("Pre-filled items", function() {
 		expect(3);
 		$input.val('Uranus,Jupiter');
-		var sugg = $input.suggester({data:fixtures.planets});
+		var sugg = $input.suggester({data:planets});
 		strictEqual($('.sugg-label').length, 2);
 		strictEqual($('.sugg-label').eq(0).text(), 'Uranus');
 		strictEqual($('.sugg-label').eq(1).text(), 'Jupiter');				
@@ -180,12 +180,12 @@
 			strictEqual(sugg.$input.val(), '');
 			start();
 		}, 1);
-	});		
+	});			
 		
 	module('Suggestions', config);
 	asyncTest("Too short for suggestion", function() {
 		expect(1);
-		var sugg = $input.suggester({data:fixtures.planets,minChars:3,keyDelay:0}).suggester('getInstance');
+		var sugg = $input.suggester({data:planets,minChars:3,keyDelay:0}).suggester('getInstance');
 		sendKeys(sugg, ['J','u']);
 		setTimeout(function() {
 			strictEqual($form.find('.sugg-item').length, 0);
@@ -194,7 +194,7 @@
 	});		
 	asyncTest("1 then 2 letters", function() {
 		expect(5);
-		var sugg = $input.suggester({data:fixtures.planets,minChars:1,keyDelay:0}).suggester('getInstance');
+		var sugg = $input.suggester({data:planets,minChars:1,keyDelay:0}).suggester('getInstance');
 		sendKeys(sugg, ['O']);
 		setTimeout(function() {
 			strictEqual($('.sugg-item').length, 2);
@@ -210,7 +210,7 @@
 	});
 	asyncTest("maxSuggestions option", function() {
 		expect(2);
-		var sugg = $input.suggester({data:fixtures.planets,minChars:1,keyDelay:0,maxSuggestions:1}).suggester('getInstance');
+		var sugg = $input.suggester({data:planets,minChars:1,keyDelay:0,maxSuggestions:1}).suggester('getInstance');
 		sendKeys(sugg, ['O']);
 		setTimeout(function() {
 			strictEqual($('.sugg-item').length, 1);
@@ -220,7 +220,7 @@
 	});
 	asyncTest("Close by clicking document", function() {
 		expect(3);
-		var sugg = new $.Suggester($input, {data:fixtures.planets,minChars:1,keyDelay:0});
+		var sugg = new $.Suggester($input, {data:planets,minChars:1,keyDelay:0});
 		sendKeys(sugg, ['V','e','n','u']);
 		setTimeout(function() {
 			strictEqual($('.sugg-item').length, 1);
@@ -235,7 +235,7 @@
 	});
 	asyncTest("Close by Esc key", function() {
 		expect(3);
-		var sugg = new $.Suggester($input, {data:fixtures.planets,minChars:1,keyDelay:0});
+		var sugg = new $.Suggester($input, {data:planets,minChars:1,keyDelay:0});
 		sendKeys(sugg, ['V','e','n','u']);
 		setTimeout(function() {
 			strictEqual($('.sugg-item').length, 1);
@@ -250,7 +250,7 @@
 	});
 	asyncTest("Navigate using arrows", function() {
 		expect(9);
-		var sugg = new $.Suggester($input, {data:fixtures.planets,minChars:1,keyDelay:0});
+		var sugg = new $.Suggester($input, {data:planets,minChars:1,keyDelay:0});
 		sendKeys(sugg, ['e','r']);
 		setTimeout(function() {
 			strictEqual($('.sugg-item').length, 4);
@@ -270,7 +270,7 @@
 	});
 	asyncTest("Navigate using hover", function() {
 		expect(9);
-		var sugg = new $.Suggester($input, {data:fixtures.planets,minChars:1,keyDelay:0});
+		var sugg = new $.Suggester($input, {data:planets,minChars:1,keyDelay:0});
 		sendKeys(sugg, ['e','r']);
 		setTimeout(function() {
 			strictEqual($('.sugg-item').length, 4);
@@ -290,7 +290,7 @@
 	});
 	asyncTest("Add via click on suggestion", function() {
 		expect(7);
-		var sugg = new $.Suggester($input, {data:fixtures.planets,minChars:1,keyDelay:0});
+		var sugg = new $.Suggester($input, {data:planets,minChars:1,keyDelay:0});
 		sendKeys(sugg, ['a','r']);
 		setTimeout(function() {
 			strictEqual($('.sugg-item').length, 2);
@@ -308,7 +308,7 @@
 	});
 	asyncTest("Don't suggest an item that was already added", function() {
 		expect(2);
-		var sugg = new $.Suggester($input, {data:fixtures.planets,minChars:1,keyDelay:0});
+		var sugg = new $.Suggester($input, {data:planets,minChars:1,keyDelay:0});
 		sugg.addTag('Earth');
 		sendKeys(sugg, ['a','r']);
 		setTimeout(function() {
@@ -319,7 +319,7 @@
 	});	
 	asyncTest("Set options.matchAt to 0 to match at beginning of word", function() {
 		expect(3);
-		var sugg = new $.Suggester($input, {data:fixtures.planets,minChars:1,keyDelay:0,matchAt:0});
+		var sugg = new $.Suggester($input, {data:planets,minChars:1,keyDelay:0,matchAt:0});
 		sendKeys(sugg, ['e']);
 		setTimeout(function() {
 			strictEqual($('.sugg-item').length, 2);
@@ -328,7 +328,19 @@
 			start();
 		}, 1);
 	});	
-	
+	if (window.location.protocol != 'file:') {
+		asyncTest("Suggestions via Ajax", function() {
+			expect(3);
+			var sugg = $input.suggester({ajaxUrl:'./assets/js/stars-canis.js?query=%s',keyDelay:2}).suggester('getInstance');
+			sendKeys(sugg, ['C','a','n','i','s'])
+			setTimeout(function() {
+				strictEqual($('.sugg-item').length, 2);
+				strictEqual($('.sugg-item').eq(0).text(), 'Canis Major');
+				strictEqual($('.sugg-item').eq(1).text(), 'Canis Minor');	
+				start();
+			}, 1500);
+		});		
+	}
 }(jQuery, QUnit));
 </script>
 </body>

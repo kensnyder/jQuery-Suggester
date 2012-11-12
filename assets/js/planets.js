@@ -1,5 +1,4 @@
-var fixtures = {};
-fixtures.planets = [
+var planets = [
 	{id: 1, label: "Sun",           cssClass: "star"},	
 	{id: 2, label: "Mercury",       cssClass: "planet"},
 	{id: 3, label: "Venus",         cssClass: "planet"},

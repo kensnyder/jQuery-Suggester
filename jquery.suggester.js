@@ -396,8 +396,9 @@
 					}
 					return;
 			}
-			// other keys:
-			// clear timeout from key delay
+			// any other key is pressed
+			// abort any outstanding xhr requests and clear timeout from key delay
+			this._abortFetch();
 			clearTimeout(this.timeoutHandle);
 			this.$currentItem = null;
 			this.unfocusTag();
@@ -412,6 +413,12 @@
 				}
 			};
 			this.timeoutHandle = setTimeout(doSuggest, this.options.keyDelay || 0);
+		},
+		_startKeyDelay: function() {
+			
+		},
+		_clearKeyDelay: function() {
+			
 		},
 		destroy: function() {
 			// "un"-render; this.$originalInput should be already populated
@@ -430,7 +437,39 @@
 		 * Fetch suggestions from an ajax URL
 		 */
 		fetchResults: function(text) {
-			
+			// TODO: add option to support other transports
+			// TODO: abort on keypress
+			this._searchTerm = text;
+			this._jqXHR = $.ajax(this.options.ajaxUrl.replace('%s', text), {
+				context: this,
+				beforeSend: this._beforeFetch
+			});
+			this._jqXHR.done(this._afterFetch);
+		},
+		_beforeFetch: function() {
+			this._publish('BeforeFetch', {
+				jqXHR: this._jqXHR,
+				term: this._searchTerm
+			});
+		},
+		_afterFetch: function(data) {
+			var evt = this._publish('AfterFetch', {
+				jqXHR: this._jqXHR,
+				data: data,
+				term: this._searchTerm,
+				cancellable: true
+			});
+			this._jqXHR = null;
+			if (evt.isDefaultPrevented()) {
+				return;
+			}
+			var records = (typeof evt.data == 'Object' ? evt.data : $.parseJSON(evt.data));
+			this.handleSuggestions(records);
+		},
+		_abortFetch: function() {
+			if (this._jqXHR) {
+				this._jqXHR.abort();
+			}
 		},
 		/**
 		 * Move the selection up or down in the suggestion box
@@ -516,9 +555,7 @@
 		suggest: function(text) {
 			this._text = text;
 			if (this.options.ajaxUrl) {
-				// TODO: add option to support other transports
-				// TODO: abort on keypress
-				$.getJson(this.options.ajaxUrl.replace('%s', text), $.proxy(this.handleSuggestions, this));
+				this.fetchResults(text);
 			}
 			else {
 				this.handleSuggestions(this.getResults(text));
