@@ -200,7 +200,7 @@
 			// the template for tags
 			this.$tagTemplate = this.$box.find('.sugg-tag').remove();
 			// the text input used to type tags
-			this.$input = this.$box.find('.sugg-input').val(this.options.placeholder || '');
+			this.$input = this.$box.find('.sugg-input').val(this.options.placeholder || '').prop('size', 2);
 			// the wrapper for that text input
 			this.$inputWrapper = this.$box.find('.sugg-input-wrapper');
 			// the list element that contains all suggestions
@@ -255,7 +255,8 @@
 			// focus to text input field when a click comes outside of any tags
 			this.$box.click($.proxy(this, '_onBoxClick'));
 			// handle various actions associated with keypresses
-			this.$input.keydown($.proxy(this, '_keydown'))
+			this.$input.keydown($.proxy(this, '_onKeydown'));
+			this.$input.keyup($.proxy(this, '_onKeyup'));
 		},
 		_onInputFocus: function(evt) {
 			this.unfocusTag();
@@ -317,6 +318,9 @@
 				this.focus();
 			}
 		},
+		_onKeyup: function(evt) {
+			this.$input.prop('size', this.$input.val().length + 1);			
+		},
 		/**
 		 * Focus on a previously added tag
 		 * @params {jQuery} $tag  The .sugg-tag element to focus
@@ -362,7 +366,7 @@
 		 * @param {jQuery.Event} evt
 		 * @return {undefined}
 		 */
-		_keydown: function(evt) {
+		_onKeydown: function(evt) {
 			var pubevent = this._publish('BeforeKeydown', {
 				event: evt,
 				cancellable: true
@@ -415,7 +419,7 @@
 				evt.preventDefault();
 				var $lastTag = this.$inputWrapper.prev();
 				if (this.$focusedTag && this.$focusedTag[0] == $lastTag[0]) {
-					this.removeId($lastTag.attr('data-id'));
+					this.removeLabel($lastTag.attr('data-label'));
 				}
 				else {
 					this.$focusedTag = $lastTag;
