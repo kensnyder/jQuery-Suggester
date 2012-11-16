@@ -172,15 +172,32 @@
 				this.options.matchAt = 0;
 			}
 		},
+		/**
+		 * Add more data records to the autosuggest list. Does not apply when dataUrl is set
+		 * 
+		 * @params {Object[]} data  More records in the same object format as initially set
+		 * @return {$.Suggester}
+		 */
 		addData: function(data) {
 			this.data = this.data.concat(data);
 			return this;
 		},
+		/**
+		 * Set data records to the autosuggest list. Does not apply when dataUrl is set
+		 * 
+		 * @params {Object[]} data
+		 * @return {$.Suggester}
+		 */		
 		setData: function(data) {
 			this.data = data;
 			return this;
 		},
-		getData: function(data) {
+		/**
+		 * Get all the records in the autosuggest list. Does not apply when dataUrl is set
+		 * 
+		 * @return {Object[]}
+		 */		
+		getData: function() {
 			return this.data;
 		},
 		/**
@@ -258,12 +275,18 @@
 			this.$input.keydown($.proxy(this, '_onKeydown'));
 			this.$input.keyup($.proxy(this, '_onKeyup'));
 		},
+		/**
+		 * Event handler for when this.$input is focused
+		 */
 		_onInputFocus: function(evt) {
 			this.unfocusTag();
 			if (this.$input.val() == this.options.placeholder) {
 				this.$input.val('');
 			}
 		},
+		/**
+		 * Event handler for when .sugg-remove is clicked
+		 */		
 		_onTagRemoveClick: function(evt) {
 			this.unfocusTag();
 			evt.preventDefault();
@@ -271,6 +294,9 @@
 			var label = $(evt.target).parents('.sugg-tag').attr('data-label');
 			this.removeLabel(label);
 		},
+		/**
+		 * Event handler for when .sugg-tag is clicked
+		 */			
 		_onTagClick: function(evt) {
 			var $target = $(evt.target);
 			if (!$target.hasClass('sugg-tag')) {
@@ -280,6 +306,9 @@
 			evt.stopImmediatePropagation();
 			this.focusTag($target);	
 		},
+		/**
+		 * Event handler for when autosuggest list is moused over
+		 */			
 		_onListMouseover: function(evt) {	
 			var $target = $(evt.target);
 			if ($target.hasClass('sugg-list')) {
@@ -295,6 +324,9 @@
 			this.selectItem($target);
 			this.$currentItem = $target;
 		},
+		/**
+		 * Event handler for when autosuggest list is clicked
+		 */			
 		_onListClick: function(evt) {
 			// effectively delegate click to .sugg-item
 			var $target = $(evt.target);
@@ -312,12 +344,18 @@
 			this.$input.val('');
 			this.focus();
 		},
+		/**
+		 * Event handler for when this.$box is clicked
+		 */			
 		_onBoxClick: function(evt) {
 			if (evt.target == this.$box[0]) {
 				this.unfocusTag();
 				this.focus();
 			}
 		},
+		/**
+		 * Event handler for when key goes up on this.$input
+		 */			
 		_onKeyup: function(evt) {
 			this.$input.prop('size', this.$input.val().length + 1);			
 		},
@@ -398,6 +436,9 @@
 			// any other key is pressed
 			this._key_other(evt);
 		},
+		/**
+		 * Handle UP key on this.$input
+		 */
 		_key_UP: function(evt) {
 			evt.preventDefault();
 			// unfocus any focused tags
@@ -405,6 +446,9 @@
 			// move selection up in suggestion box
 			this.moveSelection('up');			
 		},
+		/**
+		 * Handle DOWN key on this.$input
+		 */		
 		_key_DOWN: function(evt) {
 			evt.preventDefault();
 			// unfocus any focused tags
@@ -412,6 +456,9 @@
 			// move selection down in suggestion box
 			this.moveSelection('down');			
 		},
+		/**
+		 * Handle BACKSPACE key on this.$input
+		 */		
 		_key_BACKSPACE: function(evt) {
 			this.$currentItem = null;
 			// TODO: check that cursor is in first position, not for value == '' ?
@@ -427,6 +474,9 @@
 				}
 			}			
 		},
+		/**
+		 * Handle COMMA key on this.$input
+		 */		
 		_key_TAB_COMMA: function(evt) {
 			if (evt.which == 9) { // tab
 				if (this.$input.val() == '') {
@@ -445,9 +495,15 @@
 			this.$input.val('');
 			this.closeSuggestBox();
 		},
+		/**
+		 * Handle ESC key on this.$input
+		 */		
 		_key_ESC: function(evt) {
 			this.closeSuggestBox();			
 		},
+		/**
+		 * Handle ENTER key on this.$input
+		 */
 		_key_ENTER: function(evt) {
 			if (this.$currentItem) {
 				// add the item that was selected via arrow or hover
@@ -461,9 +517,12 @@
 				evt.preventDefault();
 			}			
 		},
+		/**
+		 * Handle other keys (e.g. printable characters) on this.$input
+		 */		
 		_key_other: function(evt) {
 			// abort any outstanding xhr requests and clear timeout from key delay
-			this._abortFetch();
+			this.abortFetch();
 			// clear key delay
 			clearTimeout(this.timeoutHandle);
 			// remove suggestion box selection
@@ -473,6 +532,9 @@
 			// start the timeout
 			this.timeoutHandle = setTimeout(this.suggestIfNeeded, this.options.keyDelay || 0);			
 		},
+		/**
+		 * Initiate suggestion process if the input text is >= this.options.minChars
+		 */
 		suggestIfNeeded: function() {
 			var text = this.$input.val();
 			if (text.length >= this.options.minChars) {				
@@ -482,6 +544,9 @@
 				this.closeSuggestBox();
 			}			
 		},
+		/**
+		 * Completely remove Suggester widget and replace with original input box (with values populated)
+		 */
 		destroy: function() {
 			// "un"-render; this.$originalInput should be already populated
 			this.$originalInput.insertBefore(this.$widget).show();
@@ -520,6 +585,13 @@
 			}
 			this._jqXHR = $.ajax(params).done(this._afterFetch);
 		},
+		/**
+		 * Handler passed to $.ajax({beforeSend:...}) to alter XHR if needed
+		 * 
+		 * @event BeforeFetch (if event.preventDefault() is called, XHR is not made and suggest box does not open)
+		 *     event.jqXHR  the jQuery XHR object (see http://api.jquery.com/jQuery.ajax/#jqXHR)
+		 *     event.term  the term that is being searched for
+		 */
 		_beforeFetch: function() {
 			var evt = this._publish('BeforeFetch', {
 				jqXHR: this._jqXHR,
@@ -527,9 +599,17 @@
 				cancellable: true
 			});
 			if (evt.isDefaultPrevented()) {
-				this._abortFetch();
+				this.abortFetch();
 			}
 		},
+		/**
+		 * Handler passed to $.ajax().done(function(){...}) that handles suggestion data that is returned
+		 * 
+		 * @event BeforeFetch (if event.preventDefault() is called, the suggest box does not open)
+		 *     event.jqXHR  the jQuery XHR object (see http://api.jquery.com/jQuery.ajax/#jqXHR)
+		 *     event.data  the object generated from the ajax returned from the XHR
+		 *     event.term  the term that was search for
+		 */		
 		_afterFetch: function(data) {
 			var evt = this._publish('AfterFetch', {
 				jqXHR: this._jqXHR,
@@ -543,16 +623,30 @@
 			}
 			this.handleSuggestions(evt.data);
 		},
-		_abortFetch: function() {
+		/**
+		 * Cancel the XHR. Used when user starts typing again before XHR completes
+		 * 
+		 * @return {$.Suggester}
+		 */
+		abortFetch: function() {
 			if (this._jqXHR) {
 				this._jqXHR.abort();
 			}
+			return this;
 		},
 		/**
 		 * Move the selection up or down in the suggestion box
-		 * @events
-		 *   BeforeMove
-		 *   AfterMove
+		 * @event BeforeMove (if event.preventDefault() is called, movement is stopped)
+		 *     event.direction  "up" or "down"
+		 *     event.current    jQuery object with the currently selected item or null if there isn't one
+		 *     event.next       jQuery object with the item that will be selected next
+		 *     example          instance.bind('BeforeMove', function(event) {
+		 *                          alert('You are moving to ' + event.next.text());
+		 *                      });
+		 * @event AfterMove
+		 *     event.direction  "up" or "down"
+		 *     event.last  jQuery object with the previously selected item
+		 *     event.current  jQuery object with the newly selected item
 		 */
 		moveSelection: function(direction) {
 			// find all the suggestion items
@@ -637,6 +731,21 @@
 				this.handleSuggestions(this.getResults(text));
 			}
 		},
+		/**
+		 * Take result records and build and display suggestion box
+		 * 
+		 * @event BeforeSuggest (if event.preventDefault() is called, the suggestion list is built but not displayed)
+		 *     event.text  The text that was searched for
+		 *     example     instance.bind('BeforeSuggest', function(event) {
+		 *                     if (evt.text == 'dont suggest') {
+		 *                          event.preventDefault(); // suggest box will not open
+		 *                     }
+		 *                 });
+		 * @event AfterSuggest
+		 *     example     instance.bind('AfterSuggest', function(event) {
+		 *                     alert('Choose a suggested item if you like.');
+		 *                 });
+		 */
 		handleSuggestions: function(records) {
 			if (records.length == 0) {
 				this.showEmptyText();
@@ -670,9 +779,15 @@
 		/**
 		 * Close the suggestion list
 		 * @return {$.Suggester}
-		 * @events
-		 *   BeforeClose - triggered before close. if preventDefault is called, it will not close
-		 *   AfterClose - triggered after suggest box closes
+		 * @event BeforeClose  (if event.preventDefault() is called, suggestion box will not close)
+		 *     example  instance.bind('BeforeClose', function(event) {
+		 *                  event.preventDefault();
+		 *                  window.location.href = '?page=' + instance.$currentItem.text();
+		 *              });         
+		 * @event AfterClose
+		 *     example  instance.bind('AfterClose', function(event) {
+		 *                 alert('You chose ' + instance.$currentItem.text());
+		 *              }); 
 		 */
 		closeSuggestBox: function() {
 			$document.unbind('click.sugg');
@@ -685,7 +800,7 @@
 			return this;
 		},
 		/**
-		 * Focus cursor on text box
+		 * Focus cursor on text input box
 		 */
 		focus: function() {
 			// trigger our jQuery-attached focus callback to clear out placeholder text if needed
@@ -699,13 +814,32 @@
 		 * @param {Object} record  The record that was suggested
 		 * @param {String} substr  The string that generated the list of suggestions
 		 * @return {String}  HTML to use as the item (e.g. '<li class="sugg-item">Suggestion</li>')
-		 * @events
-		 *   Format - callbacks can return the HTML to use to display a suggestion item; if it preventsDefault, the event's html property is used
-		 *   AfterFormat - able to alter the html after it has be constructed
+		 * @event BeforeFormat
+		 *     event.record  The record object that is being suggested
+		 *     event.substr  The part of the string that matches the suggestion search fields
+		 *     event.html    If you set event.html and then call event.preventDefault(), that html will be used instead of the default generated html
+		 *     example       instance.bind('BeforeFormat', function(event) {
+		 *                       event.preventDefault();
+		 *                       event.html = '<li>My suggestion html</li>';
+		 *                   });              
+		 * @event AfterFormat - able to alter the html after it has be constructed
+		 *     event.record  The record object that is being suggested
+		 *     event.substr  The part of the string that matches the suggestion search fields
+		 *     event.html    Another chance to alter the html of the item after it has been generated
+		 *     example       instance.bind('AfterFormat', function(event) {
+		 *                       event.preventDefault();
+		 *                       event.html; // <li><strong class="sugg-match">Canis</strong> Major</li>
+		 *                       event.html = event.html.replace(/<\/?strong\b/, 'em'),
+		 *                   });
 		 */
 		_formatSuggestion: function(record, substr) {
 			var evt, options, label, replacer, replacee, html;
-			evt = this._publish('BeforeFormat', {record:record, substr:substr, html:'', cancellable:true});
+			evt = this._publish('BeforeFormat', {
+				record: record, 
+				substr: substr, 
+				html:'', 
+				cancellable:true
+			});
 			if (evt.isDefaultPrevented()) {
 				html = evt.html;
 			}
@@ -727,7 +861,11 @@
 					return '';
 				});
 			}
-			evt = this._publish('AfterFormat', {record:evt.record, substr:evt.substr, html:html});
+			evt = this._publish('AfterFormat', {
+				record:evt.record,
+				substr:evt.substr,
+				html:html
+			});
 			return evt.html;
 		},
 		/**
