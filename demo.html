@@ -14,7 +14,7 @@
 	<!-- Basic Styling -->
 	<style>
 		form {
-			font: 15px/100% "Lucida Grande", Verdana, sans-serif;
+			font: 15px/125% "Lucida Grande", Verdana, sans-serif;
 			width: 500px;
 			padding: 15px;
 			margin: 30px 15px 15px 15px;
@@ -41,7 +41,7 @@
 
 <!-- Example 2: Demonstrating custom listItemTemplate -->
 <form id="example-2">
-	Example 2: Send this email to:<br />
+	Example 2: Send this email to: (with keyDelay of 200ms)<br />
 	<input type="text" name="example_2" value="" />
 </form>
 <style>
@@ -60,7 +60,7 @@
 	$('#example-2 input').suggester({
 		data: addressBook, // data from ./assets/js/addressBook.js
 		searchProperties: ["nameEmail"],
-		keyDelay: 0,
+		keyDelay: 200,
 		minChars: 1,
 		listItemTemplate: '<li class="sugg-item">{record.nameEmail}</li>'
 	});
@@ -72,6 +72,7 @@
 <form id="example-3">
 	Example 3: Everynote style search: (e.g. type "so")<br />
 	<input type="text" name="example_3" value="" />
+	<input type="submit" style="display:none" />
 </form>
 <style>
 	#example-3 .sugg-item {
@@ -82,7 +83,6 @@
 		border-bottom: none;
 	}
 	#example-3 .sugg-list {
-		box-shadow: none;
 		margin: 4px 0 0 -5px;
 		border-bottom: 1px solid #999;
 		width: 500px;
@@ -118,7 +118,7 @@
 	}
 </style>
 <script>
-	var e3 = new $.Suggester('#example-3 input', {
+	var e3 = new $.Suggester('#example-3 input[type=text]', {
 		data: searchSuggestions, // data from ./assets/js/search.js
 		keyDelay: 0,
 		minChars: 1,
@@ -135,7 +135,12 @@
 		preventSubmit: false,
 		onBeforeAdd: function(event) {
 			event.preventDefault();
-			alert('This is where you would initiate search for ' + event.record.prefix + ' ' + event.record.label);
+			if (event.record.prefix) {
+				alert('This is where you would initiate search for ' + event.record.prefix + ' ' + event.record.label);
+			}
+			else {
+				alert('This is where you would initiate search for Posts containing the text "' + e3.$input.val() + '"');
+			}
 		}
 	});
 	$('#example-3').submit(function(event) {
@@ -145,9 +150,43 @@
 </script>
 
 
+
 <!-- Example 4: Choose from most common tags -->
+<form id="example-4">
+	Example 4: Type or choose some celestial bodies:<br />
+	<input type="text" name="example_4" value="" /><br />
+	Choose a common tag:
+	<a href="#">Jupiter</a>, <a href="#">Canis Major</a>, <a href="#">Aldebaran</a>
+</form>
+<script>
+	var e4 = new $.Suggester('#example-4 input', {
+		data: bodies, // data from ./assets/js/bodies.js
+		keyDelay: 0,
+		minChars: 1
+	});
+	$('#example-4 a').click(function() {
+		e4.addLabel(this.innerHTML);
+	});
+</script>
+
+
+
+<!-- Example 5: start values -->
+<form id="example-5">
+	Example 5: Start value of text input is "Mars, Jupiter, Custom":<br />
+	<input type="text" name="example_5" value="Mars, Jupiter, Custom" />
+</form>
+<script>
+	var e5 = new $.Suggester('#example-5 input', {
+		data: bodies, // data from ./assets/js/bodies.js
+		keyDelay: 0,
+		minChars: 1
+	});
+</script>
+
+
 <!-- Example 6: jsonp -->
-<!-- Example 5: Fly upwards -->
+<!-- Example 7: Fly upwards -->
 
 </body>
 </html>

@@ -53,7 +53,7 @@ var bodies = [
 		"cssClass": "star"
 	}, {
 		"id": 111,
-		"label": "Skat Or Scheat Or Seat",
+		"label": "Scheat",
 		"cssClass": "star"
 	}, {
 		"id": 112,
@@ -97,7 +97,7 @@ var bodies = [
 		"cssClass": "constellation"
 	}, {
 		"id": 122,
-		"label": "Choo Or Tchou",
+		"label": "Tchou",
 		"cssClass": "star"
 	}, {
 		"id": 123,
@@ -157,7 +157,7 @@ var bodies = [
 		"cssClass": "star"
 	}, {
 		"id": 137,
-		"label": "Nekkar Or Nakkar",
+		"label": "Nakkar",
 		"cssClass": "star"
 	}, {
 		"id": 138,
@@ -297,7 +297,7 @@ var bodies = [
 		"cssClass": "star"
 	}, {
 		"id": 172,
-		"label": "Scutulum Or Aspidiske",
+		"label": "Aspidiske",
 		"cssClass": "star"
 	}, {
 		"id": 173,
@@ -305,7 +305,7 @@ var bodies = [
 		"cssClass": "constellation"
 	}, {
 		"id": 174,
-		"label": "Schedar Or Shedir",
+		"label": "Schedar",
 		"cssClass": "star"
 	}, {
 		"id": 175,
@@ -313,15 +313,15 @@ var bodies = [
 		"cssClass": "star"
 	}, {
 		"id": 176,
-		"label": "Tsih Or Cih",
+		"label": "Tsih",
 		"cssClass": "star"
 	}, {
 		"id": 177,
-		"label": "Ruchbah Or Rukbah",
+		"label": "Ruchbah",
 		"cssClass": "star"
 	}, {
 		"id": 178,
-		"label": "Segin Or Navi",
+		"label": "Navi",
 		"cssClass": "star"
 	}, {
 		"id": 179,
@@ -333,11 +333,11 @@ var bodies = [
 		"cssClass": "constellation"
 	}, {
 		"id": 181,
-		"label": "Rigel Kentaurus Or Rigilkent",
+		"label": "Rigel Kentaurus",
 		"cssClass": "star"
 	}, {
 		"id": 182,
-		"label": "Hadar Or Agena",
+		"label": "Hadar",
 		"cssClass": "star"
 	}, {
 		"id": 183,
@@ -381,11 +381,11 @@ var bodies = [
 		"cssClass": "constellation"
 	}, {
 		"id": 193,
-		"label": "Menkar Or Menkab",
+		"label": "Menkar",
 		"cssClass": "star"
 	}, {
 		"id": 194,
-		"label": "Diphda Or Deneb Kaitos",
+		"label": "Deneb Kaitos",
 		"cssClass": "star"
 	}, {
 		"id": 195,
@@ -421,7 +421,7 @@ var bodies = [
 		"cssClass": "star"
 	}, {
 		"id": 203,
-		"label": "Wezn Or Wazn",
+		"label": "Wezn",
 		"cssClass": "star"
 	}, {
 		"id": 204,
@@ -441,7 +441,7 @@ var bodies = [
 		"cssClass": "constellation"
 	}, {
 		"id": 208,
-		"label": "Gemma Or Alphecca",
+		"label": "Alphecca",
 		"cssClass": "star"
 	}, {
 		"id": 209,
@@ -533,7 +533,7 @@ var bodies = [
 		"cssClass": "star"
 	}, {
 		"id": 231,
-		"label": "Deneb Or Al Dhanab Al Dulfim",
+		"label": "Deneb",
 		"cssClass": "star"
 	}, {
 		"id": 232,
@@ -557,7 +557,7 @@ var bodies = [
 		"cssClass": "star"
 	}, {
 		"id": 237,
-		"label": "Nodus Secundus Or Altais",
+		"label": "Nodus Secundus",
 		"cssClass": "star"
 	}, {
 		"id": 238,
@@ -657,7 +657,7 @@ var bodies = [
 		"cssClass": "star"
 	}, {
 		"id": 262,
-		"label": "Almeisan Or Alhena",
+		"label": "Almeisan",
 		"cssClass": "star"
 	}, {
 		"id": 263,
@@ -717,7 +717,7 @@ var bodies = [
 		"cssClass": "constellation"
 	}, {
 		"id": 277,
-		"label": "Alphard Or Cor Hydrae",
+		"label": "Alphard",
 		"cssClass": "star"
 	}, {
 		"id": 278,
@@ -769,7 +769,7 @@ var bodies = [
 		"cssClass": "star"
 	}, {
 		"id": 290,
-		"label": "Coxa Or Chort Or Chertan",
+		"label": "Coxa",
 		"cssClass": "star"
 	}, {
 		"id": 291,
@@ -817,7 +817,7 @@ var bodies = [
 		"cssClass": "star"
 	}, {
 		"id": 302,
-		"label": "Zubenhakrabi Or Zubanalakrab",
+		"label": "Zubenhakrabi",
 		"cssClass": "star"
 	}, {
 		"id": 303,
@@ -841,7 +841,7 @@ var bodies = [
 		"cssClass": "star"
 	}, {
 		"id": 308,
-		"label": "Sheliak Or Shelyak",
+		"label": "Sheliak",
 		"cssClass": "star"
 	}, {
 		"id": 309,
@@ -889,7 +889,7 @@ var bodies = [
 		"cssClass": "star"
 	}, {
 		"id": 320,
-		"label": "Cheleb Or Celbalrai",
+		"label": "Cheleb",
 		"cssClass": "star"
 	}, {
 		"id": 321,
@@ -941,7 +941,7 @@ var bodies = [
 		"cssClass": "star"
 	}, {
 		"id": 333,
-		"label": "Heka Or Meissa",
+		"label": "Heka",
 		"cssClass": "star"
 	}, {
 		"id": 334,
@@ -961,7 +961,7 @@ var bodies = [
 		"cssClass": "constellation"
 	}, {
 		"id": 338,
-		"label": "Markab Or Marchab",
+		"label": "Markab",
 		"cssClass": "star"
 	}, {
 		"id": 339,
@@ -997,7 +997,7 @@ var bodies = [
 		"cssClass": "constellation"
 	}, {
 		"id": 347,
-		"label": "Mirfak Or Marfak",
+		"label": "Mirfak",
 		"cssClass": "star"
 	}, {
 		"id": 348,
@@ -1029,7 +1029,7 @@ var bodies = [
 		"cssClass": "constellation"
 	}, {
 		"id": 355,
-		"label": "Al Rescha Or Rischa",
+		"label": "Al Rescha",
 		"cssClass": "star"
 	}, {
 		"id": 356,
@@ -1109,7 +1109,7 @@ var bodies = [
 		"cssClass": "star"
 	}, {
 		"id": 375,
-		"label": "Graffias Or Acrab",
+		"label": "Graffias",
 		"cssClass": "star"
 	}, {
 		"id": 376,
@@ -1133,7 +1133,7 @@ var bodies = [
 		"cssClass": "star"
 	}, {
 		"id": 381,
-		"label": "Lesath Or Lesuth",
+		"label": "Lesath",
 		"cssClass": "star"
 	}, {
 		"id": 382,
@@ -1153,7 +1153,7 @@ var bodies = [
 		"cssClass": "constellation"
 	}, {
 		"id": 386,
-		"label": "Unuk Al Hay Or Unukalhai",
+		"label": "Unuk Al Hay",
 		"cssClass": "star"
 	}, {
 		"id": 387,
@@ -1221,7 +1221,7 @@ var bodies = [
 		"cssClass": "constellation"
 	}, {
 		"id": 403,
-		"label": "Mothallah Or Caput Trianguli",
+		"label": "Mothallah",
 		"cssClass": "star"
 	}, {
 		"id": 404,
@@ -1241,11 +1241,11 @@ var bodies = [
 		"cssClass": "constellation"
 	}, {
 		"id": 408,
-		"label": "Merak Or Mirak",
+		"label": "Merak",
 		"cssClass": "star"
 	}, {
 		"id": 409,
-		"label": "Phad Or Phecda",
+		"label": "Phad",
 		"cssClass": "star"
 	}, {
 		"id": 410,
@@ -1265,7 +1265,7 @@ var bodies = [
 		"cssClass": "star"
 	}, {
 		"id": 414,
-		"label": "Alkaid Or Benetnasch",
+		"label": "Alkaid",
 		"cssClass": "star"
 	}, {
 		"id": 415,
@@ -1273,7 +1273,7 @@ var bodies = [
 		"cssClass": "star"
 	}, {
 		"id": 416,
-		"label": "Talitha Borealis Or Dnoces",
+		"label": "Talitha Boreali",
 		"cssClass": "star"
 	}, {
 		"id": 417,
@@ -1309,7 +1309,7 @@ var bodies = [
 		"cssClass": "star"
 	}, {
 		"id": 425,
-		"label": "Kochab Or Kokab",
+		"label": "Kochab",
 		"cssClass": "star"
 	}, {
 		"id": 426,
@@ -1325,7 +1325,7 @@ var bodies = [
 		"cssClass": "constellation"
 	}, {
 		"id": 429,
-		"label": "Suhail Or Regor",
+		"label": "Suhail",
 		"cssClass": "star"
 	}, {
 		"id": 430,
@@ -1345,11 +1345,11 @@ var bodies = [
 		"cssClass": "constellation"
 	}, {
 		"id": 434,
-		"label": "Spica Or Azimech",
+		"label": "Spica",
 		"cssClass": "star"
 	}, {
 		"id": 435,
-		"label": "Zavijava Or Alaraph",
+		"label": "Zavijava",
 		"cssClass": "star"
 	}, {
 		"id": 436,

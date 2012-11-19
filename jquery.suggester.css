@@ -1,13 +1,17 @@
 .sugg-box {
 	border: 1px solid #777;
-	padding: 0.25em 0.25em 0 0.25em;
+	padding: 0.25em 0.25em 0.1em 0.25em;
 	box-shadow: inset 1px 1px 2px rgba(0,0,0,0.25);
 	margin: 0;
 	cursor: text;
+	line-height: 100%;
 }
 .sugg-input {
 	background-color: transparent;
-	border: none;
+	border: 1px solid transparent;
+	padding: 0.2em 0.6em 0.2em 0;
+	display: inline-block;
+	vertical-align: middle;
 }
 .sugg-input:focus {
 	outline: none;
@@ -15,8 +19,9 @@
 .sugg-box-item {
 	list-style-type: none;
 	display: inline-block;
+	vertical-align: middle;
 	padding: 0;
-	margin: 0 0.35em 0.35em 0;
+	margin: 0 0.35em 0.25em 0;
 	font: 11px/100% "Lucida Grande", Verdana, sans-serif;
 }
 .sugg-tag {
@@ -24,7 +29,7 @@
 	background-color: #DDEEFE;
 	color: #000;
 	border: 1px solid #C0D9E9;
-	padding: 0.1em 0.5em 0.3em 0.6em;
+	padding: 0.1em 0.6em 0.3em 0.6em;
 	cursor: default;
 }
 .sugg-tag:hover {

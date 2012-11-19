@@ -1,20 +1,25 @@
  /*
  * Suggester
  * Copyright 2012 Ken Snyder
- * http://kendsnyder.com
+ * GitHub: https://github.com/kensnyder/jQuery-Suggester
+ * Demos: http://sandbox.kendsnyder.com/Suggester/demo.html
  *
  * Version 1.0, November 2012
  *
- * This Plug-In will auto-complete or auto-suggest completed search queries
- * for you as you type. You can add multiple selections and remove them on
- * the fly. It supports keybord navigation (UP + DOWN + RETURN), as well
- * as multiple AutoSuggest fields on the same page.
+ * Turn a text input into a Gmail / Facebook-style auto-complete widget. Features include:
+ *   - Load data from a JavaScript object, json, or jsonp
+ *   - Powerful matching options
+ *   - Populates original input with chosen tags but also creates hidden inputs with ids and tag text
+ *   - Has methods to add a tag programmatically (e.g. user chooses a popular tag)
+ *   - CSS is easy to extend and customize
+ *   - You can subscribe to events that allow you to inject custom functionality into nearly every action
+ *   - You can define your own HTML structure for the widget output
+ *   - Object-oriented structure maskes for easy extendibility
+ *  
+ * Inspired by the AutoSuggest plugin by Drew Wilson
  *
- * Based on the AutoSuggest plugin by: Drew Wilson
- *
- * This Suggseter jQuery plug-in is dual licensed under the MIT and GPL licenses:
- *   http://www.opensource.org/licenses/mit-license.php
- *   http://www.gnu.org/licenses/gpl.html
+ * Suggseter is licensed under the MIT license:
+ * http://www.opensource.org/licenses/mit-license.php
  */
 (function($) { "use strict";
 	// get our document once
@@ -54,6 +59,8 @@
 		dataType: 'json',
 		// if true, the first tag will be removed when a duplicate is typed in
 		preventDuplicates: true,
+		// if true, don't suggest items that have already been chosen as tags
+		omitAlreadyChosenItems: true,
 		// if true, fine matches regardless of case
 		caseSensitive: false,
 		// the minimum number of characters a user must type before the suggestion box will appear
@@ -280,7 +287,6 @@
 			this.$box.click($.proxy(this, '_onBoxClick'));
 			// handle various actions associated with keypresses
 			this.$input.keydown($.proxy(this, '_onKeydown'));
-			this.$input.keyup($.proxy(this, '_onKeyup'));
 		},
 		/**
 		 * Event handler for when this.$input is focused
@@ -361,12 +367,6 @@
 			}
 		},
 		/**
-		 * Event handler for when key goes up on this.$input
-		 */			
-		_onKeyup: function(evt) {
-			this.$input.prop('size', this.$input.val().length + 1);			
-		},
-		/**
 		 * Focus on a previously added tag
 		 * @params {jQuery} $tag  The .sugg-tag element to focus
 		 * @return {$.Suggester}
@@ -441,6 +441,7 @@
 				// any other key is pressed
 				this._key_other(evt);
 			}
+			this.$input.prop('size', this.$input.val().length + 2);
 			this.publish('AfterHandleKey', {
 				event: evt
 			});
@@ -469,11 +470,12 @@
 		 * Handle BACKSPACE key on this.$input
 		 */		
 		_key_BACKSPACE: function(evt) {
+			var $lastTag;
 			this.$currentItem = null;
 			// TODO: check that cursor is in first position, not for value == '' ?
 			if (this.$input.val() == '') {
 				evt.preventDefault();
-				var $lastTag = this.$inputWrapper.prev();
+				$lastTag = this.$inputWrapper.prev();
 				if (this.$focusedTag && this.$focusedTag[0] == $lastTag[0]) {
 					this.remove($lastTag);
 				}
@@ -779,7 +781,7 @@
 				return this;
 			}
 			var sugg = this;
-			sugg.$suggList.html('');
+			sugg.$suggList.empty();
 			$.each(records, function() {
 				// TODO: format suggestion
 				var $suggestion = $(sugg._formatSuggestion(this, sugg._text));
@@ -912,23 +914,23 @@
 			}			
 			var sugg = this;
 			var results = [];
-			$.each(this.getData(), function(i, item) {	
-				if (sugg.tags[item[sugg.options.idProperty]] || sugg.tags[item[sugg.options.labelProperty]]) {
+			$.each(this.getData(), function(i, record) {	
+				if (sugg.options.omitAlreadyChosenItems && sugg._tagExists(record)) {
 					// tag already exists so don't suggest it
 					// skip loop
 					return;
 				}
-				$.each(sugg.options.searchProperties, function() {
-					var value = '' + (item[this] || '');
+				$.each(sugg.options.searchProperties, function() {					
+					var value = '' + (record[this] || '');
 					if (!sugg.options.caseSensitive) {
 						value = value.toLowerCase();
-					}
+					}					
 					if (
 						(sugg.options.matchAt == 'anywhere' && value.indexOf(evt.text) > -1) 
 						|| (value.indexOf(evt.text) == sugg.options.matchAt)
 						|| (sugg.options.matchAt == 'end' && value.indexOf(evt.text) == value.length - evt.text-length) 
 					) {
-						results.push(item);
+						results.push(record);
 						return false;
 					}
 				});
@@ -1060,12 +1062,12 @@
 		},
 		_spliceTag: function(id, label) {
 			var idx, info;
-			idx = typeof id == 'object' ? id : this._findTag(id, label);
+			idx = typeof id == 'object' ? id : this._findTag(id, label);			
 			if (idx > -1) {
 				info = this.tags[idx];
 				info.$hidden.remove();
 				info.$tag.remove();
-				this.tags = this.tags.splice(idx, 1);
+				this.tags = this.tags.splice(idx-1, 1);
 			}
 			return info;
 		},
@@ -1083,6 +1085,16 @@
 				}
 			});
 			return idx;			
+		},
+		_tagExists: function(record) {
+			var exists = false;
+			$.each(this.tags, function(i) {
+				if (this.record == record) {
+					exists = true;
+					return false;
+				}
+			});
+			return exists;				
 		},
 		removeId: function(id) {
 			this._spliceTag(id, undefined);
@@ -1189,7 +1201,7 @@
 			return $.Suggester.prototype[options].apply(this.data('SuggesterInstance'), args);
 		}
 		// otherwise create new $.Suggester instance but return the jQuery instance
-		return this.each(function(i) {			
+		return this.each(function() {			
 			var $elem = $(this);
 			var instance = new $.Suggester($elem, options);
 			$elem.data('SuggesterInstance', instance);
