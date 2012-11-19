@@ -5,11 +5,11 @@
 	margin: 0;
 	cursor: text;
 }
-input[type=text].sugg-input {
+.sugg-input {
 	background-color: transparent;
 	border: none;
 }
-input[type=text].sugg-input:focus {
+.sugg-input:focus {
 	outline: none;
 }
 .sugg-box-item {
@@ -34,9 +34,9 @@ input[type=text].sugg-input:focus {
 }
 .sugg-tag.sugg-focused,
 .sugg-tag.sugg-focused:hover {
-	background-color: #598BEC;
+	background-color: #3674D4;
 	color: #fff;
-	border: 1px solid #598BEC;
+	border: 1px solid #3674D4;
 }
 .sugg-label {
 	vertical-align: middle;

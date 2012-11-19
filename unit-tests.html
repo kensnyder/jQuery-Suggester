@@ -39,25 +39,25 @@
 		$input.suggester();
 		strictEqual($form.find('input[type=text]:visible').length, 1);
 	});
-	test("add() an arbitrary item", function() {
+	test("addRecord() with arbitrary id and label", function() {
 		$input.suggester();
-		$input.suggester('add', 100, 'Custom');
+		$input.suggester('addRecord', {id:100, label:'Custom'});
 		strictEqual($form.find('input[type=hidden]').val(), '100');
 		strictEqual($form.find('.sugg-label').html(), 'Custom');
 	});	
 	test("addId()", function() {
 		$input.suggester({data:planets});
 		var $tag = $input.suggester('addId', 1);
-		strictEqual($tag.attr('data-id'), '1');
-		strictEqual($tag.attr('data-label'), 'Sun');
+		strictEqual($tag.data('record').id, 1);
+		strictEqual($tag.data('record').label, 'Sun');
 		strictEqual($form.find('input[type=hidden]').val(), '1');
 		strictEqual($form.find('.sugg-label').html(), 'Sun');
 	});
-	test("addTag()", function() {
+	test("addLabel()", function() {
 		$input.suggester({data:planets});
-		var $tag = $input.suggester('addTag', 'Pluto');
-		strictEqual($tag.attr('data-id'), '11');
-		strictEqual($tag.attr('data-label'), 'Pluto');
+		var $tag = $input.suggester('addLabel', 'Pluto');
+		strictEqual($tag.data('record').id, 11);
+		strictEqual($tag.data('record').label, 'Pluto');
 		strictEqual($form.find('input[type=hidden]').val(), '11');
 		strictEqual($form.find('.sugg-label').html(), 'Pluto');
 	});	
@@ -91,8 +91,8 @@
 	test("addId() then removeId()", function() {
 		$input.suggester({data:planets});
 		var $tag = $input.suggester('addId', 1);
-		strictEqual($tag.attr('data-id'), '1');
-		strictEqual($tag.attr('data-label'), 'Sun');
+		strictEqual($tag.data('record').id, 1);
+		strictEqual($tag.data('record').label, 'Sun');
 		strictEqual($form.find('input[type=hidden]').val(), '1');
 		strictEqual($form.find('.sugg-label').text(), 'Sun');
 		$input.suggester('removeId', 1);
@@ -102,30 +102,29 @@
 	test("addId() then removeLabel()", function() {
 		$input.suggester({data:planets});
 		var $tag = $input.suggester('addId', 7);
-		strictEqual($tag.attr('data-id'), '7');
-		strictEqual($tag.attr('data-label'), 'Jupiter');
+		strictEqual($tag.data('record').id, 7);
+		strictEqual($tag.data('record').label, 'Jupiter');
 		strictEqual($form.find('input[type=hidden]').val(), '7');
 		strictEqual($form.find('.sugg-label').text(), 'Jupiter');
 		$input.suggester('removeLabel', 'Jupiter');
 		strictEqual($form.find('input[type=hidden]').length, 0);
 		strictEqual($form.find('.sugg-label').length, 0);
 	});	
-	test("addTag() then removeLabel()", function() {
+	test("addLabel() then removeLabel()", function() {
 		$input.suggester({data:planets});
-		var $tag = $input.suggester('addTag', 'Earth');
-		strictEqual($tag.attr('data-id'), '4');
-		strictEqual($tag.attr('data-label'), 'Earth');
+		var $tag = $input.suggester('addLabel', 'Earth');
+		strictEqual($tag.data('record').id, 4);
+		strictEqual($tag.data('record').label, 'Earth');
 		strictEqual($form.find('input[type=hidden]').val(), '4');
 		strictEqual($form.find('.sugg-label').text(), 'Earth');
 		$input.suggester('removeLabel', 'Earth');
 		strictEqual($form.find('input[type=hidden]').length, 0);
 		strictEqual($form.find('.sugg-label').length, 0);
 	});	
-	test("addTag() with custom then removeLabel()", function() {
+	test("addLabel() with custom then removeLabel()", function() {
 		$input.suggester({data:planets});
-		var $tag = $input.suggester('addTag', 'Custom');
-		strictEqual($tag.attr('data-id'), '');
-		strictEqual($tag.attr('data-label'), 'Custom');
+		var $tag = $input.suggester('addLabel', 'Custom');
+		strictEqual($tag.data('record').id, undefined);
 		strictEqual($form.find('input[type=hidden]').val(), 'Custom');
 		strictEqual($form.find('.sugg-label').text(), 'Custom');
 		$input.suggester('removeLabel', 'Custom');
@@ -309,7 +308,7 @@
 	asyncTest("Don't suggest an item that was already added", function() {
 		expect(2);
 		var sugg = new $.Suggester($input, {data:planets,minChars:1,keyDelay:0});
-		sugg.addTag('Earth');
+		sugg.addLabel('Earth');
 		sendKeys(sugg, ['a','r']);
 		setTimeout(function() {
 			strictEqual($('.sugg-item').length, 1);

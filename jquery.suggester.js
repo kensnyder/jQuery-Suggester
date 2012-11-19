@@ -3,7 +3,7 @@
  * Copyright 2012 Ken Snyder
  * http://kendsnyder.com
  *
- * Version 1.0, 
+ * Version 1.0, November 2012
  *
  * This Plug-In will auto-complete or auto-suggest completed search queries
  * for you as you type. You can add multiple selections and remove them on
@@ -16,12 +16,19 @@
  *   http://www.opensource.org/licenses/mit-license.php
  *   http://www.gnu.org/licenses/gpl.html
  */
-// TODO: fix up/down when there is only one suggestion
 (function($) { "use strict";
+	// get our document once
 	var $document = $(document);
+	/**
+	 * @constructor
+	 */
 	$.Suggester = function() {
 		this.initialize.apply(this, Array.prototype.slice.call(arguments));
 	};
+	/**
+	 * Default options. Change these to globally change the default options
+	 * See below for comments on each option
+	 */
 	$.Suggester.defaultOptions = {
 		// data to use instead of an ajax call
 		data: false,
@@ -77,9 +84,10 @@
 					'</li>' +
 				'</ul>' +
 				'<ul class="sugg-list" style="display:none">' + // this.$suggList
-					'<li class="sugg-item {record.cssClass}">{record.label}</li>' + // innerHTML is used as this.listItemTemplate
+					'<li class="sugg-item {record.cssClass}">{record.label}</li>' + // innerHTML is used as this.listItemTemplate unless options.listItemTemplate is set
 				'</ul>' +
-			'</div>'
+			'</div>',
+		listItemTemplate: null
 		/* EVENTS
 		 * onInitialize
 		 * onBeforeRender
@@ -132,16 +140,10 @@
 			this._processOptions(options);
 			// the preloaded list of suggestion records
 			this.data = this.options.data || [];		
-			// a hash of tag id to $tag elements
-			this.tags = {};
-			// a hash of tag label to $tag elements
-			this.customTags = {};
-			// a hash of tag id to hidden input $input elements
-			this.hiddens = {};
+			// a collection of tags and tag data
+			this.tags = [];
 			// the name given to the hidden $input elements
 			this.hiddenName = this.$originalInput.attr('name') + '_ids';
-			// a hash of tag label to hidden $input elements
-			this.customHiddens = {};
 			// the name given to the hidden $input elements that are unknown tags
 			this.customHiddenName = this.$originalInput.attr('name') + '_custom';
 			// the tag that is clicked to prepare for deletion
@@ -156,7 +158,7 @@
 			this._setupListeners();
 			// we're all done
 			// Initialize callback now has access to the completed widget through this.$widget, this.$box, etc.
-			this._publish('Initialize');
+			this.publish('Initialize');
 			return this;
 		},
 		/**
@@ -204,14 +206,13 @@
 		 * Render the widget and get handles to key elements
 		 * @events
 		 *   BeforeRender - called after this.$widget is populated with this.options.template but before any sub elements are found
-		 *   AfterRender - called after this.$widget is inserted into the dom
 		 * @return {undefined}
 		 */
 		_render: function() {
 			// The full widget
 			this.$widget = $(this.options.template).addClass('fly-' + this.options.fly);
 			// BeforeRender callbacks now have the ability to modify this.$widget or any of its child elements
-			this._publish('BeforeRender');
+			this.publish('BeforeRender');
 			// the container that tags and the input box are in
 			this.$box = this.$widget.find('.sugg-box');
 			// the template for tags
@@ -223,7 +224,7 @@
 			// the list element that contains all suggestions
 			this.$suggList = this.$widget.find('.sugg-list');
 			// the template html to use for suggestions
-			this.listItemTemplate = this.$suggList.html();			
+			this.listItemTemplate = this.options.listItemTemplate || this.$suggList.html();			
 			// we got that html, now empty it out
 			this.$suggList.html('');
 			// if the suggestion list should fly upwards instead of downwards, put the suggestion list before the input container in the dom tree
@@ -235,6 +236,9 @@
 			// populate tags based on starting value of original input
 			this._handleStartValue();
 		},
+		/**
+		 * Look at the initial elements start value and populate tags as appropriate
+		 */
 		_handleStartValue: function() {
 			// get a list of tags to insert now based on the current value of the original input
 			// replaces escaped commas with \u0001 such that tag labels can have commas
@@ -246,7 +250,7 @@
 				var sugg = this;
 				$.each(existingTags, function() {
 					// add each tag by its label; this.$originalInput will get repopulated automatically
-					sugg.addTag($.trim(this.replace(/\u0001/g, '')));
+					sugg.addLabel($.trim(this.replace(/\u0001/g, '')));
 				});
 			}			
 		},
@@ -259,11 +263,12 @@
 			this.unfocusTag = $.proxy(this, 'unfocusTag');
 			this.removeFocusedTag = $.proxy(this, 'removeFocusedTag');
 			this.suggestIfNeeded = $.proxy(this, 'suggestIfNeeded');
+			this.closeOnOutsideClick = $.proxy(this, 'closeOnOutsideClick');
 			// clear default text if focused on input
 			this.$input.focus($.proxy(this, '_onInputFocus'));
 			// remove tags when `X` is clicked
 			this.$box.delegate('.sugg-remove', 'click', $.proxy(this, '_onTagRemoveClick'));
-			// focus tags when clicked
+			// focus tags when clicked (for pre-deletion)
 			this.$box.delegate('.sugg-tag', 'click', $.proxy(this, '_onTagClick'));
 			// highlight suggestion on mouseover
 			this.$suggList.mouseover($.proxy(this, '_onListMouseover'));
@@ -291,8 +296,8 @@
 			this.unfocusTag();
 			evt.preventDefault();
 			evt.stopImmediatePropagation();
-			var label = $(evt.target).parents('.sugg-tag').attr('data-label');
-			this.removeLabel(label);
+			var $tag = $(evt.target).parents('.sugg-tag');
+			this.remove($tag);
 		},
 		/**
 		 * Event handler for when .sugg-tag is clicked
@@ -339,7 +344,7 @@
 			if (!$target.hasClass('sugg-item')) {
 				return;
 			}
-			this.addTag($target.text());
+			this.addRecord($target.data('record'), $target);
 			this.closeSuggestBox();
 			this.$input.val('');
 			this.focus();
@@ -392,7 +397,7 @@
 			if (evt && evt.which && (evt.which == 8 || evt.which == 46)) {
 				// delete or backspace key								
 				if (this.$focusedTag) {
-					this.removeLabel(this.$focusedTag.attr('data-label'));
+					this.remove(this.$focusedTag);
 				}
 				evt.preventDefault();
 			}	
@@ -405,36 +410,38 @@
 		 * @return {undefined}
 		 */
 		_onKeydown: function(evt) {
-			var pubevent = this._publish('BeforeKeydown', {
+			var pubevent = this.publish('BeforeHandleKey', {
 				event: evt,
 				cancellable: true
 			});
 			if (pubevent.isDefaultPrevented()) {
 				return;
 			}
-			switch (evt.which) {
-				case 38: // Up
-					this._key_UP(evt);
-					return;
-				case 40: // Down
-					this._key_DOWN(evt);
-					return;
-				case 8: // Backspace
-					this._key_BACKSPACE(evt);
-					return;
-				case 9: // tab
-				case 188: // comma
-					this._key_TAB_COMMA(evt);
-					return;
-				case 27: // Esc
-					this._key_ESC(evt);
-					return;
-				case 13: // Enter
-					this._key_ENTER(evt);
-					return;
+			if (evt.which == 38) { // Up
+				this._key_UP(evt);
 			}
-			// any other key is pressed
-			this._key_other(evt);
+			else if (evt.which == 40) { // Down
+				this._key_DOWN(evt);
+			}
+			else if (evt.which == 8) { // Backspace
+				this._key_BACKSPACE(evt);
+			}
+			else if (evt.which == 9 || evt.which == 188) {
+				this._key_TAB_COMMA(evt);
+			}
+			else if (evt.which == 27) { // Esc
+				this._key_ESC(evt);
+			}
+			else if (evt.which == 13) { // Enter
+				this._key_ENTER(evt);
+			}
+			else {
+				// any other key is pressed
+				this._key_other(evt);
+			}
+			this.publish('AfterHandleKey', {
+				event: evt
+			});
 		},
 		/**
 		 * Handle UP key on this.$input
@@ -466,16 +473,21 @@
 				evt.preventDefault();
 				var $lastTag = this.$inputWrapper.prev();
 				if (this.$focusedTag && this.$focusedTag[0] == $lastTag[0]) {
-					this.removeLabel($lastTag.attr('data-label'));
+					this.remove($lastTag);
 				}
 				else {
 					this.$focusedTag = $lastTag;
 					$lastTag.addClass('sugg-focused');
 				}
-			}			
+				this.closeSuggestBox();
+			}
+			else {
+				// update suggestions
+				this._key_other(evt);
+			}
 		},
 		/**
-		 * Handle COMMA key on this.$input
+		 * Handle TAB and COMMA key on this.$input
 		 */		
 		_key_TAB_COMMA: function(evt) {
 			if (evt.which == 9) { // tab
@@ -491,7 +503,7 @@
 				return;
 			}
 			this.$currentItem = null;
-			this.addTag(this.$input.val());
+			this.addLabel(this.$input.val());
 			this.$input.val('');
 			this.closeSuggestBox();
 		},
@@ -507,7 +519,7 @@
 		_key_ENTER: function(evt) {
 			if (this.$currentItem) {
 				// add the item that was selected via arrow or hover
-				this.addTag(this.$currentItem.text());
+				this.addRecord(this.$currentItem.data('record'), this.$currentItem);
 				this.$input.val('');
 				this.closeSuggestBox();
 				this.$currentItem = null;
@@ -590,10 +602,17 @@
 		 * 
 		 * @event BeforeFetch (if event.preventDefault() is called, XHR is not made and suggest box does not open)
 		 *     event.jqXHR  the jQuery XHR object (see http://api.jquery.com/jQuery.ajax/#jqXHR)
-		 *     event.term  the term that is being searched for
+		 *     event.term   the term that is being searched for
+		 *     example      instance.bind('BeforeFetch', function(event) {
+		 *                      event.jqHXR.fail(function() {
+		 *                          alert('ajax call failed');
+		 *                      }).always(function() {
+		 *							alert('ajax call finished regardless of success or failure');
+		 *                      });
+		 *                  });
 		 */
 		_beforeFetch: function() {
-			var evt = this._publish('BeforeFetch', {
+			var evt = this.publish('BeforeFetch', {
 				jqXHR: this._jqXHR,
 				term: this._searchTerm,
 				cancellable: true
@@ -607,11 +626,14 @@
 		 * 
 		 * @event BeforeFetch (if event.preventDefault() is called, the suggest box does not open)
 		 *     event.jqXHR  the jQuery XHR object (see http://api.jquery.com/jQuery.ajax/#jqXHR)
-		 *     event.data  the object generated from the ajax returned from the XHR
-		 *     event.term  the term that was search for
+		 *     event.data   the object generated from the ajax returned from the XHR
+		 *     event.term   the term that was search for
+		 *     example      instance.bind('AfterFetch', function(event) {
+		 *                       event.data.push({id:'', label:'Adding a test suggestion'});
+		 *                  });
 		 */		
 		_afterFetch: function(data) {
-			var evt = this._publish('AfterFetch', {
+			var evt = this.publish('AfterFetch', {
 				jqXHR: this._jqXHR,
 				data: data,
 				term: this._searchTerm,
@@ -645,8 +667,11 @@
 		 *                      });
 		 * @event AfterMove
 		 *     event.direction  "up" or "down"
-		 *     event.last  jQuery object with the previously selected item
-		 *     event.current  jQuery object with the newly selected item
+		 *     event.last       jQuery object with the previously selected item
+		 *     event.current    jQuery object with the newly selected item
+		 *     example          instance.bind('AfterMove', function(event) {
+		 *                          alert('You moved to ' + event.current.text());
+		 *                      });
 		 */
 		moveSelection: function(direction) {
 			// find all the suggestion items
@@ -662,7 +687,7 @@
 			}
 			// BeforeMove callback allows movement to be changed
 			// TODO: properly use BeforeMove evt to allow changing stuff
-			var evt = this._publish('BeforeMove', {
+			var evt = this.publish('BeforeMove', {
 				direction: direction,
 				current: this.$currentItem,
 				next: $nextItem, 
@@ -683,7 +708,7 @@
 			// reset our current items
 			this.$currentItem = evt.next;
 			// trigger AfterMove callabacks
-			this._publish('AfterMove', {
+			this.publish('AfterMove', {
 				direction: direction,
 				last: evt.current,
 				current: this.$currentItem
@@ -751,14 +776,15 @@
 				this.showEmptyText();
 				return this;
 			}
-			var html = '';
 			var sugg = this;
+			sugg.$suggList.html('');
 			$.each(records, function() {
 				// TODO: format suggestion
-				html += sugg._formatSuggestion(this, sugg._text);
+				var $suggestion = $(sugg._formatSuggestion(this, sugg._text));
+				$suggestion.data('record', this);
+				sugg.$suggList.append($suggestion);
 			});
-			this.$suggList.html(html);
-			var evt = this._publish('BeforeSuggest', {
+			var evt = this.publish('BeforeSuggest', {
 				text: this._text,
 				cancellable: true
 			});
@@ -767,15 +793,16 @@
 			}			
 			this.$suggList.show();
 			this.$widget.addClass('sugg-list-open');
-			$document.bind('click.sugg', function(evt) {
-				if ($(evt.target).parents('.sugg-list')[0] == sugg.$suggList[0]) {
-					return;
-				}
-				sugg.closeSuggestBox();
-			});
-			this._publish('AfterSuggest');
+			$document.bind('click', this.closeOnOutsideClick);
+			this.publish('AfterSuggest');
 			return this;
 		},
+		closeOnOutsideClick: function(evt) {
+			if ($(evt.target).parents('.sugg-list')[0] == this.$suggList[0]) {
+				return;
+			}
+			this.closeSuggestBox();
+		}, 
 		/**
 		 * Close the suggestion list
 		 * @return {$.Suggester}
@@ -790,13 +817,13 @@
 		 *              }); 
 		 */
 		closeSuggestBox: function() {
-			$document.unbind('click.sugg');
-			var evt = this._publish('BeforeClose', {cancellable:true});
+			$document.unbind('click', this.closeOnOutsideClick);
+			var evt = this.publish('BeforeClose', {cancellable:true});
 			if (!evt.isDefaultPrevented()) {
 				this.$suggList.hide();
 				this.$widget.removeClass('sugg-list-open');
 			}
-			this._publish('AfterClose');
+			this.publish('AfterClose');
 			return this;
 		},
 		/**
@@ -834,7 +861,7 @@
 		 */
 		_formatSuggestion: function(record, substr) {
 			var evt, options, label, replacer, replacee, html;
-			evt = this._publish('BeforeFormat', {
+			evt = this.publish('BeforeFormat', {
 				record: record, 
 				substr: substr, 
 				html:'', 
@@ -861,7 +888,7 @@
 					return '';
 				});
 			}
-			evt = this._publish('AfterFormat', {
+			evt = this.publish('AfterFormat', {
 				record:evt.record,
 				substr:evt.substr,
 				html:html
@@ -875,7 +902,7 @@
 		 */
 		getResults: function(text) {
 			text = ''+text;
-			var evt = this._publish('BeforeFilter', {
+			var evt = this.publish('BeforeFilter', {
 				text: text
 			});			
 			if (!this.options.caseSensitive) {
@@ -908,7 +935,7 @@
 					return false;
 				}
 			});
-			this._publish('AfterFilter', {
+			this.publish('AfterFilter', {
 				text: evt.text,
 				results: results
 			});
@@ -931,81 +958,64 @@
 		 * @return {jQuery|undefined} A jQuery object containing the new tag element
 		 */
 		addId: function(id) {
-			var record = this._findById(id);
+			var record = this._findRecordById(id);
 			if (record) {
-				var label = record[this.options.labelProperty];
-				return this.add(id, label);
+				return this.addRecord(record);
 			}
 			return undefined;
 		},
-		addTag: function(label) {
-			var $tag;
-			var record = this._findByLabel(label);
-			var evt = this._publish('BeforeAddTag', {
-				label: label,
+		addLabel: function(label) {
+			var record = this._findRecordByLabel(label);
+			if (!record) {
+				record = {_custom:label};
+			}
+			return this.addRecord(record);
+		},
+		addRecord: function(record, $item/* optional*/) {
+			var evt, id, label, val, idx, $hidden, name, $tag;
+			evt = this.publish('BeforeAdd', {
 				record: record,
-				isCustom: !!record,
-				cancelable: true
+				item: $item
 			});
 			if (evt.isDefaultPrevented()) {
-				return this;
+				return undefined;
 			}
-			if (evt.record) {
-				var id = evt.record[this.options.idProperty];
-				$tag = this.add(id, evt.label);							
+			if (evt.record._custom) {
+				label = evt.record._custom;
+				name = this.customHiddenName;
+				val = label;
 			}
 			else {
-				evt = this._publish('BeforeAddTagCustom', {
-					label: evt.label,
-					cancelable: true
-				});
-				if (evt.isDefaultPrevented()) {
-					return this;
+				id = evt.record[this.options.idProperty];
+				label = evt.record[this.options.labelProperty];
+				name = this.hiddenName;
+				val = id;
+			}
+			if (this.options.preventDuplicates) {
+				idx = this._findTag(id, label);
+				if (idx > -1) {
+					// duplicate: remove old and continue to add new so that new one will be at the end
+					this._spliceTag(this.tags[idx]);
 				}
-				$tag = this.addCustom(evt.label);
-				this._publish('AfterAddTagCustom', {
-					label: evt.label
-				});
 			}
-			this._publish('AfterAddTag', {
-				label: evt.label,
-				record: evt.record
-			});
-			return $tag;
-		},
-		addCustom: function(label) {
-			if (this.options.preventDuplicates && this.customHiddens[label]) {
-				// duplicate: remove old and add new so that it will be at the end
-				this.removeLabel(label);
-			}
-			var $hidden = $('<input type="hidden" />').attr('name', this.customHiddenName+'[]').val(label);
-			this.customHiddens[label] = $hidden;
+			$hidden = $('<input type="hidden" />').attr('name', name+'[]').val(val);
 			this.$widget.append($hidden);
-			var $tag = this.$tagTemplate.clone().attr('data-id', '').attr('data-label', label).addClass('sugg-custom');			
-			this.customTags[label] = $tag;
+			$tag = this.$tagTemplate.clone().data('record', evt.record);
+			this.tags.push({
+				record: evt.record, 
+				$tag: $tag, 
+				$hidden: $hidden
+			});
 			$tag.find('.sugg-label').html(label);
 			this.$inputWrapper.before($tag);
 			this._populateOriginalInput();
-			return $tag;
-		},
-		add: function(id, label) {
-			var evt = this._publish('BeforeAdd', {id:id, label:label});
-			if (evt.preventDefault()) {
-				return undefined;
-			}
-			if (this.options.preventDuplicates && this.hiddens[evt.id]) {
-				// duplicate: remove old and add new so that it will be at the end
-				this.removeId(evt.id);
-			}
-			var $hidden = $('<input type="hidden" />').attr('name', this.hiddenName+'[]').val(evt.id);
-			this.hiddens[evt.id] = $hidden;
-			this.$widget.append($hidden);
-			var $tag = this.$tagTemplate.clone().attr('data-id', evt.id).attr('data-label', evt.label);
-			this.tags[evt.id] = $tag;
-			$tag.find('.sugg-label').html(evt.label);
-			this.$inputWrapper.before($tag);
-			this._populateOriginalInput();
-			this._publish('AfterAdd', {id:evt.id, label:evt.label, tag:$tag});
+			this.publish('AfterAdd', {
+				record: evt.record,
+				item: $item,
+				tag: $tag,
+				hidden: $hidden,
+				value: val
+			});
 			return $tag;
 		},
 		_populateOriginalInput: function() {
@@ -1015,61 +1025,91 @@
 			});
 			this.$originalInput.val(vals.join(','));
 		},
-		removeId: function(id) {
-			var $tag = this.tags[id];
-			var evt = this._publish('BeforeRemove', {tag:$tag, cancellable:true});
+		remove: function($tag) {
+			var record, evt, id, label, info;
+			if ($tag instanceof $) {
+				record = $tag.data('record');
+			}
+			else {
+				record = $tag;
+			}
+			evt = this.publish('BeforeRemove', {
+				tag: $tag,
+				record: record,
+				cancellable: true
+			});
 			if (evt.isDefaultPrevented()) {
-				return undefined;
+				// don't remove anything
 			}
-			if ($tag) {
-				$tag.remove();
-				this.tags[id] = null;
+			else if (!evt.record) {
+				evt.tag.remove();
 			}
-			var $hidden = this.hiddens[id];
-			if ($hidden) {
-				$hidden.remove();
-				// don't use `delete` here because compilers can't optimize the code
-				this.hiddens[id] = null;
+			else {
+				id = evt.record[this.options.idProperty];
+				label = evt.record._custom || evt.record[this.options.labelProperty];
+				info = this._spliceTag(id, label);
 			}
-			this._publish('AfterRemove', {tag:$tag});
+			this.publish('AfterRemove', {
+				tag: evt.tag,
+				record: evt.record,
+				info: info
+			});
+			return this;
+		},
+		_spliceTag: function(id, label) {
+			var idx, info;
+			idx = typeof id == 'object' ? id : this._findTag(id, label);
+			if (idx > -1) {
+				info = this.tags[idx];
+				info.$hidden.remove();
+				info.$tag.remove();
+				this.tags = this.tags.splice(idx, 1);
+			}
+			return info;
+		},
+		_findTag: function(id, label) {
+			var idx = -1, sugg;
+			sugg = this;
+			$.each(sugg.tags, function(i, info) {
+				if (
+					info.record[sugg.options.idProperty] == id
+					|| (label && info.record[sugg.options.labelProperty] == label)
+					|| (label && info.record._custom == label)
+				) {
+					idx = i;
+					return false;
+				}
+			});
+			return idx;			
+		},
+		removeId: function(id) {
+			this._spliceTag(id, undefined);
 			return this;
 		},
 		removeLabel: function(label) {
-			if (this.customTags[label]) {
-				this._publish('BeforeRemove', {tag:this.customTags[label]});
-				this.customTags[label].remove();
-				this.customTags[label] = null;
-				this.customHiddens[label].remove();
-				this.customHiddens[label] = null;
-				this._publish('AfterRemove');
-				return this;
-			}
-			else {
-				var record = this._findByLabel(label);		
-				if (record) {
-					this.removeId(record[this.options.idProperty]);
-				}
-				return this;
-			}
+			this._spliceTag(undefined, label);
+			return this;
 		},		
-		_findById: function(id) {
-			var record = false;
-			var idProperty = this.options.idProperty;
-			$.each(this._getData(), function() {
-				if (this[idProperty] == id) {
-					record = this;
+		_findRecordById: function(id) {
+			var record, idProp;
+			idProp = this.options.idProperty;
+			$.each(this._getData(), function(i, item) {	
+				if (item[idProp] == id) {
+					record = item;
 					return false;
 				}
-			});			
+			});		
 			return record;
 		},
-		_findByLabel: function(label) {
+		_findRecordByLabel: function(label) {
+			var record, sugg, _break;
+			_break = {};
 			label = ''+label;
-			var record = false;
+			record = false;
 			if (!this.options.caseSensitive) {
 				label = label.toLowerCase();
 			}
-			var sugg = this;
+			sugg = this;
 			try {
 				$.each(this._getData(), function(i, item) {	
 					$.each(sugg.options.searchProperties, function() {
@@ -1079,23 +1119,29 @@
 						}
 						if (value == label) {
 							record = item;
-							throw '';
+							throw _break; // break out of both loops
 						}
 					});
 				});
 			}
-			catch (e) {}
+			catch (e) {
+				if (e !== _break) {
+					throw e;
+				}
+			}
 			return record;			
 		},
 		_getData: function() {
 			return this.data
 		},
 		_setupPubsub: function() {
-			this.pubsub = $({});
+			this.pubsub = $(this);
+			this.on = $.proxy(this.pubsub, 'on');
+			this.off = $.proxy(this.pubsub, 'off');
 			this.bind = $.proxy(this.pubsub, 'bind');
+			this.once = $.proxy(this.pubsub, 'once');
 			this.unbind = $.proxy(this.pubsub, 'unbind');
 			this.trigger = $.proxy(this.pubsub, 'trigger');
-			this.one = $.proxy(this.pubsub, 'one');
 			// bind listeners passed in the options (e.g. onInitialize)
 			for (var name in this.options) {
 				if (name.match(/^on[A-Z0-9]/) && typeof this.options[name] == 'function') {
@@ -1103,8 +1149,9 @@
 				}
 			}			
 		},
-		_publish: function(type, data) {
+		publish: function(type, data) {
 			var evt = $.Event(type);
+			evt.target = this;
 			if (data) {
 				$.extend(evt, data);
 			}

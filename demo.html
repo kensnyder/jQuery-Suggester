@@ -3,19 +3,143 @@
 <head>
 	<meta charset="utf-8" />
 	<title>jquery.suggester.js Demos</title>
+	<!-- Required JS and CSS -->
 	<script src="./assets/js/jquery-1.8.0.min.js"></script>
 	<script src="./jquery.suggester.js"></script>
-	<script src="./assets/js/bodies.js"></script>
 	<link rel="stylesheet" href="./jquery.suggester.css" />
+	<!-- JS data for our examples -->
+	<script src="./assets/js/bodies.js"></script>
+	<script src="./assets/js/addressBook.js"></script>
+	<script src="./assets/js/search.js"></script>
+	<style>
+		form {
+			font: 15px/100% "Lucida Grande", Verdana, sans-serif;
+			width: 500px;
+			padding: 15px;
+			margin: 30px 15px 15px 15px;
+			border: 1px solid #ccc;
+		}
+	</style>
 </head>
 <body>
-<form class="sugg"><input type="text" name="suggestable" value="" /></form>
+
+<!-- Example 1: Simple suggester with pre-loaded data -->	
+<form id="example-1">
+	Example 1: Type some celestial bodies:<br />
+	<input type="text" name="example_1" value="" />
+</form>
 <script>
-	var $input = $('input').suggester({
+	$('#example-1 input').suggester({
 		data: bodies, // data from ./assets/js/bodies.js
 		keyDelay: 0,
 		minChars: 1
 	});
 </script>
+
+
+
+<!-- Example 2: Demonstrating custom listItemTemplate -->
+<form id="example-2">
+	Example 2: Send this email to:<br />
+	<input type="text" name="example_2" value="" />
+</form>
+<style>
+#example-2 .sugg-tag {
+	border-radius: 0;
+	background-color: #f1f1f1;
+	border: 1px solid #bbb;
+}
+#example-2 .sugg-tag.sugg-focused,
+#example-2 .sugg-tag.sugg-focused:hover {
+	background-color: #3674D4;
+	border: 1px solid #3674D4;
+}
+</style>
+<script>
+	$('#example-2 input').suggester({
+		data: addressBook, // data from ./assets/js/addressBook.js
+		searchProperties: ["nameEmail"],
+		keyDelay: 0,
+		minChars: 1,
+		listItemTemplate: '<li class="sugg-item">{record.nameEmail}</li>'
+	});
+</script>
+
+
+
+<!-- Example 3: Demonstrating events and customization -->
+<form id="example-3">
+	Example 3: Everynote style search: (e.g. type "so")<br />
+	<input type="text" name="example_3" value="" />
+</form>
+<style>
+	#example-3 .sugg-item {
+		padding: 6px 4px 5px 25px;
+		background-repeat: no-repeat;
+		background-position: 4px 50%;
+	}
+	#example-3 .sugg-list {
+		box-shadow: none;
+		margin: 4px -4px 0 -4px;
+		border-left: none;
+		border-right: none;
+	}
+	#example-3 .sugg-widget {
+		padding: 4px 4px 0 4px;
+		border: 1px solid transparent;
+		border-bottom: none;
+	}
+	#example-3 .sugg-widget.sugg-list-open {
+		border: 1px solid #ccc;
+		border-bottom: 0;
+		border-radius: 12px 12px 0 0;
+	}
+	#example-3 .sugg-box {
+		border-radius: 12px;
+		padding-left: 0.66em;
+		padding-right: 0.66em;
+		box-shadow: none;
+		border: 1px solid #ccc;
+	}
+	#example-3 .result-tag {
+		background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAHcSURBVDjLhZPZihpBFIbrJeY2wbcQmjxdIGSSTC4zQxLyAK4o7igoKm7TPW49LoiYjqLG3DWpZmx7/tQpsR1xycW5qTr/9/+n+jTTdR3dbhftdhutVgvNZhOapkFVVTQajSsA7FKxTqcDx3GOajqdSki1Wr0IYeRMAsMwpPNkMnEhdCZSoFQqnYUwikzN5EYH9XpdNU0Ttm3LcwJWKhXk8/mTEEauu0YhfhKRDcuysDBt5H5tk4zHYxSLReRyuSMII+dd5M1mAxL//uvgw8Mz3t4DWWN7NxqNKAXS6fQBhIkZ+Wq1kk3r9Rpz4XytPeNLF/iqAx8f9pDhcEgpEI/HXQir1WpvxIx8uVzKps7Kls53AvCjB3x7PIQMBgNKgUgkIiGSUi6XFTEjXywWsunxj433qoM7fQ+51oDMzy2k1+tRCoRCoSt3lkKhoIgZ+Xw+P4J8F4DPTeDm3oK92aZIJpMIBAKvD15UzKdks1k+m81cyDsB+SRGuG2tYVpPL8Ued4SXlclklFQqxWkTCaILyG3bgWXvnf1+v8d9xFPLkUgklFgsxmkTd5+YxOL8QHwWQBWNRr3ipTktWL/fPym+CKAKh8PeYDDISezz+TwnV/l/v6tw9Qrxq3P3/wBazDrstPR7KQAAAABJRU5ErkJggg==");
+	}
+	#example-3 .result-category {
+		background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAGrSURBVDjLxZO7ihRBFIa/6u0ZW7GHBUV0UQQTZzd3QdhMQxOfwMRXEANBMNQX0MzAzFAwEzHwARbNFDdwEd31Mj3X7a6uOr9BtzNjYjKBJ6nicP7v3KqcJFaxhBVtZUAK8OHlld2st7Xl3DJPVONP+zEUV4HqL5UDYHr5xvuQAjgl/Qs7TzvOOVAjxjlC+ePSwe6DfbVegLVuT4r14eTr6zvA8xSAoBLzx6pvj4l+DZIezuVkG9fY2H7YRQIMZIBwycmzH1/s3F8AapfIPNF3kQk7+kw9PWBy+IZOdg5Ug3mkAATy/t0usovzGeCUWTjCz0B+Sj0ekfdvkZ3abBv+U4GaCtJ1iEm6ANQJ6fEzrG/engcKw/wXQvEKxSEKQxRGKE7Izt+DSiwBJMUSm71rguMYhQKrBygOIRStf4TiFFRBvbRGKiQLWP29yRSHKBTtfdBmHs0BUpgvtgF4yRFR+NUKi0XZcYjCeCG2smkzLAHkbRBmP0/Uk26O5YnUActBp1GsAI+S5nRJJJal5K1aAMrq0d6Tm9uI6zjyf75dAe6tx/SsWeD//o2/Ab6IH3/h25pOAAAAAElFTkSuQmCC");
+	}
+	#example-3 .result-person {
+		background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAJkSURBVDjLhVLPSxRhGH5mf8yOs9O6aa2b6BJhsW3RilAXDSW65clDdgwkEBH/gIiI6FC3uoRBQYeooP4Aw9isQ2xG5YZEVFrINmnFto67s7sz33xf76wedEfwgxdm4H1+vO/zSkIINL7Bax/PpxLRkXhUTVuMY/7Hci4z++2e/njofmNvYDvwqe726/2pcJsa9MMhgd7D4T5NUQ8GBibBZka3kPgaCZKk7IKbVT8qNodpcUToe6g33tadOjCyo4NYREkrpGyYHLYDMEfArHFoioTE/o70jgRVC3AIZDMqLogA9fKR12qVefblGWHui54rmDZCsoSaLVClUkMSVlYZZl7P53YkyGQ/T9+dWqoaFY6K5ZaDEo1w42GOVWaz7xv7pc0x9kxkh/uOxa6c6JSSnDz/MgJgFGM0ZCLALTzKrhZePnh1S+gXr3p2cHQ0kx7oSVwePtmWbNUCKFsCKb6+i3K1GXKQY2JfrCW/XJqQfGNvBL/9bMsILRF1/MzxWGo3RfbHoK3VjUkgDlhEsqDXEKJ0Lgx2tSJ56JJnB13tLf3NYR9+F20CCwJSuSnw9W8hJHxdMtHeqiAYix/xEGia0ilLPuRXKnVVx41vYwRG6XEOGGsMst8PWVF3eXZgWUyixChvCc6GMiNwja7RJjR3x3GLRFwyj4PFvPFzQTehNUn1f4e6LIfXCdxDovGR2BvEh+9lVArFNQ/BdCY/Pjq5eGfqbQGC1IPkpEkGwnREMvl09/DkxQpuPs0beDd3ets7cF/HuefL8ViU7YnIYbpcTS+Y0P9apXLe+IeSWRSfzvZs7v8PV6U0ly704DwAAAAASUVORK5CYII=");		
+	}
+	#example-3 .result-search {
+		background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAH5SURBVDjLpZK/a5NhEMe/748kRqypmqQQgz/oUPUPECpCoEVwyNStIA6COFR33boIjg6mg4uL0k0EO1RFISKImkHQxlbQRAsx0dgKJm/e53nunnOwViR5leJnuZs+973jHBHB/+D/ah7X2LXWloilyMw5YgtD3CDiBWN4Zno8bQcJHBFBucauZfsolZDCru0OfFcAAUISrLZDfPzSKxuiibOT+T6JCwDMtrQzYQvZHQ5Cw2h3GK0OI9AWBzJJZFOxgtJUGpTABQAiLu5OOviuGIEWkBUwC7pasNZj7N2ThNJUjBQY4pznAoEWsBWwxU+JFXSVRTzmQWvKRR5RG4KVGMgKrAVYflexAAugDCEygdbUCI2F7zobk7FZY76DIDQgrT9HCwwt1FsBhhIu4p4D3kiS8B0MJz28ftfGSPfl8MPLxbGBAqVpptbslJc+fEPMA7JDPrIpH3FX8LzaROdrE5O51jalgid3Lh4b6/sDALh6971riErGcFET58gwDPGndG9JT6ReHcwfPorGygu8rdxvGxMeP3XtzcofgigWZ0/EtQ7n0/sOTe0/Mo7V5WeoVu61z1yvZzZX+BsnZx9opYLpevXp7eXKIrL5UWit0n0r/Isb50bjRGreiyWmgs76lfM31y5tSQAAc6czHjONXLi13thygih+AEq4N6GqMsuhAAAAAElFTkSuQmCC");
+	}
+</style>
+<script>
+	var e3 = new $.Suggester('#example-3 input', {
+		data: searchSuggestions, // data from ./assets/js/search.js
+		keyDelay: 0,
+		minChars: 1,
+		labelProperty: 'id',
+		maxSuggestions: 20,
+		listItemTemplate: '<li class="sugg-item result-{record.cssClass}">{record.prefix} <strong>{record.label}</strong></li>',
+		onAfterFilter: function(event) {
+			event.results.unshift({
+				cssClass: 'search',
+				prefix: 'Posts containing the text',
+				label: '"' + event.text + '"'
+			});
+		},
+		preventSubmit: false,
+		onBeforeAdd: function(event) {
+			event.preventDefault();
+			alert('Initiating search for ' + event.record.prefix + ' ' + event.record.label);
+		}
+	});
+	$('#example-3').submit(function(event) {
+		event.preventDefault();
+		alert('Submitting form with ' + e3.$input.val());
+	});
+</script>
+
 </body>
 </html>
