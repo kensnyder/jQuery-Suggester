@@ -77,20 +77,22 @@
 		padding: 6px 4px 5px 25px;
 		background-repeat: no-repeat;
 		background-position: 4px 50%;
+		border: 1px solid #999;
+		border-bottom: none;
 	}
 	#example-3 .sugg-list {
 		box-shadow: none;
-		margin: 4px -4px 0 -4px;
-		border-left: none;
-		border-right: none;
+		margin: 4px 0 0 -5px;
+		border-bottom: 1px solid #999;
+		width: 500px;
 	}
 	#example-3 .sugg-widget {
-		padding: 4px 4px 0 4px;
+		padding: 4px;
 		border: 1px solid transparent;
 		border-bottom: none;
 	}
 	#example-3 .sugg-widget.sugg-list-open {
-		border: 1px solid #ccc;
+		border: 1px solid #999;
 		border-bottom: 0;
 		border-radius: 12px 12px 0 0;
 	}
@@ -132,12 +134,12 @@
 		preventSubmit: false,
 		onBeforeAdd: function(event) {
 			event.preventDefault();
-			alert('Initiating search for ' + event.record.prefix + ' ' + event.record.label);
+			alert('This is where you would initiate search for ' + event.record.prefix + ' ' + event.record.label);
 		}
 	});
 	$('#example-3').submit(function(event) {
 		event.preventDefault();
-		alert('Submitting form with ' + e3.$input.val());
+		alert('This is where you would initiate search for Posts containing the text "' + e3.$input.val() + '"');
 	});
 </script>
 

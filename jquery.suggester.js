@@ -83,9 +83,11 @@
 						'<input type="text" class="sugg-input" value="" />' + // this.$input
 					'</li>' +
 				'</ul>' +
-				'<ul class="sugg-list" style="display:none">' + // this.$suggList
-					'<li class="sugg-item {record.cssClass}">{record.label}</li>' + // innerHTML is used as this.listItemTemplate unless options.listItemTemplate is set
-				'</ul>' +
+				'<div class="sugg-list-wrapper">' + 
+					'<ul class="sugg-list" style="display:none">' + // this.$suggList
+						'<li class="sugg-item {record.cssClass}">{record.label}</li>' + // innerHTML is used as this.listItemTemplate unless options.listItemTemplate is set
+					'</ul>' +
+				'</div>' +
 			'</div>',
 		listItemTemplate: null
 		/* EVENTS
@@ -910,7 +912,7 @@
 			}			
 			var sugg = this;
 			var results = [];
-			$.each(this._getData(), function(i, item) {	
+			$.each(this.getData(), function(i, item) {	
 				if (sugg.tags[item[sugg.options.idProperty]] || sugg.tags[item[sugg.options.labelProperty]]) {
 					// tag already exists so don't suggest it
 					// skip loop
@@ -958,14 +960,14 @@
 		 * @return {jQuery|undefined} A jQuery object containing the new tag element
 		 */
 		addId: function(id) {
-			var record = this._findRecordById(id);
+			var record = this.findRecordById(id);
 			if (record) {
 				return this.addRecord(record);
 			}
 			return undefined;
 		},
 		addLabel: function(label) {
-			var record = this._findRecordByLabel(label);
+			var record = this.findRecordByLabel(label);
 			if (!record) {
 				record = {_custom:label};
 			}
@@ -1090,10 +1092,10 @@
 			this._spliceTag(undefined, label);
 			return this;
 		},		
-		_findRecordById: function(id) {
+		findRecordById: function(id) {
 			var record, idProp;
 			idProp = this.options.idProperty;
-			$.each(this._getData(), function(i, item) {	
+			$.each(this.getData(), function(i, item) {	
 				if (item[idProp] == id) {
 					record = item;
 					return false;
@@ -1101,7 +1103,7 @@
 			});		
 			return record;
 		},
-		_findRecordByLabel: function(label) {
+		findRecordByLabel: function(label) {
 			var record, sugg, _break;
 			_break = {};
 			label = ''+label;
@@ -1111,7 +1113,7 @@
 			}
 			sugg = this;
 			try {
-				$.each(this._getData(), function(i, item) {	
+				$.each(this.getData(), function(i, item) {	
 					$.each(sugg.options.searchProperties, function() {
 						var value = '' + (item[this] || '');
 						if (!sugg.options.caseSensitive) {
@@ -1130,9 +1132,6 @@
 				}
 			}
 			return record;			
-		},
-		_getData: function() {
-			return this.data
 		},
 		_setupPubsub: function() {
 			this.pubsub = $(this);
