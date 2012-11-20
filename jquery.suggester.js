@@ -97,7 +97,9 @@
 				'</div>' +
 			'</div>',
 		listItemTemplate: null
-		/* EVENTS
+		/* 
+		 * AVAILABLE EVENT OPTIONS
+		 * 
 		 * onInitialize
 		 * onBeforeRender
 		 * onBeforeKeydown
@@ -478,14 +480,13 @@
 		_key_BACKSPACE: function(evt) {
 			var $lastTag;
 			this.$currentItem = null;
-			// TODO: check that cursor is in first position, not for value == '' ?
-			if (this.$input.val() == '') {
+			if (getCursorPosition(this.$input[0]) == 0) {
 				evt.preventDefault();
-				$lastTag = this.$inputWrapper.prev();
-				if (this.$focusedTag && this.$focusedTag[0] == $lastTag[0]) {
+				$lastTag = this.tags.length > 0 ? this.tags[this.tags.length-1].$tag : null;
+				if (this.$focusedTag && $lastTag && this.$focusedTag[0] == $lastTag[0]) {
 					this.remove($lastTag);
 				}
-				else {
+				else if ($lastTag) {
 					this.$focusedTag = $lastTag;
 					$lastTag.addClass('sugg-focused');
 				}
@@ -586,7 +587,7 @@
 		 * Fetch suggestions from an ajax URL
 		 */
 		fetchResults: function(text) {
-			// TODO: add option to support other transports
+			// TODO: add option to support a custom transport?
 			// TODO: abort on keypress
 			this._searchTerm = text;
 			var params = {
@@ -1007,9 +1008,27 @@
 		},
 		/**
 		 * Add a tag by a record
-		 * @param {Object}  the record to add
-		 * @param {jQuery}  Set when the record is added by choosing from the suggestion box
+		 * @param {Object} record  the record to add
+		 * @param {jQuery} $item  Set when the record is added by choosing from the suggestion box
 		 * @return {jQuery} The jQuery object containing the newly created label
+		 * 
+		 * @event BeforeAdd - Allows you to prevent it being added or alter the record before adding
+		 *     event.record  The record to be added
+		 *     event.item    The suggestion that was chosen (if any)
+		 *     example       instance.bind('BeforeAdd', function(event) {
+		 *                        if (isSwearWord(evt.record._custom)) {
+		 *                            event.preventDefault();
+		 *                            alert('Tags cannot be swear words');
+		 *                        }
+		 *                   });
+		 * 
+		 * @event BeforeAdd - Allows you to prevent it being added or alter the record before adding
+		 *     event.record  The record to be added
+		 *     event.item    The suggestion that was chosen (if any)
+		 *     example       instance.bind('AfterAdd', function(event) {
+		 *                        // fade in tag
+		 *                        event.tag.fadeIn(500);
+		 *                   });
 		 */
 		addRecord: function(record, $item/* optional*/) {
 			var evt, id, label, val, idx, $hidden, name, $tag;
@@ -1038,17 +1057,22 @@
 					this._spliceTagByIdx(idx);
 				}
 			}
+			// append our hidden input to the widget
 			$hidden = $('<input type="hidden" />').attr('name', name+'[]').val(val);
 			this.$widget.append($hidden);
 			$tag = this.$tagTemplate.clone().data('record', evt.record);
+			// keep a full record of our chosen tag
 			this.tags.push({
 				record: evt.record, 
 				$tag: $tag, 
 				$hidden: $hidden
 			});
+			// set the label's display text
 			$tag.find('.sugg-label').html(label);
 			this.$inputWrapper.before($tag);
+			// set the value of the original input
 			this._populateOriginalInput();
+			// trigger our after add event
 			this.publish('AfterAdd', {
 				record: evt.record,
 				item: $item,
@@ -1109,7 +1133,7 @@
 			return this;
 		},
 		/**
-		 * Remove a tag from the internal collection and from the DOM
+		 * Given an id and or label, remove a tag from the internal collection and from the DOM
 		 * 
 		 * @param {String|Number} id  The id of the tag
 		 * @param {String} label      The label of the tag
@@ -1122,6 +1146,12 @@
 			}
 			return undefined;
 		},
+		/**
+		 * Given an array index, remove a tag from the internal collection and from the DOM
+		 * 
+		 * @param {Number} id  The index position in the internal collection
+		 * @return {Object}  The record associated with that tag
+		 */		
 		_spliceTagByIdx: function(idx) {
 			var info = this.tags[idx];
 			info.$hidden.remove();
@@ -1129,6 +1159,13 @@
 			this.tags = this.tags.splice(idx-1, 1);
 			return info;
 		},
+		/**
+		 * Find a tag given an id and or label
+		 * 
+		 * @param {String|Number} id  The id of the tag
+		 * @param {String} label      The label of the tag
+		 * @return {Number}  The index position of the tag in the internal collection or -1 if not found
+		 */
 		_findTag: function(id, label) {
 			var idx = -1, sugg;
 			sugg = this;
@@ -1144,6 +1181,12 @@
 			});
 			return idx;			
 		},
+		/**
+		 * Check if a tag has been added with the given record
+		 * 
+		 * @param {Object} record
+		 * @return {Boolean}
+		 */
 		_tagExists: function(record) {
 			var exists = false;
 			$.each(this.tags, function(i) {
@@ -1154,14 +1197,32 @@
 			});
 			return exists;				
 		},
+		/**
+		 * Remove the tag with the given id
+		 * 
+		 * @param {String|Number} id
+		 * @return {jQuery.Suggester}
+		 */
 		removeId: function(id) {
 			this._spliceTag(id, undefined);
 			return this;
 		},
+		/**
+		 * Remove a tag with the given label
+		 * 
+		 * @param {String|Number} label
+		 * @return {jQuery.Suggester}
+		 */
 		removeLabel: function(label) {
 			this._spliceTag(undefined, label);
 			return this;
-		},		
+		},
+		/**
+		 * Find a suggestion record by id
+		 * 
+		 * @param {String|Number} id
+		 * @return {Object}
+		 */
 		findRecordById: function(id) {
 			var record, idProp;
 			idProp = this.options.idProperty;
@@ -1173,6 +1234,12 @@
 			});		
 			return record;
 		},
+		/**
+		 * Find a suggestion record by label
+		 * 
+		 * @param {String|Number} label
+		 * @return {Object}
+		 */		
 		findRecordByLabel: function(label) {
 			var record, sugg, _break;
 			_break = {};
@@ -1203,6 +1270,11 @@
 			}
 			return record;			
 		},
+		/**
+		 * Setup publish/subscribe system that uses jQuery's event system
+		 * Example event subscription:
+		 * instance.bind('AfterFilter', myhandler)
+		 */
 		_setupPubsub: function() {
 			this.pubsub = $(this);
 			this.on = $.proxy(this.pubsub, 'on');
@@ -1218,6 +1290,13 @@
 				}
 			}			
 		},
+		/**
+		 * Publish the given event name and send the given data
+		 * 
+		 * @param {String} type  The name of the event to publish
+		 * @param {Object} data  Additional data to attach to the event object
+		 * @return {jQuery.Event}  The event object which behaves much like a DOM event object
+		 */
 		publish: function(type, data) {
 			var evt = $.Event(type);
 			evt.target = this;
@@ -1231,6 +1310,33 @@
 			return this;
 		}	
 	};
+	//
+	// private utility methods
+	//
+	/**
+	 * Given an input element, get the cursor position
+	 * 
+	 * @param {HTMLElement} input
+	 * @return {Number}  the position in the element
+	 */
+	var getCursorPosition = function(input) {
+		if ('selectionStart' in input) {
+            // Standard-compliant browsers
+            return input.selectionStart;
+        } 
+		else if (document.selection) {
+            // IE
+            input.focus();
+            var sel = document.selection.createRange();
+            var selLen = document.selection.createRange().text.length;
+            sel.moveStart('character', -input.value.length);
+            return sel.text.length - selLen;
+        }
+		else {
+			// some weirdness that should never happen
+			return input.value.length;
+		}
+	}
 	//
 	// static properties and methods
 	//
@@ -1249,9 +1355,11 @@
 		});
 		return this;
 	};
-	//
-	// jQuery plugin
-	//
+	/**
+	 * Suggester jQuery Plugin
+	 * 
+	 * @param {Object} options  The options to use on instantiation (see jQuery.Suggester.defaultOptions for info on options)
+	 */
 	$.fn.suggester = function(options) {		
 		// handle where first arg is method name and additional args should be passed to that method
 		if (typeof options == 'string' && typeof $.Suggester.prototype[options] == 'function') {

@@ -27,6 +27,7 @@
 </head>
 <body>
 
+	
 <!-- Example 1: Simple suggester with pre-loaded data -->	
 <form id="example-1">
 	Example 1: Type some celestial bodies:<br />
@@ -39,6 +40,7 @@
 		minChars: 1
 	});
 </script>
+<!-- End Example 1 -->
 
 
 
@@ -68,6 +70,7 @@
 		listItemTemplate: '<li class="sugg-item">{record.nameEmail}</li>'
 	});
 </script>
+<!-- End Example 2 -->
 
 
 
@@ -151,6 +154,7 @@
 		alert('This is where you would initiate search for Posts containing the text "' + e3.$input.val() + '"');
 	});
 </script>
+<!-- End Example 3 -->
 
 
 
@@ -172,6 +176,7 @@
 		return false;
 	});
 </script>
+<!-- End Example 4 -->
 
 
 
@@ -186,13 +191,18 @@
 		keyDelay: 0,
 		minChars: 1
 	});
+	e5.bind('AfterAdd', function(event) {
+		// example of adding an effect to a newly created tag
+		event.tag.hide().fadeIn(500);
+	});
 </script>
+<!-- End Example 5 -->
 
 
 
 <!-- Example 6: jsonp -->
 <form id="example-6">
-	Example 6: Enter a business name in LA: (jsonp via YQL; e.g. type "Pizza")<br />
+	Example 6: Businesses in LA: (jsonp via YQL; e.g. type "Pizza")<br />
 	<input type="text" name="example_6" value="" />
 </form>
 <script>
@@ -212,6 +222,7 @@
 		}
 	});
 </script>
+<!-- End Example 6 -->
 
 
 
