@@ -463,12 +463,14 @@
 			evt.preventDefault();
 			// unfocus any focused tags
 			this.unfocusTag();
-			if (!this.isSuggestBoxOpen()) {
+			if (this.isSuggestBoxOpen()) {
+				// move selection down in suggestion box
+				this.moveSelection('down');			
+			}
+			else {
 				// user clicked away or pressed ESC so reopen suggestion box
 				this.openSuggestBox();
 			}
-			// move selection down in suggestion box
-			this.moveSelection('down');			
 		},
 		/**
 		 * Handle BACKSPACE key on this.$input
@@ -633,17 +635,17 @@
 		 * Handler passed to $.ajax().done(function(){...}) that handles suggestion data that is returned
 		 * 
 		 * @event BeforeFetch (if event.preventDefault() is called, the suggest box does not open)
-		 *     event.jqXHR  the jQuery XHR object (see http://api.jquery.com/jQuery.ajax/#jqXHR)
-		 *     event.data   the object generated from the ajax returned from the XHR
-		 *     event.term   the term that was search for
-		 *     example      instance.bind('AfterFetch', function(event) {
-		 *                       event.data.push({id:'', label:'Adding a test suggestion'});
-		 *                  });
+		 *     event.jqXHR    the jQuery XHR object (see http://api.jquery.com/jQuery.ajax/#jqXHR)
+		 *     event.records  the object generated from the ajax returned from the XHR
+		 *     event.term     the term that was search for
+		 *     example        instance.bind('AfterFetch', function(event) {
+		 *                         event.data.push({id:'', label:'Adding a test suggestion'});
+		 *                    });
 		 */		
-		_afterFetch: function(data) {
+		_afterFetch: function(records) {
 			var evt = this.publish('AfterFetch', {
 				jqXHR: this._jqXHR,
-				data: data,
+				records: records,
 				term: this._searchTerm,
 				cancellable: true
 			});
@@ -651,7 +653,7 @@
 			if (evt.isDefaultPrevented()) {
 				return;
 			}
-			this.handleSuggestions(evt.data);
+			this.handleSuggestions(evt.records);
 		},
 		/**
 		 * Cancel the XHR. Used when user starts typing again before XHR completes

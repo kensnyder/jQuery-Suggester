@@ -169,6 +169,7 @@
 	});
 	$('#example-4 a').click(function() {
 		e4.addLabel(this.innerHTML);
+		return false;
 	});
 </script>
 
@@ -188,7 +189,32 @@
 </script>
 
 
+
 <!-- Example 6: jsonp -->
+<form id="example-6">
+	Example 6: Enter a business name in LA: (jsonp via YQL; e.g. type "Pizza")<br />
+	<input type="text" name="example_6" value="" />
+</form>
+<script>
+	var e6 = new $.Suggester('#example-6 input', {
+		dataUrl: "http://query.yahooapis.com/v1/public/yql?q=select%20id%2C%20Title%2C%20Address%20from%20local.search%20where%20zip%3D'90014'%20and%20query%3D'%s'&format=json&callback=%s",
+		dataType: 'jsonp',
+		labelProperty: 'Title',
+		listItemTemplate: '<li class="sugg-item">{record.Title} - {record.Address}</li>',
+		onAfterFetch: function(event) {
+			// This YQL query returns a result array at event.records.query.results.Result
+			if (event.records.query && event.records.query.results) {
+				event.records = event.records.query.results.Result;
+			}
+			else {
+				event.records = [];
+			}
+		}
+	});
+</script>
+
+
+
 <!-- Example 7: Fly upwards -->
 
 </body>
