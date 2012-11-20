@@ -463,6 +463,10 @@
 			evt.preventDefault();
 			// unfocus any focused tags
 			this.unfocusTag();
+			if (!this.isSuggestBoxOpen()) {
+				// user clicked away or pressed ESC so reopen suggestion box
+				this.openSuggestBox();
+			}
 			// move selection down in suggestion box
 			this.moveSelection('down');			
 		},
@@ -794,12 +798,18 @@
 			});
 			if (evt.isDefaultPrevented()) {
 				return this;
-			}			
-			this.$suggList.show();
-			this.$widget.addClass('sugg-list-open');
-			$document.bind('click', this.closeOnOutsideClick);
+			}
+			this.openSuggestBox();
 			this.publish('AfterSuggest');
 			return this;
+		},
+		isSuggestBoxOpen: function() {
+			return this.$suggList.css('display') != 'none';
+		},
+		openSuggestBox: function() {
+			this.$suggList.show();
+			this.$widget.addClass('sugg-list-open');
+			$document.bind('click', this.closeOnOutsideClick);			
 		},
 		closeOnOutsideClick: function(evt) {
 			if ($(evt.target).parents('.sugg-list')[0] == this.$suggList[0]) {
