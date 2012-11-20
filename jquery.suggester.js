@@ -129,7 +129,7 @@
 		 * Constructor
 		 * @param {String|HTMLElement|jQuery} $textInput  The text input as a jQuery object, DOM element, or selector string
 		 * @param {Object} options  An object with data and options (See $.Suggester.defaultOptions for explaination of options)
-		 * @return {$.Suggester}
+		 * @return {jQuery.Suggester}
 		 */
 		initialize: function($textInput, options) {
 			// This is the original text input given
@@ -187,7 +187,7 @@
 		 * Add more data records to the autosuggest list. Does not apply when dataUrl is set
 		 * 
 		 * @params {Object[]} data  More records in the same object format as initially set
-		 * @return {$.Suggester}
+		 * @return {jQuery.Suggester}
 		 */
 		addData: function(data) {
 			this.data = this.data.concat(data);
@@ -197,7 +197,7 @@
 		 * Set data records to the autosuggest list. Does not apply when dataUrl is set
 		 * 
 		 * @params {Object[]} data
-		 * @return {$.Suggester}
+		 * @return {jQuery.Suggester}
 		 */		
 		setData: function(data) {
 			this.data = data;
@@ -272,7 +272,7 @@
 			this.unfocusTag = $.proxy(this, 'unfocusTag');
 			this.removeFocusedTag = $.proxy(this, 'removeFocusedTag');
 			this.suggestIfNeeded = $.proxy(this, 'suggestIfNeeded');
-			this.closeOnOutsideClick = $.proxy(this, 'closeOnOutsideClick');
+			this._closeOnOutsideClick = $.proxy(this, '_closeOnOutsideClick');
 			// clear default text if focused on input
 			this.$input.focus($.proxy(this, '_onInputFocus'));
 			// remove tags when `X` is clicked
@@ -369,7 +369,7 @@
 		/**
 		 * Focus on a previously added tag
 		 * @params {jQuery} $tag  The .sugg-tag element to focus
-		 * @return {$.Suggester}
+		 * @return {jQuery.Suggester}
 		 */
 		focusTag: function($tag) {
 			this.unfocusTag();
@@ -380,7 +380,7 @@
 		},
 		/**
 		 * Unfocus the previously focussed tag
-		 * @return {$.Suggester}
+		 * @return {jQuery.Suggester}
 		 */
 		unfocusTag: function() {
 			$document.unbind('keydown', this.removeFocusedTag).unbind('click', this.unfocusTag);
@@ -393,7 +393,7 @@
 		/**
 		 * Remove the focused tag
 		 * @param {jQuery.Event} evt (optional)  Used to check if $document keypress is backspace or delete
-		 * @return {$.Suggester}
+		 * @return {jQuery.Suggester}
 		 */
 		removeFocusedTag: function(evt) {
 			if (evt && evt.which && (evt.which == 8 || evt.which == 46)) {
@@ -658,7 +658,7 @@
 		/**
 		 * Cancel the XHR. Used when user starts typing again before XHR completes
 		 * 
-		 * @return {$.Suggester}
+		 * @return {jQuery.Suggester}
 		 */
 		abortFetch: function() {
 			if (this._jqXHR) {
@@ -728,7 +728,7 @@
 		/**
 		 * Select a suggestion
 		 * @param {jQuery} $tag
-		 * @return {$.Suggester}
+		 * @return {jQuery.Suggester}
 		 */
 		selectItem: function($tag) {
 			$tag.addClass('sugg-selected');
@@ -737,7 +737,7 @@
 		/**
 		 * Deselect a suggestion
 		 * @param {jQuery} $tag
-		 * @return {$.Suggester}
+		 * @return {jQuery.Suggester}
 		 */		
 		deselectItem: function($tag) {
 			$tag.removeClass('sugg-selected');
@@ -745,7 +745,7 @@
 		},
 		/**
 		 * Deselect all suggestions
-		 * @return {$.Suggester}
+		 * @return {jQuery.Suggester}
 		 */			
 		deselectAllItems: function() {
 			this.$suggList.find('.sugg-item').removeClass('sugg-selected');
@@ -755,7 +755,7 @@
 		/**
 		 * Open suggestion list for the given text
 		 * @param {String} text
-		 * @return {$.Suggester}
+		 * @return {jQuery.Suggester}
 		 */
 		suggest: function(text) {
 			this._text = text;
@@ -805,15 +805,28 @@
 			this.publish('AfterSuggest');
 			return this;
 		},
+		/**
+		 * Return true if suggestion box is open
+		 * @return {Boolean}
+		 */
 		isSuggestBoxOpen: function() {
 			return this.$suggList.css('display') != 'none';
 		},
+		/**
+		 * Manually open the suggestion box in whatever state it is
+		 * @return {$.Suggestoer}
+		 */
 		openSuggestBox: function() {
 			this.$suggList.show();
 			this.$widget.addClass('sugg-list-open');
-			$document.bind('click', this.closeOnOutsideClick);			
+			$document.bind('click', this._closeOnOutsideClick);
+			return this;			
 		},
-		closeOnOutsideClick: function(evt) {
+		/**
+		 * Callback used to close the suggestion box when the user clicks off of it
+		 * @return {undefined}
+		 */
+		_closeOnOutsideClick: function(evt) {
 			if ($(evt.target).parents('.sugg-list')[0] == this.$suggList[0]) {
 				return;
 			}
@@ -821,7 +834,7 @@
 		}, 
 		/**
 		 * Close the suggestion list
-		 * @return {$.Suggester}
+		 * @return {jQuery.Suggester}
 		 * @event BeforeClose  (if event.preventDefault() is called, suggestion box will not close)
 		 *     example  instance.bind('BeforeClose', function(event) {
 		 *                  event.preventDefault();
@@ -833,7 +846,7 @@
 		 *              }); 
 		 */
 		closeSuggestBox: function() {
-			$document.unbind('click', this.closeOnOutsideClick);
+			$document.unbind('click', this._closeOnOutsideClick);
 			var evt = this.publish('BeforeClose', {cancellable:true});
 			if (!evt.isDefaultPrevented()) {
 				this.$suggList.hide();
@@ -857,7 +870,7 @@
 		 * @param {Object} record  The record that was suggested
 		 * @param {String} substr  The string that generated the list of suggestions
 		 * @return {String}  HTML to use as the item (e.g. '<li class="sugg-item">Suggestion</li>')
-		 * @event BeforeFormat
+		 * @event BeforeFormat - use to do your own formatting
 		 *     event.record  The record object that is being suggested
 		 *     event.substr  The part of the string that matches the suggestion search fields
 		 *     event.html    If you set event.html and then call event.preventDefault(), that html will be used instead of the default generated html
@@ -912,7 +925,7 @@
 			return evt.html;
 		},
 		/**
-		 * Get suggestion result records given some text
+		 * Get suggestion result records given some text (local data)
 		 * @param {String} text
 		 * @return {Array}  Array of Objects of matching records 
 		 */
@@ -959,7 +972,7 @@
 		},
 		/**
 		 * Show the empty text to show user when no suggestions are found
-		 * @return {$.Suggester}
+		 * @return {jQuery.Suggester}
 		 */
 		showEmptyText: function() {
 			if (this.options.emptyText) {
@@ -980,6 +993,11 @@
 			}
 			return undefined;
 		},
+		/**
+		 * Add a tag by label, or any custom text
+		 * @param {String} the label text
+		 * @return {jQuery} The jQuery object containing the newly created label
+		 */
 		addLabel: function(label) {
 			var record = this.findRecordByLabel(label);
 			if (!record) {
@@ -987,6 +1005,12 @@
 			}
 			return this.addRecord(record);
 		},
+		/**
+		 * Add a tag by a record
+		 * @param {Object}  the record to add
+		 * @param {jQuery}  Set when the record is added by choosing from the suggestion box
+		 * @return {jQuery} The jQuery object containing the newly created label
+		 */
 		addRecord: function(record, $item/* optional*/) {
 			var evt, id, label, val, idx, $hidden, name, $tag;
 			evt = this.publish('BeforeAdd', {
@@ -1011,7 +1035,7 @@
 				idx = this._findTag(id, label);
 				if (idx > -1) {
 					// duplicate: remove old and continue to add new so that new one will be at the end
-					this._spliceTag(this.tags[idx]);
+					this._spliceTagByIdx(idx);
 				}
 			}
 			$hidden = $('<input type="hidden" />').attr('name', name+'[]').val(val);
@@ -1034,6 +1058,10 @@
 			});
 			return $tag;
 		},
+		/**
+		 * Set the value of the original input to a comma-delimited set of labels
+		 * @return {undefined}
+		 */
 		_populateOriginalInput: function() {
 			var vals = [];
 			this.$box.find('.sugg-label').each(function() {
@@ -1041,8 +1069,16 @@
 			});
 			this.$originalInput.val(vals.join(','));
 		},
+		/**
+		 * Remove a tag given its jQuery element or record (or HTML element)
+		 * @param {jQuery|Object|HTMLElement} $tag  the tag to remove
+		 * @return {jQuery.Suggester}
+		 */
 		remove: function($tag) {
 			var record, evt, id, label, info;
+			if (typeof $tag.nodeType == 'number' && typeof $tag.style == 'object') {
+				$tag = $($tag);
+			}
 			if ($tag instanceof $) {
 				record = $tag.data('record');
 			}
@@ -1072,15 +1108,25 @@
 			});
 			return this;
 		},
+		/**
+		 * Remove a tag from the internal collection and from the DOM
+		 * 
+		 * @param {String|Number} id  The id of the tag
+		 * @param {String} label      The label of the tag
+		 * @return {Object}  The record associated with that tag
+		 */
 		_spliceTag: function(id, label) {
-			var idx, info;
-			idx = typeof id == 'object' ? id : this._findTag(id, label);			
+			var idx = this._findTag(id, label);			
 			if (idx > -1) {
-				info = this.tags[idx];
-				info.$hidden.remove();
-				info.$tag.remove();
-				this.tags = this.tags.splice(idx-1, 1);
+				return this._spliceTagByIdx(idx);
 			}
+			return undefined;
+		},
+		_spliceTagByIdx: function(idx) {
+			var info = this.tags[idx];
+			info.$hidden.remove();
+			info.$tag.remove();
+			this.tags = this.tags.splice(idx-1, 1);
 			return info;
 		},
 		_findTag: function(id, label) {
@@ -1195,7 +1241,7 @@
 	/**
 	 * Add data to all instances
 	 * @param {Object[]}  Add more data to all the registered instances
-	 * @return {$.Suggester}
+	 * @return {jQuery.Suggester}
 	 */
 	$.Suggester.addData = function(data) {
 		$.each($.Suggester.instances, function() {
