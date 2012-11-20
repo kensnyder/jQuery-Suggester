@@ -73,6 +73,11 @@
 	font: 11px/100% "Lucida Grande", Verdana, sans-serif;
 	box-shadow: 2px 2px 5px rgba(128,128,128,0.40);
 }
+.sugg-fly-up .sugg-list {
+	top: auto;
+	bottom: 0;
+	box-shadow: 2px -2px 5px rgba(128,128,128,0.40);
+}
 .sugg-item {
 	list-style-type: none;
 	margin: 0;

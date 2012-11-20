@@ -227,6 +227,20 @@
 
 
 <!-- Example 7: Fly upwards -->
+<form id="example-7">
+	Example 7: Type some celestial bodies:<br />
+	<input type="text" name="example_7" value="" />
+</form>
+<script>
+	$('#example-7 input').suggester({
+		data: bodies, // data from ./assets/js/bodies.js
+		keyDelay: 0,
+		minChars: 1,
+		fly: 'up'
+	});
+</script>
+<!-- End Example 7 -->
+
 
 </body>
 </html>
