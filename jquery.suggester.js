@@ -200,12 +200,12 @@
 		destroy: function() {
 			// "un"-render; this.$originalInput should be already populated
 			this.$originalInput.insertBefore(this.$widget).show();
-			this.$widget.remove();
+			this.$widget.empty().remove();
 			// unregister our instance
 			var sugg = this;
 			$.each($.Suggester.instances, function(i) {
 				if (sugg === this) {
-					$.Suggester.instances = $.Suggester.instances.splice(i, 1);
+					$.Suggester.instances.splice(i, 1);
 					return false;
 				}
 			});
@@ -244,7 +244,7 @@
 		 *     event.record  The record to be added
 		 *     event.item    The suggestion that was chosen (if any)
 		 *     example       instance.bind('BeforeAdd', function(event) {
-		 *                        if (isSwearWord(evt.record._custom)) {
+		 *                        if (evt.record._custom && isSwearWord(evt.record._custom)) {
 		 *                            event.preventDefault();
 		 *                            alert('Tags cannot be swear words');
 		 *                        }
@@ -1289,7 +1289,7 @@
 			var info = this.tags[idx];
 			info.$hidden.remove();
 			info.$tag.remove();
-			this.tags = this.tags.splice(idx-1, 1);
+			this.tags.splice(idx, 1);
 			return info;
 		},
 		/**

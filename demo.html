@@ -16,17 +16,22 @@
 		body {
 			overflow-y: scroll;
 		}
+		h1 {
+			font: bold 20px/125% "Lucida Grande", Verdana, sans-serif;
+			margin: 15px 0 0 15px;
+		}
 		form {
 			font: 15px/125% "Lucida Grande", Verdana, sans-serif;
 			width: 500px;
 			padding: 15px;
 			margin: 30px 15px 15px 15px;
 			border: 1px solid #ccc;
+			float: left;
 		}
 	</style>
 </head>
 <body>
-
+<h1>jQuery.Suggester examples (see source for details)</h1>
 	
 <!-- Example 1: Simple suggester with pre-loaded data -->	
 <form id="example-1">
@@ -102,6 +107,7 @@
 		border: 1px solid #999;
 		border-bottom: 0;
 		border-radius: 12px 12px 0 0;
+		box-shadow: 2px 2px 5px rgba(128, 128, 128, 0.4);
 	}
 	#example-3 .sugg-box {
 		border-radius: 12px;
@@ -129,7 +135,6 @@
 		keyDelay: 0,
 		minChars: 1,
 		labelProperty: 'id',
-		maxSuggestions: 20,
 		listItemTemplate: '<li class="sugg-item result-{record.cssClass}">{record.prefix} <strong>{record.label}</strong></li>',
 		onAfterFilter: function(event) {
 			event.results.unshift({
@@ -228,7 +233,7 @@
 
 <!-- Example 7: Fly upwards -->
 <form id="example-7">
-	Example 7: Type some celestial bodies:<br />
+	Example 7: Suggestion box flies up instead of down:<br />
 	<input type="text" name="example_7" value="" />
 </form>
 <script>
