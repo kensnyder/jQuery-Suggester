@@ -26,16 +26,16 @@
 }
 .sugg-tag {
 	border-radius: 0.85em;
-	background-color: #DDEEFE;
-	color: #000;
-	border: 1px solid #C0D9E9;
+	background-color: #D0E9FF;
+	color: #222;
+	border: 1px solid #70AFD6;
 	padding: 0.1em 0.6em 0.3em 0.6em;
 	cursor: default;
 }
 .sugg-tag:hover {
-	background-color: #bbcef1;
+	background-color: #BAD2FF;
 	color: #000;
-	border: 1px solid #6d95e0;
+	border: 1px solid #5B89DD;
 }
 .sugg-tag.sugg-focused,
 .sugg-tag.sugg-focused:hover {

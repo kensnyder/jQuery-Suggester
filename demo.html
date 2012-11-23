@@ -247,5 +247,21 @@
 <!-- End Example 7 -->
 
 
+
+<!-- Example 8: JSON -->
+<form id="example-8">
+	Example 8: JSON from php (works only on LAMP server):<br />
+	<input type="text" name="example_8" value="" />
+</form>
+<script>
+	$('#example-8 input').suggester({
+		dataUrl: 'assets/bodies.php?name=%s',
+		minChars: 1,
+		fly: 'up'
+	});
+</script>
+<!-- End Example 8 -->
+
+
 </body>
 </html>

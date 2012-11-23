@@ -79,14 +79,11 @@
 	});
 	test("Original input value properly populated", function() {
 		var sugg = $input.suggester({data:planets}).suggester('getInstance');
-		sugg.$input.val('Custom');
-		sendKey(sugg, ',');
-		sugg.$input.val('lname, fname');
-		sendKey(sugg, ',');
-		sugg.$input.val('doe, john');
-		sendKey(sugg, ',');
+		sugg.addLabel('Custom 1');
+		sugg.addLabel('lname, fname');
+		sugg.addLabel('doe, john');
 		strictEqual($form.find('.sugg-label').length, 3);
-		strictEqual($input.val(), 'Custom,lname\\, fname,doe\\, john');
+		strictEqual($input.val(), 'Custom 1,lname\\, fname,doe\\, john');
 	});
 	test("addId() then removeId()", function() {
 		$input.suggester({data:planets});

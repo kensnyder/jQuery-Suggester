@@ -73,6 +73,8 @@
 		placeholder: '',
 		// message to show when there are no matches
 		noSuggestions: '(Type a comma to create a new tag)',
+		// message to display when below min char length
+		prompt: false,
 		// only display this many suggestions
 		maxSuggestions: 10,
 		// if true, wrap first matching substring in a suggestion with <strong class="sugg-match"></strong>
@@ -95,7 +97,7 @@
 					'</ul>' +
 				'</div>' +
 			'</div>',
-		listItemTemplate: null
+		listItemTemplate: null // overrides sugg-item html
 		/* 
 		 * AVAILABLE EVENT OPTIONS
 		 * 
@@ -265,6 +267,7 @@
 				item: $item
 			});
 			if (evt.isDefaultPrevented()) {
+				this.saveToOriginalInput();
 				return undefined;
 			}
 			if (evt.record._custom) {
@@ -278,7 +281,7 @@
 				name = this.hiddenName;
 				val = id;
 			}
-			if (this.options.preventDuplicates) {
+			if (this.options.preventDuplicates) {				
 				idx = this._findTag(id, label);
 				if (idx > -1) {
 					// duplicate: remove old and continue to add new so that new one will be at the end
@@ -299,7 +302,7 @@
 			$tag.find('.sugg-label').html(label);
 			this.$inputWrapper.before($tag);
 			// set the value of the original input
-			this._populateOriginalInput();
+			this.saveToOriginalInput();
 			// trigger our after add event
 			this.publish('AfterAdd', {
 				record: evt.record,
@@ -616,9 +619,22 @@
 			if (text.length >= this.options.minChars) {				
 				this.suggest(text);
 			}
+			else if (this.options.prompt) {
+				this.showPrompt();
+			}
 			else {
 				this.closeSuggestBox();
 			}			
+		},
+		showPrompt: function() {
+		
+		
+		
+		
+		
+		
+		
+		
 		},
 		/**
 		 * Fetch suggestions from an ajax URL
@@ -672,7 +688,7 @@
 		 *                 });
 		 */
 		handleSuggestions: function(records) {
-			if (records.length == 0) {
+			if (!records || records.length == 0) {
 				this.showEmptyText();
 				return this;
 			}
@@ -1256,14 +1272,15 @@
 		},
 		/**
 		 * Set the value of the original input to a comma-delimited set of labels
-		 * @return {undefined}
+		 * @return {jQuery.Suggester}
 		 */
-		_populateOriginalInput: function() {
+		saveToOriginalInput: function() {
 			var vals = [];
 			this.$box.find('.sugg-label').each(function() {
 				vals.push($(this).text().replace(/,/g, '\\,'));
 			});
 			this.$originalInput.val(vals.join(','));
+			return this;
 		},
 		/**
 		 * Given an id and or label, remove a tag from the internal collection and from the DOM
@@ -1304,7 +1321,7 @@
 			sugg = this;
 			$.each(sugg.tags, function(i, info) {
 				if (
-					info.record[sugg.options.idProperty] == id
+					(id && info.record[sugg.options.idProperty] == id)
 					|| (label && info.record[sugg.options.labelProperty] == label)
 					|| (label && info.record._custom == label)
 				) {

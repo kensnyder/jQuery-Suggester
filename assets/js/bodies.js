@@ -1,16 +1,16 @@
 var bodies = [
-	{id: 1, label: "Sun",           cssClass: "star"},	
-	{id: 2, label: "Mercury",       cssClass: "planet"},
-	{id: 3, label: "Venus",         cssClass: "planet"},
-	{id: 4, label: "Earth",         cssClass: "planet"},
-	{id: 5, label: "Mars",          cssClass: "planet"},
-	{id: 6, label: "Asteroid Belt", cssClass: "object"},
-	{id: 7, label: "Jupiter",       cssClass: "planet"},
-	{id: 8, label: "Saturn",        cssClass: "planet"},
-	{id: 9, label: "Uranus",        cssClass: "planet"},
-	{id:10, label: "Neptune",       cssClass: "planet"},
-	{id:11, label: "Pluto",         cssClass: "dwarf-planet"},
-	{id:12, label: "Eres",          cssClass: "dwarf-planet"},
+	{"id": 1, "label": "Sun",           "cssClass": "star"},	
+	{"id": 2, "label": "Mercury",       "cssClass": "planet"},
+	{"id": 3, "label": "Venus",         "cssClass": "planet"},
+	{"id": 4, "label": "Earth",         "cssClass": "planet"},
+	{"id": 5, "label": "Mars",          "cssClass": "planet"},
+	{"id": 6, "label": "Asteroid Belt", "cssClass": "object"},
+	{"id": 7, "label": "Jupiter",       "cssClass": "planet"},
+	{"id": 8, "label": "Saturn",        "cssClass": "planet"},
+	{"id": 9, "label": "Uranus",        "cssClass": "planet"},
+	{"id":10, "label": "Neptune",       "cssClass": "planet"},
+	{"id":11, "label": "Pluto",         "cssClass": "dwarf-planet"},
+	{"id":12, "label": "Eres",          "cssClass": "dwarf-planet"},
 	{
 		"id": 101,
 		"label": "Andromeda",
@@ -85,10 +85,6 @@ var bodies = [
 		"cssClass": "star"
 	}, {
 		"id": 119,
-		"label": "Al Thalimain",
-		"cssClass": "star"
-	}, {
-		"id": 120,
 		"label": "Al Thalimain",
 		"cssClass": "star"
 	}, {
@@ -1384,4 +1380,4 @@ var bodies = [
 		"label": "Vulpecula",
 		"cssClass": "constellation"
 	}	
-];
+]
