@@ -28,6 +28,10 @@
 			border: 1px solid #ccc;
 			float: left;
 		}
+		table, tr, td {
+			padding: 0;
+			border-collapse: collapse;
+		}
 	</style>
 </head>
 <body>
@@ -65,14 +69,38 @@
 	background-color: #3674D4;
 	border: 1px solid #3674D4;
 }
+#example-2 .sugg-item {
+	padding: 2px 2px 1px 2px;
+	line-height: 100%;
+}
+.addr-avatar {
+	margin-right: 8px;
+}
+.addr-name {
+	display: block;
+}
+.addr-email {
+	color: #666;
+	display: block;
+	margin-top: 3px;
+}
+.sugg-selected .addr-email {
+	color: #fff;
+}
 </style>
 <script>
 	$('#example-2 input').suggester({
 		data: addressBook, // data from ./assets/js/addressBook.js
-		searchProperties: ["nameEmail"],
+		searchProperties: ["name","email"],
 		keyDelay: 200,
 		minChars: 1,
-		listItemTemplate: '<li class="sugg-item">{record.nameEmail}</li>'
+		labelProperty: 'name',
+		listItemTemplate: '<li class="sugg-item"><table><tr>' +
+			'<td><img class="addr-avatar" src="{record.avatar}" width="30" height="30" alt="" /></td>' + 
+			'<td><span class="addr-name">{record.name}</span>' +
+			'<span class="addr-email">{record.email}</span>' + 
+			'</td></tr></table>' +
+		'</li>'
 	});
 </script>
 <!-- End Example 2 -->
@@ -106,11 +134,11 @@
 	#example-3 .sugg-widget.sugg-list-open {
 		border: 1px solid #999;
 		border-bottom: 0;
-		border-radius: 12px 12px 0 0;
+		border-radius: 18px 18px 0 0;
 		box-shadow: 2px 2px 5px rgba(128, 128, 128, 0.4);
 	}
 	#example-3 .sugg-box {
-		border-radius: 12px;
+		border-radius: 14px;
 		padding-left: 0.66em;
 		padding-right: 0.66em;
 		box-shadow: none;
@@ -250,13 +278,16 @@
 
 <!-- Example 8: JSON -->
 <form id="example-8">
-	Example 8: JSON from php (works only on LAMP server):<br />
+	Example 8: JSON from php (demo only works on a LAMP server):<br />
 	<input type="text" name="example_8" value="" />
 </form>
 <script>
 	$('#example-8 input').suggester({
 		dataUrl: 'assets/bodies.php?name=%s',
 		minChars: 1,
+		onBeforeFetch: function(evt) {
+			console.log($.extend({}, evt.jqXHR));
+		},
 		fly: 'up'
 	});
 </script>

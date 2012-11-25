@@ -638,28 +638,39 @@
 		},
 		/**
 		 * Fetch suggestions from an ajax URL
+		 * 
+		 * @param {String} text  The text to search for
+		 * @return {jqXHR}
+		 * @event   BeforeAjax - allows you to edit settings before ajax is sent
+		 * example  instance.bind('BeforeAjax', function(event) {
+		 *              event.settings.type = 'post';
+		 *          });
 		 */
 		fetchResults: function(text) {
 			// TODO: add option to support a custom transport?
 			// TODO: abort on keypress
 			this._searchTerm = text;
-			var params = {
+			var settings = {
 				context: this,
-				beforeSend: this._beforeFetch,
 				url: this.options.dataUrl.replace('%s', text)
 			};
 			if (this.options.dataType == 'json') {
-				params.dataType = 'json';
+				settings.dataType = 'json';
 			}
 			else if (this.options.dataType == 'jsonp') {
-				params.dataType = 'jsonp';
+				settings.dataType = 'jsonp';
 				// jQuery replaces second question mark with callback name
-				params.url = params.url.replace('%s', '?');
+				settings.url = settings.url.replace('%s', '?');
 			}
 			else {
 				throw new Error('jQuery.Suggester#fetchResults: options.dataType must be "json" or "jsonp".');
 			}
-			this._jqXHR = $.ajax(params).done(this._afterFetch);
+			var evt = this.publish('BeforeAjax', {
+				settings: settings,
+				term: text
+			});
+			evt.settings.beforeSend = this._beforeFetch;
+			return $.ajax(evt.settings).done(this._afterFetch);
 		},
 		/**
 		 * Cancel the XHR. Used when user starts typing again before XHR completes
@@ -1067,10 +1078,6 @@
 				// move selection down in suggestion box
 				this.moveSelection('down');			
 			}
-			else {
-				// user clicked away or pressed ESC so reopen suggestion box
-				this.openSuggestBox();
-			}
 		},
 		/**
 		 * Handle BACKSPACE key on this.$input
@@ -1160,14 +1167,16 @@
 		 *     event.jqXHR  the jQuery XHR object (see http://api.jquery.com/jQuery.ajax/#jqXHR)
 		 *     event.term   the term that is being searched for
 		 *     example      instance.bind('BeforeFetch', function(event) {
-		 *                      event.jqHXR.fail(function() {
+		 *                      event.jqXHR.setRequestHeader('something','something');
+		 *                      event.jqXHR.fail(function() {
 		 *                          alert('ajax call failed');
 		 *                      }).always(function() {
 		 *							alert('ajax call finished regardless of success or failure');
 		 *                      });
 		 *                  });
 		 */
-		_beforeFetch: function() {
+		_beforeFetch: function(jqXHR) {
+			this._jqXHR = jqXHR;
 			var evt = this.publish('BeforeFetch', {
 				jqXHR: this._jqXHR,
 				term: this._searchTerm,
