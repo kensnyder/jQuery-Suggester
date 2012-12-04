@@ -294,5 +294,45 @@
 <!-- End Example 8 -->
 
 
+
+<!-- Example 9: absolute positioning -->
+<form id="example-9">
+	Example 9: suggest list positioned relative to body<br />
+	<input type="text" name="example_9" value="" />
+</form>
+<script>
+	$('#example-9 input').suggester({
+		data: bodies, // data from ./assets/js/bodies.js
+		minChars: 1,
+		fly: 'up',
+		suggListPosition: 'absolute'
+	});
+</script>
+<!-- End Example 9 -->
+
+
+
+
+<!-- Example 10: em units -->
+<style>
+	#example-10,
+	#example-10 * {
+		font-size: 20px;
+	}
+</style>
+<form id="example-10">
+	Example 10: the default css uses em units, so setting a larger font size will make everything larger<br />
+	<input type="text" name="example_10" value="" />
+</form>
+<script>
+	$('#example-10 input').suggester({
+		data: bodies, // data from ./assets/js/bodies.js
+		minChars: 1,
+		fly: 'up'
+	});
+</script>
+<!-- End Example 10 -->
+
+
 </body>
 </html>

@@ -4,7 +4,7 @@
  * GitHub: https://github.com/kensnyder/jQuery-Suggester
  * Demos: http://sandbox.kendsnyder.com/Suggester/demo.html
  *
- * Version 1.0, November 2012
+ * Version 1.0, December 2012
  *
  * Turn a text input into a Gmail / Facebook-style auto-complete widget. Features include:
  *   - Load data from a JavaScript object, json, or jsonp
@@ -15,15 +15,15 @@
  *   - You can subscribe to events that allow you to inject custom functionality into nearly every action
  *   - You can define your own HTML structure for the widget output
  *   - Object-oriented structure maskes for easy extendibility
+ *   - 5kb minimized and gzipped
  *  
  * Inspired by the AutoSuggest plugin by Drew Wilson
  *
- * Suggseter is licensed under the MIT license:
+ * Suggester is licensed under the MIT license:
  * http://www.opensource.org/licenses/mit-license.php
  */
-// BUG: can't delete custom tag when it is the last tag
 (function($) { "use strict";
-	// get our document once
+	// get our document and body once
 	var $document = $(document);
 	// Our true constructor function. See jQuery.Suggester.prototype.initialize for documentation
 	$.Suggester = function() {
@@ -48,6 +48,8 @@
 		// if "up", the suggestion box will exist before the input box
 		// a css class of sugg-fly-up or sugg-fly-down is applied to the widget element
 		fly: 'down',
+		// if "absolute", the suggestion box will be appended to <body> and positioned and sized each time it is opened
+		suggListPosition: 'relative',
 		// url to call to get json or jsonp results. Use %s to indicate where search text should be inserted
 		// e.g. http://example.com/myjson?query=%s
 		// e.g. http://example.com/myjsonp?query=%s&callback=%s
@@ -77,6 +79,8 @@
 		prompt: false,
 		// only display this many suggestions
 		maxSuggestions: 10,
+		// if true, add hidden input for each tag (fieldname_ids and fieldname_custom)
+		inputPerTag: true,
 		// if true, wrap first matching substring in a suggestion with <strong class="sugg-match"></strong>
 		hightlightSubstring: true,
 		// the html used to generate the widget
@@ -97,35 +101,41 @@
 					'</ul>' +
 				'</div>' +
 			'</div>',
-		listItemTemplate: null // overrides sugg-item html
+		listItemTemplate: null // overrides .sugg-item html above
 		/* 
 		 * AVAILABLE EVENT OPTIONS
 		 * 
-		 * onInitialize
-		 * onBeforeRender
-		 * onBeforeKeydown
-		 * onBeforeFetch
-		 * onAfterFetch
-		 * onBeforeMove
-		 * onAfterMove
-		 * onBeforeSuggest
-		 * onAfterSuggest
-		 * onBeforeClose
-		 * onAfterClose
-		 * onBeforeFormat
-		 * onAfterFormat
-		 * onBeforeFilter
-		 * onAfterFilter
-		 * onBeforeAddTag
-		 * onAfterAddTag
-		 * onBeforeAddTagCustom
-		 * onAfterAddTagCustom
-		 * onBeforeRemove
-		 * onAfterRemove
+		 * onInitialize       -> see jQuery.Suggester#initialize()
+		 * onBeforeRender     -> see jQuery.Suggester#_render()
+		 * onBeforeHandleKey  -> see jQuery.Suggester#_onKeydown()
+		 * onAfterHandleKey   -> see jQuery.Suggester#_onKeydown()
+		 * onBeforeFetch      -> see jQuery.Suggester#_beforeFetch()
+		 * onAfterFetch       -> see jQuery.Suggester#_afterFetch()
+		 * onBeforeMove       -> see jQuery.Suggester#moveSelection()
+		 * onAfterMove        -> see jQuery.Suggester#moveSelection()
+		 * onBeforeSuggest    -> see jQuery.Suggester#handleSuggestions()
+		 * onAfterSuggest     -> see jQuery.Suggester#handleSuggestions()
+		 * onBeforeOpen       -> see jQuery.Suggester#openSuggstBox()
+		 * onAfterOpen        -> see jQuery.Suggester#openSuggestBox()
+		 * onBeforeClose      -> see jQuery.Suggester#closeSuggestBox()
+		 * onAfterClose       -> see jQuery.Suggester#closeSuggestBox()
+		 * onBeforeFormat     -> see jQuery.Suggester#_formatSuggestion()
+		 * onAfterFormat      -> see jQuery.Suggester#_formatSuggestion()
+		 * onBeforeFilter     -> see jQuery.Suggester#getResults()
+		 * onAfterFilter      -> see jQuery.Suggester#getResults()
+		 * onBeforeAdd        -> see jQuery.Suggester#addRecord()
+		 * onAfterAdd         -> see jQuery.Suggester#addRecord()
+		 * onBeforeRemove     -> see jQuery.Suggester#remove()
+		 * onAfterRemove      -> see jQuery.Suggester#remove()
+		 * onBeforeSave       -> see jQuery.Suggester#save()
+		 * onAfterSave        -> see jQuery.Suggester#save()
 		 */
 	};
 	// Making Suggester a proper class allows two patterns:
-	// var instance = $('selector').suggester(options).suggester('getInstance');
+	// $('selector').suggester(options);
+	// $('selector').suggester('method', arg1, arg2);
+	// var instance = $('selector').suggester('getInstance');
+	// -- OR -- 
 	// var instance = new $.Suggester('selector', options)
 	$.Suggester.prototype = {
 		/**
@@ -153,7 +163,7 @@
 		 * @property {String} listItemTemplate The html to use for suggestion list items
 		 * @property {String} _searchTerm      The search term we are currently searching for
 		 * @property {jqXHR} _jqXHR            The jQuery XHR object used initilized for fetching data - http://api.jquery.com/jQuery.ajax/#jqXHR
-		 * @property {String} _text            The text in the input box that will be used to fetch results
+		 * @property {String} _text            The text in the input box that will be used to fetch results (i.e. what the user just typed)
 		 * 
 		 * @event Initialize - Called after widget is initialized and rendered
 		 */
@@ -243,8 +253,9 @@
 		 * @return {jQuery} The jQuery object containing the newly created label
 		 * 
 		 * @event BeforeAdd - Allows you to prevent it being added or alter the record before adding
-		 *     event.record  The record to be added
-		 *     event.item    The suggestion that was chosen (if any)
+		 *     event.record    The record to be added
+		 *     event.item      The suggestion that was chosen (if any)
+		 *     event.isCustom  If true, the item is not a suggestion
 		 *     example       instance.bind('BeforeAdd', function(event) {
 		 *                        if (evt.record._custom && isSwearWord(evt.record._custom)) {
 		 *                            event.preventDefault();
@@ -264,10 +275,11 @@
 			var evt, id, label, val, idx, $hidden, name, $tag;
 			evt = this.publish('BeforeAdd', {
 				record: record,
-				item: $item
+				item: $item,
+				isCustom: !!record._custom
 			});
 			if (evt.isDefaultPrevented()) {
-				this.saveToOriginalInput();
+				this.save();
 				return undefined;
 			}
 			if (evt.record._custom) {
@@ -290,7 +302,9 @@
 			}
 			// append our hidden input to the widget
 			$hidden = $('<input type="hidden" />').attr('name', name+'[]').val(val);
-			this.$widget.append($hidden);
+			if(this.options.inputPerTag) {
+				this.$widget.append($hidden);
+			}
 			$tag = this.$tagTemplate.clone().data('record', evt.record);
 			// keep a full record of our chosen tag
 			this.tags.push({
@@ -302,7 +316,7 @@
 			$tag.find('.sugg-label').html(label);
 			this.$inputWrapper.before($tag);
 			// set the value of the original input
-			this.saveToOriginalInput();
+			this.save();
 			// trigger our after add event
 			this.publish('AfterAdd', {
 				record: evt.record,
@@ -731,12 +745,56 @@
 		},
 		/**
 		 * Manually open the suggestion box in whatever state it is
-		 * @return {$.Suggestoer}
+		 * @return {jQuery.Suggester}
+		 * @event BeforeOpen  (if event.preventDefault() is called, suggestion box will not open)
+		 *     example  instance.bind('BeforeOpen', function(event) {
+		 *                  event.preventDefault();
+		 *                  alert('No suggestions for you!');
+		 *              });
+		 * @event AfterOpen
+		 *     example  instance.one('AfterOpen', function(event) {
+		 *					this.$suggList.css({
+		 *						borderTopWidth: '10px',
+		 *						borderTopColor: 'red'
+		 *					});
+		 *                  alert('Tip: You may choose an item from the suggestion list.');
+		 *                  this.$suggList.css({
+		 *						borderTopWidth: '0'
+		 *					});
+		 *              });
 		 */
-		openSuggestBox: function() {
+		openSuggestBox: function() {			
+			var evt, bodyOffset, width, height, pos, top, left;
+			if (this.options.suggListPosition == 'absolute') {
+				bodyOffset = $(document.body).offset();
+				pos = this.$box.position();
+				if (this.options.fly == 'up') {
+					// we have to show but set visibility to hidden so that we can get the outerHeight
+					this.$suggList.css('visibility','hidden').show();
+					top = pos.top - bodyOffset.top - this.$box.outerHeight() + this.$box.height() - this.$suggList.outerHeight();
+					this.$suggList.hide().css('visibility','visible');
+				}
+				else {
+					top = pos.top - bodyOffset.top + this.$box.height();
+				}
+				left = pos.left - bodyOffset.left;
+				width = this.$box.outerWidth();
+				this.$suggList.css({
+					top: top+'px',
+					left: left+'px',
+					width: width
+				});		
+			}
+			evt = this.publish('BeforeOpen', {
+				cancellable: true
+			});			
+			if (evt.isDefaultPrevented()) {
+				return this;
+			}
 			this.$suggList.show();
 			this.$widget.addClass('sugg-list-open');
 			$document.bind('click', this._closeOnOutsideClick);
+			this.publish('AfterOpen');
 			return this;			
 		},
 		/**
@@ -885,6 +943,11 @@
 			// the list element that contains all suggestions
 			this.$suggListWrapper = this.$widget.find('.sugg-list-wrapper');
 			this.$suggList = this.$widget.find('.sugg-list');
+			if (this.options.suggListPosition == 'absolute') {
+				this.$suggList.appendTo(document.body);
+				document.body.style.position = 'relative';
+				this.$suggList.css('position','absolute');
+			}
 			// the template html to use for suggestions
 			this.listItemTemplate = this.options.listItemTemplate || this.$suggList.html();			
 			// we got that html, now empty it out
@@ -1282,14 +1345,34 @@
 		/**
 		 * Set the value of the original input to a comma-delimited set of labels
 		 * @return {jQuery.Suggester}
+		 * @event  BeforeSave  (if cancelled, original imput will not be populated with new value)
+		 *     example  instance.bind('BeforeSave', function(event) {
+		 *                  event.newValue += '!';
+		 *              });
+		 * @event  AfterSave
+		 *     example  instance.bind('AfterSave', function(event) {
+		 *                  saveToServer(event.newValue);
+		 *              });
+		 *      
 		 */
-		saveToOriginalInput: function() {
-			var vals = [];
+		save: function() {
+			var vals = [], newValue;
 			this.$box.find('.sugg-label').each(function() {
 				vals.push($(this).text().replace(/,/g, '\\,'));
 			});
-			this.$originalInput.val(vals.join(','));
-			return this;
+			newValue = vals.join(',');
+			var evt = this.publish('BeforeSave', {
+				cancellable: true,
+				newValue: newValue
+			});
+			if (evt.isDefaultPrevented()) {
+				return this.$originalInput.val();
+			}
+			this.$originalInput.val(evt.newValue);
+			this.publish('AfterSave', {
+				newValue: evt.newValue
+			});
+			return evt.newValue;
 		},
 		/**
 		 * Given an id and or label, remove a tag from the internal collection and from the DOM
