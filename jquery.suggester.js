@@ -12,9 +12,10 @@
  *   - Populates original input with chosen tags but also creates hidden inputs with ids and tag text
  *   - Has methods to add a tag programmatically (e.g. user chooses a popular tag)
  *   - CSS is easy to extend and customize
- *   - You can subscribe to events that allow you to inject custom functionality into nearly every action
+ *   - CSS uses em units so that you can easily size the widget however you like
+ *   - You can subscribe to any of 20+ events that allow you to inject custom functionality into nearly every action
  *   - You can define your own HTML structure for the widget output
- *   - Object-oriented structure maskes for easy extendibility
+ *   - Object-oriented structure makes for easy extendibility
  *   - 5kb minimized and gzipped
  *  
  * Inspired by the AutoSuggest plugin by Drew Wilson
@@ -74,12 +75,12 @@
 		// e.g. "Enter tags..."
 		placeholder: '',
 		// message to show when there are no matches
-		noSuggestions: '(Type a comma to create a new tag)',
+		emptyText: '(Type a comma to create a new item)',
 		// message to display when below min char length
 		prompt: false,
 		// only display this many suggestions
 		maxSuggestions: 10,
-		// if true, add hidden input for each tag (fieldname_ids and fieldname_custom)
+		// if true, also add a hidden input for each tag (fieldname_tag[]) for easier server-side processing
 		inputPerTag: true,
 		// if true, wrap first matching substring in a suggestion with <strong class="sugg-match"></strong>
 		hightlightSubstring: true,
@@ -98,6 +99,8 @@
 				'<div class="sugg-list-wrapper">' + 
 					'<ul class="sugg-list" style="display:none">' + // this.$suggList
 						'<li class="sugg-item {record.cssClass}">{record.label}</li>' + // innerHTML is used as this.listItemTemplate unless options.listItemTemplate is set
+						'<li class="sugg-empty"></li>' + // this.$empty
+						'<li class="sugg-prompt"></li>' + // this.$prompt
 					'</ul>' +
 				'</div>' +
 			'</div>',
@@ -471,6 +474,7 @@
 				this.$suggListWrapper.insertAfter(this.$box);
 				this.$widget.addClass('sugg-fly-down').removeClass('sugg-fly-up');
 			}
+			// TODO: support auto?
 			return this;
 		},
 		/**
@@ -552,7 +556,7 @@
 			});
 			return this;
 		},
-/**
+		/**
 		 * Remove the tag with the given id
 		 * 
 		 * @param {String|Number} id
@@ -627,6 +631,9 @@
 		},		
 		/**
 		 * Initiate suggestion process if the input text is >= this.options.minChars
+		 * Otherwise show prompt
+		 * 
+		 * @return {jQuery.Suggester}
 		 */
 		suggestIfNeeded: function() {
 			var text = this.$input.val();
@@ -639,16 +646,35 @@
 			else {
 				this.closeSuggestBox();
 			}			
+			return this;
 		},
+		/**
+		 * Show the prompt text to give a hint to users
+		 * Only called when there are no items and this.options.prompt is truthy
+		 * 
+		 * @return {jQuery.Suggester}
+		 */
 		showPrompt: function() {
-		
-		
-		
-		
-		
-		
-		
-		
+			if (!this.$prompt) {
+				return this;
+			}
+			this.$suggList.html('').append(this.$prompt);
+			this.openSuggestBox();
+			return this;
+		},
+		/**
+		 * Show text indicating there are no suggestions
+		 * Text is defined in this.options.emptyText
+		 * 
+		 * @return {jQuery.Suggester}
+		 */		
+		showEmptyText: function() {
+			if (!this.$empty) {
+				return this;
+			}
+			this.$suggList.html('').append(this.$empty);
+			this.openSuggestBox();
+			return this;
 		},
 		/**
 		 * Fetch suggestions from an ajax URL
@@ -764,7 +790,7 @@
 		 *              });
 		 */
 		openSuggestBox: function() {			
-			var evt, bodyOffset, width, height, pos, top, left;
+			var evt, bodyOffset, width, height, pos, top, left, sugg = this;
 			if (this.options.suggListPosition == 'absolute') {
 				bodyOffset = $(document.body).offset();
 				pos = this.$box.position();
@@ -791,9 +817,11 @@
 			if (evt.isDefaultPrevented()) {
 				return this;
 			}
-			this.$suggList.show();
 			this.$widget.addClass('sugg-list-open');
-			$document.bind('click', this._closeOnOutsideClick);
+			setTimeout(function() {				
+				$document.bind('click', sugg._closeOnOutsideClick);
+			},0);
+			this.$suggList.show();
 			this.publish('AfterOpen');
 			return this;			
 		},
@@ -824,21 +852,8 @@
 		 * Focus cursor on text input box
 		 */
 		focus: function() {
-			// trigger our jQuery-attached focus callback to clear out placeholder text if needed
-			this.$input.triggerHandler('focus');
 			// use the dom method to focus
 			this.$input[0].focus();
-			return this;
-		},
-		/**
-		 * Show the empty text to show user when no suggestions are found
-		 * @return {jQuery.Suggester}
-		 */
-		showEmptyText: function() {
-			if (this.options.emptyText) {
-				this.$suggList.html(this.options.emptyTemplate);
-			}
-			this.closeSuggestBox();
 			return this;
 		},
 		/**
@@ -947,7 +962,10 @@
 				this.$suggList.appendTo(document.body);
 				document.body.style.position = 'relative';
 				this.$suggList.css('position','absolute');
-			}
+			}			
+			// nodes to use for no suggestions and prompt
+			this.$empty = this.$suggList.find('.sugg-empty').html(this.options.emptyText).remove();
+			this.$prompt = this.$suggList.find('.sugg-prompt').html(this.options.prompt || '').remove();
 			// the template html to use for suggestions
 			this.listItemTemplate = this.options.listItemTemplate || this.$suggList.html();			
 			// we got that html, now empty it out
@@ -1007,9 +1025,13 @@
 		 * Event handler for when this.$input is focused
 		 */
 		_onInputFocus: function(evt) {
+			var currVal = this.$input.val();
 			this.unfocusTag();
-			if (this.$input.val() == this.options.placeholder) {
+			if (currVal == this.options.placeholder) {
 				this.$input.val('');
+			}
+			if (!!this.options.prompt && currVal == '') {
+				this.showPrompt();
 			}
 		},
 		/**
@@ -1452,6 +1474,7 @@
 			this.once = $.proxy(this.pubsub, 'once');
 			this.unbind = $.proxy(this.pubsub, 'unbind');
 			this.trigger = $.proxy(this.pubsub, 'trigger');
+			this.triggerHandler = $.proxy(this.pubsub, 'triggerHandler');
 			// bind listeners passed in the options (e.g. onInitialize)
 			for (var name in this.options) {
 				if (name.match(/^on[A-Z0-9]/) && typeof this.options[name] == 'function') {

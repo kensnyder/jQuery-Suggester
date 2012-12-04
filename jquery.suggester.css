@@ -78,7 +78,9 @@
 	bottom: 0;
 	box-shadow: 2px -2px 5px rgba(128,128,128,0.40);
 }
-.sugg-item {
+.sugg-item,
+.sugg-empty,
+.sugg-prompt {
 	list-style-type: none;
 	margin: 0;
 	padding: 0.25em 0.5em;

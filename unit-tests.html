@@ -221,12 +221,16 @@
 		setTimeout(function() {
 			strictEqual($('.sugg-item').length, 1);
 			strictEqual($('.sugg-item').eq(0).text(), 'Venus');
-			start();
-			$(document).trigger({
-				type: "click",
-				target: document.body
-			});
-			strictEqual($('.sugg-list:visible').length, 0);
+			setTimeout(function() {
+				$(document).trigger({
+					type: "click",
+					target: document.body
+				});
+				setTimeout(function() {
+					strictEqual($('.sugg-list:visible').length, 0);
+					start();									
+				}, 1)
+			}, 1);
 		}, 1);
 	});
 	asyncTest("Close by Esc key", function() {
