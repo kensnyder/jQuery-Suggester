@@ -337,5 +337,28 @@
 <!-- End Example 10 -->
 
 
+
+
+<!-- Example 11: single select -->
+<style>
+	
+</style>
+<form id="example-11">
+	Example 11: single select<br />
+	<input type="text" name="example_11" value="" />
+</form>
+<script>
+	$('#example-11 input').suggester({
+		data: bodies, // data from ./assets/js/bodies.js
+		multiselect: false,
+		minChars: 0,
+		fly: 'down'
+	});
+</script>
+<!-- End Example 11 -->
+
+<div style="height:400px"></div>
+
+
 </body>
 </html>

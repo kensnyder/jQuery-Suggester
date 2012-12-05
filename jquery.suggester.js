@@ -59,6 +59,8 @@
 		// if json, url needs to have "callback" in the format http://example.com/myjsonp?query=%s&mycallback=%s
 		// to handle xml, you'll need to register a BeforeFetch and afterFetch or overwrite the fetchResults function
 		dataType: 'json',
+		// if true, allow multiple selections
+		multiselect: true,
 		// if true, the first tag will be removed when a duplicate is typed in
 		preventDuplicates: true,
 		// if true, don't suggest items that have already been chosen as tags
@@ -81,7 +83,7 @@
 		// only display this many suggestions
 		maxSuggestions: 10,
 		// if true, also add a hidden input for each tag (fieldname_tag[]) for easier server-side processing
-		inputPerTag: true,
+		addHiddenInputs: true,
 		// if true, wrap first matching substring in a suggestion with <strong class="sugg-match"></strong>
 		hightlightSubstring: true,
 		// the html used to generate the widget
@@ -151,8 +153,7 @@
 		 * @property {Object} options          The options passed to the constructor (see jQuery.Suggester.defaultOptions)
 		 * @property {Object[]} data           Static data used instead of an ajax call
 		 * @property {Object[]} tags           A collection of information about each tag that has been added (each item has properties record, $tag, and $hidden)
-		 * @property {String} hiddenName       The name to use for hidden element ids (defaults to the original input's name plus "_ids")
-		 * @property {String} customHiddenName The name to use for hidden element custom tags (defaults to the original input's name plus "_custom
+		 * @property {String} hiddenName       The name to use for hidden element ids (defaults to the original input's name plus "_itags[]")
 		 * @property {jQuery} $focusedTag      The tag that is selected for deletion
 		 * @property {jQuery} $currentItem     The currently selected suggestion
 		 * @property {jQuery} pubsub           The publish and subscribe handle
@@ -191,9 +192,7 @@
 			// a collection of tags and tag data
 			this.tags = [];
 			// the name given to the hidden $input elements
-			this.hiddenName = this.$originalInput.attr('name') + '_ids';
-			// the name given to the hidden $input elements that are unknown tags
-			this.customHiddenName = this.$originalInput.attr('name') + '_custom';
+			this.hiddenName = this.$originalInput.attr('name') + '_tags[]';
 			// the tag that is clicked to prepare for deletion
 			this.$focusedTag = false;
 			// the currently selected suggestion
@@ -239,7 +238,7 @@
 		},
 		/**
 		 * Add a tag by label, or any custom text
-		 * @param {String} the label text
+		 * @param {String} label  the label text
 		 * @return {jQuery} The jQuery object containing the newly created label
 		 */
 		addLabel: function(label) {
@@ -275,7 +274,7 @@
 		 *                   });
 		 */
 		addRecord: function(record, $item/* optional*/) {
-			var evt, id, label, val, idx, $hidden, name, $tag;
+			var evt, id, label, val, idx, $hidden, $tag;
 			evt = this.publish('BeforeAdd', {
 				record: record,
 				item: $item,
@@ -287,14 +286,10 @@
 			}
 			if (evt.record._custom) {
 				label = evt.record._custom;
-				name = this.customHiddenName;
-				val = label;
 			}
 			else {
 				id = evt.record[this.options.idProperty];
 				label = evt.record[this.options.labelProperty];
-				name = this.hiddenName;
-				val = id;
 			}
 			if (this.options.preventDuplicates) {				
 				idx = this._findTag(id, label);
@@ -304,8 +299,8 @@
 				}
 			}
 			// append our hidden input to the widget
-			$hidden = $('<input type="hidden" />').attr('name', name+'[]').val(val);
-			if(this.options.inputPerTag) {
+			$hidden = $('<input type="hidden" />').attr('name', this.hiddenName+'[]').val(label);
+			if(this.options.addHiddenInputs) {
 				this.$widget.append($hidden);
 			}
 			$tag = this.$tagTemplate.clone().data('record', evt.record);
@@ -313,11 +308,17 @@
 			this.tags.push({
 				record: evt.record, 
 				$tag: $tag, 
-				$hidden: $hidden
+				$hidden: $hidden,
+				value: label
 			});
 			// set the label's display text
-			$tag.find('.sugg-label').html(label);
-			this.$inputWrapper.before($tag);
+			if (this.options.multiselect) {
+				$tag.find('.sugg-label').html(label);
+				this.$inputWrapper.before($tag);
+			}
+			else {
+				this.$input.val(label);
+			}
 			// set the value of the original input
 			this.save();
 			// trigger our after add event
@@ -1091,7 +1092,9 @@
 			}
 			this.addRecord($target.data('record'), $target);
 			this.closeSuggestBox();
-			this.$input.val('');
+			if (this.options.multiselect) {
+				this.$input.val('');
+			}
 			this.focus();
 		},
 		/**
@@ -1205,7 +1208,9 @@
 			}
 			this.$currentItem = null;
 			this.addLabel(this.$input.val());
-			this.$input.val('');
+			if (this.options.multiselect) {
+				this.$input.val('');
+			}
 			this.closeSuggestBox();
 		},
 		/**
@@ -1221,7 +1226,9 @@
 			if (this.$currentItem) {
 				// add the item that was selected via arrow or hover
 				this.addRecord(this.$currentItem.data('record'), this.$currentItem);
-				this.$input.val('');
+				if (this.options.multiselect) {
+					this.$input.val('');
+				}
 				this.closeSuggestBox();
 				this.$currentItem = null;
 			}
@@ -1379,8 +1386,8 @@
 		 */
 		save: function() {
 			var vals = [], newValue;
-			this.$box.find('.sugg-label').each(function() {
-				vals.push($(this).text().replace(/,/g, '\\,'));
+			$.each(this.tags, function() {
+				vals.push(this.value.replace(/,/g, '\\,'));
 			});
 			newValue = vals.join(',');
 			var evt = this.publish('BeforeSave', {
