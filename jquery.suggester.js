@@ -72,8 +72,14 @@
 		minChars: 3,
 		// the number of milliseconds between keystrokes before the suggestion lookup begins
 		keyDelay: 400,
+		// If true, typing a comma will add the current text as a tag
+		addOnComma: true,
+		// If true, typing a tab will add the current text as a tag
+		addOnTab: true,
 		// if false, prevent the form from submitting when the user presses enter on the empty input
 		submitOnEnter: false,
+		// Manually set the input size property to a certain width. If auto, set size to text width
+		inputSize: 'auto',
 		// placeholder text to display when no tags are present
 		// e.g. "Enter tags..."
 		placeholder: '',
@@ -228,6 +234,7 @@
 		/**
 		 * Add a tag by a record
 		 * @param {String} value  the tag to add
+		 * @param {String} label  the text to display in the new tag
 		 * @param {jQuery} $item  Set when the record is added by choosing from the suggestion box
 		 * @return {jQuery} The jQuery object containing the newly created label
 		 * 
@@ -900,7 +907,8 @@
 			// the template for tags
 			this.$tagTemplate = this.$box.find('.sugg-tag').remove();
 			// the text input used to type tags
-			this.$input = this.$box.find('.sugg-input').val(this.options.placeholder || '').prop('size', 2);
+			this.$input = this.$box.find('.sugg-input').val(this.options.placeholder || '');
+			this.$input.prop('size', this.options.inputSize == 'auto' ? 2 : this.options.inputSize);
 			// the wrapper for that text input
 			this.$inputWrapper = this.$box.find('.sugg-input-wrapper');
 			// the list element that contains all suggestions
@@ -1076,7 +1084,10 @@
 			else if (evt.which == 8) { // Backspace
 				this._key_BACKSPACE(evt);
 			}
-			else if (evt.which == 9 || evt.which == 188) {
+			else if (
+				(this.options.addOnTab && evt.which == 9) || 
+				(this.options.addOnComma && evt.which == 188)
+			) {
 				this._key_TAB_COMMA(evt);
 			}
 			else if (evt.which == 27) { // Esc
@@ -1088,7 +1099,9 @@
 			else { // other keys
 				this._key_other(evt);
 			}
-			this.$input.prop('size', this.$input.val().length + 2);
+			if (this.options.inputSize == 'auto') {
+				this.$input.prop('size', this.$input.val().length + 2);
+			}
 			this.publish('AfterHandleKey', {
 				event: evt
 			});

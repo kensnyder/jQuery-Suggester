@@ -174,12 +174,9 @@
 			});
 		},
 		preventSubmit: false,
-		onBeforeHandleKey: function(event) {
-			// allow commas and tabs to have normal effect
-			if (event.event.which == 9 || event.event.which == 188) {
-				event.preventDefault();
-			}
-		},
+		addOnComma: false,
+		addOnTab: false,
+		inputSize: 60,
 		onBeforeAdd: function(event) {
 			event.preventDefault();
 			if (event.record && event.record.prefix) {
