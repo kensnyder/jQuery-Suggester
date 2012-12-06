@@ -78,6 +78,10 @@
 	bottom: 0;
 	box-shadow: 2px -2px 5px rgba(128,128,128,0.40);
 }
+.sugg-empty-shown .sugg-list,
+.sugg-prompt-shown .sugg-list {
+	box-shadow: none;
+}
 .sugg-item,
 .sugg-empty,
 .sugg-prompt {
@@ -88,6 +92,11 @@
 	border-bottom: none;
 	background-color: #fff;
 	cursor: default;
+}
+.sugg-empty,
+.sugg-prompt {
+	background-color: #f0f0f0;
+	font-style: italic;
 }
 .sugg-item.sugg-selected {
 	border-top: 1px solid #3674D4;

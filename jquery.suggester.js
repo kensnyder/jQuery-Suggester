@@ -615,6 +615,7 @@
 			}
 			this.$suggList.html('').append(this.$prompt);
 			this.openSuggestBox();
+			this.$widget.addClass('sugg-prompt-shown');
 			return this;
 		},
 		/**
@@ -629,6 +630,7 @@
 			}
 			this.$suggList.html('').append(this.$empty);
 			this.openSuggestBox();
+			this.$widget.addClass('sugg-empty-shown');
 			return this;
 		},
 		/**
@@ -773,7 +775,10 @@
 			if (evt.isDefaultPrevented()) {
 				return this;
 			}
-			this.$widget.addClass('sugg-list-open');
+			this.$widget
+				.addClass('sugg-list-open')
+				.removeClass('sugg-prompt-shown')
+				.removeClass('sugg-empty-shown');
 			setTimeout(function() {				
 				$document.bind('click', sugg._closeOnOutsideClick);
 			}, 0);
