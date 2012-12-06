@@ -6,7 +6,7 @@ $data = json_decode($json);
 $matches = array();
 $i = 0;
 foreach ($data as $body) {
-	if (stripos($body->label, @$_GET['name']) !== false) {
+	if (stripos($body->value, @$_GET['name']) !== false) {
 		$matches[++$i] = $body;
 	}
 	if ($i >= 10) {

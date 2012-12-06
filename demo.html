@@ -290,11 +290,7 @@
 <script>
 	$('#example-8 input').suggester({
 		dataUrl: 'assets/bodies.php?name=%s',
-		minChars: 1,
-		onBeforeFetch: function(evt) {
-			console.log($.extend({}, evt.jqXHR));
-		},
-		fly: 'up'
+		minChars: 1
 	});
 </script>
 <!-- End Example 8 -->
@@ -310,7 +306,6 @@
 	$('#example-9 input').suggester({
 		data: bodies, // data from ./assets/js/bodies.js
 		minChars: 1,
-		fly: 'up',
 		suggListPosition: 'absolute'
 	});
 </script>
@@ -340,8 +335,7 @@
 		data: bodies, // data from ./assets/js/bodies.js
 		multiselect: false,
 		minChars: 0,
-		maxSuggestions: 0,
-		fly: 'down'
+		maxSuggestions: 0
 	});
 </script>
 <!-- End Example 10 -->
