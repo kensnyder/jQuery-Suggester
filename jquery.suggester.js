@@ -160,7 +160,7 @@
 		 * @property {Object} options          The options passed to the constructor (see jQuery.Suggester.defaultOptions)
 		 * @property {Object[]} data           Static data used instead of an ajax call
 		 * @property {Object[]} tags           A collection of information about each tag that has been added (each item has properties record, $tag, and $hidden)
-		 * @property {String} hiddenName       The name to use for hidden element ids (defaults to the original input's name plus "_itags[]")
+		 * @property {String} hiddenName       The name to use for hidden element ids (defaults to the original input's name plus "_tags[]")
 		 * @property {jQuery} $focusedTag      The tag that is selected for deletion
 		 * @property {jQuery} $currentItem     The currently selected suggestion
 		 * @property {jQuery} pubsub           The publish and subscribe handle
@@ -281,7 +281,7 @@
 			}
 			// append our hidden input to the widget
 			if(this.options.addHiddenInputs) {
-				$hidden = $('<input type="hidden" />').attr('name', this.hiddenName+'[]').val(value);
+				$hidden = $('<input type="hidden" />').attr('name', this.hiddenName).val(value);
 				this.$widget.append($hidden);
 			}
 			$tag = this.$tagTemplate.clone().data('tag-value', evt.value).data('tag-label', evt.label);
