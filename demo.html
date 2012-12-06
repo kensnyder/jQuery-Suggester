@@ -165,19 +165,25 @@
 		keyDelay: 0,
 		minChars: 1,
 		labelProperty: 'id',
-		listItemTemplate: '<li class="sugg-item result-{record.cssClass}">{record.prefix} <strong>{record.label}</strong></li>',
+		listItemTemplate: '<li class="sugg-item result-{record.cssClass}">{record.prefix} <strong>{record.value}</strong></li>',
 		onAfterFilter: function(event) {
 			event.results.unshift({
 				cssClass: 'search',
 				prefix: 'Posts containing the text',
-				label: '"' + event.text + '"'
+				value: '"' + event.text + '"'
 			});
 		},
 		preventSubmit: false,
+		onBeforeHandleKey: function(event) {
+			// allow commas and tabs to have normal effect
+			if (event.event.which == 9 || event.event.which == 188) {
+				event.preventDefault();
+			}
+		},
 		onBeforeAdd: function(event) {
 			event.preventDefault();
-			if (event.record.prefix) {
-				alert('This is where you would initiate search for ' + event.record.prefix + ' ' + event.record.label);
+			if (event.record && event.record.prefix) {
+				alert('This is where you would initiate search for ' + event.record.prefix + ' ' + event.record.value);
 			}
 			else {
 				alert('This is where you would initiate search for Posts containing the text "' + e3.$input.val() + '"');
@@ -207,7 +213,7 @@
 		minChars: 1
 	});
 	$('#example-4 a').click(function() {
-		e4.addLabel(this.innerHTML);
+		e4.add(this.innerHTML);
 		return false;
 	});
 </script>
@@ -269,7 +275,7 @@
 </form>
 <script>
 	$('#example-7 input').suggester({
-		data: bodies, // data from ./assets/js/bodies.js
+		data: ["First Baseman","Second Baseman","Short Stop","Third Baseman","Pitcher","Catcher","Left Fielder","Center Fielder","Right Fielder","Designated Hitter"],
 		keyDelay: 0,
 		minChars: 1,
 		fly: 'up'
@@ -300,7 +306,7 @@
 
 <!-- Example 9: absolute positioning -->
 <form id="example-9">
-	Example 9: suggest list positioned relative to body<br />
+	Example 9: suggest list positioned relative to &lt;body&gt;<br />
 	<input type="text" name="example_9" value="" />
 </form>
 <script>

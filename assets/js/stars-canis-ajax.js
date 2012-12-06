@@ -1,11 +1,9 @@
 [
 	{
-		"id": 152,
-		"label": "Canis Major",
+		"value": "Canis Major",
 		"cssClass": "constellation"
 	}, {
-		"id": 160,
-		"label": "Canis Minor",
+		"value": "Canis Minor",
 		"cssClass": "constellation"
 	}	
 ]

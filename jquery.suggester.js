@@ -37,12 +37,12 @@
 	$.Suggester.defaultOptions = {
 		// data to use instead of an ajax call
 		data: false,
-		// name of object property that should be used as the id
-		idProperty: "id",            
-		// name of object property that should be used as the tag display text
-		labelProperty: "label",      
+		// name of object property that should be used as the tag's hidden value
+		valueProperty: "value",      
+		// name of object property that should be used as the tag's display text
+		labelProperty: "value",      
 		// array of object property names that should be searched
-		searchProperties: ["label"],
+		searchProperties: ["value"],
 		// where to match when finding suggestions. anywhere|start|end or an integer
 		matchAt: 'anywhere',
 		// which way should the suggestion box fly
@@ -68,6 +68,7 @@
 		// if true, fine matches regardless of case
 		caseSensitive: false,
 		// the minimum number of characters a user must type before the suggestion box will appear
+		// if 0, show choices when input is simply focused (like a <select>)
 		minChars: 3,
 		// the number of milliseconds between keystrokes before the suggestion lookup begins
 		keyDelay: 400,
@@ -100,7 +101,7 @@
 				'</ul>' +
 				'<div class="sugg-list-wrapper">' + 
 					'<ul class="sugg-list" style="display:none">' + // this.$suggList
-						'<li class="sugg-item {record.cssClass}">{record.label}</li>' + // innerHTML is used as this.listItemTemplate unless options.listItemTemplate is set
+						'<li class="sugg-item {record.cssClass}">{record.value}</li>' + // innerHTML is used as this.listItemTemplate unless options.listItemTemplate is set
 						'<li class="sugg-empty"></li>' + // this.$empty
 						'<li class="sugg-prompt"></li>' + // this.$prompt
 					'</ul>' +
@@ -128,8 +129,8 @@
 		 * onAfterFormat      -> see jQuery.Suggester#_formatSuggestion()
 		 * onBeforeFilter     -> see jQuery.Suggester#getResults()
 		 * onAfterFilter      -> see jQuery.Suggester#getResults()
-		 * onBeforeAdd        -> see jQuery.Suggester#addRecord()
-		 * onAfterAdd         -> see jQuery.Suggester#addRecord()
+		 * onBeforeAdd        -> see jQuery.Suggester#add()
+		 * onAfterAdd         -> see jQuery.Suggester#add()
 		 * onBeforeRemove     -> see jQuery.Suggester#remove()
 		 * onAfterRemove      -> see jQuery.Suggester#remove()
 		 * onBeforeSave       -> see jQuery.Suggester#save()
@@ -188,7 +189,7 @@
 			// our options are default options plus given options
 			this._processOptions(options);
 			// the preloaded list of suggestion records
-			this.data = this.options.data || [];		
+			this.setData(this.options.data || []);		
 			// a collection of tags and tag data
 			this.tags = [];
 			// the name given to the hidden $input elements
@@ -225,41 +226,17 @@
 			});
 		},		
 		/**
-		 * Add a tag by id
-		 * @param {String|Number}
-		 * @return {jQuery|undefined} A jQuery object containing the new tag element
-		 */
-		addId: function(id) {
-			var record = this.findRecordById(id);
-			if (record) {
-				return this.addRecord(record);
-			}
-			return undefined;
-		},
-		/**
-		 * Add a tag by label, or any custom text
-		 * @param {String} label  the label text
-		 * @return {jQuery} The jQuery object containing the newly created label
-		 */
-		addLabel: function(label) {
-			var record = this.findRecordByLabel(label);
-			if (!record) {
-				record = {_custom:label};
-			}
-			return this.addRecord(record);
-		},
-		/**
 		 * Add a tag by a record
-		 * @param {Object} record  the record to add
+		 * @param {String} value  the tag to add
 		 * @param {jQuery} $item  Set when the record is added by choosing from the suggestion box
 		 * @return {jQuery} The jQuery object containing the newly created label
 		 * 
 		 * @event BeforeAdd - Allows you to prevent it being added or alter the record before adding
-		 *     event.record    The record to be added
+		 *     event.value     The tag to be added
 		 *     event.item      The suggestion that was chosen (if any)
 		 *     event.isCustom  If true, the item is not a suggestion
 		 *     example       instance.bind('BeforeAdd', function(event) {
-		 *                        if (evt.record._custom && isSwearWord(evt.record._custom)) {
+		 *                        if (isSwearWord(evt.value)) {
 		 *                            event.preventDefault();
 		 *                            alert('Tags cannot be swear words');
 		 *                        }
@@ -273,61 +250,58 @@
 		 *                        event.tag.fadeIn(500);
 		 *                   });
 		 */
-		addRecord: function(record, $item/* optional*/) {
-			var evt, id, label, val, idx, $hidden, $tag;
+		add: function(value, label/*optional*/, $item/*optional*/) {
+			var evt, idx, $hidden, $tag;
+			if (typeof label != 'string') {
+				label = value;
+			}
 			evt = this.publish('BeforeAdd', {
-				record: record,
+				value: value,
+				label: label,
 				item: $item,
-				isCustom: !!record._custom
+				record: $item ? $item.data('tag-record') : undefined
 			});
 			if (evt.isDefaultPrevented()) {
 				this.save();
 				return undefined;
 			}
-			if (evt.record._custom) {
-				label = evt.record._custom;
-			}
-			else {
-				id = evt.record[this.options.idProperty];
-				label = evt.record[this.options.labelProperty];
-			}
 			if (this.options.preventDuplicates) {				
-				idx = this._findTag(id, label);
+				idx = this.getTagIndex(value);
 				if (idx > -1) {
 					// duplicate: remove old and continue to add new so that new one will be at the end
 					this._spliceTagByIdx(idx);
 				}
 			}
 			// append our hidden input to the widget
-			$hidden = $('<input type="hidden" />').attr('name', this.hiddenName+'[]').val(label);
 			if(this.options.addHiddenInputs) {
+				$hidden = $('<input type="hidden" />').attr('name', this.hiddenName+'[]').val(value);
 				this.$widget.append($hidden);
 			}
-			$tag = this.$tagTemplate.clone().data('record', evt.record);
+			$tag = this.$tagTemplate.clone().data('tag-value', evt.value).data('tag-label', evt.label);
 			// keep a full record of our chosen tag
 			this.tags.push({
-				record: evt.record, 
 				$tag: $tag, 
 				$hidden: $hidden,
-				value: label
+				value: evt.value,
+				label: evt.label
 			});
 			// set the label's display text
 			if (this.options.multiselect) {
-				$tag.find('.sugg-label').html(label);
+				$tag.find('.sugg-label').html(evt.label);
 				this.$inputWrapper.before($tag);
 			}
 			else {
-				this.$input.val(label);
+				this.$input.val(evt.value);
 			}
 			// set the value of the original input
 			this.save();
 			// trigger our after add event
 			this.publish('AfterAdd', {
-				record: evt.record,
 				item: $item,
 				tag: $tag,
 				hidden: $hidden,
-				value: val
+				value: evt.value,
+				label: evt.label
 			});
 			return $tag;
 		},
@@ -437,8 +411,18 @@
 		 * @params {Object[]} data  More records in the same object format as initially set
 		 * @return {jQuery.Suggester}
 		 */
-		addData: function(data) {
-			this.data = this.data.concat(data);
+		addData: function(data) {			
+			var i, len, record;
+			if (data.length > 0 && typeof data[0] != 'object') {
+				for (i = 0, len = data.length; i < len; i++) {
+					record = {};
+					record[this.options.valueProperty] = ''+data[i];
+					this.data.push(record);
+				}
+			}
+			else {
+				this.data = this.data.concat(data);			
+			}
 			return this;
 		},
 		/**
@@ -448,7 +432,8 @@
 		 * @return {jQuery.Suggester}
 		 */		
 		setData: function(data) {
-			this.data = data;
+			this.data = [];
+			this.addData(data);
 			return this;
 		},
 		/**
@@ -519,94 +504,56 @@
 			return this;
 		},
 		/**
-		 * Remove a tag given its jQuery element or record (or HTML element)
-		 * @param {jQuery|Object|HTMLElement} $tag  the tag to remove
+		 * Remove a tag given its text or jQuery element or HTML element
+		 * @param {String|jQuery|HTMLElement} $tag  the tag to remove
 		 * @return {jQuery.Suggester}
 		 */
 		remove: function($tag) {
-			var record, evt, id, label, info;
+			var evt, value, removed;
 			if (typeof $tag.nodeType == 'number' && typeof $tag.style == 'object') {
 				$tag = $($tag);
 			}
 			if ($tag instanceof $) {
-				record = $tag.data('record');
+				value = $tag.data('tag-value');
 			}
 			else {
-				record = $tag;
+				value = $tag;
+				$tag = false;
+				$.each(this.tags, function() {
+					if (value == this.value) {
+						$tag = this.$tag;
+						return false;
+					}
+				});
 			}
 			evt = this.publish('BeforeRemove', {
 				tag: $tag,
-				record: record,
+				value: value,
 				cancellable: true
 			});
 			if (evt.isDefaultPrevented()) {
-				// don't remove anything
-			}
-			else if (!evt.record) {
-				evt.tag.remove();
-			}
-			else {
-				id = evt.record[this.options.idProperty];
-				label = evt.record._custom || evt.record[this.options.labelProperty];
-				info = this._spliceTag(id, label);
-			}
+				return this;
+			}			
+			removed = this._spliceTag(evt.value);
 			this.publish('AfterRemove', {
 				tag: evt.tag,
-				record: evt.record,
-				info: info
+				value: value,
+				removed: removed
 			});
 			return this;
 		},
 		/**
-		 * Remove the tag with the given id
+		 * Find a suggestion record by text
 		 * 
-		 * @param {String|Number} id
-		 * @return {jQuery.Suggester}
-		 */
-		removeId: function(id) {
-			this._spliceTag(id, undefined);
-			return this;
-		},
-		/**
-		 * Remove a tag with the given label
-		 * 
-		 * @param {String|Number} label
-		 * @return {jQuery.Suggester}
-		 */
-		removeLabel: function(label) {
-			this._spliceTag(undefined, label);
-			return this;
-		},
-		/**
-		 * Find a suggestion record by id
-		 * 
-		 * @param {String|Number} id
-		 * @return {Object}
-		 */
-		findRecordById: function(id) {
-			var record, idProp;
-			idProp = this.options.idProperty;
-			$.each(this.getData(), function(i, item) {	
-				if (item[idProp] == id) {
-					record = item;
-					return false;
-				}
-			});		
-			return record;
-		},
-		/**
-		 * Find a suggestion record by label
-		 * 
-		 * @param {String|Number} label
+		 * @param {String} text
 		 * @return {Object}
 		 */		
-		findRecordByLabel: function(label) {
+		findRecord: function(text) {
 			var record, sugg, _break;
 			_break = {};
-			label = ''+label;
 			record = false;
 			if (!this.options.caseSensitive) {
-				label = label.toLowerCase();
+				text = text.toLowerCase();
 			}
 			sugg = this;
 			try {
@@ -616,7 +563,7 @@
 						if (!sugg.options.caseSensitive) {
 							value = value.toLowerCase();
 						}
-						if (value == label) {
+						if (value == text) {
 							record = item;
 							throw _break; // break out of both loops
 						}
@@ -749,7 +696,7 @@
 			$.each(records, function() {
 				// TODO: format suggestion
 				var $suggestion = $(sugg._formatSuggestion(this, sugg._text));
-				$suggestion.data('record', this);
+				$suggestion.data('tag-record', this);
 				sugg.$suggList.append($suggestion);
 			});
 			var evt = this.publish('BeforeSuggest', {
@@ -872,8 +819,8 @@
 			}			
 			var sugg = this;
 			var results = [];
-			$.each(this.getData(), function(i, record) {	
-				if (sugg.options.omitAlreadyChosenItems && sugg._tagExists(record)) {
+			$.each(this.getData(), function(i, record) {				
+				if (sugg.options.omitAlreadyChosenItems && sugg.getTagIndex(record[sugg.options.valueProperty]) > -1) {
 					// tag already exists so don't suggest it
 					// skip loop
 					return;
@@ -993,7 +940,7 @@
 				var sugg = this;
 				$.each(existingTags, function() {
 					// add each tag by its label; this.$originalInput will get repopulated automatically
-					sugg.addLabel($.trim(this.replace(/\u0001/g, '')));
+					sugg.add($.trim(this.replace(/\u0001/g, '')));
 				});
 			}			
 		},
@@ -1090,7 +1037,8 @@
 			if (!$target.hasClass('sugg-item')) {
 				return;
 			}
-			this.addRecord($target.data('record'), $target);
+			var record = $target.data('tag-record');
+			this.add(record[this.options.valueProperty], record[this.options.labelProperty], $target);
 			this.closeSuggestBox();
 			if (this.options.multiselect) {
 				this.$input.val('');
@@ -1207,7 +1155,7 @@
 				return;
 			}
 			this.$currentItem = null;
-			this.addLabel(this.$input.val());
+			this.add(this.$input.val());
 			if (this.options.multiselect) {
 				this.$input.val('');
 			}
@@ -1225,7 +1173,8 @@
 		_key_ENTER: function(evt) {
 			if (this.$currentItem) {
 				// add the item that was selected via arrow or hover
-				this.addRecord(this.$currentItem.data('record'), this.$currentItem);
+				var record = this.$currentItem.data('tag-record');
+				this.add(record[this.options.valueProperty], record[this.options.labelProperty], this.$currentItem);
 				if (this.options.multiselect) {
 					this.$input.val('');
 				}
@@ -1348,7 +1297,7 @@
 			}
 			else {
 				options = this.options;
-				label = record[options.labelProperty];
+				label = record[options.valueProperty];
 				// handle case insensitive replacements
 				replacer = options.caseSensitive ? evt.substr : new RegExp('(' + evt.substr + ')', 'i');
 				replacee = options.caseSensitive ? evt.substr : '$1';
@@ -1356,7 +1305,7 @@
 				html = this.listItemTemplate.replace(/\{record\.(.+?)\}/g, function($0, $1) {
 					var replacement = evt.record[$1];
 					if (typeof replacement == 'string' || !!replacement) {
-						if ($1 == options.labelProperty && options.hightlightSubstring) {						
+						if ($1 == options.valueProperty && options.hightlightSubstring) {						
 							replacement = replacement.replace(replacer, '<strong class="sugg-match">' + replacee + '</strong>');
 						}
 						return replacement;
@@ -1404,14 +1353,13 @@
 			return evt.newValue;
 		},
 		/**
-		 * Given an id and or label, remove a tag from the internal collection and from the DOM
+		 * Given tag text, remove a tag from the internal collection and from the DOM
 		 * 
-		 * @param {String|Number} id  The id of the tag
-		 * @param {String} label      The label of the tag
+		 * @param {String} value      The text of the tag
 		 * @return {Object}  The record associated with that tag
 		 */
-		_spliceTag: function(id, label) {
-			var idx = this._findTag(id, label);			
+		_spliceTag: function(value) {
+			var idx = this.getTagIndex(value);			
 			if (idx > -1) {
 				return this._spliceTagByIdx(idx);
 			}
@@ -1420,7 +1368,7 @@
 		/**
 		 * Given an array index, remove a tag from the internal collection and from the DOM
 		 * 
-		 * @param {Number} id  The index position in the internal collection
+		 * @param {Number} idx  The index position in the internal collection
 		 * @return {Object}  The record associated with that tag
 		 */		
 		_spliceTagByIdx: function(idx) {
@@ -1431,42 +1379,20 @@
 			return info;
 		},
 		/**
-		 * Find a tag given an id and or label
+		 * Find a tag given value
 		 * 
-		 * @param {String|Number} id  The id of the tag
-		 * @param {String} label      The label of the tag
+		 * @param {String} value      The text of the tag
 		 * @return {Number}  The index position of the tag in the internal collection or -1 if not found
 		 */
-		_findTag: function(id, label) {
-			var idx = -1, sugg;
-			sugg = this;
-			$.each(sugg.tags, function(i, info) {
-				if (
-					(id && info.record[sugg.options.idProperty] == id)
-					|| (label && info.record[sugg.options.labelProperty] == label)
-					|| (label && info.record._custom == label)
-				) {
+		getTagIndex: function(value) {
+			var idx = -1, i, len;
+			for (i = 0, len = this.tags.length; i < len; i++) {
+				if (this.tags[i].value == value) {
 					idx = i;
-					return false;
+					break;
 				}
-			});
+			}
 			return idx;			
-		},
-		/**
-		 * Check if a tag has been added with the given record
-		 * 
-		 * @param {Object} record
-		 * @return {Boolean}
-		 */
-		_tagExists: function(record) {
-			var exists = false;
-			$.each(this.tags, function(i) {
-				if (this.record == record) {
-					exists = true;
-					return false;
-				}
-			});
-			return exists;				
 		},
 		/**
 		 * Setup publish/subscribe system that uses jQuery's event system

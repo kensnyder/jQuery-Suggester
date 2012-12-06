@@ -1,14 +1,14 @@
 var planets = [
-	{id: 1, label: "Sun",           cssClass: "star"},	
-	{id: 2, label: "Mercury",       cssClass: "planet"},
-	{id: 3, label: "Venus",         cssClass: "planet"},
-	{id: 4, label: "Earth",         cssClass: "planet"},
-	{id: 5, label: "Mars",          cssClass: "planet"},
-	{id: 6, label: "Asteroid Belt", cssClass: "object"},
-	{id: 7, label: "Jupiter",       cssClass: "planet"},
-	{id: 8, label: "Saturn",        cssClass: "planet"},
-	{id: 9, label: "Uranus",        cssClass: "planet"},
-	{id:10, label: "Neptune",       cssClass: "planet"},
-	{id:11, label: "Pluto",         cssClass: "dwarf-planet"},
-	{id:12, label: "Eres",          cssClass: "dwarf-planet"}
+	{value: "Sun",           cssClass: "star"},	
+	{value: "Mercury",       cssClass: "planet"},
+	{value: "Venus",         cssClass: "planet"},
+	{value: "Earth",         cssClass: "planet"},
+	{value: "Mars",          cssClass: "planet"},
+	{value: "Asteroid Belt", cssClass: "object"},
+	{value: "Jupiter",       cssClass: "planet"},
+	{value: "Saturn",        cssClass: "planet"},
+	{value: "Uranus",        cssClass: "planet"},
+	{value: "Neptune",       cssClass: "planet"},
+	{value: "Pluto",         cssClass: "dwarf-planet"},
+	{value: "Eres",          cssClass: "dwarf-planet"}
 ];
