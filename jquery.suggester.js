@@ -82,7 +82,7 @@
 		inputSize: 'auto',
 		// placeholder text to display when no tags are present
 		// e.g. "Enter tags..."
-		placeholder: '',
+		placeholder: false,
 		// message to show when there are no matches
 		emptyText: '(Type a comma to create a new item)',
 		// message to display when below min char length
@@ -699,6 +699,7 @@
 				return this;
 			}
 			var sugg = this;
+			// clear out the suggestion list including all nodes and data
 			sugg.$suggList.empty();
 			$.each(records, function() {
 				// TODO: format suggestion
@@ -775,7 +776,7 @@
 			this.$widget.addClass('sugg-list-open');
 			setTimeout(function() {				
 				$document.bind('click', sugg._closeOnOutsideClick);
-			},0);
+			}, 0);
 			this.$suggList.show();
 			this.publish('AfterOpen');
 			return this;			
@@ -908,7 +909,6 @@
 			this.$tagTemplate = this.$box.find('.sugg-tag').remove();
 			// the text input used to type tags
 			this.$input = this.$box.find('.sugg-input').val(this.options.placeholder || '');
-			this.$input.prop('size', this.options.inputSize == 'auto' ? 2 : this.options.inputSize);
 			// the wrapper for that text input
 			this.$inputWrapper = this.$box.find('.sugg-input-wrapper');
 			// the list element that contains all suggestions
@@ -932,6 +932,28 @@
 			this.$widget.insertBefore(this.$originalInput.hide());
 			// populate tags based on starting value of original input
 			this._handleStartValue();
+			if (this.options.minChars == 0) {				
+				this.options.inputSize = '';
+				// set input width to remaining room
+				this.$input.width(
+					this.$box.width() 
+					- parseFloat(this.$inputWrapper.css('paddingLeft'))
+					- parseFloat(this.$inputWrapper.css('paddingRight'))
+					- parseFloat(this.$inputWrapper.css('marginLeft'))
+					- parseFloat(this.$inputWrapper.css('marginRight'))
+					- parseFloat(this.$inputWrapper.css('borderLeftWidth'))
+					- parseFloat(this.$inputWrapper.css('borderRightWidth'))
+					- parseFloat(this.$input.css('paddingLeft'))
+					- parseFloat(this.$input.css('paddingRight'))
+					- parseFloat(this.$input.css('marginLeft'))
+					- parseFloat(this.$input.css('marginRight'))
+					- parseFloat(this.$input.css('borderLeftWidth'))
+					- parseFloat(this.$input.css('borderRightWidth'))
+				);
+			}
+			else {
+				this.$input.prop('size', this.options.inputSize == 'auto' ? 2 : this.options.inputSize);			
+			}
 		},
 		/**
 		 * Look at the initial element's start value and populate tags as appropriate
@@ -983,10 +1005,13 @@
 		_onInputFocus: function(evt) {
 			var currVal = this.$input.val();
 			this.unfocusTag();
-			if (currVal == this.options.placeholder) {
+			if (this.options.minChars === 0 && this.data.length > 0) {
+				this.handleSuggestions(this.options.maxSuggestions > 0 ? this.data.slice(0, this.options.maxSuggestions) : this.data);
+			}			
+			else if (currVal === this.options.placeholder) {
 				this.$input.val('');
 			}
-			if (!!this.options.prompt && currVal == '') {
+			else if (currVal === '' & !!this.options.prompt) {
 				this.showPrompt();
 			}
 		},
@@ -1050,8 +1075,8 @@
 			this.closeSuggestBox();
 			if (this.options.multiselect) {
 				this.$input.val('');
+				this.focus();
 			}
-			this.focus();
 		},
 		/**
 		 * Event handler for when this.$box is clicked
@@ -1269,7 +1294,8 @@
 		 * @return {undefined}
 		 */
 		_closeOnOutsideClick: function(evt) {
-			if ($(evt.target).parents('.sugg-list')[0] == this.$suggList[0]) {
+			var $target = $(evt.target);
+			if ($target.parents('.sugg-widget')[0] == this.$widget[0]) {
 				return;
 			}
 			this.closeSuggestBox();

@@ -319,22 +319,29 @@
 
 
 
-<!-- Example 10: em units -->
+<!-- Example 10: single select -->
 <style>
-	#example-10,
-	#example-10 * {
-		font-size: 20px;
+	#example-10 .sugg-box {
+		box-shadow: none;
+		border-radius: 3px;
+		background: url("data:;base64,R0lGODlhCwAKAPEAMf///8z//wAAAAAAACH+TlRoaXMgYXJ0IGlzIGluIHRoZSBwdWJsaWMgZG9tYWluLiBLZXZpbiBIdWdoZXMsIGtldmluaEBlaXQuY29tLCBTZXB0ZW1iZXIgMTk5NQAh+QQBAAABACwAAAAACwAKAAACDoyPqavj/w6MaC56md4FADs=") no-repeat 479px 50%;
+	}
+	#example-10 .sugg-list {
+		max-height: 200px;
+		overflow: auto;
 	}
 </style>
 <form id="example-10">
-	Example 10: the default css uses em units, so setting a larger font size will make everything larger<br />
+	Example 10: single select<br />
 	<input type="text" name="example_10" value="" />
 </form>
 <script>
 	$('#example-10 input').suggester({
 		data: bodies, // data from ./assets/js/bodies.js
-		minChars: 1,
-		fly: 'up'
+		multiselect: false,
+		minChars: 0,
+		maxSuggestions: 0,
+		fly: 'down'
 	});
 </script>
 <!-- End Example 10 -->
@@ -342,25 +349,29 @@
 
 
 
-<!-- Example 11: single select -->
+
+
+<!-- Example EM: em units -->
 <style>
-	
+	#example-EM,
+	#example-EM * {
+		font-size: 20px;
+	}
 </style>
-<form id="example-11">
-	Example 11: single select<br />
-	<input type="text" name="example_11" value="" />
+<form id="example-EM">
+	Example 11: css uses em units, so setting a larger font size will make everything larger<br />
+	<input type="text" name="example_EM" value="" />
 </form>
 <script>
-	$('#example-11 input').suggester({
+	$('#example-EM input').suggester({
 		data: bodies, // data from ./assets/js/bodies.js
-		multiselect: false,
-		minChars: 0,
-		fly: 'down'
+		minChars: 1
 	});
 </script>
-<!-- End Example 11 -->
+<!-- End Example 1EM -->
 
-<div style="height:400px"></div>
+
+<div style="clear:both; height:400px"></div>
 
 
 </body>
