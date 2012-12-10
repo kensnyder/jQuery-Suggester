@@ -2,7 +2,7 @@
  * Suggester
  * Copyright 2012 Ken Snyder
  * GitHub: https://github.com/kensnyder/jQuery-Suggester
- * Demos: http://sandbox.kendsnyder.com/Suggester/demo/demo.html
+ * Demos: http://sandbox.kendsnyder.com/suggester/demo/demo.html
  *
  * Version 1.0, December 2012
  *
@@ -17,7 +17,7 @@
  *   - You can define your own HTML structure for the widget output
  *   - Object-oriented structure makes for easy extendibility
  *   - 5kb minimized and gzipped
- *   - Fully unit tested - http://sandbox.kendsnyder.com/Suggester/demo/unit-tests.html
+ *   - Fully unit tested - http://sandbox.kendsnyder.com/suggester/demo/unit-tests.html
  *  
  * Inspired by the AutoSuggest plugin by Drew Wilson
  *

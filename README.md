@@ -3,7 +3,7 @@ Suggester for jQuery
 
 Version 1.0, December 2012
 
-[Demos](http://sandbox.kendsnyder.com/Suggester/demo/demo.html)
+[Demos](http://sandbox.kendsnyder.com/suggester/demo/demo.html)
 
 Introduction
 -
@@ -20,7 +20,7 @@ Turn a text input into a Gmail / Facebook-style auto-complete widget. Features i
 * You can define your own HTML structure for the widget output
 * Object-oriented structure makes it easy to extend
 * 5kb minimized and gzipped
-* Fully unit tested - [Unit tests](http://sandbox.kendsnyder.com/Suggester/demo/unit-tests.html)
+* Fully unit tested - [Unit tests](http://sandbox.kendsnyder.com/suggester/demo/unit-tests.html)
 
 How to Use
 -
@@ -42,7 +42,7 @@ $('.my-text-input').suggester({
     prompt: 'Enter a day of the week'
 });
 $('.my-text-input').suggester({
-    dataUrl: 'http://example.com/myjson?query=%s&mycallback=%s',
+    dataUrl: 'http://example.com/myjson?query=%s',
     prompt: 'Enter a time zone'
 });
 var suggester = new $.Suggester('.my-text-input', {
@@ -51,6 +51,8 @@ var suggester = new $.Suggester('.my-text-input', {
         saveToServer(event.newValue);
     }
 });
+suggester.bind('AfterClose', doStuff);
+suggester.focus();
 ```
 
 Change log
