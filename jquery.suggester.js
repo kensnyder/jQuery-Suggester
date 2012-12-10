@@ -2,13 +2,13 @@
  * Suggester
  * Copyright 2012 Ken Snyder
  * GitHub: https://github.com/kensnyder/jQuery-Suggester
- * Demos: http://sandbox.kendsnyder.com/Suggester/demo.html
+ * Demos: http://sandbox.kendsnyder.com/Suggester/demo/demo.html
  *
  * Version 1.0, December 2012
  *
  * Turn a text input into a Gmail / Facebook-style auto-complete widget. Features include:
- *   - Load data from a JavaScript object, json, or jsonp
- *   - Powerful matching options
+ *   - Load data from a JavaScript array, object, json url, or jsonp url
+ *   - Lots of options
  *   - Populates original input with chosen tags but also creates hidden inputs with ids and tag text
  *   - Has methods to add a tag programmatically (e.g. user chooses a popular tag)
  *   - CSS is easy to extend and customize
@@ -17,10 +17,11 @@
  *   - You can define your own HTML structure for the widget output
  *   - Object-oriented structure makes for easy extendibility
  *   - 5kb minimized and gzipped
+ *   - Fully unit tested - http://sandbox.kendsnyder.com/Suggester/demo/unit-tests.html
  *  
  * Inspired by the AutoSuggest plugin by Drew Wilson
  *
- * Suggester is licensed under the MIT license:
+ * Suggester is licensed under the MIT License:
  * http://www.opensource.org/licenses/mit-license.php
  */
 (function($) { "use strict";
@@ -28,6 +29,9 @@
 	var $document = $(document);
 	// Our true constructor function. See jQuery.Suggester.prototype.initialize for documentation
 	$.Suggester = function() {
+		if (arguments[0] == $.Suggester.doSubclass) {
+			return;
+		}
 		this.initialize.apply(this, Array.prototype.slice.call(arguments));
 	};
 	/**
@@ -192,6 +196,7 @@
 				// if not, there will likely be errors
 				return this;
 			}
+			// TODO: allow input to be a select
 			// our options are default options plus given options
 			this._processOptions(options);
 			// the preloaded list of suggestion records
@@ -957,7 +962,7 @@
 				);
 			}
 			else {
-				this.$input.prop('size', this.options.inputSize == 'auto' ? 2 : this.options.inputSize);			
+				this.$input[0].size = this.options.inputSize == 'auto' ? 2 : this.options.inputSize;			
 			}
 		},
 		/**
@@ -1130,7 +1135,7 @@
 				this._key_other(evt);
 			}
 			if (this.options.inputSize == 'auto') {
-				this.$input.prop('size', this.$input.val().length + 2);
+				this.$input[0].size = this.$input.val().length + 2;
 			}
 			this.publish('AfterHandleKey', {
 				event: evt
@@ -1491,12 +1496,17 @@
 	// static properties and methods
 	//
 	/**
+	 * Pass to contructor to subclass (e.g. `MySuggester.prototype = new $.Suggester($.Suggester.doSubclass)`)
+	 * @var {Object}
+	 */
+	$.Suggester.doSubclass = {};
+	/**
 	 * a collection of all the instances
 	 */
 	$.Suggester.instances = [];
 	/**
 	 * Add data to all instances
-	 * @param {Object[]}  Add more data to all the registered instances
+	 * @param {Object[]} data  Add more data to all the registered instances
 	 * @return {jQuery.Suggester}
 	 */
 	$.Suggester.addData = function(data) {
@@ -1506,22 +1516,56 @@
 		return this;
 	};
 	/**
-	 * Suggester jQuery Plugin
+	 * Create a subclass of jQuery.Suggester
 	 * 
-	 * @param {Object} options  The options to use on instantiation (see jQuery.Suggester.defaultOptions for info on options)
-	 * @return (Any)
+	 * @param {String} jQueryMethodName  The method name to add to jQuery.fn
+	 * @param {Object} properties  Properties and methods to add to subclass
+	 * @return {Function}  The new class object
+	 * 
+	 * @example
+	 *     var MySuggester = $.Suggester.subclass('mysuggester', {
+	 *         initialize: function($textInput, options) {
+	 *	           options = options || {};
+	 *             this.options.myOption = options.myOptions || 'default';
+	 *             this.callParent('initialize', $textInput, options);
+	 *         }
+	 *     });
 	 */
-	$.fn.suggester = function(options) {		
-		// handle where first arg is method name and additional args should be passed to that method
-		if (typeof options == 'string' && typeof $.Suggester.prototype[options] == 'function') {
-			var args = Array.prototype.slice.call(arguments, 1);
-			return $.Suggester.prototype[options].apply(this.data('SuggesterInstance'), args);
-		}
-		// otherwise create new $.Suggester instance but return the jQuery instance
-		return this.each(function() {			
-			var $elem = $(this);
-			var instance = new $.Suggester($elem, options);
-			$elem.data('SuggesterInstance', instance);
-		});
+	$.Suggester.subclass = function(jQueryMethodName, properties) {
+		var ctor = function() {
+			this.initialize.apply(this, Array.prototype.slice.call(arguments));
+		};
+		ctor.prototype = new $.Suggester($.Suggester.doSubclass);
+		ctor.prototype.callParent = function(method/*, arg1, arg2, arg3*/) {
+			$.Suggester.prototype[method].apply(this, method, Array.prototype.slice.call(arguments, 1));
+		};
+		ctor.prototype.applyParent = function(method, args) {
+			$.Suggester.prototype[method].apply(this, method, args);
+		};
+		$.extend(ctor.prototype, properties || {});
+		makePlugin(jQueryMethodName, ctor);
+		return ctor;
 	};
+	function makePlugin(name, ctor) {
+		/**
+		 * Suggester jQuery Plugin
+		 * 
+		 * @param {Object} options  The options to use on instantiation (see jQuery.Suggester.defaultOptions for info on options)
+		 * @return (Any)
+		 */
+		$.fn[name] = function(options) {		
+			// handle where first arg is method name and additional args should be passed to that method
+			if (typeof options == 'string' && typeof this.data('SuggesterInstance')[options] == 'function') {
+				var args = Array.prototype.slice.call(arguments, 1);
+				return this.data('SuggesterInstance')[options].apply(this.data('SuggesterInstance'), args);
+			}
+			// otherwise create new $.Suggester instance but return the jQuery instance
+			return this.each(function() {			
+				var $elem = $(this);
+				var instance = new ctor($elem, options);
+				$elem.data('SuggesterInstance', instance);
+			});
+		};
+	}
+	makePlugin('suggester', $.Suggester);
 })(jQuery); 	
