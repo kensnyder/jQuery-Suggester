@@ -24,7 +24,7 @@
  * Suggester is licensed under the MIT License:
  * http://www.opensource.org/licenses/mit-license.php
  */
-(function($) { "use strict";
+;(function($) { "use strict";
 	// get our document and body once
 	var $document = $(document);
 	// Our true constructor function. See jQuery.Suggester.prototype.initialize for documentation
