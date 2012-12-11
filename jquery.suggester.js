@@ -125,6 +125,7 @@
 		 * onInitialize       -> see jQuery.Suggester#initialize()
 		 * onBeforeHandleKey  -> see jQuery.Suggester#_onKeydown()
 		 * onAfterHandleKey   -> see jQuery.Suggester#_onKeydown()
+		 * onBeforeAjax       -> see jQuery.Suggester#fetchResults()
 		 * onBeforeFetch      -> see jQuery.Suggester#_beforeFetch()
 		 * onAfterFetch       -> see jQuery.Suggester#_afterFetch()
 		 * onBeforeMove       -> see jQuery.Suggester#moveSelection()
@@ -657,10 +658,10 @@
 				context: this,
 				url: this.options.dataUrl.replace('%s', text)
 			};
-			if (this.options.dataType == 'json') {
+			if (this.options.dataType.toLowerCase() == 'json') {
 				settings.dataType = 'json';
 			}
-			else if (this.options.dataType == 'jsonp') {
+			else if (this.options.dataType.toLowerCase() == 'jsonp') {
 				settings.dataType = 'jsonp';
 				// jQuery replaces second question mark with callback name
 				settings.url = settings.url.replace('%s', '?');
@@ -1105,7 +1106,7 @@
 		 */
 		_onKeydown: function(evt) {
 			var pubevent = this.publish('BeforeHandleKey', {
-				event: evt,
+				keydown: evt,
 				cancellable: true
 			});
 			if (pubevent.isDefaultPrevented()) {
@@ -1139,7 +1140,7 @@
 				this.$input[0].size = this.$input.val().length + 2;
 			}
 			this.publish('AfterHandleKey', {
-				event: evt
+				keydown: evt
 			});
 		},
 		/**

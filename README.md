@@ -118,6 +118,12 @@ Options Documentation
 	</tr>
 	<tr>
 		<td>{String}</td>
+		<td><strong>dataType</strong></td>
+		<td>"json"</td>
+		<td>If <code>"jsonp"</code> use JSONP to fetch results instead of JSON</td>
+	</tr>
+	<tr>
+		<td>{String}</td>
 		<td><strong>fly</strong></td>
 		<td>"down"</td>
 		<td>Which way the suggestion box should flow relative to the widget. Either <code>"up"</code> or <code>"down"</code></td>
@@ -273,7 +279,7 @@ How is data passed to callbacks?
 
 * Each event callback receives one argument: `event`
 * `event` is a jQuery event object
-* `event` also contains useful information related to the event. See the Event Data section below for more information.
+* `event` also contains useful information related to the event. See the Available Events section below for more information.
 * When an event has a default action that can be prevented, `event` will have property `cancellable` set to true and `event.isCancellable()` will return true
 * To prevent a default action, call `event.preventDefault()`
 * To cancel the firing of other attached callbacks, call `event.stopImmediatePropagation()`
@@ -290,7 +296,7 @@ See the Suggester Instance Methods section for event handler examples
 		<th>Name</th>
 		<th>Description</th>
 		<th>Called within Method</th>
-		<th>Passed Data</th>
+		<th>Data available on <code>event</code></th>
 		<th>Cancellable?</th>
 	<tr>
 	<tr>
@@ -312,7 +318,7 @@ See the Suggester Instance Methods section for event handler examples
 		<td>Called before the keydown event is handled</td>
 		<td>_onKeydown()</td>
 		<td>
-			<code>event</code>: The browser keydown event
+			<code>keydown</code>: The browser keydown event
 		</td>
 		<td>Yes</td>
 	</tr>
@@ -321,9 +327,51 @@ See the Suggester Instance Methods section for event handler examples
 		<td>Called after the keydown event is handled</td>
 		<td>_onKeydown()</td>
 		<td>
-			<code>event</code>: The browser keydown event
+			<code>keydown</code>: The browser keydown event
 		</td>
 		<td>No</td>
+	</tr>
+	<tr>
+		<td><strong>BeforeAjax</strong></td>
+		<td>Called before <code>$.ajax()</code> is called</td>
+		<td>fetchResults()</td>
+		<td>
+			<code>settings</code>: The settings to send to <code>$.ajax()</code>. Alter this value to add or change settings.<br />
+			<code>term</code>: The text term being searched for
+		</td>
+		<td>No</td>
+	</tr>
+	<tr>
+		<td><strong>BeforeFetch</strong></td>
+		<td>Called before ajax call is made but has access to jqXHR</td>
+		<td>_beforeFetch()</td>
+		<td>
+			<code>jqXHR</code>: The jQuery XHR object<br />
+			<code>term</code>: The text being searched for
+		</td>
+		<td>Yes</td>
+	</tr>
+	<tr>
+		<td><strong>AfterFetch</strong></td>
+		<td>Called after ajax call is made and has access to results</td>
+		<td>_afterFetch()</td>
+		<td>
+			<code>jqXHR</code>: The jQuery XHR object<br />
+			<code>term</code>: The text being searched for<br />
+			<code>records</code>: The data returned
+		</td>
+		<td>Yes</td>
+	</tr>
+	<tr>
+		<td><strong>BeforeMove</strong></td>
+		<td></td>
+		<td>moveSelection()</td>
+		<td>
+			<code>direction</code>: <br />
+			<code>current</code>: <br />
+			<code>next</code>: 
+		</td>
+		<td>Yes	</td>
 	</tr>
 	<tr>
 		<td><strong></strong></td>
@@ -333,6 +381,7 @@ See the Suggester Instance Methods section for event handler examples
 			<code></code>: <br />
 			<code></code>: 
 		</td>
+		<td>No</td>
 	</tr>
 </table>
 			
