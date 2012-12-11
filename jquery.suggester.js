@@ -880,14 +880,9 @@
 			var evt = $.Event(type);
 			evt.target = this;
 			if (data) {
-				if ('cancellable' in data) {
-					evt.cancellable = data.cancellable;
-				}
-				this.trigger(evt, [data]);
+				$.extend(evt, data);
 			}
-			else {
-				this.trigger(evt);
-			}
+			this.trigger(evt);
 			return evt;
 		},
 		/**
