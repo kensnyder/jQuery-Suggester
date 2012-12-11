@@ -8,17 +8,18 @@ Version 1.0, December 2012, MIT License
 Table of Contents
 -
 
-[Introduction][introduction]
-[How to Use][how-to-use]
-[Options][options]
-[Events][events]
-[Instance Properties][instance-properties]
-[Instance Methods][instance-methods]
-[Static Members][static-members]
-[More Examples][more-examples]
-[Changelog][changelog]
-[License][license]
-
+<ul>
+	<li><a href="#introduction">Introduction</a></li>
+	<li><a href="#how-to-use">How to Use</a></li>
+	<li><a href="#options">Options</a></li>
+	<li><a href="#events">Events</a></li>
+	<li><a href="#instance-properties">Instance Properties</a></li>
+	<li><a href="#instance-methods">Instance Methods</a></li>
+	<li><a href="#static-members">Static Members</a></li>
+	<li><a href="#more-examples">More Examples</a></li>
+	<li><a href="#changelog">Changelog</a></li>
+	<li><a href="#license">License</a></li>
+</ul>
 
 Introduction
 -
