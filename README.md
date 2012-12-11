@@ -43,12 +43,11 @@ Turn a text input into a Gmail / Facebook-style auto-complete widget. Features i
 How to Use
 -
 
-Suggester is compatible with jQuery 1.5 and has been tested with jQuery 1.8. Copy or git checkout the Suggester files to your scripts directory then add the following HTML to your &lt;head&gt;:
+Suggester is compatible with jQuery 1.5 and has been tested with jQuery 1.8. Copy or git checkout the Suggester files to your scripts directory then add the following HTML to your &lt;head&gt; after jQuery is included:
 
 ```html
-<script src="/assets/js/jquery.js"></script>
 <script src="/assets/js/suggester/jquery.suggester.min.js"></script>
-<link href="/assets/js/suggester/jquery.suggester.css" rel="stylesheet" />
+<link  href="/assets/js/suggester/jquery.suggester.css" rel="stylesheet" />
 ```
 
 Then somewhere in your code, call:
@@ -208,7 +207,7 @@ Options
 	<tr>
 		<td>{String}</td>
 		<td><strong>placeholder</strong></td>
-		<td>false</td>
+		<td>""</td>
 		<td>Placeholder text to display in the input when empty and unfocused. Behaves like an element's <code>placeholder</code> attribute</td>
 	</tr>
 	<tr>

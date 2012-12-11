@@ -86,7 +86,7 @@
 		inputSize: 'auto',
 		// placeholder text to display when no tags are present
 		// e.g. "Enter tags..."
-		placeholder: false,
+		placeholder: '',
 		// message to show when there are no matches
 		emptyText: '(Type a comma to create a new item)',
 		// message to display when below min char length
@@ -964,7 +964,7 @@
 				);
 			}
 			else {
-				this.$input[0].size = this.options.inputSize == 'auto' ? 2 : this.options.inputSize;			
+				this.$input[0].size = this.options.inputSize == 'auto' ? (this.options.placeholder.length || 2) : this.options.inputSize;			
 			}
 		},
 		/**
