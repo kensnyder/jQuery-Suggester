@@ -49,12 +49,8 @@
 		searchProperties: ["value"],
 		// where to match when finding suggestions. anywhere|start|end or an integer
 		matchAt: 'anywhere',
-		// which way should the suggestion box fly
-		// if "up", the suggestion box will exist before the input box
-		// a css class of sugg-fly-up or sugg-fly-down is applied to the widget element
-		fly: 'down',
-		// if "absolute", the suggestion box will be appended to <body> and positioned and sized each time it is opened
-		suggListPosition: 'relative',
+		// if true, fine matches regardless of case
+		caseSensitive: false,
 		// url to call to get json or jsonp results. Use %s to indicate where search text should be inserted
 		// e.g. http://example.com/myjson?query=%s
 		// e.g. http://example.com/myjsonp?query=%s&callback=%s
@@ -63,14 +59,18 @@
 		// if json, url needs to have "callback" in the format http://example.com/myjsonp?query=%s&mycallback=%s
 		// to handle xml, you'll need to register a BeforeFetch and afterFetch or overwrite the fetchResults function
 		dataType: 'json',
+		// which way should the suggestion box fly
+		// if "up", the suggestion box will exist before the input box
+		// a css class of sugg-fly-up or sugg-fly-down is applied to the widget element
+		fly: 'down',
+		// if "absolute", the suggestion box will be appended to <body> and positioned and sized each time it is opened
+		suggListPosition: 'relative',
 		// if true, allow multiple selections
 		multiselect: true,
 		// if true, the first tag will be removed when a duplicate is typed in
 		preventDuplicates: true,
 		// if true, don't suggest items that have already been chosen as tags
 		omitAlreadyChosenItems: true,
-		// if true, fine matches regardless of case
-		caseSensitive: false,
 		// the minimum number of characters a user must type before the suggestion box will appear
 		// if 0, show choices when input is simply focused (like a <select>)
 		minChars: 3,
@@ -95,7 +95,7 @@
 		maxSuggestions: 10,
 		// if true, also add a hidden input for each tag (fieldname_tag[]) for easier server-side processing
 		addHiddenInputs: true,
-		// if true, wrap first matching substring in a suggestion with <strong class="sugg-match"></strong>
+		// if true, wrap first matching substring in each suggestion with <strong class="sugg-match"></strong>
 		hightlightSubstring: true,
 		// the html used to generate the widget
 		// you can add more markup, change tag names, or add css classes, but all the sugg-* classes need to remain
@@ -121,8 +121,8 @@
 		/* 
 		 * AVAILABLE EVENT OPTIONS
 		 * 
-		 * onInitialize       -> see jQuery.Suggester#initialize()
 		 * onBeforeRender     -> see jQuery.Suggester#_render()
+		 * onInitialize       -> see jQuery.Suggester#initialize()
 		 * onBeforeHandleKey  -> see jQuery.Suggester#_onKeydown()
 		 * onAfterHandleKey   -> see jQuery.Suggester#_onKeydown()
 		 * onBeforeFetch      -> see jQuery.Suggester#_beforeFetch()
@@ -235,6 +235,7 @@
 					return false;
 				}
 			});
+			return this.$originalInput;
 		},		
 		/**
 		 * Add a tag by a record
@@ -879,9 +880,14 @@
 			var evt = $.Event(type);
 			evt.target = this;
 			if (data) {
-				$.extend(evt, data);
+				if ('cancellable' in data) {
+					evt.cancellable = data.cancellable;
+				}
+				this.trigger(evt, [data]);
 			}
-			this.trigger(evt);
+			else {
+				this.trigger(evt);
+			}
 			return evt;
 		},
 		/**
