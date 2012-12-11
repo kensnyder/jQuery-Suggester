@@ -8,11 +8,19 @@ Version 1.0, December 2012, MIT License
 Table of Contents
 -
 
-* [Introduction][intro]
-* [How to Use][how]
+* [Introduction][introduction]
+* [How to Use][how-to-use]
+* [Options][options]
+* [Events][events]
+* [Instance Properties][instance-properties]
+* [Instance Methods][instance-methods]
+* [Static Members][static-members]
+* [More Examples][more-examples]
+* [Changelog][changelog]
+* [License][license]
 
 
-[intro]: Introduction
+Introduction
 -
 
 Turn a text input into a Gmail / Facebook-style auto-complete widget. Features include:
@@ -31,7 +39,7 @@ Turn a text input into a Gmail / Facebook-style auto-complete widget. Features i
 * Works on IE8+, FF, Chrome, Safari
 
 
-[how]: How to Use
+How to Use
 -
 
 Suggester is compatible with jQuery 1.5 and has been tested with jQuery 1.8. Copy or git checkout the Suggester files to your scripts directory then add the following HTML to your &lt;head&gt;:
@@ -52,7 +60,7 @@ var instance = new $.Suggester(input, options);
 
 See the documentation below for a full list of options.
 
-Options Documentation
+Options
 -
 
 <table>
@@ -264,7 +272,7 @@ Default value for **template** option:
 
 Also note that default options can be overwritten by altering `$.Suggester.defaultOptions`.
 
-Events Documentation
+Events
 -
 
 Events can be passed as options to the constructor, or can be added later using jQuery event methods `.on()`, `.off()`, `.bind()` `.once()`, `.unbind()` and `.trigger()`
@@ -294,10 +302,7 @@ How is data passed to callbacks?
 * In some case, altering information on the `event` object will change the behavior of the default action
 * The callback will be fired in the scope of the widget instance. In other words, using `this` in the callback will refer to the widget. See the Suggester Instance Properties and Suggester Instance Methods sections below for more information.
 
-Available Events
--
-
-See the Suggester Instance Methods section for event handler examples
+The following is a description of each event. See the Suggester Instance Methods section for event handler examples.
 
 <table>
 	<tr>
@@ -393,7 +398,7 @@ See the Suggester Instance Methods section for event handler examples
 	</tr>
 </table>
 			
-Suggester Instance Properties
+Instance Properties
 -
 
 <table>
@@ -412,9 +417,14 @@ Suggester Instance Properties
 		<td><strong>options</strong></td>
 		<td>The options that were passed to the constructor</td>
 	</tr>
+	<tr>
+		<td>{}</td>
+		<td><strong></strong></td>
+		<td></td>
+	</tr>
 </table>
 
-Suggester Instance Methods (public methods)
+Instance Methods
 -
 
 Instance methods may be called using an Object Oriented style or with the classic jQuery style:
@@ -714,7 +724,7 @@ $.Suggester.prototype = {
 };	
 ```
 
-Suggester Static Members
+Static Members
 -
 
 ```javascript
@@ -788,7 +798,7 @@ suggester.focus();
 
 See the source on the [live demos](http://sandbox.kendsnyder.com/suggester/demo/demo.html) for lots more examples.
 
-Change log
+Changelog
 -
 
 **Version 1.0, December 2012**
