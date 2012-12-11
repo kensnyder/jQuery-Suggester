@@ -158,9 +158,9 @@ How is data passed to callbacks?
 Available Events
 -
 
-* `**onBeforeRender** - Called before the widget is rendered
-* `**onInitialize** - Called after widget is initialize and rendered
-* `**onBeforeHandleKey** - Called before the keydown event is handled
+* **onBeforeRender** - Called before the widget is rendered
+* **onInitialize** - Called after widget is initialize and rendered
+* **onBeforeHandleKey** - Called before the keydown event is handled
 * ...
 
 Suggester Instance Properties
