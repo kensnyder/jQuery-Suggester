@@ -1,7 +1,7 @@
 Suggester for jQuery 
 =
 
-Version 1.0, December 2012
+Version 1.0, December 2012, MIT License
 
 [Demos](http://sandbox.kendsnyder.com/suggester/demo/demo.html)
 
@@ -26,12 +26,12 @@ Turn a text input into a Gmail / Facebook-style auto-complete widget. Features i
 How to Use
 -
 
-Suggester is compatible with jQuery 1.5 and has been tested with jQuery 1.8. Add the following HTML to your &lt;head&gt;:
+Suggester is compatible with jQuery 1.5 and has been tested with jQuery 1.8. Copy or git checkout the Suggester files to your scripts directory then add the following HTML to your &lt;head&gt;:
 
 ```html
-<script src="./assets/js/jquery.js"></script>
-<script src="/jquery.suggester.min.js"></script>
-<link rel="stylesheet" href="../jquery.suggester.css" />
+<script src="/assets/js/jquery.js"></script>
+<script src="/assets/js/suggester/jquery.suggester.min.js"></script>
+<link href="/assets/js/suggester/jquery.suggester.css" rel="stylesheet" />
 ```
 
 Then somewhere in your code, call:
@@ -57,7 +57,7 @@ Options Documentation
 	<tr>
 		<td>{Array}</td>
 		<td><strong>data</strong></td>
-		<td><code>false</code></td>
+		<td>false</td>
 		<td>An array of suggestion strings or objects. Examples:<br />
 			<ul>
 				<li><code>["Dell","HP","Apple"]</code></li>
@@ -70,25 +70,25 @@ Options Documentation
 	<tr>
 		<td>{String}</td>
 		<td><strong>valueProperty</strong></td>
-		<td><code>"value"</code></td>
+		<td>"value"</td>
 		<td>The property in <code>data</code> to write back to the original input</td>
 	</tr>
 	<tr>
 		<td>{String}</td>
 		<td><strong>labelProperty</strong></td>
-		<td><code>"value"</code></td>
+		<td>"value"</td>
 		<td>The property to show for a chosen item</td>
 	</tr>
 	<tr>
 		<td>{Array}</td>
 		<td><strong>searchProperties</strong></td>
-		<td><code>["value"]</code></td>
+		<td>["value"]</td>
 		<td>A list of properties in <code>data</code> to search for suggestions</td>
 	</tr>
 	<tr>
-		<td>{String|Number}</td>
+		<td>{String}<br />OR<br />{Number}</td>
 		<td><strong>matchAt</strong></td>
-		<td><code>"anywhere"</code></td>
+		<td>"anywhere"</td>
 		<td>Where to match within the <code>searchProperties</code> strings<br />
 			<ul>
 				<li><code>"anywhere"</code> - Suggest items that contain the input text</li>
@@ -102,13 +102,13 @@ Options Documentation
 	<tr>
 		<td>{Boolean}</td>
 		<td><strong>caseSensitive</strong></td>
-		<td><code>false</code></td>
+		<td>false</td>
 		<td>If false, find suggestion matches regardless of letter case</td>
 	</tr>
 	<tr>
 		<td>{String}</td>
 		<td><strong>dataUrl</strong></td>
-		<td><code>false</code></td>
+		<td>false</td>
 		<td>The URL from which to get JSON or JSONP suggestions. Use a <code>%s</code> to indicate where to insert term and callback. Examples:<br />
 			<ul>
 				<li><code>"http://example.com/myjson?query=%s"</code>
@@ -119,97 +119,97 @@ Options Documentation
 	<tr>
 		<td>{String}</td>
 		<td><strong>fly</strong></td>
-		<td><code>"down"</code></td>
+		<td>"down"</td>
 		<td>Which way the suggestion box should flow relative to the widget. Either <code>"up"</code> or <code>"down"</code></td>
 	</tr>
 	<tr>
 		<td>{String}</td>
 		<td><strong>suggListPosition</strong></td>
-		<td><code>"relative"</code></td>
+		<td>"relative"</td>
 		<td>If <code>"absolute"</code>, overlay suggestion box relative to <code>document.body</code>. Useful for widgets used inside tables</td>
 	</tr>
 	<tr>
 		<td>{Boolean}</td>
 		<td><strong>multiselect</strong></td>
-		<td><code>true</code></td>
+		<td>true</td>
 		<td>If true, allow multiple tags to be chosen</td>
 	</tr>
 	<tr>
 		<td>{Boolean}</td>
 		<td><strong>preventDuplicates</strong></td>
-		<td><code>true</code></td>
+		<td>true</td>
 		<td>If true, prevent a tag from being added twice</td>
 	</tr>
 	<tr>
 		<td>{Boolean}</td>
 		<td><strong>omitAlreadyChosenItems</strong></td>
-		<td><code>true</code></td>
+		<td>true</td>
 		<td>If true, omit already chosen items from the suggestion list</td>
 	</tr>
 	<tr>
 		<td>{Number}</td>
 		<td><strong>minChars</strong></td>
-		<td><code>3</code></td>
+		<td>3</td>
 		<td>The minimum number of characters that must be entered before suggestions are fetched</td>
 	</tr>
 	<tr>
 		<td>{Number}</td>
 		<td><strong>keyDelay</strong></td>
-		<td><code>400</code></td>
+		<td>400</td>
 		<td>Don't fetch suggestions until this many milliseconds between keypresses</td>
 	</tr>
 	<tr>
 		<td>{Boolean}</td>
 		<td><strong>addOnComma</strong></td>
-		<td><code>true</code></td>
+		<td>true</td>
 		<td>If true, add new tags when comma is pressed</td>
 	</tr>
 	<tr>
 		<td>{Boolean}</td>
 		<td><strong>addOnTab</strong></td>
-		<td><code>true</code></td>
+		<td>true</td>
 		<td>If true, add new tags when tab is pressed</td>
 	</tr>
 	<tr>
 		<td>{Boolean}</td>
 		<td><strong>submitOnEnter</strong></td>
-		<td><code>false</code></td>
+		<td>false</td>
 		<td>If true, submit the form when enter is pressed on the empty widget</td>
 	</tr>
 	<tr>
-		<td>{String|Number}</td>
+		<td>{String}<br />OR<br />{Number}</td>
 		<td><strong>inputSize</strong></td>
-		<td><code>"auto"</code></td>
+		<td>"auto"</td>
 		<td>Manually set input's <code>size</code> property. If <code>"auto"</code>, expand size as the user types</td>
 	</tr>
 	<tr>
 		<td>{String}</td>
 		<td><strong>placeholder</strong></td>
-		<td><code>false</code></td>
+		<td>false</td>
 		<td>Placeholder text to display in the input when empty and unfocused. Behaves like an element's <code>placeholder</code> attribute</td>
 	</tr>
 	<tr>
 		<td>{String}</td>
 		<td><strong>prompt</strong></td>
-		<td><code>false</code></td>
+		<td>false</td>
 		<td>A message to show when the input is focused but the text is below <code>minChars</code></td>
 	</tr>
 	<tr>
 		<td>{Number}</td>
 		<td><strong>maxSuggestions</strong></td>
-		<td><code>10</code></td>
+		<td>10</td>
 		<td>Limit results to this many suggestions</td>
 	</tr>
 	<tr>
 		<td>{Boolean}</td>
 		<td><strong>addHiddenInputs</strong></td>
-		<td><code>true</code></td>
+		<td>true</td>
 		<td>If true, also add a hidden input for each tag (<code>fieldname_tag[]</code>) for easier server-side processing</td>
 	</tr>
 	<tr>
 		<td>{Boolean}</td>
 		<td><strong>highlightSubstring</strong></td>
-		<td><codetrue</code></td>
+		<td><codetrue</td>
 		<td>If true, wrap first matching substring in each suggestion with a <code>strong</code> tag with class <code>sugg-match</code></td>
 	</tr>
 	<tr>
@@ -258,7 +258,7 @@ Events can be passed as options to the constructor, or can be added later using 
 For example:
 
 ```javascript
-// Register events in constructor
+// Register events in initial options
 $(input).suggester({
 	data: myData,
 	onBeforeOpen: doStuff
@@ -283,6 +283,8 @@ How is data passed to callbacks?
 Available Events
 -
 
+See the Suggester Instance Methods section for event handler examples
+
 <table>
 	<tr>
 		<th>Name</th>
@@ -294,48 +296,42 @@ Available Events
 	<tr>
 		<td><strong>BeforeRender</strong></td>
 		<td>Called before the widget is rendered</td>
-		<td><code>_render()</code></td>
+		<td>_render()</td>
 		<td></td>
 		<td>No</td>
 	</tr>
 	<tr>
 		<td><strong>Initialize</strong></td>
 		<td>Called after widget is initialize and rendered</td>
-		<td><code>initialize()</code></td>
+		<td>initialize()</td>
 		<td></td>
 		<td>No</td>
 	</tr>
 	<tr>
 		<td><strong>BeforeHandleKey</strong></td>
 		<td>Called before the keydown event is handled</td>
-		<td><code>_onKeydown()</code></td>
+		<td>_onKeydown()</td>
 		<td>
-			<ul>
-				<li><code>event</code>: The browser keydown event</li>
-			</ul>
+			<code>event</code>: The browser keydown event
 		</td>
 		<td>Yes</td>
 	</tr>
 	<tr>
 		<td><strong>AfterHandleKey</strong></td>
 		<td>Called after the keydown event is handled</td>
-		<td><code>_onKeydown()</code></td>
+		<td>_onKeydown()</td>
 		<td>
-			<ul>
-				<li><code>event</code>: The browser keydown event</li>
-			</ul>
+			<code>event</code>: The browser keydown event
 		</td>
-		<td>YNo</td>
+		<td>No</td>
 	</tr>
 	<tr>
 		<td><strong></strong></td>
 		<td></td>
-		<td><code>()</code></td>
+		<td>()</td>
 		<td>
-			<ul>
-				<li><code></code>: </li>
-				<li><code></code>: </li>
-			</ul>
+			<code></code>: <br />
+			<code></code>: 
 		</td>
 	</tr>
 </table>
@@ -351,7 +347,7 @@ Suggester Instance Properties
 	<tr>
 	<tr>
 		<td>{jQuery}</td>
-		<td><strong>originalInput</strong></td>
+		<td><strong>$originalInput</strong></td>
 		<td>Called before the widget is rendered</td>
 	</tr>
 	<tr>
@@ -364,15 +360,19 @@ Suggester Instance Properties
 Suggester Instance Methods (public methods)
 -
 
-Instance methods may be called using an OOP style or with the classic jQuery style:
+Instance methods may be called using an Object Oriented style or with the classic jQuery style:
 
 ```javascript
-// OOP Style
+// Object Oriented Style
 var suggester = new $.Suggester(input, options);
 suggester.methodName(arg1, arg2, argN);
 // jQuery Style
 $(input).suggester(options);
 $(input).suggester('methodName', arg1, arg2, argN);
+// jQuery Style followed by Object Oriented Style
+$(input).suggester(options);
+var instance = $(input).suggester('getInstance');
+instance.methodName(arg1, arg2, argN);
 ```
 
 Source code documentation with function bodies omitted:
@@ -698,7 +698,7 @@ $.Suggester.subclass = function(jQueryMethodName, properties) {};
 More examples
 -
 
-Use an array of strings for suggestions
+Use an array of strings for suggestions:
 
 ```javascript
 $('.my-text-input').suggester({
@@ -707,7 +707,7 @@ $('.my-text-input').suggester({
 });
 ```
 
-Use ajax to get suggestions
+Use ajax to get suggestions:
 
 ```javascript
 $('.my-text-input').suggester({
@@ -716,7 +716,7 @@ $('.my-text-input').suggester({
 });
 ```
 
-Use the OOP pattern and use an array of objects for `data`
+Use the OOP pattern and use an array of objects for `data`:
 
 ```javascript
 var suggester = new $.Suggester('.my-text-input', {
