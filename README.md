@@ -3,7 +3,7 @@ Suggester for jQuery
 
 Version 1.0, December 2012, MIT License
 
-[Demos](http://sandbox.kendsnyder.com/suggester/demo/demo.html)
+[Demos](http://sandbox.kendsnyder.com/suggester/demo/demo.html), [Unit tests](http://sandbox.kendsnyder.com/suggester/demo/unit-tests.html)
 
 Table of Contents
 -
