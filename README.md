@@ -232,7 +232,7 @@ Options
 	<tr>
 		<td>{Boolean}</td>
 		<td><strong>highlightSubstring</strong></td>
-		<td><codetrue</td>
+		<td>true</td>
 		<td>If true, wrap first matching substring in each suggestion with a <code>strong</code> tag with class <code>sugg-match</code></td>
 	</tr>
 	<tr>
