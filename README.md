@@ -69,11 +69,34 @@ suggester.focus();
 Options Documentation
 -
 
-* {Array} **data** (default=`false`) - An array of suggestion strings or objects. Examples:
-  * `["Dell","HP","Apple","Samsung","Acer"]`
-  * `[{"value":"Dell"},{"value":"HP"},{"value":"Apple"},{"value":"Samsung"},{"value":"Acer"}]`
-  * `[{"value":"Dell","founded":1984},{"value":"HP","founded":1939},...]`
-  * (Leave empty to use an ajax data source)
+<table>
+	<tr>
+		<th>Type</th>
+		<th>Option Name</th>
+		<th>Default</th>
+		<th>Description</th>
+	<tr>
+	<tr>
+		<td>{Array}</td>
+		<td><strong>data</strong></td>
+		<td><code>false</code></td>
+		<td>An array of suggestion strings or objects. Examples:<br />
+			<ul>
+				<li><code>["Dell","HP","Apple","Samsung","Acer"]</code></li>
+				<li><code>[{"value":"Dell"},{"value":"HP"},{"value":"Apple"},{"value":"Samsung"},{"value":"Acer"}]`
+				<li><code>[{"value":"Dell","founded":1984},{"value":"HP","founded":1939},...]`
+				<li>(Leave empty to use an ajax data source)</li>
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<td>{String}</td>
+		<td><strong>valueProperty</strong></td>
+		<td><code>"value"</code></td>
+		<td>The property in `data` to write back to the original input</td>
+	</tr>
+</table>
+
 * {String} **valueProperty** (default=`"value"`) - The property in `data` to write back to the original input
 * {String} **labelProperty** (default=`"value"`) - The property to show for a chosen item
 * {Array} **searchProperties** (default=`["value"]`) - A list of properties in `data` to search for suggestions
@@ -125,6 +148,8 @@ Options Documentation
 </div>
 ```
 * {String} **listItemTemplate** (default=`false`) - Overrides the `<li class="sugg-item {record.cssClass}">{record.value}</li>` value above
+
+Also note that default options can be overwritten by altering `$.Suggester.defaultOptions`.
 
 Events Documentation
 -
@@ -183,8 +208,8 @@ $(input).suggester(options);
 $(input).suggester('methodName', arg1, arg2, argN);
 ```
 
-* {jQuery} **add({String} **value**[, {String} **label**][, {jQuery} **$item**]) - Add a new tag as if the user had typed it
-* {jQuery} **destroy()** - Remove the widget and replace the original input. Returns the original input
+* {jQuery} **add**({String} **value**[, {String} **label**][, {jQuery} **$item**]) - Add a new tag as if the user had typed it
+* {jQuery} **destroy**() - Remove the widget and replace the original input. Returns the original input
 
 Change log
 -
