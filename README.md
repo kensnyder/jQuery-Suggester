@@ -5,6 +5,13 @@ Version 1.0, December 2012, MIT License
 
 [Demos](http://sandbox.kendsnyder.com/suggester/demo/demo.html)
 
+Table of Contents
+-
+
+* [Introduction][intro]
+* [How to Use][how]
+
+[intro]:
 Introduction
 -
 
@@ -23,6 +30,7 @@ Turn a text input into a Gmail / Facebook-style auto-complete widget. Features i
 * Unit tested - [Unit tests](http://sandbox.kendsnyder.com/suggester/demo/unit-tests.html) 
 * Works on IE8+, FF, Chrome, Safari
 
+[how]:
 How to Use
 -
 
@@ -336,7 +344,7 @@ See the Suggester Instance Methods section for event handler examples
 		<td>Called before <code>$.ajax()</code> is called</td>
 		<td>fetchResults()</td>
 		<td>
-			<code>settings</code>: The settings to send to <code>$.ajax()</code>. Alter this value to add or change settings.<br />
+			<code>settings</code>: The settings to send to $.ajax(). Alter this value to add or change settings.<br />
 			<code>term</code>: The text term being searched for
 		</td>
 		<td>No</td>
