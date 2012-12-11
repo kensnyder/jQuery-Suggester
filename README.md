@@ -11,8 +11,8 @@ Table of Contents
 * [Introduction][intro]
 * [How to Use][how]
 
-[intro]:
-Introduction
+
+[intro]: Introduction
 -
 
 Turn a text input into a Gmail / Facebook-style auto-complete widget. Features include:
@@ -30,8 +30,8 @@ Turn a text input into a Gmail / Facebook-style auto-complete widget. Features i
 * Unit tested - [Unit tests](http://sandbox.kendsnyder.com/suggester/demo/unit-tests.html) 
 * Works on IE8+, FF, Chrome, Safari
 
-[how]:
-How to Use
+
+[how]: How to Use
 -
 
 Suggester is compatible with jQuery 1.5 and has been tested with jQuery 1.8. Copy or git checkout the Suggester files to your scripts directory then add the following HTML to your &lt;head&gt;:
