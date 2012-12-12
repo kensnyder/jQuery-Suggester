@@ -659,9 +659,11 @@ Instance methods may be called using an Object Oriented style or with the classi
 // Object Oriented Style
 var suggester = new $.Suggester(input, options);
 suggester.methodName(arg1, arg2, argN);
+
 // jQuery Style
 $(input).suggester(options);
 $(input).suggester('methodName', arg1, arg2, argN);
+
 // jQuery Style followed by Object Oriented Style
 $(input).suggester(options);
 var instance = $(input).suggester('getInstance');
