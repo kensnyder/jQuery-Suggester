@@ -639,14 +639,14 @@ Instance Properties
 		<td>The search term we are currently searching for</td>
 	</tr>
 	<tr>
+		<td>{String}</td>
+		<td><strong>_text</strong></td>
+		<td>The text in the input box that will be used to fetch results (i.e. what the user just typed). Normally the same as _searchTerm</td>
+	</tr>
+	<tr>
 		<td>{jqXHR}</td>
 		<td><strong>_jqXHR</strong></td>
 		<td>The jQuery XHR object used initilized for fetching data - http://api.jquery.com/jQuery.ajax/#jqXHR</td>
-	</tr>
-	<tr>
-		<td>{String}</td>
-		<td><strong>_text</strong></td>
-		<td> The text in the input box that will be used to fetch results (i.e. what the user just typed)</td>
 	</tr>
 </table>
 
