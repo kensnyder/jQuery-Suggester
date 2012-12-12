@@ -393,8 +393,8 @@ The following is a description of each event. See the Suggester Instance Methods
 		<td>moveSelection()</td>
 		<td>
 			<code>direction</code>: "up" or "down"<br />
-			<code>last</code>: jQuery object of the last selected item
-			<code>current</code>: jQuery object of the currently selected item<br />
+			<code>last</code>: jQuery object of the last selected item<br />
+			<code>current</code>: jQuery object of the currently selected item
 		</td>
 		<td>-</td>
 	</tr>
@@ -556,7 +556,7 @@ Instance Properties
 	<tr>
 		<td>{jQuery}</td>
 		<td><strong>$originalInput</strong></td>
-		<td>Called before the widget is rendered</td>
+		<td>The input from which the widget was generated</td>
 	</tr>
 	<tr>
 		<td>{Object}</td>
