@@ -26,7 +26,7 @@
  * Suggester is licensed under the MIT License:
  * http://www.opensource.org/licenses/mit-license.php
  */
-(function (factory) {
+;(function (factory) {
 	// AMD compatibility
 	// https://github.com/umdjs/umd/blob/6c10fc0af1e1692cf430c9eb7f530d6b5a5d758b/jqueryPlugin.js
     if (typeof define === 'function' && define.amd) {
