@@ -17,14 +17,26 @@
  *   - You can define your own HTML structure for the widget output
  *   - Object-oriented structure makes for easy extendibility
  *   - 5kb minimized and gzipped
- *   - Fully unit tested - http://sandbox.kendsnyder.com/suggester/demo/unit-tests.html
+ *   - Unit tested - http://sandbox.kendsnyder.com/suggester/demo/unit-tests.html
+ *   - Works on IE8+, FF, Chrome, Safari
+ *   - Campatibile with AMD
  *  
  * Inspired by the AutoSuggest plugin by Drew Wilson
  *
  * Suggester is licensed under the MIT License:
  * http://www.opensource.org/licenses/mit-license.php
  */
-;(function($) { "use strict";
+(function (factory) {
+	// AMD compatibility
+	// https://github.com/umdjs/umd/blob/6c10fc0af1e1692cf430c9eb7f530d6b5a5d758b/jqueryPlugin.js
+    if (typeof define === 'function' && define.amd) {
+        // AMD environment
+        define(['jquery'], factory);
+    } else {
+        // Browser environment
+        factory(jQuery);
+    }
+}(function($) { "use strict";
 	// get our document and body once
 	var $document = $(document);
 	// Our true constructor function. See jQuery.Suggester.prototype.initialize for documentation
@@ -1570,4 +1582,4 @@
 		};
 	}
 	makePlugin('suggester', $.Suggester);
-})(jQuery); 	
+})); 	
