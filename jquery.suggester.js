@@ -302,7 +302,7 @@
 				}
 			}
 			// append our hidden input to the widget
-			if(this.options.addHiddenInputs) {
+			if (this.options.addHiddenInputs) {
 				$hidden = $('<input type="hidden" />').attr('name', this.hiddenName).val(value);
 				this.$widget.append($hidden);
 			}
@@ -850,7 +850,7 @@
 				text: text
 			});			
 			if (!this.options.caseSensitive) {
-				evt.text = evt.text.toLowerCase();
+				var casedText = evt.text.toLowerCase();
 			}			
 			var sugg = this;
 			var results = [];
@@ -866,9 +866,9 @@
 						value = value.toLowerCase();
 					}					
 					if (
-						(sugg.options.matchAt == 'anywhere' && value.indexOf(evt.text) > -1) 
-						|| (value.indexOf(evt.text) == sugg.options.matchAt)
-						|| (sugg.options.matchAt == 'end' && value.indexOf(evt.text) == value.length - evt.text-length) 
+						(sugg.options.matchAt == 'anywhere' && value.indexOf(casedText) > -1) 
+						|| (value.indexOf(casedText) == sugg.options.matchAt)
+						|| (sugg.options.matchAt == 'end' && value.indexOf(casedText) == value.length - casedText-length) 
 					) {
 						results.push(record);
 						return false;
@@ -978,9 +978,9 @@
 					- parseFloat(this.$input.css('borderRightWidth'))
 				);
 			}
-			else {
-				this.$input[0].size = this.options.inputSize == 'auto' ? (this.options.placeholder.length || 2) : this.options.inputSize;			
-			}
+			else if (this.options.inputSize == 'auto' && this.options.multiselect) {
+				this.$input[0].size = this.options.placeholder.length || 2;			
+ 			}
 		},
 		/**
 		 * Look at the initial element's start value and populate tags as appropriate
@@ -1186,18 +1186,20 @@
 		_key_BACKSPACE: function(evt) {
 			var $lastTag;
 			this.$currentItem = null;
-			if (getCursorPosition(this.$input[0]) == 0) {
-				evt.preventDefault();
-				$lastTag = this.tags.length > 0 ? this.tags[this.tags.length-1].$tag : null;
-				if (this.$focusedTag && $lastTag && this.$focusedTag[0] == $lastTag[0]) {
-					this.remove($lastTag);
-				}
-				else if ($lastTag) {
-					this.$focusedTag = $lastTag;
-					$lastTag.addClass('sugg-focused');
-				}
-				this.closeSuggestBox();
-			}
+			if (this._isCursorAtStart()) {
+				if (this.options.multiselect && this.tags.length > 0) {
+					evt.preventDefault();
+					$lastTag = this.tags[this.tags.length-1].$tag;
+					if (this.$focusedTag && $lastTag && this.$focusedTag[0] == $lastTag[0]) {
+						this.remove($lastTag);
+					}
+					else if ($lastTag) {
+						this.$focusedTag = $lastTag;
+						$lastTag.addClass('sugg-focused');
+					}
+ 				}
+ 				this.closeSuggestBox();
+ 			}
 			else {
 				// update suggestions
 				this._key_other(evt);
@@ -1246,7 +1248,7 @@
 				this.closeSuggestBox();
 				this.$currentItem = null;
 			}
-			else if (this.options.preventSubmit) {
+			if (this.options.preventSubmit) {
 				// don't let form submit
 				evt.preventDefault();
 			}			
@@ -1480,35 +1482,37 @@
 					this.bind(name.slice(2), this.options[name]);
 				}
 			}			
-		}
+		},
+		/**
+		 * Given an input element, get the cursor position. Used to determine if backspace key should delete the previous tag
+		 * 
+		 * @return {Boolean}  true if the cursor is at the start and no text is selected
+		 */
+		_isCursorAtStart: function() {
+			var selStart = _getSelectionStart(this.$input[0]);
+			var selEnd = _getSelectionEnd(this.$input[0]);
+			return selStart == 0 && selEnd == 0;
+ 		}
 	};
-	//
-	// private utility methods
-	//
-	/**
-	 * Given an input element, get the cursor position. Used to determine if backspace key should delete the previous tag
-	 * 
-	 * @param {HTMLElement} input
-	 * @return {Number}  the position in the element
-	 */
-	var getCursorPosition = function(input) {
-		if ('selectionStart' in input) {
-            // Standard-compliant browsers
-            return input.selectionStart;
-        } 
-		else if (document.selection) {
-            // IE
-            input.focus();
-            var sel = document.selection.createRange();
-            var selLen = document.selection.createRange().text.length;
-            sel.moveStart('character', -input.value.length);
-            return sel.text.length - selLen;
-        }
-		else {
-			// some weirdness that should never happen
-			return input.value.length;
-		}
+	
+	// cursor helper methods
+	// from http://javascript.nwbox.com/cursor_position/cursor.js
+	function _getSelectionStart(o) {
+		if (o.createTextRange) {
+			var r = document.selection.createRange().duplicate();
+			r.moveEnd('character', o.value.length);
+			if (r.text == '') return o.value.length;
+			return o.value.lastIndexOf(r.text);
+		} else return o.selectionStart;
 	}
+	function _getSelectionEnd(o) {
+		if (o.createTextRange) {
+			var r = document.selection.createRange().duplicate();
+			r.moveStart('character', -o.value.length);
+			return r.text.length;
+		} else return o.selectionEnd;
+ 	}
+	
 	//
 	// static properties and methods
 	//

@@ -17,7 +17,7 @@
 	outline: none;
 }
 .sugg-box-item {
-	list-style-type: none;
+	list-style-type: none !important;
 	display: inline-block;
 	vertical-align: middle;
 	padding: 0;
@@ -72,6 +72,7 @@
 	padding: 0;
 	font: 11px/100% "Lucida Grande", Verdana, sans-serif;
 	box-shadow: 2px 2px 5px rgba(128,128,128,0.40);
+	z-index: 2147483646;
 }
 .sugg-fly-up .sugg-list {
 	top: auto;
@@ -85,7 +86,7 @@
 .sugg-item,
 .sugg-empty,
 .sugg-prompt {
-	list-style-type: none;
+	list-style-type: none !important;
 	margin: 0;
 	padding: 0.25em 0.5em;
 	border: 1px solid #ccc;
