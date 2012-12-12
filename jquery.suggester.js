@@ -179,7 +179,7 @@
 		 * @property {Object[]} tags           A collection of information about each tag that has been added (each item has properties record, $tag, and $hidden)
 		 * @property {String} hiddenName       The name to use for hidden element ids (defaults to the original input's name plus "_tags[]")
 		 * @property {jQuery} $focusedTag      The tag that is selected for deletion
-		 * @property {jQuery} $currentItem     The currently selected suggestion
+		 * @property {jQuery} $currentItem     
 		 * @property {jQuery} pubsub           The publish and subscribe handle
 		 * @property {jQuery} $widget          The element that wraps the widget
 		 * @property {jQuery} $box             The container that holds the chosen tags
@@ -190,8 +190,8 @@
 		 * @property {jQuery} $suggListWrapper The element that is positioned relatively to hold the absolutely positioned suggestion list
 		 * @property {String} listItemTemplate The html to use for suggestion list items
 		 * @property {String} _searchTerm      The search term we are currently searching for
-		 * @property {jqXHR} _jqXHR            The jQuery XHR object used initilized for fetching data - http://api.jquery.com/jQuery.ajax/#jqXHR
 		 * @property {String} _text            The text in the input box that will be used to fetch results (i.e. what the user just typed)
+		 * @property {jqXHR} _jqXHR            The jQuery XHR object used initilized for fetching data - http://api.jquery.com/jQuery.ajax/#jqXHR
 		 * 
 		 * @event Initialize - Called after widget is initialized and rendered
 		 */
@@ -268,9 +268,12 @@
 		 *                        }
 		 *                   });
 		 * 
-		 * @event BeforeAdd - Allows you to prevent it being added or alter the record before adding
-		 *     event.record  The record to be added
+		 * @event AfterAdd
 		 *     event.item    The suggestion that was chosen (if any)
+		 *     event.tag     The jQuery element of the tag that was added
+		 *     event.hidden  The hidden input that was generated
+		 *     event.value   The value of the tag
+		 *     event.label   The the label of the tag
 		 *     example       instance.bind('AfterAdd', function(event) {
 		 *                        // fade in tag
 		 *                        event.tag.fadeIn(500);
@@ -1386,7 +1389,7 @@
 		/**
 		 * Set the value of the original input to a comma-delimited set of labels
 		 * @return {jQuery.Suggester}
-		 * @event  BeforeSave  (if cancelled, original imput will not be populated with new value)
+		 * @event  BeforeSave  (if canceled, original imput will not be populated with new value)
 		 *     example  instance.bind('BeforeSave', function(event) {
 		 *                  event.newValue += '!';
 		 *              });

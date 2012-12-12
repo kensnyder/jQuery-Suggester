@@ -38,6 +38,7 @@ Turn a text input into a Gmail / Facebook-style auto-complete widget. Features i
 * 5kb minimized and gzipped
 * Unit tested - [Unit tests](http://sandbox.kendsnyder.com/suggester/demo/unit-tests.html) 
 * Works on IE8+, FF, Chrome, Safari
+* Compatible with AMD
 
 
 How to Use
@@ -310,21 +311,21 @@ The following is a description of each event. See the Suggester Instance Methods
 		<th>Description</th>
 		<th>Called within Method</th>
 		<th>Data available on <code>event</code></th>
-		<th>Cancellable?</th>
+		<th>If Cancelled...</th>
 	<tr>
 	<tr>
 		<td><strong>BeforeRender</strong></td>
 		<td>Called before the widget is rendered</td>
 		<td>_render()</td>
 		<td></td>
-		<td>No</td>
+		<td>-</td>
 	</tr>
 	<tr>
 		<td><strong>Initialize</strong></td>
 		<td>Called after widget is initialize and rendered</td>
 		<td>initialize()</td>
 		<td></td>
-		<td>No</td>
+		<td>-</td>
 	</tr>
 	<tr>
 		<td><strong>BeforeHandleKey</strong></td>
@@ -333,7 +334,7 @@ The following is a description of each event. See the Suggester Instance Methods
 		<td>
 			<code>keydown</code>: The browser keydown event
 		</td>
-		<td>Yes</td>
+		<td>key has no effect</td>
 	</tr>
 	<tr>
 		<td><strong>AfterHandleKey</strong></td>
@@ -342,7 +343,7 @@ The following is a description of each event. See the Suggester Instance Methods
 		<td>
 			<code>keydown</code>: The browser keydown event
 		</td>
-		<td>No</td>
+		<td>-</td>
 	</tr>
 	<tr>
 		<td><strong>BeforeAjax</strong></td>
@@ -352,7 +353,7 @@ The following is a description of each event. See the Suggester Instance Methods
 			<code>settings</code>: The settings to send to $.ajax(). Alter this value to add or change settings.<br />
 			<code>term</code>: The text term being searched for
 		</td>
-		<td>No</td>
+		<td>-</td>
 	</tr>
 	<tr>
 		<td><strong>BeforeFetch</strong></td>
@@ -362,7 +363,7 @@ The following is a description of each event. See the Suggester Instance Methods
 			<code>jqXHR</code>: The jQuery XHR object<br />
 			<code>term</code>: The text being searched for
 		</td>
-		<td>Yes</td>
+		<td>ajax request is aborted</td>
 	</tr>
 	<tr>
 		<td><strong>AfterFetch</strong></td>
@@ -373,28 +374,173 @@ The following is a description of each event. See the Suggester Instance Methods
 			<code>term</code>: The text being searched for<br />
 			<code>records</code>: The data returned
 		</td>
-		<td>Yes</td>
+		<td>Suggestions are not displayed</td>
 	</tr>
 	<tr>
 		<td><strong>BeforeMove</strong></td>
-		<td></td>
+		<td>Called when arrow keys are used to navigate between suggestions</td>
 		<td>moveSelection()</td>
 		<td>
-			<code>direction</code>: <br />
-			<code>current</code>: <br />
-			<code>next</code>: 
+			<code>direction</code>: "up" or "down"<br />
+			<code>current</code>: jQuery object of the currently selected item<br />
+			<code>next</code>: jQuery object of the item that will be selected next. Changing it will move the selection to another item.
 		</td>
-		<td>Yes	</td>
+		<td>Movement is canceled</td>
 	</tr>
 	<tr>
-		<td><strong></strong></td>
-		<td></td>
-		<td>()</td>
+		<td><strong>AfterMove</strong></td>
+		<td>Called after arrow key has been used to navigate between suggestions</td>
+		<td>moveSelection()</td>
 		<td>
-			<code></code>: <br />
-			<code></code>: 
+			<code>direction</code>: "up" or "down"<br />
+			<code>last</code>: jQuery object of the last selected item
+			<code>current</code>: jQuery object of the currently selected item<br />
 		</td>
-		<td>No</td>
+		<td>-</td>
+	</tr>
+	<tr>
+		<td><strong>BeforeSuggest</strong></td>
+		<td>Called before suggestion box opens</td>
+		<td>handleSuggestions()</td>
+		<td>
+			<code>text</code>: The text that was searched for
+		</td>
+		<td>Suggestionn list is built but not displayed</td>
+	</tr>
+	<tr>
+		<td><strong>AfterSuggest</strong></td>
+		<td>Called after suggestion box opens due to fetching a list</td>
+		<td>handleSuggestions()</td>
+		<td></td>
+		<td>-</td>
+	</tr>
+	<tr>
+		<td><strong>BeforeOpen</strong></td>
+		<td>Called before suggestion box is opened for any reason</td>
+		<td>openSuggestBox()</td>
+		<td></td>
+		<td>Suggestion box does not open</td>
+	</tr>
+	<tr>
+		<td><strong>AfterOpen</strong></td>
+		<td>Called after suggestion box is opened for any reason</td>
+		<td>openSuggestBox()</td>
+		<td></td>
+		<td>-</td>
+	</tr>
+	<tr>
+		<td><strong>BeforeClose</strong></td>
+		<td>Called before suggestion box closes</td>
+		<td>closeSuggestBox()</td>
+		<td></td>
+		<td>Suggestion box stays open</td>
+	</tr>
+	<tr>
+		<td><strong>AfterClose</strong></td>
+		<td>Called after suggestion box closes</td>
+		<td>closeSuggestBox()</td>
+		<td></td>
+		<td>-</td>
+	</tr>
+	<tr>
+		<td><strong>BeforeFormat</strong></td>
+		<td>Allows you to provide custom html for a single record</td>
+		<td>_formatSuggestion()</td>
+		<td>
+			<code>record</code>: The record from which the suggestion was generated<br />
+			<code>substr</code>: The portion of the suggestion that matched the input text<br />
+			<code>html</code>: Blank string. Set it and call event.preventDefault() to specify your own HTML
+		</td>
+		<td>event.html is used instead of default HTML</td>
+	</tr>
+	<tr>
+		<td><strong>AfterFormat</strong></td>
+		<td>Allows you to alter suggestion html for a single record</td>
+		<td>_formatSuggestion()</td>
+		<td>
+			<code>record</code>: The record from which the suggestion was generated<br />
+			<code>substr</code>: The portion of the suggestion that matched the input text<br />
+			<code>html</code>: The default HTML. Change it if needed
+		</td>
+		<td>-</td>
+	</tr>
+	<tr>
+		<td><strong>BeforeFilter</strong></td>
+		<td>For local data, allows altering input text</td>
+		<td>getResults()</td>
+		<td>
+			<code>text</code>: The input text. Alter to change it
+		</td>
+		<td>-</td>
+	</tr>
+	<tr>
+		<td><strong>AfterFilter</strong></td>
+		<td>For local data, allows altering results</td>
+		<td>getResults()</td>
+		<td>
+			<code>text</code>: The input text<br />
+			<code>results</code>: An array of suggestion records. Change if desired
+		</td>
+		<td>-</td>
+	</tr>
+	<tr>
+		<td><strong>BeforeAdd</strong></td>
+		<td>Change tag before adding</td>
+		<td>add()</td>
+		<td>
+			<code>value</code>: The tag to be added<br />
+			<code>item</code>: The jQuery element of the selection from the suggest box if any<br />
+			<code>isCustom</code>: True when item is not a member of result data
+		</td>
+		<td>Tag is not added</td>
+	</tr>
+	<tr>
+		<td><strong>AfterAdd</strong></td>
+		<td>Called after tag is added</td>
+		<td>add()</td>
+		<td>
+			<code>item</code>: The suggestion that was chosen (if any)<br />
+			<code>tag</code>: The jQuery element of the tag that was added<br />
+			<code>hidden</code>: The hidden input that was generated if any<br />
+			<code>value</code>: The value of the tag<br />
+			<code>label</code>: The tag's display text
+		</td>
+		<td>-</td>
+	</tr>
+	<tr>
+		<td><strong>BeforeRemove</strong></td>
+		<td>Called before a tag is removed</td>
+		<td>remove()</td>
+		<td>
+			<code>tag</code>: The jQuery element of the tag<br />
+			<code>value</code>: The value of the tag
+		</td>
+		<td>Tag is not removed</td>
+	</tr>
+	<tr>
+		<td><strong>AfterRemove</strong></td>
+		<td>Called after a tag is removed</td>
+		<td>remove()</td>
+		<td>
+			<code>tag</code>: The jQuery element of the tag<br />
+			<code>value</code>: The value of the tag<br />
+			<code>removed</code>: The tag object used internally to store $tag, value, $hidden, and label
+		</td>
+		<td>Tag is not removed</td>
+	</tr>
+	<tr>
+		<td><strong>BeforeSave</strong></td>
+		<td>Called before values are written to hidden element(s)</td>
+		<td>save()</td>
+		<td></td>
+		<td>Hidden elements are left unchanged</td>
+	</tr>
+	<tr>
+		<td><strong>AfterSave</strong></td>
+		<td>Called after values are written to hidden element(s)</td>
+		<td>save()</td>
+		<td></td>
+		<td>-</td>
 	</tr>
 </table>
 			
@@ -418,9 +564,89 @@ Instance Properties
 		<td>The options that were passed to the constructor</td>
 	</tr>
 	<tr>
-		<td>{}</td>
-		<td><strong></strong></td>
-		<td></td>
+		<td>{Array}</td>
+		<td><strong>data</strong></td>
+		<td>Static data used instead of an ajax call</td>
+	</tr>
+	<tr>
+		<td>{Array}</td>
+		<td><strong>tags</strong></td>
+		<td>Information about each tag</td>
+	</tr>
+	<tr>
+		<td>{String}</td>
+		<td><strong>hiddenName</strong></td>
+		<td>The name to use for hidden element ids (defaults to the original input's name plus "_tags[]")</td>
+	</tr>
+	<tr>
+		<td>{jQuery}</td>
+		<td><strong>$focusedTag</strong></td>
+		<td>The tag that is selected for deletion</td>
+	</tr>
+	<tr>
+		<td>{jQuery}</td>
+		<td><strong>$currentItem</strong></td>
+		<td>The currently selected suggestion</td>
+	</tr>
+	<tr>
+		<td>{jQuery}</td>
+		<td><strong>pubsub</strong></td>
+		<td>The publish and subscribe handle used by publish()</td>
+	</tr>
+	<tr>
+		<td>{jQuery}</td>
+		<td><strong>$widget</strong></td>
+		<td>The element that wraps the widget</td>
+	</tr>
+	<tr>
+		<td>{jQuery}</td>
+		<td><strong>$box</strong></td>
+		<td>The container that holds the chosen tags</td>
+	</tr>
+	<tr>
+		<td>{jQuery}</td>
+		<td><strong>$tagTemplate</strong></td>
+		<td>The tag element that is cloned to make new tags</td>
+	</tr>
+	<tr>
+		<td>{jQuery}</td>
+		<td><strong>$input</strong></td>
+		<td>The input that users type in</td>
+	</tr>
+	<tr>
+		<td>{jQuery}</td>
+		<td><strong>$inputWrapper</strong></td>
+		<td>The container around $input</td>
+	</tr>
+	<tr>
+		<td>{jQuery}</td>
+		<td><strong>$suggList</strong></td>
+		<td>The suggestion list</td>
+	</tr>
+	<tr>
+		<td>{jQuery}</td>
+		<td><strong>$suggListWrapper</strong></td>
+		<td>The element that is positioned relatively to hold the absolutely positioned suggestion list</td>
+	</tr>
+	<tr>
+		<td>{String}</td>
+		<td><strong>listItemTemplate</strong></td>
+		<td>The html to use for suggestion list items</td>
+	</tr>
+	<tr>
+		<td>{String}</td>
+		<td><strong>_searchTerm</strong></td>
+		<td>The search term we are currently searching for</td>
+	</tr>
+	<tr>
+		<td>{jqXHR}</td>
+		<td><strong>_jqXHR</strong></td>
+		<td>The jQuery XHR object used initilized for fetching data - http://api.jquery.com/jQuery.ajax/#jqXHR</td>
+	</tr>
+	<tr>
+		<td>{String}</td>
+		<td><strong>_text</strong></td>
+		<td> The text in the input box that will be used to fetch results (i.e. what the user just typed)</td>
 	</tr>
 </table>
 
@@ -703,7 +929,7 @@ $.Suggester.prototype = {
    /**
 	* Set the value of the original input to a comma-delimited set of labels
 	* @return {jQuery.Suggester}
-	* @event  BeforeSave  (if cancelled, original imput will not be populated with new value)
+	* @event  BeforeSave  (if canceled, original imput will not be populated with new value)
 	*     example  instance.bind('BeforeSave', function(event) {
 	*                  event.newValue += '!';
 	*              });
