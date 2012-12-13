@@ -1,7 +1,7 @@
 Suggester for jQuery 
 =
 
-Version 1.0, December 2012, MIT License
+Version 1.0pre, December 2012, MIT License
 
 [Demos](http://sandbox.kendsnyder.com/suggester/demo/demo.html), [Unit tests](http://sandbox.kendsnyder.com/suggester/demo/unit-tests.html)
 
@@ -1035,7 +1035,7 @@ See the source on the [live demos](http://sandbox.kendsnyder.com/suggester/demo/
 Changelog
 -
 
-**Version 1.0, December 2012**
+**Version 1.0pre, December 2012**
 
 *initial version*
 

@@ -4,7 +4,7 @@
  * GitHub: https://github.com/kensnyder/jQuery-Suggester
  * Demos: http://sandbox.kendsnyder.com/suggester/demo/demo.html
  *
- * Version 1.0, December 2012
+ * Version 1.0pre, December 2012
  *
  * Turn a text input into a Gmail / Facebook-style auto-complete widget. Features include:
  *   - Load data from a JavaScript array, object, json url, or jsonp url
