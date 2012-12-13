@@ -99,7 +99,7 @@
 		// placeholder text to display when no tags are present
 		// e.g. "Enter tags..."
 		placeholder: '',
-		// message to show when there are no matches
+		// message to show when there are no suggestions
 		emptyText: '(Type a comma to create a new item)',
 		// message to display when below min char length
 		prompt: false,
@@ -107,6 +107,8 @@
 		maxSuggestions: 10,
 		// if true, also add a hidden input for each tag (fieldname_tag[]) for easier server-side processing
 		addHiddenInputs: true,
+		// The name to use for hidden elements (defaults to the original input's name plus "_tags[]")
+		hiddenName: null,
 		// if true, wrap first matching substring in each suggestion with <strong class="sugg-match"></strong>
 		hightlightSubstring: true,
 		// the html used to generate the widget
@@ -177,7 +179,7 @@
 		 * @property {Object} options          The options passed to the constructor (see jQuery.Suggester.defaultOptions)
 		 * @property {Object[]} data           Static data used instead of an ajax call
 		 * @property {Object[]} tags           A collection of information about each tag that has been added (each item has properties record, $tag, and $hidden)
-		 * @property {String} hiddenName       The name to use for hidden element ids (defaults to the original input's name plus "_tags[]")
+		 * @property {String} hiddenName       The name to use for hidden elements (defaults to the original input's name plus "_tags[]")
 		 * @property {jQuery} $focusedTag      The tag that is selected for deletion
 		 * @property {jQuery} $currentItem     
 		 * @property {jQuery} pubsub           The publish and subscribe handle
@@ -217,7 +219,7 @@
 			// a collection of tags and tag data
 			this.tags = [];
 			// the name given to the hidden $input elements
-			this.hiddenName = this.$originalInput.attr('name') + '_tags[]';
+			this.hiddenName = this.options.hiddenName || this.$originalInput.attr('name') + '_tags[]';
 			// the tag that is clicked to prepare for deletion
 			this.$focusedTag = false;
 			// the currently selected suggestion
@@ -781,7 +783,7 @@
 					this.$suggList.hide().css('visibility','visible');
 				}
 				else {
-					top = pos.top - bodyOffset.top + this.$box.height();
+					top = pos.top - bodyOffset.top + this.$box.outerHeight();
 				}
 				left = pos.left - bodyOffset.left;
 				width = this.$box.outerWidth();
@@ -1248,7 +1250,7 @@
 				this.closeSuggestBox();
 				this.$currentItem = null;
 			}
-			if (this.options.preventSubmit) {
+			if (!this.options.submitOnEnter) {
 				// don't let form submit
 				evt.preventDefault();
 			}			

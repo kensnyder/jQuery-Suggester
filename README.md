@@ -213,6 +213,12 @@ Options
 	</tr>
 	<tr>
 		<td>{String}</td>
+		<td><strong>emptyText</strong></td>
+		<td>"(Type a comma to create a new item)"</td>
+		<td>Message to show when there are no suggestions</td>
+	</tr>
+	<tr>
+		<td>{String}</td>
 		<td><strong>prompt</strong></td>
 		<td>false</td>
 		<td>A message to show when the input is focused but the text is below <code>minChars</code></td>
