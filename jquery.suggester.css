@@ -7,7 +7,7 @@
 	line-height: 100%;
 }
 .sugg-input {
-	background-color: transparent;
+	background: transparent;
 	border: 1px solid transparent;
 	padding: 0.2em 0.6em 0.2em 0;
 	display: inline-block;
@@ -26,20 +26,20 @@
 }
 .sugg-tag {
 	border-radius: 0.85em;
-	background-color: #D0E9FF;
+	background: #D0E9FF;
 	color: #222;
 	border: 1px solid #70AFD6;
 	padding: 0.1em 0.6em 0.3em 0.6em;
 	cursor: default;
 }
 .sugg-tag:hover {
-	background-color: #BAD2FF;
+	background: #BAD2FF;
 	color: #000;
 	border: 1px solid #5B89DD;
 }
 .sugg-tag.sugg-focused,
 .sugg-tag.sugg-focused:hover {
-	background-color: #3674D4;
+	background: #3674D4;
 	color: #fff;
 	border: 1px solid #3674D4;
 }
@@ -91,25 +91,86 @@
 	padding: 0.25em 0.5em;
 	border: 1px solid #ccc;
 	border-bottom: none;
-	background-color: #fff;
+	background: #fff;
 	cursor: default;
 }
 .sugg-empty,
 .sugg-prompt {
-	background-color: #f0f0f0;
+	background: #f0f0f0;
 	font-style: italic;
 }
 .sugg-item.sugg-selected {
 	border-top: 1px solid #3674D4;
 	border-right: 1px solid #3674D4;
 	border-left: 1px solid #3674D4;
-	background-color: #3674D4;
+	background: #3674D4;
 	color: #fff;
 }
 strong.sugg-match {
 	font-weight: bold;
-	background-color: #e7f0f7;
+	background: #e7f0f7;
 }
 .sugg-item.sugg-selected strong.sugg-match {
-	background-color: transparent;
+	background: transparent;
 }
+/* graybox theme */
+.sugg-theme-graybox .sugg-tag {
+	border-radius: 0;
+	background: #f1f1f1;
+	border: 1px solid #bbb;
+}
+.sugg-theme-graybox .sugg-tag.sugg-focused,
+.sugg-theme-graybox .sugg-tag.sugg-focused:hover {
+	background: #555;
+	color: #fff;
+	border: 1px solid #000;
+}
+/* grayred theme */
+.sugg-theme-grayred .sugg-tag {
+	background: #f1f1f1;
+	border: 1px solid #bbb;
+}
+.sugg-theme-grayred .sugg-tag.sugg-focused,
+.sugg-theme-grayred .sugg-tag.sugg-focused:hover {
+	background: #d64848;
+	color: #fff;
+	border: 1px solid #920000;
+}
+/* faceblue theme */
+.sugg-theme-faceblue .sugg-tag {
+	border-radius: 2px;
+	background: #dfe3ee; /* Old browsers */
+	background: -moz-linear-gradient(top,  #dfe3ee 0%, #bccff0 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#dfe3ee), color-stop(100%,#bccff0)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #dfe3ee 0%,#bccff0 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #dfe3ee 0%,#bccff0 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #dfe3ee 0%,#bccff0 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #dfe3ee 0%,#bccff0 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dfe3ee', endColorstr='#bccff0',GradientType=0 ); /* IE6-9 */
+	border: 1px solid #a2bce8;
+}
+.sugg-theme-faceblue .sugg-tag.sugg-focused,
+.sugg-theme-faceblue .sugg-tag.sugg-focused:hover {
+	background: #3b5998;
+	color: #fff;
+	border: 1px solid #3b5998;
+}
+.sugg-theme-faceblue .sugg-item.sugg-selected {
+	border-top: 1px solid #6c83b2;
+	border-right: 1px solid #6c83b2;
+	border-left: 1px solid #6c83b2;
+	background: #6c83b2;
+	color: #fff;
+}
+/* bluegradient theme */
+/*.sugg-theme-bluegradient .sugg-tag {
+	border-radius: 0;
+	background: #ebf0e9;
+	border: 1px solid #2dad00;
+}
+.sugg-theme-bluegradient .sugg-tag.sugg-focused,
+.sugg-theme-bluegradient .sugg-tag.sugg-focused:hover {
+	background: #248701;
+	color: #fff;
+	border: 1px solid #248701;
+}*/

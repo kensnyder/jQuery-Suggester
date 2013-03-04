@@ -37,7 +37,7 @@
         factory(jQuery);
     }
 }(function($) { "use strict";
-	// get our document and body once
+	// get our document once
 	var $document = $(document);
 	// Our true constructor function. See jQuery.Suggester.prototype.initialize for documentation
 	$.Suggester = function() {
@@ -92,6 +92,8 @@
 		addOnComma: true,
 		// If true, typing a tab will add the current text as a tag
 		addOnTab: true,
+		// If true, add tag on submit if user has entered text but not typed comma or tab
+		addOnSubmit: true,
 		// if false, prevent the form from submitting when the user presses enter on the empty input
 		submitOnEnter: false,
 		// Manually set the input size property to a certain width. If auto, set size to text width
@@ -131,7 +133,9 @@
 					'</ul>' +
 				'</div>' +
 			'</div>',
-		listItemTemplate: null // overrides .sugg-item html above
+		listItemTemplate: null, // overrides .sugg-item html above
+		
+		theme: 'coolblue'
 		/* 
 		 * AVAILABLE EVENT OPTIONS
 		 * 
@@ -160,6 +164,7 @@
 		 * onAfterRemove      -> see jQuery.Suggester#remove()
 		 * onBeforeSave       -> see jQuery.Suggester#save()
 		 * onAfterSave        -> see jQuery.Suggester#save()
+		 * onBeforeSubmit     -> see jQuery.Suggester#_onSubmit()
 		 */
 	};
 	// Making Suggester a proper class allows two patterns:
@@ -200,6 +205,7 @@
 		initialize: function($textInput, options) {
 			// This is the original text input given
 			this.$originalInput = $($textInput);
+			this.$form = $(this.$originalInput.prop('form'));
 			// Bail because original input already has an instance .data('SuggesterInstance')
 			if (this.$originalInput.data('SuggesterInstance')) {
 				return this;
@@ -887,6 +893,14 @@
 			});
 			return results;
 		},
+		setTheme: function(themeName) {
+			if (this._theme) {
+				this.$widget.removeClass('sugg-theme-' + this._theme);
+			}
+			this._theme = themeName;
+			this.$widget.addClass('sugg-theme-' + this._theme);
+			return this;
+		},
 		/**
 		 * Publish the given event name and send the given data
 		 * 
@@ -982,7 +996,10 @@
 			}
 			else if (this.options.inputSize == 'auto' && this.options.multiselect) {
 				this.$input[0].size = this.options.placeholder.length || 2;			
- 			}
+			}
+			if (this.options.theme) {
+				this.setTheme(this.options.theme);
+			}
 		},
 		/**
 		 * Look at the initial element's start value and populate tags as appropriate
@@ -1027,6 +1044,8 @@
 			this.$box.click($.proxy(this, '_onBoxClick'));
 			// handle various actions associated with keypresses
 			this.$input.keydown($.proxy(this, '_onKeydown'));
+			// auto add tags on submit
+			this.$form.submit($.proxy(this, '_onSubmit'));
 		},
 		/**
 		 * Event handler for when this.$input is focused
@@ -1199,9 +1218,9 @@
 						this.$focusedTag = $lastTag;
 						$lastTag.addClass('sugg-focused');
 					}
- 				}
- 				this.closeSuggestBox();
- 			}
+				}
+				this.closeSuggestBox();
+			}
 			else {
 				// update suggestions
 				this._key_other(evt);
@@ -1269,7 +1288,40 @@
 			this.unfocusTag();
 			// start the timeout
 			this.timeoutHandle = setTimeout(this.suggestIfNeeded, this.options.keyDelay || 0);			
-		},		
+		},
+		/**
+		 * Handler for form submission
+		 * 
+		 * @param {jQuery} jqEvent  The jQuery-wrapped browser event
+		 * @event BeforeFetch (if event.preventDefault() is called, XHR is not made and suggest box does not open)
+		 *     event.event  The jQuery-wrapped browser event
+		 *     event.form   The input's form (same as this.$form)
+		 *     example      instance.bind('BeforeSubmit', function(event) {
+		 *                      // pretty much the same as instance.$form.submit(...)
+		 *                      // used internally to add tag on submit if options.addOnSubmit is true
+		 *                  });
+		 */		
+		_onSubmit: function(jqEvent) {
+			var evt = this.publish('BeforeSubmit', {
+				event: jqEvent,
+				form: this.$form.get(0)
+			});
+			// cancel form submission
+			if (evt.isDefaultPrevented()) {
+				jqEvent.preventDefault();
+				return;
+			}
+			if (this.options.addOnSubmit) {
+				if (this.$input.val() != '') {
+					this.$currentItem = null;
+					this.add(this.$input.val());
+					if (this.options.multiselect) {
+						this.$input.val('');
+					}
+					this.closeSuggestBox();
+				}
+			}
+		},
 		/**
 		 * Handler passed to $.ajax({beforeSend:...}) to alter XHR if needed
 		 * 
@@ -1473,8 +1525,8 @@
 			this.pubsub = $(this);
 			this.on = $.proxy(this.pubsub, 'on');
 			this.off = $.proxy(this.pubsub, 'off');
+			this.one = $.proxy(this.pubsub, 'one');
 			this.bind = $.proxy(this.pubsub, 'bind');
-			this.once = $.proxy(this.pubsub, 'once');
 			this.unbind = $.proxy(this.pubsub, 'unbind');
 			this.trigger = $.proxy(this.pubsub, 'trigger');
 			this.triggerHandler = $.proxy(this.pubsub, 'triggerHandler');
@@ -1494,7 +1546,7 @@
 			var selStart = _getSelectionStart(this.$input[0]);
 			var selEnd = _getSelectionEnd(this.$input[0]);
 			return selStart == 0 && selEnd == 0;
- 		}
+		}
 	};
 	
 	// cursor helper methods

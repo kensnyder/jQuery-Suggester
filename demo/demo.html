@@ -60,16 +60,6 @@
 	<input type="text" name="example_2" value="" />
 </form>
 <style>
-#example-2 .sugg-tag {
-	border-radius: 0;
-	background-color: #f1f1f1;
-	border: 1px solid #bbb;
-}
-#example-2 .sugg-tag.sugg-focused,
-#example-2 .sugg-tag.sugg-focused:hover {
-	background-color: #3674D4;
-	border: 1px solid #3674D4;
-}
 #example-2 .sugg-item {
 	padding: 2px 2px 1px 2px;
 	line-height: 100%;
@@ -97,12 +87,15 @@
 		minChars: 1,
 		labelProperty: 'name',
 		prompt: 'Enter a name or email address',
-		listItemTemplate: '<li class="sugg-item"><table><tr>' +
+		listItemTemplate: '<li class="sugg-item">' +
+			'<table><tr>' +
 			'<td><img class="addr-avatar" src="{record.avatar}" width="30" height="30" alt="" /></td>' + 
 			'<td><span class="addr-name">{record.name}</span>' +
 			'<span class="addr-email">{record.email}</span>' + 
-			'</td></tr></table>' +
-		'</li>'
+			'</td>' +
+			'</tr></table>' +
+		'</li>',
+		theme: 'graybox'
 	});
 </script>
 <!-- End Example 2 -->
@@ -207,7 +200,8 @@
 	var e4 = new $.Suggester('#example-4 input', {
 		data: bodies, // data from ./assets/js/bodies.js
 		keyDelay: 0,
-		minChars: 1
+		minChars: 1,
+		theme: 'grayred'
 	});
 	$('#example-4 a').click(function() {
 		e4.add(this.innerHTML);
@@ -227,7 +221,8 @@
 	var e5 = new $.Suggester('#example-5 input', {
 		data: bodies, // data from ./assets/js/bodies.js
 		keyDelay: 0,
-		minChars: 1
+		minChars: 1,
+		theme: 'faceblue'
 	});
 	e5.bind('AfterAdd', function(event) {
 		// example of adding an effect to a newly created tag
