@@ -951,7 +951,11 @@
 			// the template for tags
 			this.$tagTemplate = this.$box.find('.sugg-tag').remove();
 			// the text input used to type tags
-			this.$input = this.$box.find('.sugg-input').val(this.options.placeholder || '');
+			this.$input = this.$box.find('.sugg-input');
+			if (this.options.placeholder) {
+				this.$widget.addClass('sugg-placeholder-on')
+				this.$input.val(this.options.placeholder);
+			}
 			// the wrapper for that text input
 			this.$inputWrapper = this.$box.find('.sugg-input-wrapper');
 			// the list element that contains all suggestions
@@ -1032,6 +1036,7 @@
 			this._closeOnOutsideClick = $.proxy(this, '_closeOnOutsideClick');
 			// clear default text if focused on input
 			this.$input.focus($.proxy(this, '_onInputFocus'));
+			this.$input.blur($.proxy(this, '_onInputBlur'));
 			// remove tags when `X` is clicked
 			this.$box.delegate('.sugg-remove', 'click', $.proxy(this, '_onTagRemoveClick'));
 			// focus tags when clicked (for pre-deletion)
@@ -1051,6 +1056,8 @@
 		 * Event handler for when this.$input is focused
 		 */
 		_onInputFocus: function(evt) {
+			this.$widget.addClass('sugg-active');
+			this.$widget.removeClass('sugg-placeholder-on');
 			var currVal = this.$input.val();
 			this.unfocusTag();
 			if (this.options.minChars === 0 && this.data.length > 0) {
@@ -1062,6 +1069,12 @@
 			else if (currVal === '' & !!this.options.prompt) {
 				this.showPrompt();
 			}
+		},
+		_onInputBlur: function(evt) {
+			if (this.$input.val === this.options.placeholder) {
+				this.$widget.addClass('sugg-placeholder-on');
+			}
+			this.$widget.removeClass('sugg-active');			
 		},
 		/**
 		 * Event handler for when .sugg-remove is clicked
