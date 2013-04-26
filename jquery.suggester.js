@@ -92,6 +92,8 @@
 		addOnComma: true,
 		// If true, typing a tab will add the current text as a tag
 		addOnTab: true,
+		// If true, typing a semicolon will add the current text as a tag
+		addOnSemicolon: false,
 		// If true, add tag on submit if user has entered text but not typed comma or tab
 		addOnSubmit: true,
 		// if false, prevent the form from submitting when the user presses enter on the empty input
@@ -953,7 +955,7 @@
 			// the text input used to type tags
 			this.$input = this.$box.find('.sugg-input');
 			if (this.options.placeholder) {
-				this.$widget.addClass('sugg-placeholder-on')
+				this.$widget.addClass('sugg-placeholder-on');
 				this.$input.val(this.options.placeholder);
 			}
 			// the wrapper for that text input
@@ -1015,6 +1017,7 @@
 			// if JavaScript RegExp supported lookbehinds we wouldn't need this \u0001 deal
 			var startVal = this.$originalInput.val();
 			if (startVal) {
+				this.$widget.removeClass('sugg-placeholder-on');
 				var existingTags = startVal.replace(/\\,/g, '\u0001,').split(/,/g);
 				this.$originalInput.val('');
 				var sugg = this;
@@ -1161,29 +1164,36 @@
 			if (pubevent.isDefaultPrevented()) {
 				return;
 			}
-			if (evt.which == 38) { // Up
-				this._key_UP(evt);
-			}
-			else if (evt.which == 40) { // Down
-				this._key_DOWN(evt);
-			}
-			else if (evt.which == 8) { // Backspace
-				this._key_BACKSPACE(evt);
-			}
-			else if (
-				(this.options.addOnTab && evt.which == 9) || 
-				(this.options.addOnComma && evt.which == 188)
-			) {
-				this._key_TAB_COMMA(evt);
-			}
-			else if (evt.which == 27) { // Esc
-				this._key_ESC(evt);
-			}
-			else if (evt.which == 13) { // Enter
-				this._key_ENTER(evt);
-			}
-			else { // other keys
+			var hasMetaKey = (evt.metaKey || evt.shiftKey || evt.altKey);
+			if (hasMetaKey) {
 				this._key_other(evt);
+			}
+			else {
+				if (evt.which == 38) { // Up
+					this._key_UP(evt);
+				}
+				else if (evt.which == 40) { // Down
+					this._key_DOWN(evt);
+				}
+				else if (evt.which == 8) { // Backspace
+					this._key_BACKSPACE(evt);
+				}
+				else if (
+					(this.options.addOnTab && evt.which == 9) || 
+					(this.options.addOnComma && evt.which == 188) ||
+					(this.options.addOnSemicolon && evt.which == 59)
+				) {
+					this._key_TAB_COMMA(evt);
+				}
+				else if (evt.which == 27) { // Esc
+					this._key_ESC(evt);
+				}
+				else if (evt.which == 13) { // Enter
+					this._key_ENTER(evt);
+				}
+				else { // other keys
+					this._key_other(evt);
+				}
 			}
 			if (this.options.inputSize == 'auto') {
 				this.$input[0].size = this.$input.val().length + 2;
@@ -1240,7 +1250,7 @@
 			}
 		},
 		/**
-		 * Handle TAB and COMMA key on this.$input
+		 * Handle TAB and COMMA and SEMICOLON key on this.$input
 		 */		
 		_key_TAB_COMMA: function(evt) {
 			if (evt.which == 9) { // tab
@@ -1249,7 +1259,7 @@
 					return;
 				}
 			}
-			// tab or comma
+			// tab or comma or semicolon
 			evt.preventDefault();
 			if (this.$input.val() == '') {
 				// no value so don't create a new tag

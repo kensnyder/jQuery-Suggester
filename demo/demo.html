@@ -32,10 +32,18 @@
 			padding: 0;
 			border-collapse: collapse;
 		}
+		pre {
+			font: 11px/120% Monaco, "Bitstream Vera Sans", Consolas, monospace;
+			padding: 8px;
+			background-color: #f0f0f0;
+			border: 1px solid #ccc;
+			margin: 9px 0 0 0;
+			overflow: auto;
+		}
 	</style>
 </head>
 <body>
-<h1>jQuery.Suggester examples (see page source for details)</h1>
+<h1>jQuery.Suggester examples</h1>
 	
 <!-- Example 1: Simple suggester with pre-loaded data -->	
 <form id="example-1">
@@ -86,6 +94,7 @@
 		keyDelay: 200,
 		minChars: 1,
 		labelProperty: 'name',
+		addOnSemicolon: true,
 		prompt: 'Enter a name or email address',
 		listItemTemplate: '<li class="sugg-item">' +
 			'<table><tr>' +
@@ -362,6 +371,15 @@
 
 
 <div style="clear:both; height:400px"></div>
+
+<script>
+	$('form').each(function() {
+		var $form = $(this);
+		var js = $form.nextAll('script').eq(0).text().replace(/\t/g, '   ').replace(/\n   /g, '\n');
+		js = $.trim(js);
+		$form.append($('<pre></pre>').text(js));
+	});	
+</script>
 
 
 </body>
