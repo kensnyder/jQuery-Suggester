@@ -1,10 +1,10 @@
  /*
  * Suggester
- * Copyright 2012 Ken Snyder
+ * Copyright 2012-2013 Ken Snyder
  * GitHub: https://github.com/kensnyder/jQuery-Suggester
  * Demos: http://sandbox.kendsnyder.com/suggester/demo/demo.html
  *
- * Version 1.0pre, December 2012
+ * Version 1.0.2, April 2013
  *
  * Turn a text input into a Gmail / Facebook-style auto-complete widget. Features include:
  *   - Load data from a JavaScript array, object, json url, or jsonp url
@@ -18,7 +18,7 @@
  *   - Object-oriented structure makes for easy extendibility
  *   - 5kb minimized and gzipped
  *   - Unit tested - http://sandbox.kendsnyder.com/suggester/demo/unit-tests.html
- *   - Works on IE8+, FF, Chrome, Safari
+ *   - Tested on IE8+, FF, Chrome, Safari
  *   - Campatibile with AMD
  *  
  * Inspired by the AutoSuggest plugin by Drew Wilson
@@ -1618,6 +1618,7 @@
 	//
 	// static properties and methods
 	//
+	$.Suggester.version = '1.0.2';
 	/**
 	 * Pass to contructor to subclass (e.g. `MySuggester.prototype = new $.Suggester($.Suggester.doSubclass)`)
 	 * @var {Object}

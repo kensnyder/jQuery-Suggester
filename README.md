@@ -1,7 +1,7 @@
 Suggester for jQuery 
 =
 
-Version 1.0pre, December 2012, MIT License
+Version 1.0.2, April 2013, MIT License
 
 [Demos](http://sandbox.kendsnyder.com/suggester/demo/demo.html), [Unit tests](http://sandbox.kendsnyder.com/suggester/demo/unit-tests.html)
 
@@ -1284,7 +1284,7 @@ Changelog
 License
 -
 
-Copyright 2013, Ken Snyder
+Copyright 2012-2013, Ken Snyder
 
 [MIT License](http://www.opensource.org/licenses/mit-license.php)
 
