@@ -308,7 +308,6 @@
 				record: $item ? $item.data('tag-record') : undefined
 			});
 			if (evt.isDefaultPrevented()) {
-				this.save();
 				return undefined;
 			}
 			if (this.options.preventDuplicates) {				
