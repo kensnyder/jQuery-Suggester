@@ -16,7 +16,7 @@
  *   - You can subscribe to any of 20+ events that allow you to inject custom functionality into nearly every action
  *   - You can define your own HTML structure for the widget output
  *   - Object-oriented structure makes for easy extendibility
- *   - 5kb minimized and gzipped
+ *   - Less than 6kb minimized and gzipped
  *   - Unit tested - http://sandbox.kendsnyder.com/suggester/demo/unit-tests.html
  *   - Tested on IE8+, FF, Chrome, Safari
  *   - Campatibile with AMD

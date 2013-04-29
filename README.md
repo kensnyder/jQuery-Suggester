@@ -35,7 +35,7 @@ Turn a text input into a Gmail / Facebook-style auto-complete widget. Features i
 * You can subscribe to any of 20+ events that allow you to inject custom functionality into nearly every action
 * You can define your own HTML structure for the widget output
 * Object-oriented structure makes it easy to extend
-* 5kb minimized and gzipped
+* Less than 6kb minimized and gzipped
 * Unit tested - [Unit tests](http://sandbox.kendsnyder.com/suggester/demo/unit-tests.html) 
 * Works on IE8+, FF, Chrome, Safari
 * Compatible with AMD
