@@ -491,7 +491,7 @@ The following is a description of each event. See the Suggester Instance Methods
 		<td>getResults()</td>
 		<td>
 			<code>text</code>: The input text<br />
-			<code>results</code>: An array of suggestion records. Change if desired
+			<code>results</code>: An array of suggestion records. Change to edit what is displayed
 		</td>
 		<td>-</td>
 	</tr>
@@ -500,9 +500,10 @@ The following is a description of each event. See the Suggester Instance Methods
 		<td>Change tag before adding</td>
 		<td>add()</td>
 		<td>
-			<code>value</code>: The tag to be added<br />
+			<code>value</code>: The value of the tag to be added into a hidden element; if changed, the value in the hidden element will be changed<br />
+			<code>label</code>: The tag's display text (changeable)<br />
 			<code>item</code>: The jQuery element of the selection from the suggest box if any<br />
-			<code>isCustom</code>: True when item is not a member of result data
+			<code>record</code>: When a suggested item is chosen, the data of the item; otherwise undefined
 		</td>
 		<td>Tag is not added</td>
 	</tr>
@@ -511,11 +512,12 @@ The following is a description of each event. See the Suggester Instance Methods
 		<td>Called after tag is added</td>
 		<td>add()</td>
 		<td>
-			<code>item</code>: The suggestion that was chosen (if any)<br />
+			<code>item</code>: The jQuery element of the selection from the suggest box if any<br />
 			<code>tag</code>: The jQuery element of the tag that was added<br />
 			<code>hidden</code>: The hidden input that was generated if any<br />
 			<code>value</code>: The value of the tag<br />
-			<code>label</code>: The tag's display text
+			<code>label</code>: The tag's display text<br />
+			<code>record</code>: When a suggested item is chosen, the data of the item; otherwise undefined
 		</td>
 		<td>-</td>
 	</tr>
@@ -692,16 +694,41 @@ Source code documentation with function bodies omitted:
 ```javascript
 $.Suggester.prototype = {
 	/**
+	 * @class jQuery.Suggester widget
 	 * @param {String|HTMLElement|jQuery} $textInput  The text input as a jQuery object, DOM element, or selector string
 	 * @param {Object} options  An object with data and options (See $.Suggester.defaultOptions for explaination of options)
 	 * @return {jQuery.Suggester}
+	 * 
+	 * @property {jQuery} $originalInput   The input used to make the widget
+	 * @property {Object} options          The options passed to the constructor (see jQuery.Suggester.defaultOptions)
+	 * @property {Object[]} data           Static data used instead of an ajax call
+	 * @property {Object[]} tags           A collection of information about each tag that has been added (each item has properties record, $tag, and $hidden)
+	 * @property {String} hiddenName       The name to use for hidden elements (defaults to the original input's name plus "_tags[]")
+	 * @property {jQuery} $focusedTag      The tag that is selected for deletion
+	 * @property {jQuery} $currentItem     
+	 * @property {jQuery} pubsub           The publish and subscribe handle
+	 * @property {jQuery} $widget          The element that wraps the widget
+	 * @property {jQuery} $box             The container that holds the chosen tags
+	 * @property {jQuery} $tagTemplate     The tag element that is cloned to make new tags
+	 * @property {jQuery} $input           The input that users type in
+	 * @property {jQuery} $inputWrapper    The container for the input
+	 * @property {jQuery} $suggList        The suggestion list
+	 * @property {jQuery} $suggListWrapper The element that is positioned relatively to hold the absolutely positioned suggestion list
+	 * @property {String} listItemTemplate The html to use for suggestion list items
+	 * @property {String} _searchTerm      The search term we are currently searching for
+	 * @property {String} _text            The text in the input box that will be used to fetch results (i.e. what the user just typed)
+	 * @property {jqXHR} _jqXHR            The jQuery XHR object used initilized for fetching data - http://api.jquery.com/jQuery.ajax/#jqXHR
+	 * 
 	 * @event Initialize - Called after widget is initialized and rendered
 	 */
 	initialize: function($textInput, options) {},
 	/**
 	 * Completely remove Suggester widget and replace with original input box (with values populated)
+	 * @param {Object} options
+	 *		options.keepHiddenInputs {Boolean}  If true, append all hidden inputs after the original input
+	 * @return {jQuery}  The original input
 	 */
-	destroy: function() {},		
+	destroy: function(options) {},		
 	/**
 	 * Add a tag by a record
 	 * @param {String} value  the tag to add
@@ -926,14 +953,19 @@ $.Suggester.prototype = {
 	closeSuggestBox: function() {},
 	/**
 	 * Focus cursor on text input box
+	 * @return {$.Suggester}
 	 */
 	focus: function() {},
 	/**
 	 * Get suggestion result records given some text (local data)
-	 * @param {String} text
+	 * @param {String} text  Gather suggestions based on this text
 	 * @return {Array}  Array of Objects of matching records 
 	 */
 	getResults: function(text) {},
+	/**
+	 * Set the widget's CSS theme - Adds a class "sugg-theme-%name%" to the widget
+	 */
+	setTheme: function(themeName) {},
 	/**
 	 * Publish the given event name and send the given data
 	 * 
@@ -944,93 +976,106 @@ $.Suggester.prototype = {
 	publish: function(type, data) {},
 	/**
 	 * Get this instance. Useful for jQuery-ish usage:  var instance = $('input').suggester(options).suggester('getInstance')
+	 * @return {$.Suggester}
 	 */
 	getInstance: function() {},		
 	/**
 	 * Set options and interpret options
-	 * 
-	 * @params {Object} options
-	 * @return {undefined}
+	 * @params {Object} options  Settings passed to constructor
 	 */
 	_processOptions: function(options) {},		
 	/**
 	 * Render the widget and get handles to key elements
 	 * @event BeforeRender - called after this.$widget is populated with this.options.template but before any sub elements are found
-	 * @return {undefined}
 	 */
 	_render: function() {},
 	/**
 	 * Look at the initial element's start value and populate tags as appropriate
-	 * @return {undefined}
 	 */
 	_handleStartValue: function() {},
 	/**
 	 * Attach event handlers
-	 * @return {undefined}
 	 */
 	_setupListeners: function() {},
 	/**
 	 * Event handler for when this.$input is focused
+	 * @param {jQuery.Event} evt  The focus event
 	 */
 	_onInputFocus: function(evt) {},
 	/**
+	 * Event handler for when this.$input is blurred
+	 * @param {jQuery.Event} evt  blur event
+	 */
+	_onInputBlur: function(evt) {},
+	/**
 	 * Event handler for when .sugg-remove is clicked
+	 * @param {jQuery.Event} evt  The click event
 	 */		
 	_onTagRemoveClick: function(evt) {},
 	/**
 	 * Event handler for when .sugg-tag is clicked
+	 * @param {jQuery.Event} evt  The click event
 	 */			
 	_onTagClick: function(evt) {},
 	/**
 	 * Event handler for when autosuggest list is moused over
+	 * @param {jQuery.Event} evt  The mouseover event
 	 */			
 	_onListMouseover: function(evt) {},
 	/**
 	 * Event handler for when autosuggest list is clicked
+	 * @param {jQuery.Event} evt  The click event
 	 */			
 	_onListClick: function(evt) {},
 	/**
 	 * Event handler for when this.$box is clicked
+	 * @param {jQuery.Event} evt  The click event
 	 */			
 	_onBoxClick: function(evt) {},
 	/**
 	 * Handle keypresses while in tag input field
-	 * @param {jQuery.Event} evt
-	 * @return {undefined}
+	 * @param {jQuery.Event} evt  The keydown event
 	 */
 	_onKeydown: function(evt) {},
 	/**
 	 * Handle UP key on this.$input
+	 * @param {jQuery.Event} evt  The keydown event
 	 */
 	_key_UP: function(evt) {},
 	/**
 	 * Handle DOWN key on this.$input
+	 * @param {jQuery.Event} evt  The keydown event
 	 */		
 	_key_DOWN: function(evt) {},
 	/**
 	 * Handle BACKSPACE key on this.$input
+	 * @param {jQuery.Event} evt  The keydown event
 	 */		
 	_key_BACKSPACE: function(evt) {},
 	/**
-	 * Handle TAB and COMMA key on this.$input
+	 * Handle TAB and COMMA and SEMICOLON key on this.$input
+	 * @param {jQuery.Event} evt  The keydown event
 	 */		
 	_key_TAB_COMMA: function(evt) {},
 	/**
 	 * Handle ESC key on this.$input
+	 * @param {jQuery.Event} evt  The keydown event
 	 */		
 	_key_ESC: function(evt) {},
 	/**
 	 * Handle ENTER key on this.$input
+	 * @param {jQuery.Event} evt  The keydown event
 	 */
 	_key_ENTER: function(evt) {},
 	/**
 	 * Handle other keys (e.g. printable characters) on this.$input
+	 * @param {jQuery.Event} evt  The keydown event
 	 */		
 	_key_other: function(evt) {},
 	/**
 	 * Handler for form submission
 	 * 
-	 * @param {jQuery} jqEvent  The jQuery-wrapped browser event
+	 * @param {jQuery} jqEvent  The submit event
 	 * @event BeforeFetch (if event.preventDefault() is called, XHR is not made and suggest box does not open)
 	 *     event.event  The jQuery-wrapped browser event
 	 *     event.form   The input's form (same as this.$form)
@@ -1070,7 +1115,7 @@ $.Suggester.prototype = {
 	_afterFetch: function(records) {},
 	/**
 	 * Callback used to close the suggestion box when the user clicks off of it
-	 * @return {undefined}
+	 * @param {jQuery.Event} evt  The click event
 	 */
 	_closeOnOutsideClick: function(evt) {}, 
 	/**
@@ -1224,6 +1269,14 @@ See the source on the [live demos](http://sandbox.kendsnyder.com/suggester/demo/
 Changelog
 -
 
+**Version 1.0.2, April 2013**
+
+*CSS classes for sugg-active and sugg-placeholder-on*
+
+*Fix BeforeAdd event to let value to be altered and AfterAdd event to include record*
+
+*Documentation fixes*
+
 **Version 1.0pre, December 2012**
 
 *initial version*
@@ -1231,7 +1284,7 @@ Changelog
 License
 -
 
-Copyright 2012, Ken Snyder
+Copyright 2013, Ken Snyder
 
 [MIT License](http://www.opensource.org/licenses/mit-license.php)
 

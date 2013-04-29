@@ -245,10 +245,17 @@
 		},
 		/**
 		 * Completely remove Suggester widget and replace with original input box (with values populated)
+		 * @param {Object} options
+		 *		options.keepHiddenInputs {Boolean}  If true, append all hidden inputs after the original input
+		 * @return {jQuery}  The original input
 		 */
-		destroy: function() {
+		destroy: function(options) {
+			options = options || {};
 			// "un"-render; this.$originalInput should be already populated
 			this.$originalInput.insertBefore(this.$widget).show();
+			if (options.keepHiddenInputs) {
+				this.$widget.find('input[type=hidden]').insertBefore(this.$widget);
+			}
 			this.$widget.empty().remove();
 			// unregister our instance
 			var sugg = this;
@@ -313,7 +320,7 @@
 			}
 			// append our hidden input to the widget
 			if (this.options.addHiddenInputs) {
-				$hidden = $('<input type="hidden" />').attr('name', this.hiddenName).val(value);
+				$hidden = $('<input type="hidden" />').attr('name', this.hiddenName).val(evt.value);
 				this.$widget.append($hidden);
 			}
 			$tag = this.$tagTemplate.clone().data('tag-value', evt.value).data('tag-label', evt.label);
@@ -336,11 +343,12 @@
 			this.save();
 			// trigger our after add event
 			this.publish('AfterAdd', {
-				item: $item,
+				item: evt.item,
 				tag: $tag,
 				hidden: $hidden,
 				value: evt.value,
-				label: evt.label
+				label: evt.label,
+				record: evt.record
 			});
 			return $tag;
 		},
@@ -843,6 +851,7 @@
 		},
 		/**
 		 * Focus cursor on text input box
+		 * @return {$.Suggester}
 		 */
 		focus: function() {
 			// use the dom method to focus
@@ -851,7 +860,7 @@
 		},
 		/**
 		 * Get suggestion result records given some text (local data)
-		 * @param {String} text
+		 * @param {String} text  Gather suggestions based on this text
 		 * @return {Array}  Array of Objects of matching records 
 		 */
 		getResults: function(text) {
@@ -895,6 +904,9 @@
 			});
 			return results;
 		},
+		/**
+		 * Set the widget's CSS theme - Adds a class "sugg-theme-%name%" to the widget
+		 */
 		setTheme: function(themeName) {
 			if (this._theme) {
 				this.$widget.removeClass('sugg-theme-' + this._theme);
@@ -921,15 +933,14 @@
 		},
 		/**
 		 * Get this instance. Useful for jQuery-ish usage:  var instance = $('input').suggester(options).suggester('getInstance')
+		 * @return {$.Suggester}
 		 */
 		getInstance: function() {
 			return this;
 		},		
 		/**
 		 * Set options and interpret options
-		 * 
-		 * @params {Object} options
-		 * @return {undefined}
+		 * @params {Object} options  Settings passed to constructor
 		 */
 		_processOptions: function(options) {
 			this.options = $.extend({}, $.Suggester.defaultOptions, options);
@@ -941,7 +952,6 @@
 		/**
 		 * Render the widget and get handles to key elements
 		 * @event BeforeRender - called after this.$widget is populated with this.options.template but before any sub elements are found
-		 * @return {undefined}
 		 */
 		_render: function() {
 			// The full widget
@@ -984,6 +994,7 @@
 			if (this.options.minChars == 0) {				
 				this.options.inputSize = '';
 				// set input width to remaining room
+				// TODO: handle border-box and padding-box box sizing
 				this.$input.width(
 					this.$box.width() 
 					- parseFloat(this.$inputWrapper.css('paddingLeft'))
@@ -1009,7 +1020,6 @@
 		},
 		/**
 		 * Look at the initial element's start value and populate tags as appropriate
-		 * @return {undefined}
 		 */
 		_handleStartValue: function() {
 			// get a list of tags to insert now based on the current value of the original input
@@ -1029,7 +1039,6 @@
 		},
 		/**
 		 * Attach event handlers
-		 * @return {undefined}
 		 */
 		_setupListeners: function() {
 			// proxy some methods to always be bound to our instance
@@ -1057,6 +1066,7 @@
 		},
 		/**
 		 * Event handler for when this.$input is focused
+		 * @param {jQuery.Event} evt  The focus event
 		 */
 		_onInputFocus: function(evt) {
 			this.$widget.addClass('sugg-active');
@@ -1073,6 +1083,10 @@
 				this.showPrompt();
 			}
 		},
+		/**
+		 * Event handler for when this.$input is blurred
+		 * @param {jQuery.Event} evt  blur event
+		 */
 		_onInputBlur: function(evt) {
 			if (this.$input.val === this.options.placeholder) {
 				this.$widget.addClass('sugg-placeholder-on');
@@ -1081,6 +1095,7 @@
 		},
 		/**
 		 * Event handler for when .sugg-remove is clicked
+		 * @param {jQuery.Event} evt  The click event
 		 */		
 		_onTagRemoveClick: function(evt) {
 			this.unfocusTag();
@@ -1091,6 +1106,7 @@
 		},
 		/**
 		 * Event handler for when .sugg-tag is clicked
+		 * @param {jQuery.Event} evt  The click event
 		 */			
 		_onTagClick: function(evt) {
 			var $target = $(evt.target);
@@ -1103,6 +1119,7 @@
 		},
 		/**
 		 * Event handler for when autosuggest list is moused over
+		 * @param {jQuery.Event} evt  The mouseover event
 		 */			
 		_onListMouseover: function(evt) {	
 			var $target = $(evt.target);
@@ -1121,6 +1138,7 @@
 		},
 		/**
 		 * Event handler for when autosuggest list is clicked
+		 * @param {jQuery.Event} evt  The click event
 		 */			
 		_onListClick: function(evt) {
 			// effectively delegate click to .sugg-item
@@ -1144,6 +1162,7 @@
 		},
 		/**
 		 * Event handler for when this.$box is clicked
+		 * @param {jQuery.Event} evt  The click event
 		 */			
 		_onBoxClick: function(evt) {
 			if (evt.target == this.$box[0]) {
@@ -1153,8 +1172,7 @@
 		},
 		/**
 		 * Handle keypresses while in tag input field
-		 * @param {jQuery.Event} evt
-		 * @return {undefined}
+		 * @param {jQuery.Event} evt  The keydown event
 		 */
 		_onKeydown: function(evt) {
 			var pubevent = this.publish('BeforeHandleKey', {
@@ -1204,6 +1222,7 @@
 		},
 		/**
 		 * Handle UP key on this.$input
+		 * @param {jQuery.Event} evt  The keydown event
 		 */
 		_key_UP: function(evt) {
 			evt.preventDefault();
@@ -1214,6 +1233,7 @@
 		},
 		/**
 		 * Handle DOWN key on this.$input
+		 * @param {jQuery.Event} evt  The keydown event
 		 */		
 		_key_DOWN: function(evt) {
 			evt.preventDefault();
@@ -1226,6 +1246,7 @@
 		},
 		/**
 		 * Handle BACKSPACE key on this.$input
+		 * @param {jQuery.Event} evt  The keydown event
 		 */		
 		_key_BACKSPACE: function(evt) {
 			var $lastTag;
@@ -1251,6 +1272,7 @@
 		},
 		/**
 		 * Handle TAB and COMMA and SEMICOLON key on this.$input
+		 * @param {jQuery.Event} evt  The keydown event
 		 */		
 		_key_TAB_COMMA: function(evt) {
 			if (evt.which == 9) { // tab
@@ -1274,12 +1296,14 @@
 		},
 		/**
 		 * Handle ESC key on this.$input
+		 * @param {jQuery.Event} evt  The keydown event
 		 */		
 		_key_ESC: function(evt) {
 			this.closeSuggestBox();			
 		},
 		/**
 		 * Handle ENTER key on this.$input
+		 * @param {jQuery.Event} evt  The keydown event
 		 */
 		_key_ENTER: function(evt) {
 			if (this.$currentItem) {
@@ -1299,6 +1323,7 @@
 		},
 		/**
 		 * Handle other keys (e.g. printable characters) on this.$input
+		 * @param {jQuery.Event} evt  The keydown event
 		 */		
 		_key_other: function(evt) {
 			// abort any outstanding xhr requests and clear timeout from key delay
@@ -1315,7 +1340,7 @@
 		/**
 		 * Handler for form submission
 		 * 
-		 * @param {jQuery} jqEvent  The jQuery-wrapped browser event
+		 * @param {jQuery} jqEvent  The submit event
 		 * @event BeforeFetch (if event.preventDefault() is called, XHR is not made and suggest box does not open)
 		 *     event.event  The jQuery-wrapped browser event
 		 *     event.form   The input's form (same as this.$form)
@@ -1397,7 +1422,7 @@
 		},
 		/**
 		 * Callback used to close the suggestion box when the user clicks off of it
-		 * @return {undefined}
+		 * @param {jQuery.Event} evt  The click event
 		 */
 		_closeOnOutsideClick: function(evt) {
 			var $target = $(evt.target);
