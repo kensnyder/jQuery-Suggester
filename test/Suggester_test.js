@@ -140,12 +140,16 @@
     strictEqual($form.find('input[type=hidden]').length, 0);
     strictEqual($form.find('.sugg-label').length, 0);   
   });
-  test("options.addOnBlur", function() {
+  asyncTest("options.addOnBlur", function() {
+	expect(2);
     var sugg = new $.Suggester($input);
     sendKeys(sugg, ['t','e','s','t']);
     sugg.$input.trigger({type:'blur'});
-    strictEqual(sugg.tags.length, 1, 'Custom tag is added after blur');
-    strictEqual($input.val(), 'test', 'Custom tag has expected value');   
+	setTimeout(function() {		
+		strictEqual(sugg.tags.length, 1, 'Custom tag is added after blur');
+		strictEqual($input.val(), 'test', 'Custom tag has expected value');   
+		start();
+	}, 1000);
   });
   test("clear()", function() {
     var sugg = new $.Suggester($input);
@@ -286,10 +290,7 @@
       strictEqual($('.sugg-item').length, 1);
       strictEqual($('.sugg-item').eq(0).text(), 'Venus');
       start();
-      sugg.$input.trigger({
-        type: 'keydown',
-        which: 27
-      });
+      sendKey(sugg, 'ESC');
       strictEqual($('.sugg-list:visible').length, 0);
     }, 1);
   });
