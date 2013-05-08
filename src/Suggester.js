@@ -142,35 +142,35 @@
     
 		theme: 'coolblue'
 	/* 
-     * AVAILABLE EVENT OPTIONS
-     * 
-     * onBeforeRender     -> see jQuery.Suggester#_render()
-     * onInitialize       -> see jQuery.Suggester#initialize()
-     * onBeforeHandleKey  -> see jQuery.Suggester#_onKeydown()
-     * onAfterHandleKey   -> see jQuery.Suggester#_onKeydown()
-     * onBeforeAjax       -> see jQuery.Suggester#fetchResults()
-     * onBeforeFetch      -> see jQuery.Suggester#_beforeFetch()
-     * onAfterFetch       -> see jQuery.Suggester#_afterFetch()
-     * onBeforeMove       -> see jQuery.Suggester#moveSelection()
-     * onAfterMove        -> see jQuery.Suggester#moveSelection()
-     * onBeforeSuggest    -> see jQuery.Suggester#handleSuggestions()
-     * onAfterSuggest     -> see jQuery.Suggester#handleSuggestions()
-     * onBeforeOpen       -> see jQuery.Suggester#openSuggstBox()
-     * onAfterOpen        -> see jQuery.Suggester#openSuggestBox()
-     * onBeforeClose      -> see jQuery.Suggester#closeSuggestBox()
-     * onAfterClose       -> see jQuery.Suggester#closeSuggestBox()
-     * onBeforeFormat     -> see jQuery.Suggester#_formatSuggestion()
-     * onAfterFormat      -> see jQuery.Suggester#_formatSuggestion()
-     * onBeforeFilter     -> see jQuery.Suggester#getResults()
-     * onAfterFilter      -> see jQuery.Suggester#getResults()
-     * onBeforeAdd        -> see jQuery.Suggester#add()
-     * onAfterAdd         -> see jQuery.Suggester#add()
-     * onBeforeRemove     -> see jQuery.Suggester#remove()
-     * onAfterRemove      -> see jQuery.Suggester#remove()
-     * onBeforeSave       -> see jQuery.Suggester#save()
-     * onAfterSave        -> see jQuery.Suggester#save()
-     * onBeforeSubmit     -> see jQuery.Suggester#_onSubmit()
-     */
+	 * AVAILABLE EVENT OPTIONS
+	 * 
+	 * onBeforeRender     -> see jQuery.Suggester#_render()
+	 * onInitialize       -> see jQuery.Suggester#initialize()
+	 * onBeforeHandleKey  -> see jQuery.Suggester#_onKeydown()
+	 * onAfterHandleKey   -> see jQuery.Suggester#_onKeydown()
+	 * onBeforeAjax       -> see jQuery.Suggester#fetchResults()
+	 * onBeforeFetch      -> see jQuery.Suggester#_beforeFetch()
+	 * onAfterFetch       -> see jQuery.Suggester#_afterFetch()
+	 * onBeforeMove       -> see jQuery.Suggester#moveSelection()
+	 * onAfterMove        -> see jQuery.Suggester#moveSelection()
+	 * onBeforeSuggest    -> see jQuery.Suggester#handleSuggestions()
+	 * onAfterSuggest     -> see jQuery.Suggester#handleSuggestions()
+	 * onBeforeOpen       -> see jQuery.Suggester#openSuggstBox()
+	 * onAfterOpen        -> see jQuery.Suggester#openSuggestBox()
+	 * onBeforeClose      -> see jQuery.Suggester#closeSuggestBox()
+	 * onAfterClose       -> see jQuery.Suggester#closeSuggestBox()
+	 * onBeforeFormat     -> see jQuery.Suggester#_formatSuggestion()
+	 * onAfterFormat      -> see jQuery.Suggester#_formatSuggestion()
+	 * onBeforeFilter     -> see jQuery.Suggester#getResults()
+	 * onAfterFilter      -> see jQuery.Suggester#getResults()
+	 * onBeforeAdd        -> see jQuery.Suggester#add()
+	 * onAfterAdd         -> see jQuery.Suggester#add()
+	 * onBeforeRemove     -> see jQuery.Suggester#remove()
+	 * onAfterRemove      -> see jQuery.Suggester#remove()
+	 * onBeforeSave       -> see jQuery.Suggester#save()
+	 * onAfterSave        -> see jQuery.Suggester#save()
+	 * onBeforeSubmit     -> see jQuery.Suggester#_onSubmit()
+	 */
 	};
 	// Making Suggester a proper class allows two patterns:
 	// $('selector').suggester(options);
@@ -180,33 +180,33 @@
 	// var instance = new $.Suggester('selector', options)
 	$.Suggester.prototype = {
 		/**
-     * @class jQuery.Suggester widget
-     * @param {String|HTMLElement|jQuery} $textInput  The text input as a jQuery object, DOM element, or selector string
-     * @param {Object} options  An object with data and options (See $.Suggester.defaultOptions for explaination of options)
-     * @return {jQuery.Suggester}
-     * 
-     * @property {jQuery} $originalInput   The input used to make the widget
-     * @property {Object} options          The options passed to the constructor (see jQuery.Suggester.defaultOptions)
-     * @property {Object[]} data           Static data used instead of an ajax call
-     * @property {Object[]} tags           A collection of information about each tag that has been added (each item has properties record, $tag, and $hidden)
-     * @property {String} hiddenName       The name to use for hidden elements (defaults to the original input's name plus "_tags[]")
-     * @property {jQuery} $focusedTag      The tag that is selected for deletion
-     * @property {jQuery} $currentItem     
-     * @property {jQuery} pubsub           The publish and subscribe handle
-     * @property {jQuery} $widget          The element that wraps the widget
-     * @property {jQuery} $box             The container that holds the chosen tags
-     * @property {jQuery} $tagTemplate     The tag element that is cloned to make new tags
-     * @property {jQuery} $input           The input that users type in
-     * @property {jQuery} $inputWrapper    The container for the input
-     * @property {jQuery} $suggList        The suggestion list
-     * @property {jQuery} $suggListWrapper The element that is positioned relatively to hold the absolutely positioned suggestion list
-     * @property {String} listItemTemplate The html to use for suggestion list items
-     * @property {String} _searchTerm      The search term we are currently searching for
-     * @property {String} _text            The text in the input box that will be used to fetch results (i.e. what the user just typed)
-     * @property {jqXHR} _jqXHR            The jQuery XHR object used initilized for fetching data - http://api.jquery.com/jQuery.ajax/#jqXHR
-     * 
-     * @event Initialize - Called after widget is initialized and rendered
-     */
+		 * @class jQuery.Suggester widget
+		 * @param {String|HTMLElement|jQuery} $textInput  The text input as a jQuery object, DOM element, or selector string
+		 * @param {Object} options  An object with data and options (See $.Suggester.defaultOptions for explaination of options)
+		 * @return {jQuery.Suggester}
+		 * 
+		 * @property {jQuery} $originalInput   The input used to make the widget
+		 * @property {Object} options          The options passed to the constructor (see jQuery.Suggester.defaultOptions)
+		 * @property {Object[]} data           Static data used instead of an ajax call
+		 * @property {Object[]} tags           A collection of information about each tag that has been added (each item has properties record, $tag, and $hidden)
+		 * @property {String} hiddenName       The name to use for hidden elements (defaults to the original input's name plus "_tags[]")
+		 * @property {jQuery} $focusedTag      The tag that is selected for deletion
+		 * @property {jQuery} $currentItem     
+		 * @property {jQuery} pubsub           The publish and subscribe handle
+		 * @property {jQuery} $widget          The element that wraps the widget
+		 * @property {jQuery} $box             The container that holds the chosen tags
+		 * @property {jQuery} $tagTemplate     The tag element that is cloned to make new tags
+		 * @property {jQuery} $input           The input that users type in
+		 * @property {jQuery} $inputWrapper    The container for the input
+		 * @property {jQuery} $suggList        The suggestion list
+		 * @property {jQuery} $suggListWrapper The element that is positioned relatively to hold the absolutely positioned suggestion list
+		 * @property {String} listItemTemplate The html to use for suggestion list items
+		 * @property {String} _searchTerm      The search term we are currently searching for
+		 * @property {String} _text            The text in the input box that will be used to fetch results (i.e. what the user just typed)
+		 * @property {jqXHR} _jqXHR            The jQuery XHR object used initilized for fetching data - http://api.jquery.com/jQuery.ajax/#jqXHR
+		 * 
+		 * @event Initialize - Called after widget is initialized and rendered
+		 */
 		initialize: function($textInput, options) {
 			// This is the original text input given
 			this.$originalInput = $($textInput);
@@ -247,11 +247,11 @@
 			return this;
 		},
 		/**
-     * Completely remove Suggester widget and replace with original input box (with values populated)
-     * @param {Object} options
-     *    options.keepHiddenInputs {Boolean}  If true, append all hidden inputs after the original input
-     * @return {jQuery}  The original input
-     */
+		 * Completely remove Suggester widget and replace with original input box (with values populated)
+		 * @param {Object} options
+		 *    options.keepHiddenInputs {Boolean}  If true, append all hidden inputs after the original input
+		 * @return {jQuery}  The original input
+		 */
 		destroy: function(options) {
 			options = options || {};
 			// "un"-render; this.$originalInput should be already populated
@@ -274,34 +274,34 @@
 			return this.$originalInput;
 		},    
 		/**
-     * Add a tag by a record
-     * @param {String} value  the tag to add
-     * @param {String} label  the text to display in the new tag
-     * @param {jQuery} $item  Set when the record is added by choosing from the suggestion box
-     * @return {jQuery} The jQuery object containing the newly created label or undefined of one was not created
-     * 
-     * @event BeforeAdd - Allows you to prevent it being added or alter the record before adding
-     *     event.value     The tag to be added
-     *     event.item      The suggestion that was chosen (if any)
-     *     event.isCustom  If true, the item is not a suggestion
-     *     example       instance.bind('BeforeAdd', function(event) {
-     *                        if (isSwearWord(evt.value)) {
-     *                            event.preventDefault();
-     *                            alert('Tags cannot be swear words');
-     *                        }
-     *                   });
-     * 
-     * @event AfterAdd
-     *     event.item    The suggestion that was chosen (if any)
-     *     event.tag     The jQuery element of the tag that was added
-     *     event.hidden  The hidden input that was generated
-     *     event.value   The value of the tag
-     *     event.label   The the label of the tag
-     *     example       instance.bind('AfterAdd', function(event) {
-     *                        // fade in tag
-     *                        event.tag.fadeIn(500);
-     *                   });
-     */
+		 * Add a tag by a record
+		 * @param {String} value  the tag to add
+		 * @param {String} label  the text to display in the new tag
+		 * @param {jQuery} $item  Set when the record is added by choosing from the suggestion box
+		 * @return {jQuery} The jQuery object containing the newly created label or undefined of one was not created
+		 * 
+		 * @event BeforeAdd - Allows you to prevent it being added or alter the record before adding
+		 *     event.value     The tag to be added
+		 *     event.item      The suggestion that was chosen (if any)
+		 *     event.isCustom  If true, the item is not a suggestion
+		 *     example       instance.bind('BeforeAdd', function(event) {
+		 *                        if (isSwearWord(evt.value)) {
+		 *                            event.preventDefault();
+		 *                            alert('Tags cannot be swear words');
+		 *                        }
+		 *                   });
+		 * 
+		 * @event AfterAdd
+		 *     event.item    The suggestion that was chosen (if any)
+		 *     event.tag     The jQuery element of the tag that was added
+		 *     event.hidden  The hidden input that was generated
+		 *     event.value   The value of the tag
+		 *     event.label   The the label of the tag
+		 *     example       instance.bind('AfterAdd', function(event) {
+		 *                        // fade in tag
+		 *                        event.tag.fadeIn(500);
+		 *                   });
+		 */
 		add: function(value, label/*optional*/, $item/*optional*/) {
 			var evt, idx, $hidden, $tag;
 			if (typeof label != 'string') {
@@ -360,9 +360,9 @@
 			return $tag;
 		},
 		/**
-     * Add a tag with the contents of the input; e.g. when the user has typed something but clicks on another part of the form
-     * Note: this happens on blur when this.options.addOnBlur is true
-     */
+		 * Add a tag with the contents of the input; e.g. when the user has typed something but clicks on another part of the form
+		 * Note: this happens on blur when this.options.addOnBlur is true
+		 */
 		addCurrentBuffer: function() {
 			var inputVal = $.trim(this.$input.val());
 			if (inputVal !== this.options.placeholder && inputVal !== '') {
@@ -371,22 +371,22 @@
 			}     
 		},
 		/**
-     * Move the selection up or down in the suggestion box
-     * @event BeforeMove (if event.preventDefault() is called, movement is stopped)
-     *     event.direction  "up" or "down"
-     *     event.current    jQuery object with the currently selected item or null if there isn't one
-     *     event.next       jQuery object with the item that will be selected next
-     *     example          instance.bind('BeforeMove', function(event) {
-     *                          alert('You are moving to ' + event.next.text());
-     *                      });
-     * @event AfterMove
-     *     event.direction  "up" or "down"
-     *     event.last       jQuery object with the previously selected item
-     *     event.current    jQuery object with the newly selected item
-     *     example          instance.bind('AfterMove', function(event) {
-     *                          alert('You moved to ' + event.current.text());
-     *                      });
-     */
+		 * Move the selection up or down in the suggestion box
+		 * @event BeforeMove (if event.preventDefault() is called, movement is stopped)
+		 *     event.direction  "up" or "down"
+		 *     event.current    jQuery object with the currently selected item or null if there isn't one
+		 *     event.next       jQuery object with the item that will be selected next
+		 *     example          instance.bind('BeforeMove', function(event) {
+		 *                          alert('You are moving to ' + event.next.text());
+		 *                      });
+		 * @event AfterMove
+		 *     event.direction  "up" or "down"
+		 *     event.last       jQuery object with the previously selected item
+		 *     event.current    jQuery object with the newly selected item
+		 *     example          instance.bind('AfterMove', function(event) {
+		 *                          alert('You moved to ' + event.current.text());
+		 *                      });
+		 */
 		moveSelection: function(direction) {
 			// find all the suggestion items
 			var $items = this.$suggList.find('.sugg-item');
@@ -430,37 +430,37 @@
 			return this;
 		},
 		/**
-     * Select a suggestion
-     * @param {jQuery} $tag
-     * @return {jQuery.Suggester}
-     */
+		 * Select a suggestion
+		 * @param {jQuery} $tag
+		 * @return {jQuery.Suggester}
+		 */
 		selectItem: function($tag) {
 			$tag.addClass('sugg-selected');
 			return this;
 		},
 		/**
-     * Deselect a suggestion
-     * @param {jQuery} $tag
-     * @return {jQuery.Suggester}
-     */   
+		 * Deselect a suggestion
+		 * @param {jQuery} $tag
+		 * @return {jQuery.Suggester}
+		 */   
 		deselectItem: function($tag) {
 			$tag.removeClass('sugg-selected');
 			return this;
 		},
 		/**
-     * Deselect all suggestions
-     * @return {jQuery.Suggester}
-     */     
+		 * Deselect all suggestions
+		 * @return {jQuery.Suggester}
+		 */     
 		deselectAllItems: function() {
 			this.$suggList.find('.sugg-item').removeClass('sugg-selected');
 			this.$currentItem = null; 
 			return this;
 		},
 		/**
-     * Open suggestion list for the given text
-     * @param {String} text
-     * @return {jQuery.Suggester}
-     */
+		 * Open suggestion list for the given text
+		 * @param {String} text
+		 * @return {jQuery.Suggester}
+		 */
 		suggest: function(text) {
 			this._text = text;
 			if (this.options.dataUrl) {
@@ -471,11 +471,11 @@
 			}
 		},
 		/**
-     * Add more data records to the autosuggest list. Does not apply when dataUrl is set
-     * 
-     * @params {Object[]} data  More records in the same object format as initially set
-     * @return {jQuery.Suggester}
-     */
+		 * Add more data records to the autosuggest list. Does not apply when dataUrl is set
+		 * 
+		 * @params {Object[]} data  More records in the same object format as initially set
+		 * @return {jQuery.Suggester}
+		 */
 		addData: function(data) {     
 			var i, len, record;
 			if (data.length > 0 && typeof data[0] != 'object') {
@@ -491,30 +491,30 @@
 			return this;
 		},
 		/**
-     * Set data records to the autosuggest list. Does not apply when dataUrl is set
-     * 
-     * @params {Object[]} data
-     * @return {jQuery.Suggester}
-     */   
+		 * Set data records to the autosuggest list. Does not apply when dataUrl is set
+		 * 
+		 * @params {Object[]} data
+		 * @return {jQuery.Suggester}
+		 */   
 		setData: function(data) {
 			this.data = [];
 			this.addData(data);
 			return this;
 		},
 		/**
-     * Get all the records in the autosuggest list. Does not apply when dataUrl is set
-     * 
-     * @return {Object[]}
-     */   
+		 * Get all the records in the autosuggest list. Does not apply when dataUrl is set
+		 * 
+		 * @return {Object[]}
+		 */   
 		getData: function() {
 			return this.data;
 		},
 		/**
-     * Set the direction of the suggestion menu, to fly upwards or downwards
-     * 
-     * @param {String} direction  either "up" or "down"
-     * @return {jQuery.Suggester}
-     */
+		 * Set the direction of the suggestion menu, to fly upwards or downwards
+		 * 
+		 * @param {String} direction  either "up" or "down"
+		 * @return {jQuery.Suggester}
+		 */
 		setFlyDirection: function(direction) {
 			// if the suggestion list should fly upwards instead of downwards, put the suggestion list before the input container in the dom tree
 			if (direction == 'up') {
@@ -529,10 +529,10 @@
 			return this;
 		},
 		/**
-     * Focus on a previously added tag
-     * @params {jQuery} $tag  The .sugg-tag element to focus
-     * @return {jQuery.Suggester}
-     */
+		 * Focus on a previously added tag
+		 * @params {jQuery} $tag  The .sugg-tag element to focus
+		 * @return {jQuery.Suggester}
+		 */
 		focusTag: function($tag) {
 			this.unfocusTag();
 			this.$focusedTag = $tag.addClass('sugg-focused');
@@ -541,9 +541,9 @@
 			return this;
 		},
 		/**
-     * Unfocus the previously focussed tag
-     * @return {jQuery.Suggester}
-     */
+		 * Unfocus the previously focussed tag
+		 * @return {jQuery.Suggester}
+		 */
 		unfocusTag: function() {
 			$document.unbind('keydown', this.removeFocusedTag).unbind('click', this.unfocusTag);
 			if (this.$focusedTag) {
@@ -553,10 +553,10 @@
 			return this;
 		},
 		/**
-     * Remove the focused tag
-     * @param {jQuery.Event} evt (optional)  Used to check if $document keypress is backspace or delete
-     * @return {jQuery.Suggester}
-     */
+		 * Remove the focused tag
+		 * @param {jQuery.Event} evt (optional)  Used to check if $document keypress is backspace or delete
+		 * @return {jQuery.Suggester}
+		 */
 		removeFocusedTag: function(evt) {
 			if (evt && evt.which && (evt.which == 8 || evt.which == 46)) {
 				// delete or backspace key                
@@ -569,10 +569,10 @@
 			return this;
 		},
 		/**
-     * Remove a tag given its text or jQuery element or HTML element
-     * @param {String|jQuery|HTMLElement} $tag  the tag to remove
-     * @return {jQuery.Suggester}
-     */
+		 * Remove a tag given its text or jQuery element or HTML element
+		 * @param {String|jQuery|HTMLElement} $tag  the tag to remove
+		 * @return {jQuery.Suggester}
+		 */
 		remove: function($tag) {
 			var evt, value, removed;
 			if (typeof $tag.nodeType == 'number' && typeof $tag.style == 'object') {
@@ -608,11 +608,11 @@
 			return this;
 		},
 		/**
-     * Find a suggestion record by text
-     * 
-     * @param {String} text
-     * @return {Object}
-     */   
+		 * Find a suggestion record by text
+		 * 
+		 * @param {String} text
+		 * @return {Object}
+		 */   
 		findRecord: function(text) {
 			var record, sugg, _break;
 			_break = {};
@@ -643,11 +643,11 @@
 			return record;      
 		},    
 		/**
-     * Initiate suggestion process if the input text is >= this.options.minChars
-     * Otherwise show prompt
-     * 
-     * @return {jQuery.Suggester}
-     */
+		 * Initiate suggestion process if the input text is >= this.options.minChars
+		 * Otherwise show prompt
+		 * 
+		 * @return {jQuery.Suggester}
+		 */
 		suggestIfNeeded: function() {
 			var text = this.$input.val();
 			if (text.length >= this.options.minChars) {       
@@ -662,11 +662,11 @@
 			return this;
 		},
 		/**
-     * Show the prompt text to give a hint to users
-     * Only called when there are no items and this.options.prompt is truthy
-     * 
-     * @return {jQuery.Suggester}
-     */
+		 * Show the prompt text to give a hint to users
+		 * Only called when there are no items and this.options.prompt is truthy
+		 * 
+		 * @return {jQuery.Suggester}
+		 */
 		showPrompt: function() {
 			if (!this.$prompt) {
 				return this;
@@ -677,11 +677,11 @@
 			return this;
 		},
 		/**
-     * Show text indicating there are no suggestions
-     * Text is defined in this.options.emptyText
-     * 
-     * @return {jQuery.Suggester}
-     */   
+		 * Show text indicating there are no suggestions
+		 * Text is defined in this.options.emptyText
+		 * 
+		 * @return {jQuery.Suggester}
+		 */   
 		showEmptyText: function() {
 			if (!this.$empty) {
 				return this;
@@ -692,15 +692,15 @@
 			return this;
 		},
 		/**
-     * Fetch suggestions from an ajax URL
-     * 
-     * @param {String} text  The text to search for
-     * @return {jqXHR}
-     * @event   BeforeAjax - allows you to edit settings before ajax is sent
-     * example  instance.bind('BeforeAjax', function(event) {
-     *              event.settings.type = 'post';
-     *          });
-     */
+		 * Fetch suggestions from an ajax URL
+		 * 
+		 * @param {String} text  The text to search for
+		 * @return {jqXHR}
+		 * @event   BeforeAjax - allows you to edit settings before ajax is sent
+		 * example  instance.bind('BeforeAjax', function(event) {
+		 *              event.settings.type = 'post';
+		 *          });
+		 */
 		fetchResults: function(text) {
 			// TODO: add option to support a custom transport?
 			// TODO: abort on keypress
@@ -728,10 +728,10 @@
 			return $.ajax(evt.settings).done(this._afterFetch);
 		},
 		/**
-     * Cancel the XHR. Used when user starts typing again before XHR completes
-     * 
-     * @return {jQuery.Suggester}
-     */
+		 * Cancel the XHR. Used when user starts typing again before XHR completes
+		 * 
+		 * @return {jQuery.Suggester}
+		 */
 		abortFetch: function() {
 			if (this._jqXHR) {
 				this._jqXHR.abort();
@@ -739,20 +739,20 @@
 			return this;
 		},
 		/**
-     * Take result records and build and display suggestion box
-     * 
-     * @event BeforeSuggest (if event.preventDefault() is called, the suggestion list is built but not displayed)
-     *     event.text  The text that was searched for
-     *     example     instance.bind('BeforeSuggest', function(event) {
-     *                     if (evt.text == 'dont suggest') {
-     *                          event.preventDefault(); // suggest box will not open
-     *                     }
-     *                 });
-     * @event AfterSuggest
-     *     example     instance.bind('AfterSuggest', function(event) {
-     *                     alert('Choose a suggested item if you like.');
-     *                 });
-     */
+		 * Take result records and build and display suggestion box
+		 * 
+		 * @event BeforeSuggest (if event.preventDefault() is called, the suggestion list is built but not displayed)
+		 *     event.text  The text that was searched for
+		 *     example     instance.bind('BeforeSuggest', function(event) {
+		 *                     if (evt.text == 'dont suggest') {
+		 *                          event.preventDefault(); // suggest box will not open
+		 *                     }
+		 *                 });
+		 * @event AfterSuggest
+		 *     example     instance.bind('AfterSuggest', function(event) {
+		 *                     alert('Choose a suggested item if you like.');
+		 *                 });
+		 */
 		handleSuggestions: function(records) {
 			if (!records || records.length === 0) {
 				this.showEmptyText();
@@ -779,32 +779,32 @@
 			return this;
 		},
 		/**
-     * Return true if suggestion box is open
-     * @return {Boolean}
-     */
+		 * Return true if suggestion box is open
+		 * @return {Boolean}
+		 */
 		isSuggestBoxOpen: function() {
 			return this.$suggList.css('display') != 'none';
 		},
 		/**
-     * Manually open the suggestion box in whatever state it is
-     * @return {jQuery.Suggester}
-     * @event BeforeOpen  (if event.preventDefault() is called, suggestion box will not open)
-     *     example  instance.bind('BeforeOpen', function(event) {
-     *                  event.preventDefault();
-     *                  alert('No suggestions for you!');
-     *              });
-     * @event AfterOpen
-     *     example  instance.one('AfterOpen', function(event) {
-     *          this.$suggList.css({
-     *            borderTopWidth: '10px',
-     *            borderTopColor: 'red'
-     *          });
-     *                  alert('Tip: You may choose an item from the suggestion list.');
-     *                  this.$suggList.css({
-     *            borderTopWidth: '0'
-     *          });
-     *              });
-     */
+		 * Manually open the suggestion box in whatever state it is
+		 * @return {jQuery.Suggester}
+		 * @event BeforeOpen  (if event.preventDefault() is called, suggestion box will not open)
+		 *     example  instance.bind('BeforeOpen', function(event) {
+		 *                  event.preventDefault();
+		 *                  alert('No suggestions for you!');
+		 *              });
+		 * @event AfterOpen
+		 *     example  instance.one('AfterOpen', function(event) {
+		 *          this.$suggList.css({
+		 *            borderTopWidth: '10px',
+		 *            borderTopColor: 'red'
+		 *          });
+		 *                  alert('Tip: You may choose an item from the suggestion list.');
+		 *                  this.$suggList.css({
+		 *            borderTopWidth: '0'
+		 *          });
+		 *              });
+		 */
 		openSuggestBox: function() {      
 			var evt, bodyOffset, width, height, pos, top, left, sugg = this;
 			if (this.options.suggListPosition == 'absolute') {
@@ -845,18 +845,18 @@
 			return this;      
 		},
 		/**
-     * Hide the suggestion list
-     * @return {jQuery.Suggester}
-     * @event BeforeClose  (if event.preventDefault() is called, suggestion box will not close)
-     *     example  instance.bind('BeforeClose', function(event) {
-     *                  event.preventDefault();
-     *                  window.location.href = '?page=' + instance.$currentItem.text();
-     *              });         
-     * @event AfterClose
-     *     example  instance.bind('AfterClose', function(event) {
-     *                 alert('You chose ' + instance.$currentItem.text());
-     *              }); 
-     */
+		 * Hide the suggestion list
+		 * @return {jQuery.Suggester}
+		 * @event BeforeClose  (if event.preventDefault() is called, suggestion box will not close)
+		 *     example  instance.bind('BeforeClose', function(event) {
+		 *                  event.preventDefault();
+		 *                  window.location.href = '?page=' + instance.$currentItem.text();
+		 *              });         
+		 * @event AfterClose
+		 *     example  instance.bind('AfterClose', function(event) {
+		 *                 alert('You chose ' + instance.$currentItem.text());
+		 *              }); 
+		 */
 		closeSuggestBox: function() {
 			$document.unbind('click', this._closeOnOutsideClick);
 			var evt = this.publish('BeforeClose', {
@@ -870,19 +870,19 @@
 			return this;
 		},
 		/**
-     * Focus cursor on text input box
-     * @return {$.Suggester}
-     */
+		 * Focus cursor on text input box
+		 * @return {$.Suggester}
+		 */
 		focus: function() {
 			// use the dom method to focus
 			this.$input[0].focus();
 			return this;
 		},
 		/**
-     * Get suggestion result records given some text (local data)
-     * @param {String} text  Gather suggestions based on this text
-     * @return {Array}  Array of Objects of matching records 
-     */
+		 * Get suggestion result records given some text (local data)
+		 * @param {String} text  Gather suggestions based on this text
+		 * @return {Array}  Array of Objects of matching records 
+		 */
 		getResults: function(text) {
 			text = ''+text;
 			var evt = this.publish('BeforeFilter', {
@@ -955,8 +955,8 @@
 			});
 		},
 		/**
-     * Set the widget's CSS theme - Adds a class "sugg-theme-%name%" to the widget
-     */
+		 * Set the widget's CSS theme - Adds a class "sugg-theme-%name%" to the widget
+		 */
 		setTheme: function(themeName) {
 			if (this._theme) {
 				this.$widget.removeClass('sugg-theme-' + this._theme);
@@ -966,12 +966,12 @@
 			return this;
 		},
 		/**
-     * Publish the given event name and send the given data
-     * 
-     * @param {String} type  The name of the event to publish
-     * @param {Object} data  Additional data to attach to the event object
-     * @return {jQuery.Event}  The event object which behaves much like a DOM event object
-     */
+		 * Publish the given event name and send the given data
+		 * 
+		 * @param {String} type  The name of the event to publish
+		 * @param {Object} data  Additional data to attach to the event object
+		 * @return {jQuery.Event}  The event object which behaves much like a DOM event object
+		 */
 		publish: function(type, data) {
 			var evt = $.Event(type);
 			evt.target = this;
@@ -982,16 +982,16 @@
 			return evt;
 		},
 		/**
-     * Get this instance. Useful for jQuery-ish usage:  var instance = $('input').suggester(options).suggester('getInstance')
-     * @return {$.Suggester}
-     */
+		 * Get this instance. Useful for jQuery-ish usage:  var instance = $('input').suggester(options).suggester('getInstance')
+		 * @return {$.Suggester}
+		 */
 		getInstance: function() {
 			return this;
 		},    
 		/**
-     * Set options and interpret options
-     * @params {Object} options  Settings passed to constructor
-     */
+		 * Set options and interpret options
+		 * @params {Object} options  Settings passed to constructor
+		 */
 		_processOptions: function(options) {
 			this.options = $.extend({}, $.Suggester.defaultOptions, options);
 			// interpret some overloaded options      
@@ -1000,9 +1000,9 @@
 			}
 		},    
 		/**
-     * Render the widget and get handles to key elements
-     * @event BeforeRender - called after this.$widget is populated with this.options.template but before any sub elements are found
-     */
+		 * Render the widget and get handles to key elements
+		 * @event BeforeRender - called after this.$widget is populated with this.options.template but before any sub elements are found
+		 */
 		_render: function() {
 			// The full widget
 			this.$widget = $(this.options.template);
@@ -1069,8 +1069,8 @@
 			}
 		},
 		/**
-     * Look at the initial element's start value and populate tags as appropriate
-     */
+		 * Look at the initial element's start value and populate tags as appropriate
+		 */
 		_handleStartValue: function() {
 			// get a list of tags to insert now based on the current value of the original input
 			// replaces escaped commas with \u0001 such that tag labels can have commas
@@ -1088,8 +1088,8 @@
 			}     
 		},
 		/**
-     * Attach event handlers
-     */
+		 * Attach event handlers
+		 */
 		_setupListeners: function() {
 			// proxy some methods to always be bound to our instance
 			this.unfocusTag = $.proxy(this, 'unfocusTag');
@@ -1117,9 +1117,9 @@
 			this.$form.submit($.proxy(this, '_onSubmit'));
 		},
 		/**
-     * Event handler for when this.$input is focused
-     * @param {jQuery.Event} evt  The focus event
-     */
+		 * Event handler for when this.$input is focused
+		 * @param {jQuery.Event} evt  The focus event
+		 */
 		_onInputFocus: function(evt) {
 			this.$widget.addClass('sugg-active');
 			this.$widget.removeClass('sugg-placeholder-on');
@@ -1137,9 +1137,9 @@
 			}
 		},
 		/**
-     * Event handler for when this.$input is blurred
-     * @param {jQuery.Event} evt  blur event
-     */
+		 * Event handler for when this.$input is blurred
+		 * @param {jQuery.Event} evt  blur event
+		 */
 		_onInputBlur: function(evt) {
 			var inputVal = $.trim(this.$input.val());
 			if (inputVal === this.options.placeholder) {
@@ -1156,9 +1156,9 @@
 			this.$widget.removeClass('sugg-active');      
 		},
 		/**
-     * Event handler for when .sugg-remove is clicked
-     * @param {jQuery.Event} evt  The click event
-     */   
+		 * Event handler for when .sugg-remove is clicked
+		 * @param {jQuery.Event} evt  The click event
+		 */   
 		_onTagRemoveClick: function(evt) {
 			this.unfocusTag();
 			evt.preventDefault();
@@ -1167,9 +1167,9 @@
 			this.remove($tag);
 		},
 		/**
-     * Event handler for when .sugg-tag is clicked
-     * @param {jQuery.Event} evt  The click event
-     */     
+		 * Event handler for when .sugg-tag is clicked
+		 * @param {jQuery.Event} evt  The click event
+		 */     
 		_onTagClick: function(evt) {
 			var $target = $(evt.target);
 			if (!$target.hasClass('sugg-tag')) {
@@ -1180,9 +1180,9 @@
 			this.focusTag($target); 
 		},
 		/**
-     * Event handler for when autosuggest list is moused over
-     * @param {jQuery.Event} evt  The mouseover event
-     */     
+		 * Event handler for when autosuggest list is moused over
+		 * @param {jQuery.Event} evt  The mouseover event
+		 */     
 		_onListMouseover: function(evt) { 
 			var $target = $(evt.target);
 			if ($target.hasClass('sugg-list')) {
@@ -1199,9 +1199,9 @@
 			this.$currentItem = $target;
 		},
 		/**
-     * Event handler for when autosuggest list is clicked
-     * @param {jQuery.Event} evt  The click event
-     */     
+		 * Event handler for when autosuggest list is clicked
+		 * @param {jQuery.Event} evt  The click event
+		 */     
 		_onListClick: function(evt) {
 			clearTimeout(this._onInputBlurTimeout);
 			// effectively delegate click to .sugg-item
@@ -1225,9 +1225,9 @@
 			}
 		},
 		/**
-     * Event handler for when this.$box is clicked
-     * @param {jQuery.Event} evt  The click event
-     */     
+		 * Event handler for when this.$box is clicked
+		 * @param {jQuery.Event} evt  The click event
+		 */     
 		_onBoxClick: function(evt) {
 			if (evt.target == this.$box[0]) {
 				this.unfocusTag();
@@ -1235,9 +1235,9 @@
 			}
 		},
 		/**
-     * Handle keypresses while in tag input field
-     * @param {jQuery.Event} evt  The keydown event
-     */
+		 * Handle keypresses while in tag input field
+		 * @param {jQuery.Event} evt  The keydown event
+		 */
 		_onKeydown: function(evt) {
 			var pubevent = this.publish('BeforeHandleKey', {
 				keydown: evt,
@@ -1283,17 +1283,17 @@
 			});
 		},
 		/**
-     * Handle paste on this.$input
-     * @param {jQuery.Event} evt  The paste event
-     */
+		 * Handle paste on this.$input
+		 * @param {jQuery.Event} evt  The paste event
+		 */
 		_onValueChange: function(evt) {
 			// when paste fires, input hasn't yet been populated so run on timeout
 			setTimeout($.proxy(this._updateInputSize, this), 0);    
 		},
 		/**
-     * Handle UP key on this.$input
-     * @param {jQuery.Event} evt  The keydown event
-     */
+		 * Handle UP key on this.$input
+		 * @param {jQuery.Event} evt  The keydown event
+		 */
 		_key_UP: function(evt) {
 			evt.preventDefault();
 			// unfocus any focused tags
@@ -1302,9 +1302,9 @@
 			this.moveSelection('up');     
 		},
 		/**
-     * Handle DOWN key on this.$input
-     * @param {jQuery.Event} evt  The keydown event
-     */   
+		 * Handle DOWN key on this.$input
+		 * @param {jQuery.Event} evt  The keydown event
+		 */   
 		_key_DOWN: function(evt) {
 			evt.preventDefault();
 			// unfocus any focused tags
@@ -1315,9 +1315,9 @@
 			}
 		},
 		/**
-     * Handle BACKSPACE key on this.$input
-     * @param {jQuery.Event} evt  The keydown event
-     */   
+		 * Handle BACKSPACE key on this.$input
+		 * @param {jQuery.Event} evt  The keydown event
+		 */   
 		_key_BACKSPACE: function(evt) {
 			var $lastTag;
 			this.$currentItem = null;
@@ -1341,9 +1341,9 @@
 			}
 		},
 		/**
-     * Handle TAB and COMMA and SEMICOLON key on this.$input
-     * @param {jQuery.Event} evt  The keydown event
-     */   
+		 * Handle TAB and COMMA and SEMICOLON key on this.$input
+		 * @param {jQuery.Event} evt  The keydown event
+		 */   
 		_key_TAB_COMMA: function(evt) {
 			if (evt.which == 9) { // tab
 				if (this.$input.val() === '') {
@@ -1365,16 +1365,16 @@
 			this.closeSuggestBox();
 		},
 		/**
-     * Handle ESC key on this.$input
-     * @param {jQuery.Event} evt  The keydown event
-     */   
+		 * Handle ESC key on this.$input
+		 * @param {jQuery.Event} evt  The keydown event
+		 */   
 		_key_ESC: function(evt) {
 			this.closeSuggestBox();     
 		},
 		/**
-     * Handle ENTER key on this.$input
-     * @param {jQuery.Event} evt  The keydown event
-     */
+		 * Handle ENTER key on this.$input
+		 * @param {jQuery.Event} evt  The keydown event
+		 */
 		_key_ENTER: function(evt) {
 			if (this.$currentItem) {
 				// add the item that was selected via arrow or hover
@@ -1392,9 +1392,9 @@
 			}     
 		},
 		/**
-     * Handle other keys (e.g. printable characters) on this.$input
-     * @param {jQuery.Event} evt  The keydown event
-     */   
+		 * Handle other keys (e.g. printable characters) on this.$input
+		 * @param {jQuery.Event} evt  The keydown event
+		 */   
 		_key_other: function(evt) {
 			// abort any outstanding xhr requests and clear timeout from key delay
 			this.abortFetch();
@@ -1408,17 +1408,17 @@
 			this.timeoutHandle = setTimeout(this.suggestIfNeeded, this.options.keyDelay || 0);      
 		},
 		/**
-     * Handler for form submission
-     * 
-     * @param {jQuery} jqEvent  The submit event
-     * @event BeforeFetch (if event.preventDefault() is called, XHR is not made and suggest box does not open)
-     *     event.event  The jQuery-wrapped browser event
-     *     event.form   The input's form (same as this.$form)
-     *     example      instance.bind('BeforeSubmit', function(event) {
-     *                      // pretty much the same as instance.$form.submit(...)
-     *                      // used internally to add tag on submit if options.addOnSubmit is true
-     *                  });
-     */   
+		 * Handler for form submission
+		 * 
+		 * @param {jQuery} jqEvent  The submit event
+		 * @event BeforeFetch (if event.preventDefault() is called, XHR is not made and suggest box does not open)
+		 *     event.event  The jQuery-wrapped browser event
+		 *     event.form   The input's form (same as this.$form)
+		 *     example      instance.bind('BeforeSubmit', function(event) {
+		 *                      // pretty much the same as instance.$form.submit(...)
+		 *                      // used internally to add tag on submit if options.addOnSubmit is true
+		 *                  });
+		 */   
 		_onSubmit: function(jqEvent) {
 			var evt = this.publish('BeforeSubmit', {
 				event: jqEvent,
@@ -1441,20 +1441,20 @@
 			}
 		},
 		/**
-     * Handler passed to $.ajax({beforeSend:...}) to alter XHR if needed
-     * 
-     * @event BeforeFetch (if event.preventDefault() is called, XHR is not made and suggest box does not open)
-     *     event.jqXHR  the jQuery XHR object (see http://api.jquery.com/jQuery.ajax/#jqXHR)
-     *     event.term   the term that is being searched for
-     *     example      instance.bind('BeforeFetch', function(event) {
-     *                      event.jqXHR.setRequestHeader('something','something');
-     *                      event.jqXHR.fail(function() {
-     *                          alert('ajax call failed');
-     *                      }).always(function() {
-     *              alert('ajax call finished regardless of success or failure');
-     *                      });
-     *                  });
-     */
+		 * Handler passed to $.ajax({beforeSend:...}) to alter XHR if needed
+		 * 
+		 * @event BeforeFetch (if event.preventDefault() is called, XHR is not made and suggest box does not open)
+		 *     event.jqXHR  the jQuery XHR object (see http://api.jquery.com/jQuery.ajax/#jqXHR)
+		 *     event.term   the term that is being searched for
+		 *     example      instance.bind('BeforeFetch', function(event) {
+		 *                      event.jqXHR.setRequestHeader('something','something');
+		 *                      event.jqXHR.fail(function() {
+		 *                          alert('ajax call failed');
+		 *                      }).always(function() {
+		 *              alert('ajax call finished regardless of success or failure');
+		 *                      });
+		 *                  });
+		 */
 		_beforeFetch: function(jqXHR) {
 			this._jqXHR = jqXHR;
 			var evt = this.publish('BeforeFetch', {
@@ -1467,16 +1467,16 @@
 			}
 		},
 		/**
-     * Handler passed to $.ajax().done(function(){...}) that handles suggestion data that is returned
-     * 
-     * @event BeforeFetch (if event.preventDefault() is called, the suggest box does not open)
-     *     event.jqXHR    the jQuery XHR object (see http://api.jquery.com/jQuery.ajax/#jqXHR)
-     *     event.records  the object generated from the ajax returned from the XHR
-     *     event.term     the term that was search for
-     *     example        instance.bind('AfterFetch', function(event) {
-     *                         event.data.push({id:'', label:'Adding a test suggestion'});
-     *                    });
-     */   
+		 * Handler passed to $.ajax().done(function(){...}) that handles suggestion data that is returned
+		 * 
+		 * @event BeforeFetch (if event.preventDefault() is called, the suggest box does not open)
+		 *     event.jqXHR    the jQuery XHR object (see http://api.jquery.com/jQuery.ajax/#jqXHR)
+		 *     event.records  the object generated from the ajax returned from the XHR
+		 *     event.term     the term that was search for
+		 *     example        instance.bind('AfterFetch', function(event) {
+		 *                         event.data.push({id:'', label:'Adding a test suggestion'});
+		 *                    });
+		 */   
 		_afterFetch: function(records) {
 			var evt = this.publish('AfterFetch', {
 				jqXHR: this._jqXHR,
@@ -1491,9 +1491,9 @@
 			this.handleSuggestions(evt.records);
 		},
 		/**
-     * Callback used to close the suggestion box when the user clicks off of it
-     * @param {jQuery.Event} evt  The click event
-     */
+		 * Callback used to close the suggestion box when the user clicks off of it
+		 * @param {jQuery.Event} evt  The click event
+		 */
 		_closeOnOutsideClick: function(evt) {
 			var $target = $(evt.target);
 			if ($target.parents('.sugg-widget')[0] == this.$widget[0]) {
@@ -1502,28 +1502,28 @@
 			this.closeSuggestBox();
 		}, 
 		/**
-     * Format a suggestion before display
-     * @param {Object} record  The record that was suggested
-     * @param {String} substr  The string that generated the list of suggestions
-     * @return {String}  HTML to use as the item (e.g. '<li class="sugg-item">Suggestion</li>')
-     * @event BeforeFormat - use to do your own formatting
-     *     event.record  The record object that is being suggested
-     *     event.substr  The part of the string that matches the suggestion search fields
-     *     event.html    If you set event.html and then call event.preventDefault(), that html will be used instead of the default generated html
-     *     example       instance.bind('BeforeFormat', function(event) {
-     *                       event.preventDefault();
-     *                       event.html = '<li>My suggestion html</li>';
-     *                   });              
-     * @event AfterFormat - able to alter the html after it has be constructed
-     *     event.record  The record object that is being suggested
-     *     event.substr  The part of the string that matches the suggestion search fields
-     *     event.html    Another chance to alter the html of the item after it has been generated
-     *     example       instance.bind('AfterFormat', function(event) {
-     *                       event.preventDefault();
-     *                       event.html; // <li><strong class="sugg-match">Canis</strong> Major</li>
-     *                       event.html = event.html.replace(/<\/?strong\b/, 'em'),
-     *                   });
-     */
+		 * Format a suggestion before display
+		 * @param {Object} record  The record that was suggested
+		 * @param {String} substr  The string that generated the list of suggestions
+		 * @return {String}  HTML to use as the item (e.g. '<li class="sugg-item">Suggestion</li>')
+		 * @event BeforeFormat - use to do your own formatting
+		 *     event.record  The record object that is being suggested
+		 *     event.substr  The part of the string that matches the suggestion search fields
+		 *     event.html    If you set event.html and then call event.preventDefault(), that html will be used instead of the default generated html
+		 *     example       instance.bind('BeforeFormat', function(event) {
+		 *                       event.preventDefault();
+		 *                       event.html = '<li>My suggestion html</li>';
+		 *                   });              
+		 * @event AfterFormat - able to alter the html after it has be constructed
+		 *     event.record  The record object that is being suggested
+		 *     event.substr  The part of the string that matches the suggestion search fields
+		 *     event.html    Another chance to alter the html of the item after it has been generated
+		 *     example       instance.bind('AfterFormat', function(event) {
+		 *                       event.preventDefault();
+		 *                       event.html; // <li><strong class="sugg-match">Canis</strong> Major</li>
+		 *                       event.html = event.html.replace(/<\/?strong\b/, 'em'),
+		 *                   });
+		 */
 		_formatSuggestion: function(record, substr) {
 			var evt, options, label, replacer, replacee, html;
 			evt = this.publish('BeforeFormat', {
@@ -1561,26 +1561,26 @@
 			return evt.html;
 		},
 		/**
-     * Update the size when this.options.inputSize is "auto"
-     */
+		 * Update the size when this.options.inputSize is "auto"
+		 */
 		_updateInputSize: function() {
 			if (this.options.inputSize == 'auto') {         
 				this.$input.prop('size', this.$input.val().length + 2); 
 			}
 		},
 		/**
-     * Set the value of the original input to a comma-delimited set of labels
-     * @return {jQuery.Suggester}
-     * @event  BeforeSave  (if canceled, original imput will not be populated with new value)
-     *     example  instance.bind('BeforeSave', function(event) {
-     *                  event.newValue += '!';
-     *              });
-     * @event  AfterSave
-     *     example  instance.bind('AfterSave', function(event) {
-     *                  saveToServer(event.newValue);
-     *              });
-     *      
-     */
+		 * Set the value of the original input to a comma-delimited set of labels
+		 * @return {jQuery.Suggester}
+		 * @event  BeforeSave  (if canceled, original imput will not be populated with new value)
+		 *     example  instance.bind('BeforeSave', function(event) {
+		 *                  event.newValue += '!';
+		 *              });
+		 * @event  AfterSave
+		 *     example  instance.bind('AfterSave', function(event) {
+		 *                  saveToServer(event.newValue);
+		 *              });
+		 *      
+		 */
 		save: function() {
 			var vals = [], newValue;
 			$.each(this.tags, function() {
@@ -1601,11 +1601,11 @@
 			return evt.newValue;
 		},
 		/**
-     * Given tag text, remove a tag from the internal collection and from the DOM
-     * 
-     * @param {String} value      The text of the tag
-     * @return {Object}  The record associated with that tag
-     */
+		 * Given tag text, remove a tag from the internal collection and from the DOM
+		 * 
+		 * @param {String} value      The text of the tag
+		 * @return {Object}  The record associated with that tag
+		 */
 		_spliceTag: function(value) {
 			var idx = this.getTagIndex(value);      
 			if (idx > -1) {
@@ -1614,11 +1614,11 @@
 			return undefined;
 		},
 		/**
-     * Given an array index, remove a tag from the internal collection and from the DOM
-     * 
-     * @param {Number} idx  The index position in the internal collection
-     * @return {Object}  The record associated with that tag
-     */   
+		 * Given an array index, remove a tag from the internal collection and from the DOM
+		 * 
+		 * @param {Number} idx  The index position in the internal collection
+		 * @return {Object}  The record associated with that tag
+		 */   
 		_spliceTagByIdx: function(idx) {
 			var tag = this.tags[idx];
 			var newTags = [];
@@ -1636,11 +1636,11 @@
 			return tag;
 		},
 		/**
-     * Find a tag given value
-     * 
-     * @param {String} value      The text of the tag
-     * @return {Number}  The index position of the tag in the internal collection or -1 if not found
-     */
+		 * Find a tag given value
+		 * 
+		 * @param {String} value      The text of the tag
+		 * @return {Number}  The index position of the tag in the internal collection or -1 if not found
+		 */
 		getTagIndex: function(value) {
 			var idx = -1, i, len;
 			for (i = 0, len = this.tags.length; i < len; i++) {
@@ -1652,10 +1652,10 @@
 			return idx;     
 		},
 		/**
-     * Setup publish/subscribe system that uses jQuery's event system
-     * Example event subscription:
-     * instance.bind('AfterFilter', myhandler)
-     */
+		 * Setup publish/subscribe system that uses jQuery's event system
+		 * Example event subscription:
+		 * instance.bind('AfterFilter', myhandler)
+		 */
 		_setupPubsub: function() {
 			this.pubsub = $(this);
 			this.on = $.proxy(this.pubsub, 'on');
@@ -1673,10 +1673,10 @@
 			}
 		},
 		/**
-     * Given an input element, get the cursor position. Used to determine if backspace key should delete the previous tag
-     * 
-     * @return {Boolean}  true if the cursor is at the start and no text is selected
-     */
+		 * Given an input element, get the cursor position. Used to determine if backspace key should delete the previous tag
+		 * 
+		 * @return {Boolean}  true if the cursor is at the start and no text is selected
+		 */
 		_isCursorAtStart: function() {
 			var selStart = _getSelectionStart(this.$input[0]);
 			var selEnd = _getSelectionEnd(this.$input[0]);
@@ -1780,11 +1780,11 @@
 	};
 	function makePlugin(name, Ctor) {
 		/**
-     * Suggester jQuery Plugin
-     * 
-     * @param {Object} options  The options to use on instantiation (see jQuery.Suggester.defaultOptions for info on options)
-     * @return (Any)
-     */
+		 * Suggester jQuery Plugin
+		 * 
+		 * @param {Object} options  The options to use on instantiation (see jQuery.Suggester.defaultOptions for info on options)
+		 * @return (Any)
+		 */
 		$.fn[name] = function(options) {    
 			// handle where first arg is method name and additional args should be passed to that method
 			if (typeof options == 'string' && typeof this.data('SuggesterInstance')[options] == 'function') {
