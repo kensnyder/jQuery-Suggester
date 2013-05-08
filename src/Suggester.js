@@ -1111,7 +1111,7 @@
 			// focus to text input field when a click comes outside of any tags
 			this.$box.click($.proxy(this, '_onBoxClick'));
 			// handle various actions associated with keypresses
-			this.$input.keydown($.proxy(this, '_onKeydown'));
+			$.Suggester.quickBind(this.$input.get(0), 'keydown', $.proxy(this, '_onKeydown'));
 			// handle paste into tag field
 			this.$input.bind('cut paste propertychange', $.proxy(this, '_onValueChange'));
 			// auto add tags on submit
@@ -1710,25 +1710,42 @@ console.log('_onListClick ' + (+new Date));
 	//
 	$.Suggester.version = '1.0.2';
 	/**
-   * Pass to contructor to subclass (e.g. `MySuggester.prototype = new $.Suggester($.Suggester.doSubclass)`)
-   * @var {Object}
-   */
+	 * Pass to contructor to subclass (e.g. `MySuggester.prototype = new $.Suggester($.Suggester.doSubclass)`)
+	 * @var {Object}
+	 */
 	$.Suggester.doSubclass = {};
 	/**
-   * a collection of all the instances
-   */
+	 * a collection of all the instances
+	 */
 	$.Suggester.instances = [];
 	/**
-   * Add data to all instances
-   * @param {Object[]} data  Add more data to all the registered instances
-   * @return {jQuery.Suggester}
-   */
+	 * Add data to all instances
+	 * @param {Object[]} data  Add more data to all the registered instances
+	 * @return {jQuery.Suggester}
+	 */
 	$.Suggester.addData = function(data) {
 		$.each($.Suggester.instances, function() {
 			this.addData(data);
 		});
 		return this;
 	};
+	/**
+	 * Lightweight event handler to allow keydown to have less overhead
+	 */
+	$.Suggester.quickBind = document.addEventListener ? 
+		function(element, type, handler) {
+			element.addEventListener(type, handler, false);
+		} :
+		function(element, type, handler) {
+			element.attachEvent('on'+type, function(evt) {
+				evt = evt || window.event;
+				evt.preventDefault = function() {
+					evt.returnValue = false;
+				};
+				handler.call(element, evt);
+			});
+		}
+	;
 	/**
    * Create a subclass of jQuery.Suggester
    * 
