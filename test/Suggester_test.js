@@ -141,7 +141,7 @@
     strictEqual($form.find('.sugg-label').length, 0);   
   });
   test("options.addOnBlur", function() {
-    var sugg = new $.Suggester($input, {data:addressBook});
+    var sugg = new $.Suggester($input);
     sendKeys(sugg, ['t','e','s','t']);
     sugg.$input.trigger({type:'blur'});
     strictEqual(sugg.tags.length, 1, 'Custom tag is added after blur');
@@ -151,7 +151,10 @@
     var sugg = new $.Suggester($input);
     sugg.add('Foo');
     strictEqual(sugg.tags.length, 1);
-    strictEqual($input.val(), 'test');    
+    strictEqual($input.val(), 'Foo');
+	sugg.clear();
+    strictEqual($input.val(), '');
+    strictEqual(sugg.tags.length, 0);
   });
   test("Pre-filled items", function() {
     $input.val('Uranus,Jupiter');
@@ -181,7 +184,7 @@
     strictEqual(sugg.tags.length, 1, 'Should have exact length');
     strictEqual(sugg.tags[0] instanceof $.Suggester.Tag, true, 'Tags should be an instance of $.Suggester.Tag');
     strictEqual(sugg.getTags()[0], sugg.tags[0], 'getTags() should contain the exact tag objects');
-    strictEqual(sugg.getTags() === sugg.tags, false, 'But getTags() should be a copy of the array');
+    notStrictEqual(sugg.getTags(), sugg.tags, 'But getTags() should be a copy of the array');
     var tags = [];
     sugg.eachTag(function(i, tag) {
       tags[i] = tag;
@@ -394,4 +397,4 @@
       }, 1500);
     });   
   }
-}(jQuery, QUnit));
+}(jQuery));
