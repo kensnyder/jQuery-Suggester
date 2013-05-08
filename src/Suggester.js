@@ -26,7 +26,6 @@
  * Suggester is licensed under the MIT License:
  * http://www.opensource.org/licenses/mit-license.php
  */
-;
 (function (factory) {
 	// AMD compatibility
 	// https://github.com/umdjs/umd/blob/6c10fc0af1e1692cf430c9eb7f530d6b5a5d758b/jqueryPlugin.js
@@ -218,7 +217,7 @@
 			}
 			// register our instance
 			$.Suggester.instances.push(this);
-			if (this.$originalInput.length == 0) {
+			if (this.$originalInput.length === 0) {
 				// no input found. User could explicitly call initialize later
 				// if not, there will likely be errors
 				return this;
@@ -257,7 +256,7 @@
 			options = options || {};
 			// "un"-render; this.$originalInput should be already populated
 			this.$originalInput.insertBefore(this.$widget).show();
-			this.$originalInput.removeData('SuggesterInstance')
+			this.$originalInput.removeData('SuggesterInstance');
 			if (options.keepHiddenInputs) {
 				this.$widget.find('input[type=hidden]').insertBefore(this.$widget);
 			}
@@ -755,7 +754,7 @@
      *                 });
      */
 		handleSuggestions: function(records) {
-			if (!records || records.length == 0) {
+			if (!records || records.length === 0) {
 				this.showEmptyText();
 				return this;
 			}
@@ -906,9 +905,9 @@
 						value = value.toLowerCase();
 					}         
 					if (
-						(sugg.options.matchAt == 'anywhere' && value.indexOf(casedText) > -1) 
-						|| (value.indexOf(casedText) == sugg.options.matchAt)
-						|| (sugg.options.matchAt == 'end' && value.indexOf(casedText) == value.length - casedText-length) 
+						(sugg.options.matchAt == 'anywhere' && value.indexOf(casedText) > -1) ||
+						(value.indexOf(casedText) == sugg.options.matchAt) ||
+						(sugg.options.matchAt == 'end' && value.indexOf(casedText) == value.length - casedText-length) 
 						) {
 						results.push(record);
 						return false;
@@ -1042,7 +1041,7 @@
 			this.$widget.insertBefore(this.$originalInput.hide());
 			// populate tags based on starting value of original input
 			this._handleStartValue();
-			if (this.options.minChars == 0) {
+			if (this.options.minChars === 0) {
 				// when minChars is 0, it acts like a regular drop down box
 				this.options.inputSize = '';
 				// set input width to remaining room
@@ -1142,7 +1141,6 @@
      * @param {jQuery.Event} evt  blur event
      */
 		_onInputBlur: function(evt) {
-console.log('_onInputBlur ' + (+new Date));			
 			var inputVal = $.trim(this.$input.val());
 			if (inputVal === this.options.placeholder) {
 				this.$widget.addClass('sugg-placeholder-on');
@@ -1205,7 +1203,6 @@ console.log('_onInputBlur ' + (+new Date));
      * @param {jQuery.Event} evt  The click event
      */     
 		_onListClick: function(evt) {
-console.log('_onListClick ' + (+new Date));			
 			clearTimeout(this._onInputBlurTimeout);
 			// effectively delegate click to .sugg-item
 			var $target = $(evt.target);
@@ -1349,14 +1346,14 @@ console.log('_onListClick ' + (+new Date));
      */   
 		_key_TAB_COMMA: function(evt) {
 			if (evt.which == 9) { // tab
-				if (this.$input.val() == '') {
+				if (this.$input.val() === '') {
 					// go ahead and tab to next field
 					return;
 				}
 			}
 			// tab or comma or semicolon
 			evt.preventDefault();
-			if (this.$input.val() == '') {
+			if (this.$input.val() === '') {
 				// no value so don't create a new tag
 				return;
 			}
@@ -1433,7 +1430,7 @@ console.log('_onListClick ' + (+new Date));
 				return;
 			}
 			if (this.options.addOnSubmit) {
-				if (this.$input.val() != '') {
+				if (this.$input.val() !== '') {
 					this.$currentItem = null;
 					this.add(this.$input.val());
 					if (this.options.multiselect) {
@@ -1683,7 +1680,7 @@ console.log('_onListClick ' + (+new Date));
 		_isCursorAtStart: function() {
 			var selStart = _getSelectionStart(this.$input[0]);
 			var selEnd = _getSelectionEnd(this.$input[0]);
-			return selStart == 0 && selEnd == 0;
+			return selStart === 0 && selEnd === 0;
 		}
 	};
   
@@ -1693,16 +1690,20 @@ console.log('_onListClick ' + (+new Date));
 		if (o.createTextRange) {
 			var r = document.selection.createRange().duplicate();
 			r.moveEnd('character', o.value.length);
-			if (r.text == '') return o.value.length;
+			if (r.text === '') {
+				return o.value.length;
+			}
 			return o.value.lastIndexOf(r.text);
-		} else return o.selectionStart;
+		}
+		return o.selectionStart;
 	}
 	function _getSelectionEnd(o) {
 		if (o.createTextRange) {
 			var r = document.selection.createRange().duplicate();
 			r.moveStart('character', -o.value.length);
 			return r.text.length;
-		} else return o.selectionEnd;
+		}
+		return o.selectionEnd;
 	}
   
 	//
@@ -1763,21 +1764,21 @@ console.log('_onListClick ' + (+new Date));
    *     });
    */
 	$.Suggester.subclass = function(jQueryMethodName, properties) {
-		var ctor = function() {
+		var Ctor = function() {
 			this.initialize.apply(this, Array.prototype.slice.call(arguments));
 		};
-		ctor.prototype = new $.Suggester($.Suggester.doSubclass);
-		ctor.prototype.callParent = function(method/*, arg1, arg2, arg3*/) {
+		Ctor.prototype = new $.Suggester($.Suggester.doSubclass);
+		Ctor.prototype.callParent = function(method/*, arg1, arg2, arg3*/) {
 			$.Suggester.prototype[method].apply(this, method, Array.prototype.slice.call(arguments, 1));
 		};
-		ctor.prototype.applyParent = function(method, args) {
+		Ctor.prototype.applyParent = function(method, args) {
 			$.Suggester.prototype[method].apply(this, method, args);
 		};
-		$.extend(ctor.prototype, properties || {});
-		makePlugin(jQueryMethodName, ctor);
-		return ctor;
+		$.extend(Ctor.prototype, properties || {});
+		makePlugin(jQueryMethodName, Ctor);
+		return Ctor;
 	};
-	function makePlugin(name, ctor) {
+	function makePlugin(name, Ctor) {
 		/**
      * Suggester jQuery Plugin
      * 
@@ -1796,7 +1797,7 @@ console.log('_onListClick ' + (+new Date));
 			// otherwise create new $.Suggester instance but return the jQuery instance
 			return this.each(function() {     
 				var $elem = $(this);
-				var instance = new ctor($elem, options);
+				var instance = new Ctor($elem, options);
 				$elem.data('SuggesterInstance', instance);
 			});
 		};

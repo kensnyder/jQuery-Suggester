@@ -59,23 +59,11 @@ module.exports = function(grunt) {
 			files: ['test/**/*.html']
 		},
 		jshint: {
-			gruntfile: {
-				options: {
-					jshintrc: '.jshintrc'
-				},
-				src: 'Gruntfile.js'
-			},
 			src: {
 				options: {
-					jshintrc: 'src/.jshintrc'
+					jshintrc: 'jshint.conf.json'
 				},
 				src: ['src/**/*.js']
-			},
-			test: {
-				options: {
-					jshintrc: 'test/.jshintrc'
-				},
-				src: ['test/**/*.js']
 			}
 		},
 		watch: {
@@ -105,6 +93,6 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-copy');
 
 	// Default task.
-	grunt.registerTask('default', [/*'jshint', 'qunit', */ 'clean', 'copy', 'concat', 'cssmin', 'uglify']);
+	grunt.registerTask('default', ['jshint', /*'qunit', */ 'clean', 'copy', 'concat', 'cssmin', 'uglify']);
 
 };
