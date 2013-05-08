@@ -1,9 +1,9 @@
-Suggester for jQuery 
+Suggester - A Better Autocomplete Widget
 =
 
-Version 1.0.2, April 2013, MIT License
+Version 1.1.0, May 2013, MIT License
 
-[Demos](http://sandbox.kendsnyder.com/suggester/demo/demo.html), [Unit tests](http://sandbox.kendsnyder.com/suggester/demo/unit-tests.html)
+[Demos](http://sandbox.kendsnyder.com/Suggester-1.1/demo), [Unit tests](http://sandbox.kendsnyder.com/Suggester-1.1/test/Suggester.html)
 
 Table of Contents
 -
@@ -36,7 +36,7 @@ Turn a text input into a Gmail / Facebook-style auto-complete widget. Features i
 * You can define your own HTML structure for the widget output
 * Object-oriented structure makes it easy to extend
 * Less than 6kb minimized and gzipped
-* Unit tested - [Unit tests](http://sandbox.kendsnyder.com/suggester/demo/unit-tests.html) 
+* Unit tested - [Unit tests](http://sandbox.kendsnyder.com/Suggester-1.1/test/Suggester.html) 
 * Works on IE8+, FF, Chrome, Safari
 * Compatible with AMD
 
@@ -44,19 +44,19 @@ Turn a text input into a Gmail / Facebook-style auto-complete widget. Features i
 How to Use
 -
 
-Suggester is compatible with jQuery 1.5 and has been tested with jQuery 1.8. Copy or git checkout the Suggester files to your scripts directory then add the following HTML to your &lt;head&gt; after jQuery is included:
+Suggester is compatible with jQuery 1.5+ and has been tested with jQuery 1.9. Copy files in the `dist` directory to your scripts directory then add the following HTML to your &lt;head&gt; after jQuery is included:
 
 ```html
-<script src="/assets/js/suggester/jquery.suggester.min.js"></script>
-<link  href="/assets/js/suggester/jquery.suggester.css" rel="stylesheet" />
+<script src="/js/Suggester.min.js"></script>
+<link  href="/js/Suggester.min.css" rel="stylesheet" />
 ```
 
 Then somewhere in your code, call:
 
 ```javascript
-$(input).suggester(options);
+$(selector).suggester(options);
 // OR
-var instance = new $.Suggester(input, options);
+var instance = new $.Suggester(selector, options);
 ```
 
 See the documentation below for a full list of options.
@@ -1273,6 +1273,12 @@ See the source on the [live demos](http://sandbox.kendsnyder.com/suggester/demo/
 
 Changelog
 -
+
+**Version 1.1.0, May 2013**
+
+*Grunt build process*
+
+*Suggester.tags is now a collection of $.Suggester.Tag objects*
 
 **Version 1.0.2, April 2013**
 
