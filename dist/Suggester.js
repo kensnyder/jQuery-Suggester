@@ -902,6 +902,7 @@
         this.getElement().remove(); 
       }); 
       this.tags = [];
+	  this.save();
       return this;
     },
     getTags: function() {

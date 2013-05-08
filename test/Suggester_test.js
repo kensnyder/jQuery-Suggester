@@ -152,9 +152,11 @@
     sugg.add('Foo');
     strictEqual(sugg.tags.length, 1);
     strictEqual($input.val(), 'Foo');
+    strictEqual($form.find('input[type=hidden]').length, 1);
 	sugg.clear();
     strictEqual($input.val(), '');
     strictEqual(sugg.tags.length, 0);
+    strictEqual($form.find('input[type=hidden]').length, 0);
   });
   test("Pre-filled items", function() {
     $input.val('Uranus,Jupiter');
