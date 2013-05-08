@@ -1,4 +1,4 @@
-/*! Suggester - A Better Autocomplete Widget - v1.0.3 - 2013-05-07
+/*! Suggester - A Better Autocomplete Widget - v1.0.3 - May 2013
 * https://github.com/kensnyder/jQuery-Suggester
 * Copyright (c) 2013 Ken Snyder; Licensed MIT */
 ;(function (factory) {
