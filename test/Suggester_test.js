@@ -180,7 +180,7 @@
     setTimeout(function() {
       strictEqual(sugg.$input.val(), '');
       start();
-    }, 1);
+    }, 500);
   });
   
   module('$.Suggester.Tag', config);
