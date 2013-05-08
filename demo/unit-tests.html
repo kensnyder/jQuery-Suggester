@@ -7,6 +7,7 @@
 	<script src="./assets/js/qunit-1.10.0.js"></script>
 	<script src="../jquery.suggester.js"></script>
 	<script src="./assets/js/planets.js"></script>
+	<script src="./assets/js/products.js"></script>
 	<script src="./assets/js/test-helpers.js"></script>
 	<link rel="stylesheet" href="./assets/css/qunit-1.10.0.css" />
 </head>
@@ -135,6 +136,19 @@
 		strictEqual($form.find('input[type=hidden]').length, 0);
 		strictEqual($form.find('.sugg-label').length, 0);		
 	});
+	test("options.addOnBlur", function() {
+		var sugg = new $.Suggester($input, {data:addressBook});
+		sendKeys(sugg, ['t','e','s','t']);
+		sugg.$input.trigger({type:'blur'});
+		strictEqual(sugg.tags.length, 1, 'Custom tag is added after blur');
+		strictEqual($input.val(), 'test', 'Custom tag has expected value');		
+	});
+	test("clear()", function() {
+		var sugg = new $.Suggester($input);
+		sugg.add('Foo');
+		strictEqual(sugg.tags.length, 1);
+		strictEqual($input.val(), 'test');		
+	});
 	test("Pre-filled items", function() {
 		$input.val('Uranus,Jupiter');
 		var sugg = $input.suggester({data:planets});
@@ -154,7 +168,51 @@
 			strictEqual(sugg.$input.val(), '');
 			start();
 		}, 1);
-	});			
+	});
+	
+	module('$.Suggester.Tag', config);
+	test('The tags collection', function() {
+		var sugg = new $.Suggester($input);
+		sugg.add('First');
+		strictEqual(sugg.tags.length, 1, 'Should have exact length');
+		strictEqual(sugg.tags[0] instanceof $.Suggester.Tag, true, 'Tags should be an instance of $.Suggester.Tag');
+		strictEqual(sugg.getTags()[0], sugg.tags[0], 'getTags() should contain the exact tag objects');
+		strictEqual(sugg.getTags() === sugg.tags, false, 'But getTags() should be a copy of the array');
+		var tags = [];
+		sugg.eachTag(function(i, tag) {
+			tags[i] = tag;
+		});
+		strictEqual(tags.length, 1, 'eachTag() should iterate properly')
+		strictEqual(sugg.tags[0], tags[0], 'eachTag() should iterate properly')
+	});
+	test('Properties', function() {
+		var sugg = new $.Suggester($input);
+		sugg.add('First');
+		strictEqual(sugg.tags[0].suggester, sugg, 'Should have a reference to suggester instance');
+		strictEqual(sugg.tags[0].getWidget(), sugg, 'getWidget() should return a reference to suggester instance');
+	});
+	test('Getters and setters', function() {
+		var sugg = new $.Suggester($input);
+		sugg.add('First');
+		strictEqual(sugg.tags[0].getValue(), 'First', 'Value should be set');
+		strictEqual(sugg.tags[0].getHidden().val(), 'First', 'Hidden input should be set');
+		strictEqual(sugg.tags[0].getElement().find('.sugg-label').text(), 'First', 'Tag text control test');
+		sugg.tags[0].setValue('Second');
+		strictEqual(sugg.tags[0].getValue(), 'Second', 'Value should be changeable');
+		strictEqual(sugg.tags[0].getHidden().val(), 'Second', 'Value change should affect hidden input');
+		strictEqual($input.val(), 'Second', 'Value change should affect original input');
+		strictEqual(sugg.tags[0].getElement().find('.sugg-label').text(), 'First', 'Value change should NOT affect tag text');		
+	});
+	
+	module('Destroy', config);
+	test("destroy() keeps values on original input", function() {
+		var sugg = new $.Suggester($input);
+		sugg.add('One');
+		sugg.add('Two');
+		sugg.destroy();
+		strictEqual($input.val(), 'One,Two');
+		strictEqual(sugg.tags.length, 0);
+	});
 		
 	module('Suggestions', config);
 	asyncTest("Too short for suggestion", function() {

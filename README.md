@@ -1038,6 +1038,11 @@ $.Suggester.prototype = {
 	 */
 	_onKeydown: function(evt) {},
 	/**
+	 * Handle paste on this.$input
+	 * @param {jQuery.Event} evt  The paste event
+	 */
+	_onPaste: function(evt) {},
+	/**
 	 * Handle UP key on this.$input
 	 * @param {jQuery.Event} evt  The keydown event
 	 */

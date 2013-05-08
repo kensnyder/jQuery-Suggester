@@ -41,7 +41,7 @@
 	var $document = $(document);
 	// Our true constructor function. See jQuery.Suggester.prototype.initialize for documentation
 	$.Suggester = function() {
-		if (arguments[0] == $.Suggester.doSubclass) {
+		if (arguments[0] === $.Suggester.doSubclass) {
 			return;
 		}
 		this.initialize.apply(this, Array.prototype.slice.call(arguments));
@@ -96,6 +96,8 @@
 		addOnSemicolon: false,
 		// If true, add tag on submit if user has entered text but not typed comma or tab
 		addOnSubmit: true,
+		// If true, add tag when widget is blurred
+		addOnBlur: true,
 		// if false, prevent the form from submitting when the user presses enter on the empty input
 		submitOnEnter: false,
 		// Manually set the input size property to a certain width. If auto, set size to text width
@@ -253,9 +255,12 @@
 			options = options || {};
 			// "un"-render; this.$originalInput should be already populated
 			this.$originalInput.insertBefore(this.$widget).show();
+			this.$originalInput.removeData('SuggesterInstance')
 			if (options.keepHiddenInputs) {
 				this.$widget.find('input[type=hidden]').insertBefore(this.$widget);
 			}
+			this.tags = [];
+			this.data = [];
 			this.$widget.empty().remove();
 			// unregister our instance
 			var sugg = this;
@@ -272,7 +277,7 @@
 		 * @param {String} value  the tag to add
 		 * @param {String} label  the text to display in the new tag
 		 * @param {jQuery} $item  Set when the record is added by choosing from the suggestion box
-		 * @return {jQuery} The jQuery object containing the newly created label
+		 * @return {jQuery} The jQuery object containing the newly created label or undefined of one was not created
 		 * 
 		 * @event BeforeAdd - Allows you to prevent it being added or alter the record before adding
 		 *     event.value     The tag to be added
@@ -324,22 +329,24 @@
 			}
 			$tag = this.$tagTemplate.clone().data('tag-value', evt.value).data('tag-label', evt.label);
 			// keep a full record of our chosen tag
-			this.tags.push({
+			this.tags.push(new $.Suggester.Tag({
+				suggester: this,
+				index: this.tags.length, 
 				$tag: $tag, 
 				$hidden: $hidden,
 				value: evt.value,
 				label: evt.label
-			});
+			}));
 			// set the label's display text
 			if (this.options.multiselect) {
-				$tag.find('.sugg-label').html(evt.label);
+				$tag.find('.sugg-label').text(evt.label);
 				this.$inputWrapper.before($tag);
 			}
 			else {
 				this.$input.val(evt.value);
 			}
 			// set the value of the original input
-			this.save();
+			this.save();			
 			// trigger our after add event
 			this.publish('AfterAdd', {
 				item: evt.item,
@@ -350,6 +357,17 @@
 				record: evt.record
 			});
 			return $tag;
+		},
+		/**
+		 * Add a tag with the contents of the input; e.g. when the user has typed something but clicks on another part of the form
+		 * Note: this happens on blur when this.options.addOnBlur is true
+		 */
+		addCurrentBuffer: function() {
+			var inputVal = $.trim(this.$input.val());
+			if (inputVal !== this.options.placeholder && inputVal !== '') {
+				this.add(inputVal);
+				this.$input.val('');
+			}			
 		},
 		/**
 		 * Move the selection up or down in the suggestion box
@@ -903,6 +921,35 @@
 			});
 			return results;
 		},
+		clear: function() {
+			$.each(this.tags, function() {
+				this.getHidden().remove();
+				this.getElement().remove();	
+			});	
+			this.tags = [];
+			return this;
+		},
+		getTags: function() {
+			return Array.prototype.slice.call(this.tags);
+		},
+		eachTag: function(iterator) {
+			$.each(this.getTags(), iterator);
+			return this;
+		},
+		serialize: function() {
+			var query = [];
+			$.each(this.tags, function() {
+				var $hidden = this.getHidden();
+				query.push(encodeURIComponent($hidden.name) + '=' + encodeURIComponent($hidden.value));
+			});
+			return query.join('&');
+		},
+		getValues: function() {
+			var values = [];
+			$.each(this.tags, function() {
+				values.push(this.getValue);
+			});
+		},
 		/**
 		 * Set the widget's CSS theme - Adds a class "sugg-theme-%name%" to the widget
 		 */
@@ -990,10 +1037,12 @@
 			this.$widget.insertBefore(this.$originalInput.hide());
 			// populate tags based on starting value of original input
 			this._handleStartValue();
-			if (this.options.minChars == 0) {				
+			if (this.options.minChars == 0) {
+				// when minChars is 0, it acts like a regular drop down box
 				this.options.inputSize = '';
 				// set input width to remaining room
 				// TODO: handle border-box and padding-box box sizing
+				// TODO: consider position absolute and width 100% height 100%
 				this.$input.width(
 					this.$box.width() 
 					- parseFloat(this.$inputWrapper.css('paddingLeft'))
@@ -1010,9 +1059,7 @@
 					- parseFloat(this.$input.css('borderRightWidth'))
 				);
 			}
-			else if (this.options.inputSize == 'auto' && this.options.multiselect) {
-				this.$input[0].size = this.options.placeholder.length || 2;			
-			}
+			this._updateInputSize();
 			if (this.options.theme) {
 				this.setTheme(this.options.theme);
 			}
@@ -1060,6 +1107,8 @@
 			this.$box.click($.proxy(this, '_onBoxClick'));
 			// handle various actions associated with keypresses
 			this.$input.keydown($.proxy(this, '_onKeydown'));
+			// handle paste into tag field
+			this.$input.bind('cut paste propertychange', $.proxy(this, '_onValueChange'));
 			// auto add tags on submit
 			this.$form.submit($.proxy(this, '_onSubmit'));
 		},
@@ -1077,6 +1126,7 @@
 			}			
 			else if (currVal === this.options.placeholder) {
 				this.$input.val('');
+				this._updateInputSize();
 			}
 			else if (currVal === '' & !!this.options.prompt) {
 				this.showPrompt();
@@ -1087,8 +1137,13 @@
 		 * @param {jQuery.Event} evt  blur event
 		 */
 		_onInputBlur: function(evt) {
-			if (this.$input.val === this.options.placeholder) {
+			var inputVal = $.trim(this.$input.val());
+			if (inputVal === this.options.placeholder) {
 				this.$widget.addClass('sugg-placeholder-on');
+			}
+			else if (inputVal !== '' && this.options.addOnBlur) {
+				this.add(inputVal);
+				this.$input.val('');
 			}
 			this.$widget.removeClass('sugg-active');			
 		},
@@ -1156,6 +1211,7 @@
 			this.closeSuggestBox();
 			if (this.options.multiselect) {
 				this.$input.val('');
+				this._updateInputSize();
 				this.focus();
 			}
 		},
@@ -1212,12 +1268,18 @@
 					this._key_other(evt);
 				}
 			}
-			if (this.options.inputSize == 'auto') {
-				this.$input[0].size = this.$input.val().length + 2;
-			}
+			this._updateInputSize();
 			this.publish('AfterHandleKey', {
 				keydown: evt
 			});
+		},
+		/**
+		 * Handle paste on this.$input
+		 * @param {jQuery.Event} evt  The paste event
+		 */
+		_onValueChange: function(evt) {
+			// when paste fires, input hasn't yet been populated so run on timeout
+			setTimeout($.proxy(this._updateInputSize, this), 0);		
 		},
 		/**
 		 * Handle UP key on this.$input
@@ -1490,6 +1552,14 @@
 			return evt.html;
 		},
 		/**
+		 * Update the size when this.options.inputSize is "auto"
+		 */
+		_updateInputSize: function() {
+			if (this.options.inputSize == 'auto') {					
+				this.$input.prop('size', this.$input.val().length + 2);	
+			}
+		},
+		/**
 		 * Set the value of the original input to a comma-delimited set of labels
 		 * @return {jQuery.Suggester}
 		 * @event  BeforeSave  (if canceled, original imput will not be populated with new value)
@@ -1541,11 +1611,20 @@
 		 * @return {Object}  The record associated with that tag
 		 */		
 		_spliceTagByIdx: function(idx) {
-			var info = this.tags[idx];
-			info.$hidden.remove();
-			info.$tag.remove();
-			this.tags.splice(idx, 1);
-			return info;
+			var tag = this.tags[idx];
+			var newTags = [];
+			var index = 0;
+			$.each(this.tags, function(i) {
+				if (i == idx) {
+					this.$hidden.remove();
+					this.$tag.remove();					
+					return;
+				}
+				this.index = index++;
+				newTags.push(this);
+			});
+			this.tags = newTags;
+			return tag;
 		},
 		/**
 		 * Find a tag given value
@@ -1582,7 +1661,7 @@
 				if (name.match(/^on[A-Z0-9]/) && typeof this.options[name] == 'function') {
 					this.bind(name.slice(2), this.options[name]);
 				}
-			}			
+			}
 		},
 		/**
 		 * Given an input element, get the cursor position. Used to determine if backspace key should delete the previous tag
@@ -1682,6 +1761,9 @@
 				var args = Array.prototype.slice.call(arguments, 1);
 				return this.data('SuggesterInstance')[options].apply(this.data('SuggesterInstance'), args);
 			}
+			if (this.data('SuggesterInstance')) {
+				return this;
+			}
 			// otherwise create new $.Suggester instance but return the jQuery instance
 			return this.each(function() {			
 				var $elem = $(this);
@@ -1691,4 +1773,48 @@
 		};
 	}
 	makePlugin('suggester', $.Suggester);
+	$.Suggester.Tag = function() {
+		this.initialize.apply(this, Array.prototype.slice.call(arguments));
+	};	
+	$.Suggester.Tag.prototype = {
+		initialize: function(properties) {
+			$.extend(this, properties);
+		},
+		getWidget: function() {
+			return this.suggester;
+		},
+		remove: function() {
+			this.suggester.remove(this.value);
+			return this;
+		},
+		getIndex: function() {
+			return this.index;
+		},
+		getValue: function() {
+			return this.value;
+		},
+		setValue: function(value) {
+			this.value = value;
+			this.$hidden.val(value);
+			this.suggester.save();
+			return this;
+		},
+		getLabel: function() {
+			return this.label;
+		},
+		setLabel: function(label) {
+			this.label = label;
+			this.$tag.text(label);
+			return this;
+		},
+		getHidden: function() {
+			return this.$hidden;
+		},
+		getElement: function() {
+			return this.$tag;
+		},
+		getRecord: function() {
+			return this.record;
+		}
+	};
 })); 	
