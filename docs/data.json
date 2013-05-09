@@ -1,0 +1,1339 @@
+{
+    "project": {
+        "name": "Suggester",
+        "description": "Turn a text input into a Facebook-style multiple-tag input. Lots of options and event hooks.",
+        "version": "1.1.0",
+        "url": "https://github.com/kensnyder/jQuery-Suggester"
+    },
+    "files": {
+        "src/Suggester.js": {
+            "name": "src/Suggester.js",
+            "modules": {
+                "jQuery": 1
+            },
+            "classes": {
+                "Suggester": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {
+        "jQuery": {
+            "name": "jQuery",
+            "submodules": {},
+            "classes": {
+                "Suggester": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "src/Suggester.js",
+            "line": 217
+        }
+    },
+    "classes": {
+        "Suggester": {
+            "name": "Suggester",
+            "shortname": "Suggester",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "jQuery",
+            "namespace": "",
+            "file": "src/Suggester.js",
+            "line": 217,
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "$textInput",
+                    "description": "The input element to which to convert into a widget",
+                    "type": "String|jQuery|HTMLElement"
+                },
+                {
+                    "name": "options",
+                    "description": "",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "data",
+                            "description": "Initial data to use for suggestions",
+                            "type": "Array|Boolean",
+                            "optional": true,
+                            "optdefault": "false"
+                        },
+                        {
+                            "name": "valueProperty",
+                            "description": "The key within data objects to use for the tag value",
+                            "type": "String",
+                            "optional": true,
+                            "optdefault": "value"
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    "classitems": [
+        {
+            "file": "src/Suggester.js",
+            "line": 53,
+            "description": "Default options. Change these to globally change the default options\nSee below for comments on each option",
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 191,
+            "itemtype": "property",
+            "name": "$originalInput   The input used to make the widget",
+            "type": "jQuery",
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 264,
+            "description": "Completely remove Suggester widget and replace with original input box (with values populated)",
+            "itemtype": "method",
+            "name": "destroy",
+            "params": [
+                {
+                    "name": "options!~YUIDOC_LINE~!",
+                    "description": "options.keepHiddenInputs {Boolean}  If true, append all hidden inputs after the original input",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "The original input",
+                "type": "JQuery"
+            },
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 292,
+            "description": "Add a tag by a record",
+            "itemtype": "event",
+            "name": "AfterAdd\n    event.item    The suggestion that was chosen (if any)\n    event.tag     The jQuery element of the tag that was added\n    event.hidden  The hidden input that was generated\n    event.value   The value of the tag\n    event.label   The the label of the tag\n    example       instance.bind('AfterAdd', function(event) {\n                       // fade in tag\n                       event.tag.fadeIn(500);\n                  });",
+            "params": [
+                {
+                    "name": "value",
+                    "description": "the tag to add",
+                    "type": "String"
+                },
+                {
+                    "name": "label",
+                    "description": "the text to display in the new tag",
+                    "type": "String"
+                },
+                {
+                    "name": "$item",
+                    "description": "Set when the record is added by choosing from the suggestion box",
+                    "type": "JQuery"
+                }
+            ],
+            "return": {
+                "description": "The jQuery object containing the newly created label or undefined of one was not created",
+                "type": "JQuery"
+            },
+            "type": "!~YUIDOC_LINE~!                       if (isSwearWord(evt.value)) {!~YUIDOC_LINE~!                           event.preventDefault();!~YUIDOC_LINE~!                           alert('Tags cannot be swear words');!~YUIDOC_LINE~!",
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 379,
+            "description": "Add a tag with the contents of the input; e.g. when the user has typed something but clicks on another part of the form\nNote: this happens on blur when this.options.addOnBlur is true",
+            "itemtype": "method",
+            "name": "addCurrentBuffer",
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 391,
+            "description": "Move the selection up or down in the suggestion box",
+            "itemtype": "event",
+            "name": "AfterMove\n    event.direction  \"up\" or \"down\"\n    event.last       jQuery object with the previously selected item\n    event.current    jQuery object with the newly selected item\n    example          instance.bind('AfterMove', function(event) {\n                         alert('You moved to ' + event.current.text());\n                     });",
+            "type": "!~YUIDOC_LINE~!                         alert('You are moving to ' + event.next.text());!~YUIDOC_LINE~!",
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 451,
+            "description": "Select a suggestion",
+            "itemtype": "method",
+            "name": "selectItem",
+            "params": [
+                {
+                    "name": "$tag",
+                    "description": "",
+                    "type": "JQuery"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "jQuery.Suggester"
+            },
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 461,
+            "description": "Deselect a suggestion",
+            "itemtype": "method",
+            "name": "deselectItem",
+            "params": [
+                {
+                    "name": "$tag",
+                    "description": "",
+                    "type": "JQuery"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "jQuery.Suggester"
+            },
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 471,
+            "description": "Deselect all suggestions",
+            "itemtype": "method",
+            "name": "deselectAllItems",
+            "return": {
+                "description": "",
+                "type": "jQuery.Suggester"
+            },
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 481,
+            "description": "Open suggestion list for the given text",
+            "itemtype": "method",
+            "name": "suggest",
+            "params": [
+                {
+                    "name": "text",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "jQuery.Suggester"
+            },
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 496,
+            "description": "Add more data records to the autosuggest list. Does not apply when dataUrl is set",
+            "itemtype": "method",
+            "name": "addData",
+            "params": [
+                {
+                    "name": "data",
+                    "description": "More records in the same object format as initially set",
+                    "type": "Object[]"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "jQuery.Suggester"
+            },
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 516,
+            "description": "Set data records to the autosuggest list. Does not apply when dataUrl is set",
+            "itemtype": "method",
+            "name": "setData",
+            "params": [
+                {
+                    "name": "data",
+                    "description": "",
+                    "type": "Object[]"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "jQuery.Suggester"
+            },
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 527,
+            "description": "Get all the records in the autosuggest list. Does not apply when dataUrl is set",
+            "itemtype": "method",
+            "name": "getData",
+            "return": {
+                "description": "",
+                "type": "Object[]"
+            },
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 535,
+            "description": "Set the direction of the suggestion menu, to fly upwards or downwards",
+            "itemtype": "method",
+            "name": "setFlyDirection",
+            "params": [
+                {
+                    "name": "direction",
+                    "description": "either \"up\" or \"down\"",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "jQuery.Suggester"
+            },
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 554,
+            "description": "Focus on a previously added tag",
+            "itemtype": "method",
+            "name": "focusTag",
+            "params": [
+                {
+                    "name": "$tag",
+                    "description": "The .sugg-tag element to focus",
+                    "type": "JQuery"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "jQuery.Suggester"
+            },
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 567,
+            "description": "Unfocus the previously focussed tag",
+            "itemtype": "method",
+            "name": "unfocusTag",
+            "return": {
+                "description": "",
+                "type": "jQuery.Suggester"
+            },
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 580,
+            "description": "Remove the focused tag",
+            "itemtype": "method",
+            "name": "removeFocusedTag",
+            "params": [
+                {
+                    "name": "evt",
+                    "description": "(optional)  Used to check if $document keypress is backspace or delete",
+                    "type": "jQuery.Event"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "jQuery.Suggester"
+            },
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 597,
+            "description": "Remove a tag given its text or jQuery element or HTML element",
+            "itemtype": "method",
+            "name": "remove",
+            "params": [
+                {
+                    "name": "$tag",
+                    "description": "the tag to remove",
+                    "type": "String|jQuery|HTMLElement"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "jQuery.Suggester"
+            },
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 637,
+            "description": "Find a suggestion record by text",
+            "itemtype": "method",
+            "name": "findRecord",
+            "params": [
+                {
+                    "name": "text",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Object"
+            },
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 672,
+            "description": "Initiate suggestion process if the input text is >= this.options.minChars\nOtherwise show prompt",
+            "itemtype": "method",
+            "name": "suggestIfNeeded",
+            "return": {
+                "description": "",
+                "type": "jQuery.Suggester"
+            },
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 691,
+            "description": "Show the prompt text to give a hint to users\nOnly called when there are no items and this.options.prompt is truthy",
+            "itemtype": "method",
+            "name": "showPrompt",
+            "return": {
+                "description": "",
+                "type": "jQuery.Suggester"
+            },
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 706,
+            "description": "Show text indicating there are no suggestions\nText is defined in this.options.emptyText",
+            "itemtype": "method",
+            "name": "showEmptyText",
+            "return": {
+                "description": "",
+                "type": "jQuery.Suggester"
+            },
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 721,
+            "description": "Fetch suggestions from an ajax URL",
+            "itemtype": "event",
+            "name": "BeforeAjax - allows you to edit settings before ajax is sent!~YUIDOC_LINE~!example  instance.bind('BeforeAjax', function(event) );",
+            "params": [
+                {
+                    "name": "text",
+                    "description": "The text to search for",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "JqXHR"
+            },
+            "type": "!~YUIDOC_LINE~!             event.settings.type = 'post';!~YUIDOC_LINE~!",
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 757,
+            "description": "Cancel the XHR. Used when user starts typing again before XHR completes",
+            "itemtype": "method",
+            "name": "abortFetch",
+            "return": {
+                "description": "",
+                "type": "jQuery.Suggester"
+            },
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 768,
+            "description": "Take result records and build and display suggestion box",
+            "itemtype": "event",
+            "name": "AfterSuggest\n    example     instance.bind('AfterSuggest', function(event) {\n                    alert('Choose a suggested item if you like.');\n                });",
+            "type": "!~YUIDOC_LINE~!                    if (evt.text == 'dont suggest') {!~YUIDOC_LINE~!                         event.preventDefault(); // suggest box will not open!~YUIDOC_LINE~!",
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 808,
+            "description": "Return true if suggestion box is open",
+            "itemtype": "method",
+            "name": "isSuggestBoxOpen",
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 816,
+            "description": "Manually open the suggestion box in whatever state it is",
+            "itemtype": "event",
+            "name": "AfterOpen\n    example  instance.one('AfterOpen', function(event) {\n         this.$suggList.css({\n           borderTopWidth: '10px',\n           borderTopColor: 'red'\n         });\n                 alert('Tip: You may choose an item from the suggestion list.');\n                 this.$suggList.css({\n           borderTopWidth: '0'\n         });\n             });",
+            "return": {
+                "description": "",
+                "type": "jQuery.Suggester"
+            },
+            "chainable": 1,
+            "type": "!~YUIDOC_LINE~!                 event.preventDefault();!~YUIDOC_LINE~!                 alert('No suggestions for you!');!~YUIDOC_LINE~!",
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 877,
+            "description": "Hide the suggestion list",
+            "itemtype": "event",
+            "name": "AfterClose\n    example  instance.bind('AfterClose', function(event) {\n                alert('You chose ' + instance.$currentItem.text());\n             });",
+            "return": {
+                "description": "",
+                "type": "jQuery.Suggester"
+            },
+            "chainable": 1,
+            "type": "!~YUIDOC_LINE~!                 event.preventDefault();!~YUIDOC_LINE~!                 window.location.href = '?page=' + instance.$currentItem.text();!~YUIDOC_LINE~!",
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 904,
+            "description": "Focus cursor on text input box",
+            "itemtype": "method",
+            "name": "focus",
+            "return": {
+                "description": "",
+                "type": "jQuery.Suggester"
+            },
+            "chainable": 1,
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 915,
+            "description": "Get suggestion result records given some text (local data)",
+            "itemtype": "method",
+            "name": "getResults",
+            "params": [
+                {
+                    "name": "text",
+                    "description": "Gather suggestions based on this text",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Array of Objects of matching records",
+                "type": "Array"
+            },
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 962,
+            "description": "Clear all the chosen tags",
+            "itemtype": "method",
+            "name": "clear",
+            "return": {
+                "description": "",
+                "type": "$.Suggester"
+            },
+            "chainable": 1,
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 977,
+            "description": "Get a collection of all the chosen tag objects",
+            "itemtype": "method",
+            "name": "getTags",
+            "return": {
+                "description": "",
+                "type": "Array"
+            },
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 985,
+            "description": "Iterate through each of the chosen tag objects",
+            "itemtype": "method",
+            "name": "eachTag",
+            "params": [
+                {
+                    "name": "iterator",
+                    "description": "The iterator function - function(i, tag) {}",
+                    "type": "Function"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "jQuery.Suggester"
+            },
+            "chainable": 1,
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 996,
+            "description": "Return a URL query string representing the hidden values of the input",
+            "itemtype": "method",
+            "name": "serialize",
+            "return": {
+                "description": "",
+                "type": "String"
+            },
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 1009,
+            "description": "Pluck all the tag values from the chosen tags",
+            "itemtype": "method",
+            "name": "getValues",
+            "return": {
+                "description": "",
+                "type": "Array"
+            },
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 1021,
+            "description": "Set the widget's CSS theme - Adds a class \"sugg-theme-%name%\" to the widget",
+            "itemtype": "method",
+            "name": "setTheme",
+            "params": [
+                {
+                    "name": "themeName",
+                    "description": "The name of the theme to use",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "jQuery.Suggester"
+            },
+            "chainable": 1,
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 1036,
+            "description": "Publish the given event name and send the given data",
+            "itemtype": "method",
+            "name": "publish",
+            "params": [
+                {
+                    "name": "type",
+                    "description": "The name of the event to publish",
+                    "type": "String"
+                },
+                {
+                    "name": "data",
+                    "description": "Additional data to attach to the event object",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "The event object which behaves much like a DOM event object",
+                "type": "jQuery.Event"
+            },
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 1052,
+            "description": "Get this instance. Useful for jQuery-style usage:  var instance = $('input').suggester(options).suggester('getInstance')",
+            "itemtype": "method",
+            "name": "getInstance",
+            "return": {
+                "description": "",
+                "type": "jQuery.Suggester"
+            },
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 1060,
+            "description": "Set options and interpret options",
+            "itemtype": "method",
+            "name": "_processOptions",
+            "params": [
+                {
+                    "name": "options",
+                    "description": "Settings passed to constructor",
+                    "type": "Object"
+                }
+            ],
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 1072,
+            "description": "Render the widget and get handles to key elements",
+            "itemtype": "event",
+            "name": "BeforeRender - called after this.$widget is populated with this.options.template but before any sub elements are found",
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 1142,
+            "description": "Look at the initial element's start value and populate tags as appropriate",
+            "itemtype": "method",
+            "name": "_handleStartValue",
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 1162,
+            "description": "Attach event handlers",
+            "itemtype": "method",
+            "name": "_setupListeners",
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 1192,
+            "description": "Event handler for when this.$input is focused",
+            "itemtype": "method",
+            "name": "_onInputFocus",
+            "params": [
+                {
+                    "name": "evt",
+                    "description": "The focus event",
+                    "type": "jQuery.Event"
+                }
+            ],
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 1213,
+            "description": "Event handler for when this.$input is blurred",
+            "itemtype": "method",
+            "name": "_onInputBlur",
+            "params": [
+                {
+                    "name": "evt",
+                    "description": "blur event",
+                    "type": "jQuery.Event"
+                }
+            ],
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 1233,
+            "description": "Event handler for when .sugg-remove is clicked",
+            "itemtype": "method",
+            "name": "_onTagRemoveClick",
+            "params": [
+                {
+                    "name": "evt",
+                    "description": "The click event",
+                    "type": "jQuery.Event"
+                }
+            ],
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 1245,
+            "description": "Event handler for when .sugg-tag is clicked",
+            "itemtype": "method",
+            "name": "_onTagClick",
+            "params": [
+                {
+                    "name": "evt",
+                    "description": "The click event",
+                    "type": "jQuery.Event"
+                }
+            ],
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 1259,
+            "description": "Event handler for when autosuggest list is moused over",
+            "itemtype": "method",
+            "name": "_onListMouseover",
+            "params": [
+                {
+                    "name": "evt",
+                    "description": "The mouseover event",
+                    "type": "jQuery.Event"
+                }
+            ],
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 1279,
+            "description": "Event handler for when autosuggest list is clicked",
+            "itemtype": "method",
+            "name": "_onListClick",
+            "params": [
+                {
+                    "name": "evt",
+                    "description": "The click event",
+                    "type": "jQuery.Event"
+                }
+            ],
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 1306,
+            "description": "Event handler for when this.$box is clicked",
+            "itemtype": "method",
+            "name": "_onBoxClick",
+            "params": [
+                {
+                    "name": "evt",
+                    "description": "The click event",
+                    "type": "jQuery.Event"
+                }
+            ],
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 1317,
+            "description": "Handle keypresses while in tag input field",
+            "itemtype": "method",
+            "name": "_onKeydown",
+            "params": [
+                {
+                    "name": "evt",
+                    "description": "The keydown event",
+                    "type": "jQuery.Event"
+                }
+            ],
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 1366,
+            "description": "Handle paste on this.$input",
+            "itemtype": "method",
+            "name": "_onValueChange",
+            "params": [
+                {
+                    "name": "evt",
+                    "description": "The paste event",
+                    "type": "jQuery.Event"
+                }
+            ],
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 1375,
+            "description": "Handle UP key on this.$input",
+            "itemtype": "method",
+            "name": "_key_UP",
+            "params": [
+                {
+                    "name": "evt",
+                    "description": "The keydown event",
+                    "type": "jQuery.Event"
+                }
+            ],
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 1387,
+            "description": "Handle DOWN key on this.$input",
+            "itemtype": "method",
+            "name": "_key_DOWN",
+            "params": [
+                {
+                    "name": "evt",
+                    "description": "The keydown event",
+                    "type": "jQuery.Event"
+                }
+            ],
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 1401,
+            "description": "Handle BACKSPACE key on this.$input",
+            "params": [
+                {
+                    "name": "evt",
+                    "description": "The keydown event",
+                    "type": "jQuery.Event"
+                }
+            ],
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 1427,
+            "description": "Handle TAB and COMMA and SEMICOLON key on this.$input",
+            "params": [
+                {
+                    "name": "evt",
+                    "description": "The keydown event",
+                    "type": "jQuery.Event"
+                }
+            ],
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 1451,
+            "description": "Handle ESC key on this.$input",
+            "params": [
+                {
+                    "name": "evt",
+                    "description": "The keydown event",
+                    "type": "jQuery.Event"
+                }
+            ],
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 1458,
+            "description": "Handle ENTER key on this.$input",
+            "params": [
+                {
+                    "name": "evt",
+                    "description": "The keydown event",
+                    "type": "jQuery.Event"
+                }
+            ],
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 1478,
+            "description": "Handle other keys (e.g. printable characters) on this.$input",
+            "params": [
+                {
+                    "name": "evt",
+                    "description": "The keydown event",
+                    "type": "jQuery.Event"
+                }
+            ],
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 1494,
+            "description": "Handler for form submission",
+            "params": [
+                {
+                    "name": "jqEvent",
+                    "description": "The submit event",
+                    "type": "JQuery"
+                }
+            ],
+            "itemtype": "event",
+            "name": "BeforeFetch (if event.preventDefault() is called, XHR is not made and suggest box does not open)!~YUIDOC_LINE~!    event.event  The jQuery-wrapped browser event!~YUIDOC_LINE~!    event.form   The input's form (same as this.$form)!~YUIDOC_LINE~!    example      instance.bind('BeforeSubmit', function(event) );",
+            "type": "!~YUIDOC_LINE~!                     // pretty much the same as instance.$form.submit(...)!~YUIDOC_LINE~!                     // used internally to add tag on submit if options.addOnSubmit is true!~YUIDOC_LINE~!",
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 1527,
+            "description": "Handler passed to $.ajax({beforeSend:...}) to alter XHR if needed",
+            "itemtype": "event",
+            "name": "BeforeFetch (if event.preventDefault() is called, XHR is not made and suggest box does not open)!~YUIDOC_LINE~!    event.jqXHR  the jQuery XHR object (see http://api.jquery.com/jQuery.ajax/#jqXHR)!~YUIDOC_LINE~!    event.term   the term that is being searched for!~YUIDOC_LINE~!    example      instance.bind('BeforeFetch', function(event) ).always(function() {!~YUIDOC_LINE~!             alert('ajax call finished regardless of success or failure');!~YUIDOC_LINE~!                     });!~YUIDOC_LINE~!                 });",
+            "type": "!~YUIDOC_LINE~!                     event.jqXHR.setRequestHeader('something','something');!~YUIDOC_LINE~!                     event.jqXHR.fail(function() {!~YUIDOC_LINE~!                         alert('ajax call failed');!~YUIDOC_LINE~!",
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 1553,
+            "description": "Handler passed to $.ajax().done(function(){...}) that handles suggestion data that is returned",
+            "itemtype": "event",
+            "name": "BeforeFetch (if event.preventDefault() is called, the suggest box does not open)!~YUIDOC_LINE~!    event.jqXHR    the jQuery XHR object (see http://api.jquery.com/jQuery.ajax/#jqXHR)!~YUIDOC_LINE~!    event.records  the object generated from the ajax returned from the XHR!~YUIDOC_LINE~!    event.term     the term that was search for!~YUIDOC_LINE~!    example        instance.bind('AfterFetch', function(event) );!~YUIDOC_LINE~!                   });",
+            "type": "!~YUIDOC_LINE~!                        event.data.push({id:'', label:'Adding a test suggestion'",
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 1577,
+            "description": "Callback used to close the suggestion box when the user clicks off of it",
+            "params": [
+                {
+                    "name": "evt",
+                    "description": "The click event",
+                    "type": "jQuery.Event"
+                }
+            ],
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 1588,
+            "description": "Format a suggestion before display",
+            "params": [
+                {
+                    "name": "record",
+                    "description": "The record that was suggested",
+                    "type": "Object"
+                },
+                {
+                    "name": "substr",
+                    "description": "The string that generated the list of suggestions",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "HTML to use as the item (e.g. '<li class=\"sugg-item\">Suggestion</li>')",
+                "type": "String"
+            },
+            "itemtype": "event",
+            "name": "AfterFormat - able to alter the html after it has be constructed\n    event.record  The record object that is being suggested\n    event.substr  The part of the string that matches the suggestion search fields\n    event.html    Another chance to alter the html of the item after it has been generated\n    example       instance.bind('AfterFormat', function(event) {\n                      event.preventDefault();\n                      event.html; // <li><strong class=\"sugg-match\">Canis</strong> Major</li>\n                      event.html = event.html.replace(/<\\/?strong\\b/, 'em'),\n                  });",
+            "type": "!~YUIDOC_LINE~!                      event.preventDefault();!~YUIDOC_LINE~!                      event.html = '<li>My suggestion html</li>';!~YUIDOC_LINE~!",
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 1647,
+            "description": "Update the size when this.options.inputSize is \"auto\"",
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 1655,
+            "description": "Set the value of the original input to a comma-delimited set of labels",
+            "return": {
+                "description": "",
+                "type": "jQuery.Suggester"
+            },
+            "itemtype": "event",
+            "name": "AfterSave\n    example  instance.bind('AfterSave', function(event) {\n                 saveToServer(event.newValue);\n             });",
+            "type": "!~YUIDOC_LINE~!                 event.newValue += '!';!~YUIDOC_LINE~!",
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 1687,
+            "description": "Given tag text, remove a tag from the internal collection and from the DOM",
+            "params": [
+                {
+                    "name": "value",
+                    "description": "The text of the tag",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "The record associated with that tag",
+                "type": "Object"
+            },
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 1700,
+            "description": "Given an array index, remove a tag from the internal collection and from the DOM",
+            "params": [
+                {
+                    "name": "idx",
+                    "description": "The index position in the internal collection",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "The record associated with that tag",
+                "type": "Object"
+            },
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 1722,
+            "description": "Find a tag given value",
+            "params": [
+                {
+                    "name": "value",
+                    "description": "The text of the tag",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "The index position of the tag in the internal collection or -1 if not found",
+                "type": "Number"
+            },
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 1738,
+            "description": "Setup publish/subscribe system that uses jQuery's event system\nExample event subscription:\ninstance.bind('AfterFilter', myhandler)",
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 1759,
+            "description": "Given an input element, get the cursor position. Used to determine if backspace key should delete the previous tag",
+            "return": {
+                "description": "true if the cursor is at the start and no text is selected",
+                "type": "Boolean"
+            },
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 1797,
+            "description": "Pass to contructor to subclass (e.g. `MySuggester.prototype = new $.Suggester($.Suggester.doSubclass)`)",
+            "var": "{Object}",
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 1802,
+            "description": "a collection of all the instances",
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 1806,
+            "description": "Add data to all instances",
+            "params": [
+                {
+                    "name": "data",
+                    "description": "Add more data to all the registered instances",
+                    "type": "Object[]"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "jQuery.Suggester"
+            },
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 1817,
+            "description": "Lightweight event handler to allow keydown to have less overhead",
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 1834,
+            "description": "Create a subclass of jQuery.Suggester",
+            "params": [
+                {
+                    "name": "jQueryMethodName",
+                    "description": "The method name to add to jQuery.fn",
+                    "type": "String"
+                },
+                {
+                    "name": "properties",
+                    "description": "Properties and methods to add to subclass",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "The new class object",
+                "type": "Function"
+            },
+            "example": [
+                "\n    var MySuggester = $.Suggester.subclass('mysuggester', {\n        initialize: function($textInput, options) {\n            options = options || {};\n            this.options.myOption = options.myOptions || 'default';\n            this.callParent('initialize', $textInput, options);\n        }\n    });"
+            ],
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 1866,
+            "description": "Suggester jQuery Plugin",
+            "params": [
+                {
+                    "name": "options",
+                    "description": "The options to use on instantiation (see jQuery.Suggester.defaultOptions for info on options)",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "(Any)"
+            },
+            "class": "Suggester",
+            "module": "jQuery"
+        }
+    ],
+    "warnings": [
+        {
+            "message": "replacing incorrect tag: params with param",
+            "line": " src/Suggester.js:496"
+        },
+        {
+            "message": "replacing incorrect tag: params with param",
+            "line": " src/Suggester.js:516"
+        },
+        {
+            "message": "replacing incorrect tag: params with param",
+            "line": " src/Suggester.js:554"
+        },
+        {
+            "message": "replacing incorrect tag: params with param",
+            "line": " src/Suggester.js:1060"
+        },
+        {
+            "message": "unknown tag: var",
+            "line": " src/Suggester.js:1797"
+        },
+        {
+            "message": "Missing item type\nDefault options. Change these to globally change the default options\nSee below for comments on each option",
+            "line": " src/Suggester.js:53"
+        },
+        {
+            "message": "Missing item type\nHandle BACKSPACE key on this.$input",
+            "line": " src/Suggester.js:1401"
+        },
+        {
+            "message": "Missing item type\nHandle TAB and COMMA and SEMICOLON key on this.$input",
+            "line": " src/Suggester.js:1427"
+        },
+        {
+            "message": "Missing item type\nHandle ESC key on this.$input",
+            "line": " src/Suggester.js:1451"
+        },
+        {
+            "message": "Missing item type\nHandle ENTER key on this.$input",
+            "line": " src/Suggester.js:1458"
+        },
+        {
+            "message": "Missing item type\nHandle other keys (e.g. printable characters) on this.$input",
+            "line": " src/Suggester.js:1478"
+        },
+        {
+            "message": "Missing item type\nCallback used to close the suggestion box when the user clicks off of it",
+            "line": " src/Suggester.js:1577"
+        },
+        {
+            "message": "Missing item type\nUpdate the size when this.options.inputSize is \"auto\"",
+            "line": " src/Suggester.js:1647"
+        },
+        {
+            "message": "Missing item type\nGiven tag text, remove a tag from the internal collection and from the DOM",
+            "line": " src/Suggester.js:1687"
+        },
+        {
+            "message": "Missing item type\nGiven an array index, remove a tag from the internal collection and from the DOM",
+            "line": " src/Suggester.js:1700"
+        },
+        {
+            "message": "Missing item type\nFind a tag given value",
+            "line": " src/Suggester.js:1722"
+        },
+        {
+            "message": "Missing item type\nSetup publish/subscribe system that uses jQuery's event system\nExample event subscription:\ninstance.bind('AfterFilter', myhandler)",
+            "line": " src/Suggester.js:1738"
+        },
+        {
+            "message": "Missing item type\nGiven an input element, get the cursor position. Used to determine if backspace key should delete the previous tag",
+            "line": " src/Suggester.js:1759"
+        },
+        {
+            "message": "Missing item type\nPass to contructor to subclass (e.g. `MySuggester.prototype = new $.Suggester($.Suggester.doSubclass)`)",
+            "line": " src/Suggester.js:1797"
+        },
+        {
+            "message": "Missing item type\na collection of all the instances",
+            "line": " src/Suggester.js:1802"
+        },
+        {
+            "message": "Missing item type\nAdd data to all instances",
+            "line": " src/Suggester.js:1806"
+        },
+        {
+            "message": "Missing item type\nLightweight event handler to allow keydown to have less overhead",
+            "line": " src/Suggester.js:1817"
+        },
+        {
+            "message": "Missing item type\nCreate a subclass of jQuery.Suggester",
+            "line": " src/Suggester.js:1834"
+        },
+        {
+            "message": "Missing item type\nSuggester jQuery Plugin",
+            "line": " src/Suggester.js:1866"
+        }
+    ]
+}

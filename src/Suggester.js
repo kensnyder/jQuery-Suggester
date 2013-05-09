@@ -38,6 +38,9 @@
 	}
 }(function($) {
 	"use strict";
+	/**
+	 * @module jQuery
+	 */
 	// get our document once
 	var $document = $(document);
 	// Our true constructor function. See jQuery.Suggester.prototype.initialize for documentation
@@ -179,13 +182,17 @@
 	// -- OR -- 
 	// var instance = new $.Suggester('selector', options)
 	$.Suggester.prototype = {
-		/**
-		 * @class jQuery.Suggester widget
+		/*
 		 * @param {String|HTMLElement|jQuery} $textInput  The text input as a jQuery object, DOM element, or selector string
 		 * @param {Object} options  An object with data and options (See $.Suggester.defaultOptions for explaination of options)
 		 * @return {jQuery.Suggester}
 		 * 
-		 * @property {jQuery} $originalInput   The input used to make the widget
+		 */
+		/**
+		 * @property $originalInput   The input used to make the widget
+		 * @type jQuery
+		 */
+		/*
 		 * @property {Object} options          The options passed to the constructor (see jQuery.Suggester.defaultOptions)
 		 * @property {Object[]} data           Static data used instead of an ajax call
 		 * @property {Object[]} tags           A collection of information about each tag that has been added (each item has properties record, $tag, and $hidden)
@@ -206,6 +213,14 @@
 		 * @property {jqXHR} _jqXHR            The jQuery XHR object used initilized for fetching data - http://api.jquery.com/jQuery.ajax/#jqXHR
 		 * 
 		 * @event Initialize - Called after widget is initialized and rendered
+		 */
+		/**
+		 * @class Suggester
+		 * @constructor
+		 * @param {String|jQuery|HTMLElement} $textInput  The input element to convert into a widget
+		 * @param {Object} options
+		 *   @param {Array|Boolean} [options.data=false]  Initial data to use for suggestions
+		 *   @param {String} [options.valueProperty=value]  The key within data objects to use for the tag value
 		 */
 		initialize: function($textInput, options) {
 			// This is the original text input given
@@ -248,6 +263,7 @@
 		},
 		/**
 		 * Completely remove Suggester widget and replace with original input box (with values populated)
+		 * @method destroy
 		 * @param {Object} options
 		 *    options.keepHiddenInputs {Boolean}  If true, append all hidden inputs after the original input
 		 * @return {jQuery}  The original input
@@ -275,6 +291,7 @@
 		},    
 		/**
 		 * Add a tag by a record
+		 * @method add
 		 * @param {String} value  the tag to add
 		 * @param {String} label  the text to display in the new tag
 		 * @param {jQuery} $item  Set when the record is added by choosing from the suggestion box
@@ -362,6 +379,7 @@
 		/**
 		 * Add a tag with the contents of the input; e.g. when the user has typed something but clicks on another part of the form
 		 * Note: this happens on blur when this.options.addOnBlur is true
+		 * @method addCurrentBuffer
 		 */
 		addCurrentBuffer: function() {
 			var inputVal = $.trim(this.$input.val());
@@ -372,6 +390,7 @@
 		},
 		/**
 		 * Move the selection up or down in the suggestion box
+		 * @method moveSelection
 		 * @event BeforeMove (if event.preventDefault() is called, movement is stopped)
 		 *     event.direction  "up" or "down"
 		 *     event.current    jQuery object with the currently selected item or null if there isn't one
@@ -431,6 +450,7 @@
 		},
 		/**
 		 * Select a suggestion
+		 * @method selectItem
 		 * @param {jQuery} $tag
 		 * @return {jQuery.Suggester}
 		 */
@@ -440,6 +460,7 @@
 		},
 		/**
 		 * Deselect a suggestion
+		 * @method deselectItem
 		 * @param {jQuery} $tag
 		 * @return {jQuery.Suggester}
 		 */   
@@ -449,6 +470,7 @@
 		},
 		/**
 		 * Deselect all suggestions
+		 * @method deselectAllItems
 		 * @return {jQuery.Suggester}
 		 */     
 		deselectAllItems: function() {
@@ -458,6 +480,7 @@
 		},
 		/**
 		 * Open suggestion list for the given text
+		 * @method suggest
 		 * @param {String} text
 		 * @return {jQuery.Suggester}
 		 */
@@ -472,7 +495,7 @@
 		},
 		/**
 		 * Add more data records to the autosuggest list. Does not apply when dataUrl is set
-		 * 
+		 * @method addData
 		 * @params {Object[]} data  More records in the same object format as initially set
 		 * @return {jQuery.Suggester}
 		 */
@@ -492,7 +515,7 @@
 		},
 		/**
 		 * Set data records to the autosuggest list. Does not apply when dataUrl is set
-		 * 
+		 * @method setData
 		 * @params {Object[]} data
 		 * @return {jQuery.Suggester}
 		 */   
@@ -503,7 +526,7 @@
 		},
 		/**
 		 * Get all the records in the autosuggest list. Does not apply when dataUrl is set
-		 * 
+		 * @method getData
 		 * @return {Object[]}
 		 */   
 		getData: function() {
@@ -511,7 +534,7 @@
 		},
 		/**
 		 * Set the direction of the suggestion menu, to fly upwards or downwards
-		 * 
+		 * @method setFlyDirection
 		 * @param {String} direction  either "up" or "down"
 		 * @return {jQuery.Suggester}
 		 */
@@ -530,6 +553,7 @@
 		},
 		/**
 		 * Focus on a previously added tag
+		 * @method focusTag
 		 * @params {jQuery} $tag  The .sugg-tag element to focus
 		 * @return {jQuery.Suggester}
 		 */
@@ -542,6 +566,7 @@
 		},
 		/**
 		 * Unfocus the previously focussed tag
+		 * @method unfocusTag
 		 * @return {jQuery.Suggester}
 		 */
 		unfocusTag: function() {
@@ -554,6 +579,7 @@
 		},
 		/**
 		 * Remove the focused tag
+		 * @method removeFocusedTag
 		 * @param {jQuery.Event} evt (optional)  Used to check if $document keypress is backspace or delete
 		 * @return {jQuery.Suggester}
 		 */
@@ -570,6 +596,7 @@
 		},
 		/**
 		 * Remove a tag given its text or jQuery element or HTML element
+		 * @method remove
 		 * @param {String|jQuery|HTMLElement} $tag  the tag to remove
 		 * @return {jQuery.Suggester}
 		 */
@@ -609,7 +636,7 @@
 		},
 		/**
 		 * Find a suggestion record by text
-		 * 
+		 * @method findRecord
 		 * @param {String} text
 		 * @return {Object}
 		 */   
@@ -645,7 +672,7 @@
 		/**
 		 * Initiate suggestion process if the input text is >= this.options.minChars
 		 * Otherwise show prompt
-		 * 
+		 * @method suggestIfNeeded
 		 * @return {jQuery.Suggester}
 		 */
 		suggestIfNeeded: function() {
@@ -664,7 +691,7 @@
 		/**
 		 * Show the prompt text to give a hint to users
 		 * Only called when there are no items and this.options.prompt is truthy
-		 * 
+		 * @method showPrompt
 		 * @return {jQuery.Suggester}
 		 */
 		showPrompt: function() {
@@ -679,7 +706,7 @@
 		/**
 		 * Show text indicating there are no suggestions
 		 * Text is defined in this.options.emptyText
-		 * 
+		 * @method showEmptyText
 		 * @return {jQuery.Suggester}
 		 */   
 		showEmptyText: function() {
@@ -693,7 +720,7 @@
 		},
 		/**
 		 * Fetch suggestions from an ajax URL
-		 * 
+		 * @method fetchResults
 		 * @param {String} text  The text to search for
 		 * @return {jqXHR}
 		 * @event   BeforeAjax - allows you to edit settings before ajax is sent
@@ -729,7 +756,7 @@
 		},
 		/**
 		 * Cancel the XHR. Used when user starts typing again before XHR completes
-		 * 
+		 * @method abortFetch
 		 * @return {jQuery.Suggester}
 		 */
 		abortFetch: function() {
@@ -740,7 +767,7 @@
 		},
 		/**
 		 * Take result records and build and display suggestion box
-		 * 
+		 * @method handleSuggestions
 		 * @event BeforeSuggest (if event.preventDefault() is called, the suggestion list is built but not displayed)
 		 *     event.text  The text that was searched for
 		 *     example     instance.bind('BeforeSuggest', function(event) {
@@ -780,6 +807,7 @@
 		},
 		/**
 		 * Return true if suggestion box is open
+		 * @method isSuggestBoxOpen
 		 * @return {Boolean}
 		 */
 		isSuggestBoxOpen: function() {
@@ -787,7 +815,9 @@
 		},
 		/**
 		 * Manually open the suggestion box in whatever state it is
+		 * @method openSuggestBox
 		 * @return {jQuery.Suggester}
+		 * @chainable
 		 * @event BeforeOpen  (if event.preventDefault() is called, suggestion box will not open)
 		 *     example  instance.bind('BeforeOpen', function(event) {
 		 *                  event.preventDefault();
@@ -846,7 +876,9 @@
 		},
 		/**
 		 * Hide the suggestion list
+		 * @method closeSuggestBox
 		 * @return {jQuery.Suggester}
+		 * @chainable
 		 * @event BeforeClose  (if event.preventDefault() is called, suggestion box will not close)
 		 *     example  instance.bind('BeforeClose', function(event) {
 		 *                  event.preventDefault();
@@ -871,7 +903,9 @@
 		},
 		/**
 		 * Focus cursor on text input box
-		 * @return {$.Suggester}
+		 * @method focus
+		 * @return {jQuery.Suggester}
+		 * @chainable
 		 */
 		focus: function() {
 			// use the dom method to focus
@@ -880,6 +914,7 @@
 		},
 		/**
 		 * Get suggestion result records given some text (local data)
+		 * @method getResults
 		 * @param {String} text  Gather suggestions based on this text
 		 * @return {Array}  Array of Objects of matching records 
 		 */
@@ -924,6 +959,12 @@
 			});
 			return results;
 		},
+		/**
+		 * Clear all the chosen tags
+		 * @method clear
+		 * @return {$.Suggester}
+		 * @chainable
+		 */
 		clear: function() {
 			$.each(this.tags, function() {
 				this.getHidden().remove();
@@ -933,13 +974,30 @@
 			this.save();
 			return this;
 		},
+		/**
+		 * Get a collection of all the chosen tag objects
+		 * @method getTags
+		 * @return {Array}
+		 */
 		getTags: function() {
 			return Array.prototype.slice.call(this.tags);
 		},
+		/**
+		 * Iterate through each of the chosen tag objects
+		 * @method eachTag
+		 * @param {Function} iterator  The iterator function - function(i, tag) {}
+		 * @return {jQuery.Suggester}
+		 * @chainable
+		 */
 		eachTag: function(iterator) {
 			$.each(this.getTags(), iterator);
 			return this;
 		},
+		/**
+		 * Return a URL query string representing the hidden values of the input
+		 * @method serialize
+		 * @return {String}
+		 */
 		serialize: function() {
 			var query = [];
 			$.each(this.tags, function() {
@@ -948,14 +1006,24 @@
 			});
 			return query.join('&');
 		},
+		/**
+		 * Pluck all the tag values from the chosen tags
+		 * @method getValues
+		 * @return {Array}
+		 */
 		getValues: function() {
 			var values = [];
 			$.each(this.tags, function() {
 				values.push(this.getValue);
 			});
+			return values;
 		},
 		/**
 		 * Set the widget's CSS theme - Adds a class "sugg-theme-%name%" to the widget
+		 * @method setTheme
+		 * @param {String} themeName  The name of the theme to use
+		 * @return {jQuery.Suggester}
+		 * @chainable
 		 */
 		setTheme: function(themeName) {
 			if (this._theme) {
@@ -967,7 +1035,7 @@
 		},
 		/**
 		 * Publish the given event name and send the given data
-		 * 
+		 * @method publish
 		 * @param {String} type  The name of the event to publish
 		 * @param {Object} data  Additional data to attach to the event object
 		 * @return {jQuery.Event}  The event object which behaves much like a DOM event object
@@ -982,14 +1050,16 @@
 			return evt;
 		},
 		/**
-		 * Get this instance. Useful for jQuery-ish usage:  var instance = $('input').suggester(options).suggester('getInstance')
-		 * @return {$.Suggester}
+		 * Get this instance. Useful for jQuery-style usage:  var instance = $('input').suggester(options).suggester('getInstance')
+		 * @method getInstance
+		 * @return {jQuery.Suggester}
 		 */
 		getInstance: function() {
 			return this;
 		},    
 		/**
 		 * Set options and interpret options
+		 * @method _processOptions
 		 * @params {Object} options  Settings passed to constructor
 		 */
 		_processOptions: function(options) {
@@ -1001,6 +1071,7 @@
 		},    
 		/**
 		 * Render the widget and get handles to key elements
+		 * @method _render
 		 * @event BeforeRender - called after this.$widget is populated with this.options.template but before any sub elements are found
 		 */
 		_render: function() {
@@ -1070,6 +1141,7 @@
 		},
 		/**
 		 * Look at the initial element's start value and populate tags as appropriate
+		 * @method _handleStartValue
 		 */
 		_handleStartValue: function() {
 			// get a list of tags to insert now based on the current value of the original input
@@ -1089,6 +1161,7 @@
 		},
 		/**
 		 * Attach event handlers
+		 * @method _setupListeners
 		 */
 		_setupListeners: function() {
 			// proxy some methods to always be bound to our instance
@@ -1118,6 +1191,7 @@
 		},
 		/**
 		 * Event handler for when this.$input is focused
+		 * @method _onInputFocus
 		 * @param {jQuery.Event} evt  The focus event
 		 */
 		_onInputFocus: function(evt) {
@@ -1138,6 +1212,7 @@
 		},
 		/**
 		 * Event handler for when this.$input is blurred
+		 * @method _onInputBlur
 		 * @param {jQuery.Event} evt  blur event
 		 */
 		_onInputBlur: function(evt) {
@@ -1157,6 +1232,7 @@
 		},
 		/**
 		 * Event handler for when .sugg-remove is clicked
+		 * @method _onTagRemoveClick
 		 * @param {jQuery.Event} evt  The click event
 		 */   
 		_onTagRemoveClick: function(evt) {
@@ -1168,6 +1244,7 @@
 		},
 		/**
 		 * Event handler for when .sugg-tag is clicked
+		 * @method _onTagClick
 		 * @param {jQuery.Event} evt  The click event
 		 */     
 		_onTagClick: function(evt) {
@@ -1181,6 +1258,7 @@
 		},
 		/**
 		 * Event handler for when autosuggest list is moused over
+		 * @method _onListMouseover
 		 * @param {jQuery.Event} evt  The mouseover event
 		 */     
 		_onListMouseover: function(evt) { 
@@ -1200,6 +1278,7 @@
 		},
 		/**
 		 * Event handler for when autosuggest list is clicked
+		 * @method _onListClick
 		 * @param {jQuery.Event} evt  The click event
 		 */     
 		_onListClick: function(evt) {
@@ -1226,6 +1305,7 @@
 		},
 		/**
 		 * Event handler for when this.$box is clicked
+		 * @method _onBoxClick
 		 * @param {jQuery.Event} evt  The click event
 		 */     
 		_onBoxClick: function(evt) {
@@ -1236,6 +1316,7 @@
 		},
 		/**
 		 * Handle keypresses while in tag input field
+		 * @method _onKeydown
 		 * @param {jQuery.Event} evt  The keydown event
 		 */
 		_onKeydown: function(evt) {
@@ -1284,6 +1365,7 @@
 		},
 		/**
 		 * Handle paste on this.$input
+		 * @method _onValueChange
 		 * @param {jQuery.Event} evt  The paste event
 		 */
 		_onValueChange: function(evt) {
@@ -1292,6 +1374,7 @@
 		},
 		/**
 		 * Handle UP key on this.$input
+		 * @method _key_UP
 		 * @param {jQuery.Event} evt  The keydown event
 		 */
 		_key_UP: function(evt) {
@@ -1303,6 +1386,7 @@
 		},
 		/**
 		 * Handle DOWN key on this.$input
+		 * @method _key_DOWN
 		 * @param {jQuery.Event} evt  The keydown event
 		 */   
 		_key_DOWN: function(evt) {
