@@ -113,6 +113,9 @@ strong.sugg-match {
 .sugg-item.sugg-selected strong.sugg-match {
 	background: transparent;
 }
+.sugg-placeholder-on .sugg-input {
+	color: #999;
+}
 /* graybox theme */
 .sugg-theme-graybox .sugg-tag {
 	border-radius: 0;
