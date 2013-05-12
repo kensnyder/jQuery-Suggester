@@ -311,7 +311,7 @@
 		 * Completely remove Suggester widget and replace with original input box (with values populated)
 		 * @method destroy
 		 * @param {Object} options
-		 *    options.keepHiddenInputs {Boolean}  If true, append all hidden inputs after the original input
+		 *    @param {Boolean} [options.keepHiddenInputs=false]  If true, append all hidden inputs after the original input
 		 * @return {jQuery}  The original input
 		 */
 		destroy: function(options) {
@@ -350,11 +350,13 @@
 				label = value;
 			}
 			/**
-			 * Allows you to prevent it being added or alter the record before adding
+			 * Fired before a tag is added
 			 * @event BeforeAdd
-			 * @param value     The tag to be added
-			 * @param item      The suggestion that was chosen (if any)
-			 * @param isCustom  If true, the item is not a suggestion
+			 * @param {String} value  The tag to be added
+			 * @param {String} label  The value of the tag to be added
+			 * @param {jQuery} item  The suggestion that was chosen (if any)
+			 * @param {Object} record  The suggestion that was chosen (if any)
+			 * @ifprevented  The tag is not added
 			 * @example       
 	instance.bind('BeforeAdd', function(event) {
 		if (isSwearWord(evt.value)) {

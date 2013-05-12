@@ -1,0 +1,548 @@
+{
+	"event":[],
+	"property":[["Default options. Change these to globally change the default options","See {{#crossLink \"Suggester/constructor:method\"}}constructor{{/crossLink}} for documentation on each option","@property defaultOptions","@static","@type {Object}"],["The input used to make the widget","@property {jQuery} $originalInput"],["Array of static data used instead of an ajax call","@property {Object[]} data"],["An array of Suggester.Tag objects","@property {Suggester.Tag[]} tags"],["The name to use for hidden elements (defaults to the original input's name plus \"_tags[]\")","@property {String} hiddenName"],["The tag that is selected for deletion","@property {jQuery} $focusedTag"],["The item currently selected in the suggestion box","@property {jQuery} $currentItem"],["The publish and subscribe handle - equal to $(this)","@property {jQuery} pubsub"],["The element that wraps the widget","@property {jQuery} $widget"],["The container that holds the chosen tags","@property {jQuery} $box"],["The tag element that is cloned to make new tags","@property {jQuery} $tagTemplate"],["The input that users type in","@property {jQuery} $input"],["The container for the input","@property {jQuery} $inputWrapper"],["The suggestion list element","@property {jQuery} $suggList"],["The element that is positioned relatively to hold the absolutely positioned suggestion list","@property {jQuery} $suggListWrapper"],["The html to use for suggestion list items","@property {String} listItemTemplate"],["The search term we are currently searching for","@property {String} _searchTerm"],["The text in the input box that will be used to fetch results (i.e. what the user just typed)","@property {String} _text"],["The jQuery XHR object used initilized for fetching data - http://api.jquery.com/jQuery.ajax/#jqXHR","@property {jqXHR} _jqXHR"],["A collection of all the instances","@property {Array} instances","@static"],["The Suggester to which this tag belongs","@property {Suggester} suggester"],["The value of the tag","@property {String} value"],["The display text if the tag","@property {String} label"],["The index relative to other tags","@property {Number} index"],["The hidden input element","@property {jQuery} $hidden"],["The tag elements","@property {jQuery} $tag"],["The record corresponding to this tag, if any","@property {Object|undefined}"]],
+	"method":[{
+		"params":[{
+			"type":"Object",
+			"name":"options",
+			"description":""
+		}],
+		"description":"options.keepHiddenInputs {Boolean}  If true, append all hidden inputs after the original input",
+		"name":"destroy",
+		"returns":{
+			"type":"jQuery",
+			"description":"The original input"
+		}
+	},{
+	"params":[{
+		"type":"String",
+		"name":"value",
+		"description":"the tag to add"
+	},{
+		"type":"String",
+		"name":"[label=value]",
+		"description":"the text to display in the new tag"
+	},{
+		"type":"jQuery",
+		"name":"[$item]",
+		"description":"Set internally when the record is added by choosing from the suggestion box"
+	}],
+	"description":"Add a tag by a record",
+	"name":"add",
+	"returns":{
+		"type":"jQuery",
+		"description":"The jQuery object containing the newly created label or undefined if one was not created"
+	}
+},{
+	"params":[],
+	"description":"Note: this happens on blur when this.options.addOnBlur is true",
+	"name":"addCurrentBuffer"
+},{
+	"params":[{
+		"type":"String",
+		"name":"[direction=up]",
+		"description":"Either \"up\" or \"down\""
+	}],
+	"description":"Move the selection up or down in the suggestion box",
+	"name":"moveSelection"
+},{
+	"params":[{
+		"type":"jQuery",
+		"name":"$tag",
+		"description":""
+	}],
+	"description":"Select a suggestion",
+	"name":"selectItem",
+	"returns":{
+		"type":"jQuery.Suggester",
+		"description":""
+	}
+},{
+	"params":[{
+		"type":"jQuery",
+		"name":"$tag",
+		"description":""
+	}],
+	"description":"Deselect a suggestion",
+	"name":"deselectItem",
+	"returns":{
+		"type":"jQuery.Suggester",
+		"description":""
+	}
+},{
+	"params":[],
+	"description":"Deselect all suggestions",
+	"name":"deselectAllItems",
+	"returns":{
+		"type":"jQuery.Suggester",
+		"description":""
+	}
+},{
+	"params":[{
+		"type":"String",
+		"name":"text",
+		"description":""
+	}],
+	"description":"Open suggestion list for the given text",
+	"name":"suggest",
+	"returns":{
+		"type":"jQuery.Suggester",
+		"description":""
+	}
+},{
+	"params":"{Object[]} data  More records in the same object format as initially set",
+	"description":"Add more data records to the autosuggest list. Does not apply when dataUrl is set",
+	"name":"addData",
+	"returns":{
+		"type":"jQuery.Suggester",
+		"description":""
+	}
+},{
+	"params":"{Object[]} data",
+	"description":"Set data records to the autosuggest list. Does not apply when dataUrl is set",
+	"name":"setData",
+	"returns":{
+		"type":"jQuery.Suggester",
+		"description":""
+	}
+},{
+	"params":[],
+	"description":"Get all the records in the autosuggest list. Does not apply when dataUrl is set",
+	"name":"getData",
+	"returns":{
+		"type":"Object[]",
+		"description":""
+	}
+},{
+	"params":[{
+		"type":"String",
+		"name":"direction",
+		"description":"either \"up\" or \"down\""
+	}],
+	"description":"Set the direction of the suggestion menu, to fly upwards or downwards",
+	"name":"setFlyDirection",
+	"returns":{
+		"type":"jQuery.Suggester",
+		"description":""
+	}
+},{
+	"params":"{jQuery} $tag  The .sugg-tag element to focus",
+	"description":"Focus on a previously added tag",
+	"name":"focusTag",
+	"returns":{
+		"type":"jQuery.Suggester",
+		"description":""
+	}
+},{
+	"params":[],
+	"description":"Unfocus the previously focussed tag",
+	"name":"unfocusTag",
+	"returns":{
+		"type":"jQuery.Suggester",
+		"description":""
+	}
+},{
+	"params":[{
+		"type":"jQuery.Event",
+		"name":"evt",
+		"description":"(optional)  Used to check if $document keypress is backspace or delete"
+	}],
+	"description":"Remove the focused tag",
+	"name":"removeFocusedTag",
+	"returns":{
+		"type":"jQuery.Suggester",
+		"description":""
+	}
+},{
+	"params":[{
+		"type":"String|jQuery|HTMLElement",
+		"name":"$tag",
+		"description":"the tag to remove"
+	}],
+	"description":"Remove a tag given its text or jQuery element or HTML element",
+	"name":"remove",
+	"returns":{
+		"type":"jQuery.Suggester",
+		"description":""
+	}
+},{
+	"params":[{
+		"type":"String",
+		"name":"text",
+		"description":""
+	}],
+	"description":"Find a suggestion record by text",
+	"name":"findRecord",
+	"returns":{
+		"type":"Object",
+		"description":""
+	}
+},{
+	"params":[],
+	"description":"Otherwise show prompt",
+	"name":"suggestIfNeeded",
+	"returns":{
+		"type":"jQuery.Suggester",
+		"description":""
+	}
+},{
+	"params":[],
+	"description":"Only called when there are no items and this.options.prompt is truthy",
+	"name":"showPrompt",
+	"returns":{
+		"type":"jQuery.Suggester",
+		"description":""
+	}
+},{
+	"params":[],
+	"description":"Text is defined in this.options.emptyText",
+	"name":"showEmptyText",
+	"returns":{
+		"type":"jQuery.Suggester",
+		"description":""
+	}
+},{
+	"params":[{
+		"type":"String",
+		"name":"text",
+		"description":"The text to search for"
+	}],
+	"description":"});",
+	"name":"fetchResults",
+	"returns":{
+		"type":"jqXHR",
+		"description":""
+	},
+	"event":"BeforeAjax - allows you to edit settings before ajax is sent"
+},{
+	"params":[],
+	"description":"Cancel the XHR. Used when user starts typing again before XHR completes",
+	"name":"abortFetch",
+	"returns":{
+		"type":"jQuery.Suggester",
+		"description":""
+	}
+},{
+	"params":[],
+	"description":"});",
+	"name":"handleSuggestions",
+	"event":"AfterSuggest",
+	"param":"text  The text that was searched for"
+},{
+	"params":[],
+	"description":"Return true if suggestion box is open",
+	"name":"isSuggestBoxOpen",
+	"returns":{
+		"type":"Boolean",
+		"description":""
+	}
+},{
+	"params":[],
+	"description":"});",
+	"name":"openSuggestBox",
+	"returns":{
+		"type":"jQuery.Suggester",
+		"description":""
+	},
+	"chainable":"",
+	"event":"AfterOpen"
+},{
+	"params":[],
+	"description":"});",
+	"name":"closeSuggestBox",
+	"returns":{
+		"type":"jQuery.Suggester",
+		"description":""
+	},
+	"chainable":"",
+	"event":"AfterClose"
+},{
+	"params":[],
+	"description":"Focus cursor on text input box",
+	"name":"focus",
+	"returns":{
+		"type":"jQuery.Suggester",
+		"description":""
+	},
+	"chainable":""
+},{
+	"params":[{
+		"type":"String",
+		"name":"text",
+		"description":"Gather suggestions based on this text"
+	}],
+	"description":"Get suggestion result records given some text (local data)",
+	"name":"getResults",
+	"returns":{
+		"type":"Array",
+		"description":"Array of Objects of matching records"
+	}
+},{
+	"params":[],
+	"description":"Clear all the chosen tags",
+	"name":"clear",
+	"returns":{
+		"type":"Suggester",
+		"description":""
+	},
+	"chainable":""
+},{
+	"params":[],
+	"description":"Get a collection of all the chosen tag objects",
+	"name":"getTags",
+	"returns":{
+		"type":"Array",
+		"description":""
+	}
+},{
+	"params":[{
+		"type":"Function",
+		"name":"iterator",
+		"description":"The iterator function - function(i, tag) {}"
+	}],
+	"description":"Iterate through each of the chosen tag objects",
+	"name":"eachTag",
+	"returns":{
+		"type":"jQuery.Suggester",
+		"description":""
+	},
+	"chainable":""
+},{
+	"params":[],
+	"description":"Return a URL query string representing the hidden values of the input",
+	"name":"serialize",
+	"returns":{
+		"type":"String",
+		"description":""
+	}
+},{
+	"params":[],
+	"description":"Pluck all the tag values from the chosen tags",
+	"name":"getValues",
+	"returns":{
+		"type":"Array",
+		"description":""
+	}
+},{
+	"params":[{
+		"type":"String",
+		"name":"themeName",
+		"description":"The name of the theme to use"
+	}],
+	"description":"Set the widget's CSS theme - Adds a class \"sugg-theme-%name%\" to the widget",
+	"name":"setTheme",
+	"returns":{
+		"type":"jQuery.Suggester",
+		"description":""
+	},
+	"chainable":""
+},{
+	"params":[{
+		"type":"String",
+		"name":"type",
+		"description":"The name of the event to publish"
+	},{
+		"type":"Object",
+		"name":"data",
+		"description":"Additional data to attach to the event object"
+	}],
+	"description":"Publish the given event name and send the given data",
+	"name":"publish",
+	"returns":{
+		"type":"jQuery.Event",
+		"description":"The event object which behaves much like a DOM event object"
+	}
+},{
+	"params":[],
+	"description":"Get this instance. Useful for jQuery-style usage:  var instance = $('input').suggester(options).suggester('getInstance')",
+	"name":"getInstance",
+	"returns":{
+		"type":"jQuery.Suggester",
+		"description":""
+	}
+},{
+	"params":"{Object} options  Settings passed to constructor",
+	"description":"Set options and interpret options",
+	"name":"_processOptions"
+},{
+	"params":[],
+	"description":"Render the widget and get handles to key elements",
+	"name":"_render"
+},{
+	"params":[],
+	"description":"Look at the initial element's start value and populate tags as appropriate",
+	"name":"_handleStartValue"
+},{
+	"params":[],
+	"description":"Attach event handlers",
+	"name":"_setupListeners"
+},{
+	"params":[{
+		"type":"jQuery.Event",
+		"name":"evt",
+		"description":"The focus event"
+	}],
+	"description":"Event handler for when this.$input is focused",
+	"name":"_onInputFocus"
+},{
+	"params":[{
+		"type":"jQuery.Event",
+		"name":"evt",
+		"description":"blur event"
+	}],
+	"description":"Event handler for when this.$input is blurred",
+	"name":"_onInputBlur"
+},{
+	"params":[{
+		"type":"jQuery.Event",
+		"name":"evt",
+		"description":"The click event"
+	}],
+	"description":"Event handler for when .sugg-remove is clicked",
+	"name":"_onTagRemoveClick"
+},{
+	"params":[{
+		"type":"jQuery.Event",
+		"name":"evt",
+		"description":"The click event"
+	}],
+	"description":"Event handler for when .sugg-tag is clicked",
+	"name":"_onTagClick"
+},{
+	"params":[{
+		"type":"jQuery.Event",
+		"name":"evt",
+		"description":"The mouseover event"
+	}],
+	"description":"Event handler for when autosuggest list is moused over",
+	"name":"_onListMouseover"
+},{
+	"params":[{
+		"type":"jQuery.Event",
+		"name":"evt",
+		"description":"The click event"
+	}],
+	"description":"Event handler for when autosuggest list is clicked",
+	"name":"_onListClick"
+},{
+	"params":[{
+		"type":"jQuery.Event",
+		"name":"evt",
+		"description":"The click event"
+	}],
+	"description":"Event handler for when this.$box is clicked",
+	"name":"_onBoxClick"
+},{
+	"params":[{
+		"type":"jQuery.Event",
+		"name":"evt",
+		"description":"The keydown event"
+	}],
+	"description":"Handle keypresses while in tag input field",
+	"name":"_onKeydown"
+},{
+	"params":[{
+		"type":"jQuery.Event",
+		"name":"evt",
+		"description":"The paste event"
+	}],
+	"description":"Handle paste on this.$input",
+	"name":"_onValueChange"
+},{
+	"params":[{
+		"type":"jQuery.Event",
+		"name":"evt",
+		"description":"The keydown event"
+	}],
+	"description":"Handle UP key on this.$input",
+	"name":"_key_UP"
+},{
+	"params":[{
+		"type":"jQuery.Event",
+		"name":"evt",
+		"description":"The keydown event"
+	}],
+	"description":"Handle DOWN key on this.$input",
+	"name":"_key_DOWN"
+},{
+	"params":[{
+		"type":"Object[]",
+		"name":"data",
+		"description":"Add more data to all the registered instances"
+	}],
+	"description":"Add data to all instances",
+	"name":"addData",
+	"static":"",
+	"returns":{
+		"type":"Suggester",
+		"description":""
+	}
+},{
+	"params":[],
+	"description":"Get the Suggester widget to which this tag belongs",
+	"name":"getWidget",
+	"returns":{
+		"type":"Suggester",
+		"description":""
+	}
+},{
+	"params":[],
+	"description":"Remove this tag from the tag collection",
+	"name":"remove",
+	"returns":{
+		"type":"Suggester.Tag",
+		"description":""
+	},
+	"chainable":""
+},{
+	"params":[],
+	"description":"Get thee index of this tag relative to others",
+	"name":"getIndex",
+	"returns":{
+		"type":"Number",
+		"description":""
+	}
+},{
+	"params":[],
+	"description":"Get the hidden value of this tag",
+	"name":"getValue",
+	"returns":{
+		"type":"String",
+		"description":""
+	}
+},{
+	"params":[],
+	"description":"Get the visible label of this tag",
+	"name":"getLabel",
+	"returns":{
+		"type":"String",
+		"description":""
+	}
+},{
+	"params":[],
+	"description":"Set the visibile label of this tag",
+	"name":"setLabel",
+	"returns":{
+		"type":"Suggester.Tag",
+		"description":""
+	},
+	"chainable":""
+},{
+	"params":[],
+	"description":"Get the hidden value of the tag",
+	"name":"getHidden",
+	"returns":{
+		"type":"String",
+		"description":""
+	}
+},{
+	"params":[],
+	"description":"Get the tag element",
+	"name":"getElement",
+	"returns":{
+		"type":"jQuery",
+		"description":""
+	}
+}],
+"options":["options!"]
+}
