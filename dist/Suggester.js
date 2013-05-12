@@ -85,15 +85,11 @@
 	};
 	$.Suggester.prototype = {
 		/**
-		 * The input used to make the widget
-		 * @property {jQuery} $originalInput
-		 */
-		/**
 		 * The current options. Starts with value given in constructor
 		 * @property {Object} options
 		 *   @param {Array|Boolean} [options.data=false]  Initial data to use for suggestions
-		 *   @param {String} [options.valueProperty=value]  The name of object property that should be used as the tag's value. Only applicable when options.data is set
-		 *   @param {String} [options.labelProperty=value]  The name of object property that should be used as the tag's display text. Only applicable when options.data is set
+		 *   @param {String} [options.valueProperty="value"]  The name of object property that should be used as the tag's value. Only applicable when options.data is set
+		 *   @param {String} [options.labelProperty="value"]  The name of object property that should be used as the tag's display text. Only applicable when options.data is set
 		 *   @param {Array} [options.searchProperties=Array("value")]  The array of object property names that should be searched when generating suggestions. Only applicable when options.data is set
 		 *   @params {String|Number} [options.matchAt="anywhere"]  Where to match when finding suggestions. It can be "anywhere", "start", "end" or an integer. Only applicable when options.data is set
 		 *   @params {Boolean} [options.caseSensitive=false]  If true, find matches regardless of case. Only applicable when options.data is set. Only applicable when options.data is set
@@ -180,6 +176,10 @@
 	options.listItemTemplate = '<li class="sugg-item">{record.lname}, {record.fname} ({record.email})</li>';	
 	
 		 */
+		/**
+		 * The input used to make the widget
+		 * @property {jQuery} $originalInput
+		 */		
 		/**
 		 * Array of static data used instead of an ajax call
 		 * @property {Object[]} data 
@@ -313,8 +313,8 @@
 		/**
 		 * Completely remove Suggester widget and replace with original input box (with values populated)
 		 * @method destroy
-		 * @param {Object} options
-		 *    options.keepHiddenInputs {Boolean}  If true, append all hidden inputs after the original input
+		 * @param {Object} [options]
+		 *    @param {Boolean} [options.keepHiddenInputs=false]  If true, append all hidden inputs after the original input
 		 * @return {jQuery}  The original input
 		 */
 		destroy: function(options) {
@@ -353,12 +353,15 @@
 				label = value;
 			}
 			/**
-			 * Allows you to prevent it being added or alter the record before adding
+			 * Fired before a tag is added
 			 * @event BeforeAdd
-			 * @param value     The tag to be added
-			 * @param item      The suggestion that was chosen (if any)
-			 * @param isCustom  If true, the item is not a suggestion
+			 * @param {String} value  The tag to be added (writeable)
+			 * @param {String} label  The value of the tag to be added (writeable)
+			 * @param {jQuery} item  The suggestion that was chosen, if any (writeable)
+			 * @param {Object} record  The record that was chosen, if any (writeable)
+			 * @ifprevented  The tag is not added
 			 * @example       
+			 
 	instance.bind('BeforeAdd', function(event) {
 		if (isSwearWord(evt.value)) {
 			event.preventDefault();
@@ -410,12 +413,14 @@
 			/**
 			 * Allows you to take action after a tag is added
 			 * @event AfterAdd
-			 * @param {jQuery} item    The suggestion that was chosen (if any)
+			 * @param {jQuery} item    The suggestion that was chosen, if any
 			 * @param {jQuery} tag     The jQuery element of the tag that was added
 			 * @param {jQuery} hidden  The hidden input that was generated
 			 * @param {String} value   The value of the tag
 			 * @param {String} label   The the label of the tag
+			 * @param {String} record  The record that was chosen, if any
 			 * @example
+			 
 	instance.bind('AfterAdd', function(event) {
 		// fade in tag
 		event.tag.fadeIn(500);
@@ -461,13 +466,18 @@
 				$nextItem = (direction == 'down' ? $items.first() : $items.last());
 			}
 			/**
-			 * @event BeforeMove (if event.preventDefault() is called, movement is stopped)
+			 * Fire in response to up or down arrow while suggestion list is focused
+			 * @event BeforeMove
 			 * @param {String} direction  "up" or "down"
-			 * @param {jQuery|null} current    jQuery object with the currently selected item or null if there isn't one
-			 * @param {jQuery|null} next       jQuery object with the item that will be selected next
-			 * @example          instance.bind('BeforeMove', function(event) {
-			 *                          alert('You are moving to ' + event.next.text());
-			 *                      });
+			 * @param {jQuery|null} current    jQuery object with the currently selected item or null if there isn't one (writeable)
+			 * @param {jQuery|null} next       jQuery object with the item that will be selected next (writeable)
+			 * @ifprevented  Movement is cancelled
+			 * @example
+
+	instance.bind('BeforeMove', function(event) {
+		alert('The new selection will be ' + event.next.text());
+	});
+			
 			 */
 			var evt = this.publish('BeforeMove', {
 				direction: direction,
@@ -490,13 +500,17 @@
 			// reset our current items
 			this.$currentItem = evt.next;
 			/*
+			 * Fired after selected suggestion is changed in response to up or down arrow
 			 * @event AfterMove
-			 * @param direction  "up" or "down"
-			 * @param last       jQuery object with the previously selected item
-			 * @param current    jQuery object with the newly selected item
-			 *     example          instance.bind('AfterMove', function(event) {
-			 *                          alert('You moved to ' + event.current.text());
-			 *                      });
+			 * @param {String} direction  "up" or "down"
+			 * @param {jQuery} last       The previously selected item
+			 * @param {jQuery} current    The newly selected item
+			 * @example
+	
+	instance.bind('AfterMove', function(event) {
+		alert('The new selection is ' + event.current.text());
+	});
+			
 			 */
 			this.publish('AfterMove', {
 				direction: direction,
@@ -658,7 +672,7 @@
 		 * @return {jQuery.Suggester}
 		 */
 		remove: function($tag) {
-			var evt, value, removed;
+			var evt, value, label, removed;
 			if (typeof $tag.nodeType == 'number' && typeof $tag.style == 'object') {
 				$tag = $($tag);
 			}
@@ -675,18 +689,44 @@
 					}
 				});
 			}
+			label = $tag.data('tag-label');
+			/**
+			 * Fired before a tag is removed
+			 * @event BeforeRemove
+			 * @param {jQuery} tag  The tag to be removed
+			 * @param {String} value  The value of the tag to be removed (writeable)
+			 * @param {String} label  The label of the tag to be removed
+			 * @ifprevented The tag will not be removed
+			 * @example
+			 
+	instance.bind('BeforeRemove', function(event) {
+		if (!confirm('Are you sure you want to remove the tag "' + event.label + '"?')) {
+			event.preventDefault();
+		}
+	});
+			 
+			 */
 			evt = this.publish('BeforeRemove', {
 				tag: $tag,
 				value: value,
+				label: label,
 				cancellable: true
 			});
 			if (evt.isDefaultPrevented()) {
 				return this;
 			}     
 			removed = this._spliceTag(evt.value);
+			/**
+			 * Fired after a tag is removed
+			 * @event AfterRemove
+			 * @param {jQuery} tag  The tag that was removed
+			 * @param {String} value  The value of the tag that was removed
+			 * @param {String} label  The label of the tag that was removed
+			 */			
 			this.publish('AfterRemove', {
-				tag: evt.tag,
-				value: value,
+				tag: $tag,
+				value: evt.value,
+				label: label,
 				removed: removed
 			});
 			return this;

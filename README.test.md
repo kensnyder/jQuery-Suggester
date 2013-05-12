@@ -81,13 +81,13 @@ Options
 		<td>{String}</td>
 		<td><strong>valueProperty</strong></td>
 		<td>The name of object property that should be used as the tag&#x27;s value. Only applicable when options.data is set</td>
-		<td>value</td>
+		<td>&quot;value&quot;</td>
 	</tr>
 	<tr>
 		<td>{String}</td>
 		<td><strong>labelProperty</strong></td>
 		<td>The name of object property that should be used as the tag&#x27;s display text. Only applicable when options.data is set</td>
-		<td>value</td>
+		<td>&quot;value&quot;</td>
 	</tr>
 	<tr>
 		<td>{Array}</td>
@@ -527,10 +527,10 @@ The following is a description of each event. See the Suggester Instance Methods
 		<td><strong>BeforeAdd</strong></td>
 		<td>Fired before a tag is added</td>
 		<td>
-			{String} value <em>The tag to be added</em><br />
-			{String} label <em>The value of the tag to be added</em><br />
-			{jQuery} item <em>The suggestion that was chosen (if any)</em><br />
-			{Object} record <em>The suggestion that was chosen (if any)</em><br />
+			{String} value <em>The tag to be added (writeable)</em><br />
+			{String} label <em>The value of the tag to be added (writeable)</em><br />
+			{jQuery} item <em>The suggestion that was chosen, if any (writeable)</em><br />
+			{Object} record <em>The record that was chosen, if any (writeable)</em><br />
 		</td>
 		<td>The tag is not added</td>
 	</tr>
@@ -538,21 +538,42 @@ The following is a description of each event. See the Suggester Instance Methods
 		<td><strong>AfterAdd</strong></td>
 		<td>Allows you to take action after a tag is added</td>
 		<td>
-			{jQuery} item <em>The suggestion that was chosen (if any)</em><br />
+			{jQuery} item <em>The suggestion that was chosen, if any</em><br />
 			{jQuery} tag <em>The jQuery element of the tag that was added</em><br />
 			{jQuery} hidden <em>The hidden input that was generated</em><br />
 			{String} value <em>The value of the tag</em><br />
 			{String} label <em>The the label of the tag</em><br />
+			{String} record <em>The record that was chosen, if any</em><br />
 		</td>
 		<td>-</td>
 	</tr>
 	<tr>
-		<td><strong>BeforeMove (if event.preventDefault() is called, movement is stopped)</strong></td>
-		<td></td>
+		<td><strong>BeforeMove</strong></td>
+		<td>Fire in response to up or down arrow while suggestion list is focused</td>
 		<td>
 			{String} direction <em>&quot;up&quot; or &quot;down&quot;</em><br />
-			{jQuery|null} current <em>jQuery object with the currently selected item or null if there isn&#x27;t one</em><br />
-			{jQuery|null} next <em>jQuery object with the item that will be selected next</em><br />
+			{jQuery|null} current <em>jQuery object with the currently selected item or null if there isn&#x27;t one (writeable)</em><br />
+			{jQuery|null} next <em>jQuery object with the item that will be selected next (writeable)</em><br />
+		</td>
+		<td>Movement is cancelled</td>
+	</tr>
+	<tr>
+		<td><strong>BeforeRemove</strong></td>
+		<td>Fired before a tag is removed</td>
+		<td>
+			{jQuery} tag <em>The tag to be removed</em><br />
+			{String} value <em>The value of the tag to be removed (writeable)</em><br />
+			{String} label <em>The label of the tag to be removed</em><br />
+		</td>
+		<td>The tag will not be removed</td>
+	</tr>
+	<tr>
+		<td><strong>AfterRemove</strong></td>
+		<td>Fired after a tag is removed</td>
+		<td>
+			{jQuery} tag <em>The tag that was removed</em><br />
+			{String} value <em>The value of the tag that was removed</em><br />
+			{String} label <em>The label of the tag that was removed</em><br />
 		</td>
 		<td>-</td>
 	</tr>
@@ -684,103 +705,103 @@ Instance Properties
 		<th>Description</th>
 	<tr>
 	<tr>
-		<td>{Object}</td>
+		<td>{{Object}}</td>
 		<td><strong>defaultOptions</strong></td>
 		<td>Default options. Change these to globally change the default options
 See {{#crossLink &quot;Suggester/constructor:method&quot;}}constructor{{/crossLink}} for documentation on each option</td>
 	</tr>
 	<tr>
-		<td>Object[]</td>
-		<td><strong>data</strong></td>
-		<td>Array of static data used instead of an ajax call</td>
-	</tr>
-	<tr>
-		<td>Suggester.Tag[]</td>
-		<td><strong>tags</strong></td>
-		<td>An array of Suggester.Tag objects</td>
-	</tr>
-	<tr>
-		<td>String</td>
-		<td><strong>hiddenName</strong></td>
-		<td>The name to use for hidden elements (defaults to the original input&#x27;s name plus &quot;_tags[]&quot;)</td>
-	</tr>
-	<tr>
-		<td>JQuery</td>
-		<td><strong>$focusedTag</strong></td>
-		<td>The tag that is selected for deletion</td>
-	</tr>
-	<tr>
-		<td>JQuery</td>
-		<td><strong>$currentItem</strong></td>
-		<td>The item currently selected in the suggestion box</td>
-	</tr>
-	<tr>
-		<td>JQuery</td>
-		<td><strong>pubsub</strong></td>
-		<td>The publish and subscribe handle - equal to $(this)</td>
-	</tr>
-	<tr>
-		<td>JQuery</td>
-		<td><strong>$widget</strong></td>
-		<td>The element that wraps the widget</td>
-	</tr>
-	<tr>
-		<td>JQuery</td>
-		<td><strong>$box</strong></td>
-		<td>The container that holds the chosen tags</td>
-	</tr>
-	<tr>
-		<td>JQuery</td>
-		<td><strong>$tagTemplate</strong></td>
-		<td>The tag element that is cloned to make new tags</td>
-	</tr>
-	<tr>
-		<td>JQuery</td>
-		<td><strong>$input</strong></td>
-		<td>The input that users type in</td>
-	</tr>
-	<tr>
-		<td>JQuery</td>
-		<td><strong>$inputWrapper</strong></td>
-		<td>The container for the input</td>
-	</tr>
-	<tr>
-		<td>JQuery</td>
-		<td><strong>$suggList</strong></td>
-		<td>The suggestion list element</td>
-	</tr>
-	<tr>
-		<td>JQuery</td>
-		<td><strong>$suggListWrapper</strong></td>
-		<td>The element that is positioned relatively to hold the absolutely positioned suggestion list</td>
-	</tr>
-	<tr>
-		<td>String</td>
-		<td><strong>listItemTemplate</strong></td>
-		<td>The html to use for suggestion list items</td>
-	</tr>
-	<tr>
-		<td>String</td>
-		<td><strong>_searchTerm</strong></td>
-		<td>The search term we are currently searching for</td>
-	</tr>
-	<tr>
-		<td>String</td>
-		<td><strong>_text</strong></td>
-		<td>The text in the input box that will be used to fetch results (i.e. what the user just typed)</td>
-	</tr>
-	<tr>
-		<td>JqXHR</td>
-		<td><strong>_jqXHR</strong></td>
-		<td>The jQuery XHR object used initilized for fetching data - http://api.jquery.com/jQuery.ajax/#jqXHR</td>
-	</tr>
-	<tr>
-		<td>JQuery</td>
+		<td>{jQuery}</td>
 		<td><strong>$originalInput</strong></td>
 		<td>The input used to make the widget</td>
 	</tr>
 	<tr>
-		<td>Array</td>
+		<td>{Object[]}</td>
+		<td><strong>data</strong></td>
+		<td>Array of static data used instead of an ajax call</td>
+	</tr>
+	<tr>
+		<td>{Suggester.Tag[]}</td>
+		<td><strong>tags</strong></td>
+		<td>An array of Suggester.Tag objects</td>
+	</tr>
+	<tr>
+		<td>{String}</td>
+		<td><strong>hiddenName</strong></td>
+		<td>The name to use for hidden elements (defaults to the original input&#x27;s name plus &quot;_tags[]&quot;)</td>
+	</tr>
+	<tr>
+		<td>{jQuery}</td>
+		<td><strong>$focusedTag</strong></td>
+		<td>The tag that is selected for deletion</td>
+	</tr>
+	<tr>
+		<td>{jQuery}</td>
+		<td><strong>$currentItem</strong></td>
+		<td>The item currently selected in the suggestion box</td>
+	</tr>
+	<tr>
+		<td>{jQuery}</td>
+		<td><strong>pubsub</strong></td>
+		<td>The publish and subscribe handle - equal to $(this)</td>
+	</tr>
+	<tr>
+		<td>{jQuery}</td>
+		<td><strong>$widget</strong></td>
+		<td>The element that wraps the widget</td>
+	</tr>
+	<tr>
+		<td>{jQuery}</td>
+		<td><strong>$box</strong></td>
+		<td>The container that holds the chosen tags</td>
+	</tr>
+	<tr>
+		<td>{jQuery}</td>
+		<td><strong>$tagTemplate</strong></td>
+		<td>The tag element that is cloned to make new tags</td>
+	</tr>
+	<tr>
+		<td>{jQuery}</td>
+		<td><strong>$input</strong></td>
+		<td>The input that users type in</td>
+	</tr>
+	<tr>
+		<td>{jQuery}</td>
+		<td><strong>$inputWrapper</strong></td>
+		<td>The container for the input</td>
+	</tr>
+	<tr>
+		<td>{jQuery}</td>
+		<td><strong>$suggList</strong></td>
+		<td>The suggestion list element</td>
+	</tr>
+	<tr>
+		<td>{jQuery}</td>
+		<td><strong>$suggListWrapper</strong></td>
+		<td>The element that is positioned relatively to hold the absolutely positioned suggestion list</td>
+	</tr>
+	<tr>
+		<td>{String}</td>
+		<td><strong>listItemTemplate</strong></td>
+		<td>The html to use for suggestion list items</td>
+	</tr>
+	<tr>
+		<td>{String}</td>
+		<td><strong>_searchTerm</strong></td>
+		<td>The search term we are currently searching for</td>
+	</tr>
+	<tr>
+		<td>{String}</td>
+		<td><strong>_text</strong></td>
+		<td>The text in the input box that will be used to fetch results (i.e. what the user just typed)</td>
+	</tr>
+	<tr>
+		<td>{JqXHR}</td>
+		<td><strong>_jqXHR</strong></td>
+		<td>The jQuery XHR object used initilized for fetching data - http://api.jquery.com/jQuery.ajax/#jqXHR</td>
+	</tr>
+	<tr>
+		<td>{Array}</td>
 		<td><strong>instances</strong></td>
 		<td>A collection of all the instances</td>
 	</tr>
@@ -811,19 +832,19 @@ instance.methodName(arg1, arg2, argN);
 
 <tr>
 	<td>
-		{JQuery} <strong>`destroy`</strong>(options)<br />
+		{jQuery} <strong>`destroy`</strong>([options])<br />
 		Completely remove Suggester widget and replace with original input box (with values populated)<br />
-		{Object} `options` <br />
-		Returns: {JQuery} The original input
+		{Object} [`options`] <br />
+		Returns: {jQuery} The original input
 	</td>
 </tr>
 
 <tr>
 	<td>
-		{JQuery} <strong>`add`</strong>(value[, label=value][, $item])<br />
+		{jQuery} <strong>`add`</strong>(value[, label=value][, $item])<br />
 		Add a tag by a record<br />
-		{String} `value` the tag to add{String} [`label`=value] the text to display in the new tag{JQuery} [`$item`] Set internally when the record is added by choosing from the suggestion box<br />
-		Returns: {JQuery} The jQuery object containing the newly created label or undefined if one was not created
+		{String} `value` the tag to add{String} [`label`=value] the text to display in the new tag{jQuery} [`$item`] Set internally when the record is added by choosing from the suggestion box<br />
+		Returns: {jQuery} The jQuery object containing the newly created label or undefined if one was not created
 	</td>
 </tr>
 
@@ -850,7 +871,7 @@ Note: this happens on blur when this.options.addOnBlur is true<br />
 	<td>
 		{jQuery.Suggester} <strong>`selectItem`</strong>($tag)<br />
 		Select a suggestion<br />
-		{JQuery} `$tag` <br />
+		{jQuery} `$tag` <br />
 		Returns: {jQuery.Suggester} 
 	</td>
 </tr>
@@ -859,7 +880,7 @@ Note: this happens on blur when this.options.addOnBlur is true<br />
 	<td>
 		{jQuery.Suggester} <strong>`deselectItem`</strong>($tag)<br />
 		Deselect a suggestion<br />
-		{JQuery} `$tag` <br />
+		{jQuery} `$tag` <br />
 		Returns: {jQuery.Suggester} 
 	</td>
 </tr>
@@ -922,7 +943,7 @@ Note: this happens on blur when this.options.addOnBlur is true<br />
 	<td>
 		{jQuery.Suggester} <strong>`focusTag`</strong>($tag)<br />
 		Focus on a previously added tag<br />
-		{JQuery} `$tag` The .sugg-tag element to focus<br />
+		{jQuery} `$tag` The .sugg-tag element to focus<br />
 		Returns: {jQuery.Suggester} 
 	</td>
 </tr>
@@ -1076,10 +1097,10 @@ Text is defined in this.options.emptyText<br />
 
 <tr>
 	<td>
-		{jQuery.Suggester} <strong>`setTheme`</strong>(themeName)<br />
-		Set the widget&#x27;s CSS theme - Adds a class &quot;sugg-theme-%name%&quot; to the widget<br />
-		{String} `themeName` The name of the theme to use<br />
-		Returns: {jQuery.Suggester} 
+		{jQuery.Event} <strong>`publish`</strong>(type, data)<br />
+		Publish the given event name and send the given data<br />
+		{String} `type` The name of the event to publish{Object} `data` Additional data to attach to the event object<br />
+		Returns: {jQuery.Event} The event object which behaves much like a DOM event object
 	</td>
 </tr>
 
@@ -1238,10 +1259,10 @@ Text is defined in this.options.emptyText<br />
 
 <tr>
 	<td>
-		{jQuery.Event} <strong>`publish`</strong>(type, data)<br />
-		Publish the given event name and send the given data<br />
-		{String} `type` The name of the event to publish{Object} `data` Additional data to attach to the event object<br />
-		Returns: {jQuery.Event} The event object which behaves much like a DOM event object
+		{jQuery.Suggester} <strong>`setTheme`</strong>(themeName)<br />
+		Set the widget&#x27;s CSS theme - Adds a class &quot;sugg-theme-%name%&quot; to the widget<br />
+		{String} `themeName` The name of the theme to use<br />
+		Returns: {jQuery.Suggester} 
 	</td>
 </tr>
 
