@@ -94,7 +94,7 @@
 
     
         <div class="foundat">
-            Defined in: <a href="../files/src_Suggester.js.html#l252"><code>src&#x2F;Suggester.js:252</code></a>
+            Defined in: <a href="../files/src_Suggester.js.html#l248"><code>src&#x2F;Suggester.js:248</code></a>
         </div>
     
 
@@ -131,7 +131,7 @@
             
                 <li class="arg">
                     
-                        <code>options</code>
+                        <code class="optional">[options=Suggester.defaultOptions]</code>
                     
                 </li>
             
@@ -164,7 +164,7 @@
             
         
         
-        <a href="../files/src_Suggester.js.html#l252"><code>src&#x2F;Suggester.js:252</code></a>
+        <a href="../files/src_Suggester.js.html#l248"><code>src&#x2F;Suggester.js:248</code></a>
         
         </p>
 
@@ -201,8 +201,9 @@
             
                 <li class="param">
                     
-                        <code class="param-name">options</code>
+                        <code class="param-name optional">[options=Suggester.defaultOptions]</code>
                         <span class="type">Object</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
                     
 
                     
@@ -270,7 +271,35 @@ var instance = $('selector').suggester('getInstance');
                     <ul class="index-list methods">
                         
                             <li class="index-item method">
+                                <a href="#method__afterFetch">_afterFetch</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method__beforeFetch">_beforeFetch</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method__formatSuggestion">_formatSuggestion</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
                                 <a href="#method__handleStartValue">_handleStartValue</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method__isCursorAtStart">_isCursorAtStart</a>
 
                                 
                                 
@@ -375,6 +404,27 @@ var instance = $('selector').suggester('getInstance');
                             </li>
                         
                             <li class="index-item method">
+                                <a href="#method__setupPubsub">_setupPubsub</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method__spliceTag">_spliceTag</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method__spliceTagByIdx">_spliceTagByIdx</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
                                 <a href="#method_abortFetch">abortFetch</a>
 
                                 
@@ -419,6 +469,13 @@ var instance = $('selector').suggester('getInstance');
                             </li>
                         
                             <li class="index-item method">
+                                <a href="#method_closeSuggestBox">closeSuggestBox</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
                                 <a href="#method_deselectAllItems">deselectAllItems</a>
 
                                 
@@ -441,6 +498,13 @@ var instance = $('selector').suggester('getInstance');
                         
                             <li class="index-item method">
                                 <a href="#method_eachTag">eachTag</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_fetchResults">fetchResults</a>
 
                                 
                                 
@@ -489,6 +553,13 @@ var instance = $('selector').suggester('getInstance');
                             </li>
                         
                             <li class="index-item method">
+                                <a href="#method_getTagIndex">getTagIndex</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
                                 <a href="#method_getTags">getTags</a>
 
                                 
@@ -503,6 +574,13 @@ var instance = $('selector').suggester('getInstance');
                             </li>
                         
                             <li class="index-item method">
+                                <a href="#method_handleSuggestions">handleSuggestions</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
                                 <a href="#method_isSuggestBoxOpen">isSuggestBoxOpen</a>
 
                                 
@@ -511,6 +589,13 @@ var instance = $('selector').suggester('getInstance');
                         
                             <li class="index-item method">
                                 <a href="#method_moveSelection">moveSelection</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_openSuggestBox">openSuggestBox</a>
 
                                 
                                 
@@ -532,6 +617,13 @@ var instance = $('selector').suggester('getInstance');
                         
                             <li class="index-item method">
                                 <a href="#method_removeFocusedTag">removeFocusedTag</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_save">save</a>
 
                                 
                                 
@@ -582,6 +674,15 @@ var instance = $('selector').suggester('getInstance');
                             <li class="index-item method">
                                 <a href="#method_showPrompt">showPrompt</a>
 
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_subclass">subclass</a>
+
+                                
+                                    <span class="flag static">static</span>
                                 
                                 
                             </li>
@@ -788,47 +889,49 @@ var instance = $('selector').suggester('getInstance');
                             </li>
                         
                             <li class="index-item event">
-                                <a href="#event_AfterClose
-    example  instance.bind(&#x27;AfterClose&#x27;, function(event) {
-                alert(&#x27;You chose &#x27; + instance.$currentItem.text());
-             });">AfterClose
-    example  instance.bind(&#x27;AfterClose&#x27;, function(event) {
-                alert(&#x27;You chose &#x27; + instance.$currentItem.text());
-             });</a>
+                                <a href="#event_AfterAjax">AfterAjax</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item event">
-                                <a href="#event_AfterFormat - able to alter the html after it has be constructed">AfterFormat - able to alter the html after it has be constructed</a>
+                                <a href="#event_AfterClose">AfterClose</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item event">
-                                <a href="#event_AfterOpen
-    example  instance.one(&#x27;AfterOpen&#x27;, function(event) {
-         this.$suggList.css({
-           borderTopWidth: &#x27;10px&#x27;,
-           borderTopColor: &#x27;red&#x27;
-         });
-                 alert(&#x27;Tip: You may choose an item from the suggestion list.&#x27;);
-                 this.$suggList.css({
-           borderTopWidth: &#x27;0&#x27;
-         });
-             });">AfterOpen
-    example  instance.one(&#x27;AfterOpen&#x27;, function(event) {
-         this.$suggList.css({
-           borderTopWidth: &#x27;10px&#x27;,
-           borderTopColor: &#x27;red&#x27;
-         });
-                 alert(&#x27;Tip: You may choose an item from the suggestion list.&#x27;);
-                 this.$suggList.css({
-           borderTopWidth: &#x27;0&#x27;
-         });
-             });</a>
+                                <a href="#event_AfterFetch">AfterFetch</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item event">
+                                <a href="#event_AfterFilter">AfterFilter</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item event">
+                                <a href="#event_AfterFormat">AfterFormat</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item event">
+                                <a href="#event_AfterHandleKey">AfterHandleKey</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item event">
+                                <a href="#event_AfterOpen">AfterOpen</a>
 
                                 
                                 
@@ -842,20 +945,14 @@ var instance = $('selector').suggester('getInstance');
                             </li>
                         
                             <li class="index-item event">
-                                <a href="#event_AfterSave
-    example  instance.bind(&#x27;AfterSave&#x27;, function(event) {
-                 saveToServer(event.newValue);
-             });">AfterSave
-    example  instance.bind(&#x27;AfterSave&#x27;, function(event) {
-                 saveToServer(event.newValue);
-             });</a>
+                                <a href="#event_AfterSave">AfterSave</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item event">
-                                <a href="#event_AfterSuggest!~YUIDOC_LINE~!    example     instance.bind(&#x27;AfterSuggest&#x27;, function(event) );">AfterSuggest!~YUIDOC_LINE~!    example     instance.bind(&#x27;AfterSuggest&#x27;, function(event) );</a>
+                                <a href="#event_AfterSuggest">AfterSuggest</a>
 
                                 
                                 
@@ -869,28 +966,42 @@ var instance = $('selector').suggester('getInstance');
                             </li>
                         
                             <li class="index-item event">
-                                <a href="#event_BeforeAjax - allows you to edit settings before ajax is sent!~YUIDOC_LINE~!example  instance.bind(&#x27;BeforeAjax&#x27;, function(event) );">BeforeAjax - allows you to edit settings before ajax is sent!~YUIDOC_LINE~!example  instance.bind(&#x27;BeforeAjax&#x27;, function(event) );</a>
+                                <a href="#event_BeforeAjax">BeforeAjax</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item event">
-                                <a href="#event_BeforeFetch (if event.preventDefault() is called, the suggest box does not open)">BeforeFetch (if event.preventDefault() is called, the suggest box does not open)</a>
+                                <a href="#event_BeforeClose">BeforeClose</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item event">
-                                <a href="#event_BeforeFetch (if event.preventDefault() is called, XHR is not made and suggest box does not open)">BeforeFetch (if event.preventDefault() is called, XHR is not made and suggest box does not open)</a>
+                                <a href="#event_BeforeFetch">BeforeFetch</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item event">
-                                <a href="#event_BeforeFetch (if event.preventDefault() is called, XHR is not made and suggest box does not open)">BeforeFetch (if event.preventDefault() is called, XHR is not made and suggest box does not open)</a>
+                                <a href="#event_BeforeFilter">BeforeFilter</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item event">
+                                <a href="#event_BeforeFormat - use to do your own formatting">BeforeFormat - use to do your own formatting</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item event">
+                                <a href="#event_BeforeHandleKey">BeforeHandleKey</a>
 
                                 
                                 
@@ -898,6 +1009,13 @@ var instance = $('selector').suggester('getInstance');
                         
                             <li class="index-item event">
                                 <a href="#event_BeforeMove">BeforeMove</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item event">
+                                <a href="#event_BeforeOpen">BeforeOpen</a>
 
                                 
                                 
@@ -918,6 +1036,34 @@ var instance = $('selector').suggester('getInstance');
                             </li>
                         
                             <li class="index-item event">
+                                <a href="#event_BeforeRender">BeforeRender</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item event">
+                                <a href="#event_BeforeSave">BeforeSave</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item event">
+                                <a href="#event_BeforeSubmit">BeforeSubmit</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item event">
+                                <a href="#event_BeforeSuggest">BeforeSuggest</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item event">
                                 <a href="#event_Initialize">Initialize</a>
 
                                 
@@ -932,6 +1078,305 @@ var instance = $('selector').suggester('getInstance');
         
             <div id="methods" class="api-class-tabpanel">
                 <h2 class="off-left">Methods</h2>
+
+                
+                    <div id="method__afterFetch" class="method item">
+    <h3 class="name"><code>_afterFetch</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>records</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_Suggester.js.html#l1752"><code>src&#x2F;Suggester.js:1752</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Handler passed to $.ajax().done(function(){...}) that handles suggestion data that is returned</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">records</code>
+                        <span class="type">Array</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The Array of record objects returned from the XHR</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method__beforeFetch" class="method item">
+    <h3 class="name"><code>_beforeFetch</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>jqXHR</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_Suggester.js.html#l1718"><code>src&#x2F;Suggester.js:1718</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>The handler function that is passed to $.ajax({beforeSend:...}) to alter XHR if needed</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">jqXHR</code>
+                        <span class="type">JqXHR</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The jQuery XHR object (see http://api.jquery.com/jQuery.ajax/#jqXHR)</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method__formatSuggestion" class="method item">
+    <h3 class="name"><code>_formatSuggestion</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>record</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>substr</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">String</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_Suggester.js.html#l1794"><code>src&#x2F;Suggester.js:1794</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Format a suggestion before display</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">record</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The record that was suggested</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">substr</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The string that generated the list of suggestions</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">String</span>:
+                    
+                    HTML to use as the item (e.g. '<li>Suggestion</li>')
+                
+            </div>
+        </div>
+    
+
+    
+</div>
 
                 
                     <div id="method__handleStartValue" class="method item">
@@ -966,7 +1411,7 @@ var instance = $('selector').suggester('getInstance');
             
         
         
-        <a href="../files/src_Suggester.js.html#l1239"><code>src&#x2F;Suggester.js:1239</code></a>
+        <a href="../files/src_Suggester.js.html#l1314"><code>src&#x2F;Suggester.js:1314</code></a>
         
         </p>
 
@@ -982,6 +1427,77 @@ var instance = $('selector').suggester('getInstance');
 
     
 
+    
+
+    
+</div>
+
+                
+                    <div id="method__isCursorAtStart" class="method item">
+    <h3 class="name"><code>_isCursorAtStart</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Boolean</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_Suggester.js.html#l1987"><code>src&#x2F;Suggester.js:1987</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Given an input element, get the cursor position. Used to determine if backspace key should delete the previous tag</p>
+    </div>
+
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Boolean</span>:
+                    
+                    true if the cursor is at the start and no text is selected
+                
+            </div>
+        </div>
     
 
     
@@ -1030,7 +1546,7 @@ var instance = $('selector').suggester('getInstance');
             
         
         
-        <a href="../files/src_Suggester.js.html#l1484"><code>src&#x2F;Suggester.js:1484</code></a>
+        <a href="../files/src_Suggester.js.html#l1570"><code>src&#x2F;Suggester.js:1570</code></a>
         
         </p>
 
@@ -1053,7 +1569,7 @@ var instance = $('selector').suggester('getInstance');
                 <li class="param">
                     
                         <code class="param-name">evt</code>
-                        <span class="type">jQuery.Event</span>
+                        <span class="type">Event</span>
                     
 
                     
@@ -1117,7 +1633,7 @@ var instance = $('selector').suggester('getInstance');
             
         
         
-        <a href="../files/src_Suggester.js.html#l1472"><code>src&#x2F;Suggester.js:1472</code></a>
+        <a href="../files/src_Suggester.js.html#l1558"><code>src&#x2F;Suggester.js:1558</code></a>
         
         </p>
 
@@ -1140,7 +1656,7 @@ var instance = $('selector').suggester('getInstance');
                 <li class="param">
                     
                         <code class="param-name">evt</code>
-                        <span class="type">jQuery.Event</span>
+                        <span class="type">Event</span>
                     
 
                     
@@ -1204,7 +1720,7 @@ var instance = $('selector').suggester('getInstance');
             
         
         
-        <a href="../files/src_Suggester.js.html#l1403"><code>src&#x2F;Suggester.js:1403</code></a>
+        <a href="../files/src_Suggester.js.html#l1478"><code>src&#x2F;Suggester.js:1478</code></a>
         
         </p>
 
@@ -1291,7 +1807,7 @@ var instance = $('selector').suggester('getInstance');
             
         
         
-        <a href="../files/src_Suggester.js.html#l1310"><code>src&#x2F;Suggester.js:1310</code></a>
+        <a href="../files/src_Suggester.js.html#l1385"><code>src&#x2F;Suggester.js:1385</code></a>
         
         </p>
 
@@ -1378,7 +1894,7 @@ var instance = $('selector').suggester('getInstance');
             
         
         
-        <a href="../files/src_Suggester.js.html#l1289"><code>src&#x2F;Suggester.js:1289</code></a>
+        <a href="../files/src_Suggester.js.html#l1364"><code>src&#x2F;Suggester.js:1364</code></a>
         
         </p>
 
@@ -1465,7 +1981,7 @@ var instance = $('selector').suggester('getInstance');
             
         
         
-        <a href="../files/src_Suggester.js.html#l1414"><code>src&#x2F;Suggester.js:1414</code></a>
+        <a href="../files/src_Suggester.js.html#l1489"><code>src&#x2F;Suggester.js:1489</code></a>
         
         </p>
 
@@ -1488,13 +2004,13 @@ var instance = $('selector').suggester('getInstance');
                 <li class="param">
                     
                         <code class="param-name">evt</code>
-                        <span class="type">jQuery.Event</span>
+                        <span class="type">Event</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>The keydown event</p>
+                        <p>The keydown event (a raw browser event, not jQuery.Event)</p>
                     </div>
 
                     
@@ -1552,7 +2068,7 @@ var instance = $('selector').suggester('getInstance');
             
         
         
-        <a href="../files/src_Suggester.js.html#l1376"><code>src&#x2F;Suggester.js:1376</code></a>
+        <a href="../files/src_Suggester.js.html#l1451"><code>src&#x2F;Suggester.js:1451</code></a>
         
         </p>
 
@@ -1639,7 +2155,7 @@ var instance = $('selector').suggester('getInstance');
             
         
         
-        <a href="../files/src_Suggester.js.html#l1356"><code>src&#x2F;Suggester.js:1356</code></a>
+        <a href="../files/src_Suggester.js.html#l1431"><code>src&#x2F;Suggester.js:1431</code></a>
         
         </p>
 
@@ -1726,7 +2242,7 @@ var instance = $('selector').suggester('getInstance');
             
         
         
-        <a href="../files/src_Suggester.js.html#l1342"><code>src&#x2F;Suggester.js:1342</code></a>
+        <a href="../files/src_Suggester.js.html#l1417"><code>src&#x2F;Suggester.js:1417</code></a>
         
         </p>
 
@@ -1813,7 +2329,7 @@ var instance = $('selector').suggester('getInstance');
             
         
         
-        <a href="../files/src_Suggester.js.html#l1330"><code>src&#x2F;Suggester.js:1330</code></a>
+        <a href="../files/src_Suggester.js.html#l1405"><code>src&#x2F;Suggester.js:1405</code></a>
         
         </p>
 
@@ -1900,7 +2416,7 @@ var instance = $('selector').suggester('getInstance');
             
         
         
-        <a href="../files/src_Suggester.js.html#l1463"><code>src&#x2F;Suggester.js:1463</code></a>
+        <a href="../files/src_Suggester.js.html#l1549"><code>src&#x2F;Suggester.js:1549</code></a>
         
         </p>
 
@@ -1987,7 +2503,7 @@ var instance = $('selector').suggester('getInstance');
             
         
         
-        <a href="../files/src_Suggester.js.html#l1154"><code>src&#x2F;Suggester.js:1154</code></a>
+        <a href="../files/src_Suggester.js.html#l1216"><code>src&#x2F;Suggester.js:1216</code></a>
         
         </p>
 
@@ -2064,7 +2580,7 @@ var instance = $('selector').suggester('getInstance');
             
         
         
-        <a href="../files/src_Suggester.js.html#l1166"><code>src&#x2F;Suggester.js:1166</code></a>
+        <a href="../files/src_Suggester.js.html#l1228"><code>src&#x2F;Suggester.js:1228</code></a>
         
         </p>
 
@@ -2118,7 +2634,7 @@ var instance = $('selector').suggester('getInstance');
             
         
         
-        <a href="../files/src_Suggester.js.html#l1259"><code>src&#x2F;Suggester.js:1259</code></a>
+        <a href="../files/src_Suggester.js.html#l1334"><code>src&#x2F;Suggester.js:1334</code></a>
         
         </p>
 
@@ -2140,16 +2656,80 @@ var instance = $('selector').suggester('getInstance');
 </div>
 
                 
-                    <div id="method_abortFetch" class="method item">
-    <h3 class="name"><code>abortFetch</code></h3>
+                    <div id="method__setupPubsub" class="method item">
+    <h3 class="name"><code>_setupPubsub</code></h3>
 
     
         <span class="paren">()</span>
     
 
     
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_Suggester.js.html#l1967"><code>src&#x2F;Suggester.js:1967</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Setup publish/subscribe system that uses jQuery's event system. Allows subscribing this way: instance.bind('AfterFilter', myhandler)</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method__spliceTag" class="method item">
+    <h3 class="name"><code>_spliceTag</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>value</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
         <span class="returns-inline">
-            <span class="type">jQuery.Suggester</span>
+            <span class="type">Object</span>
         </span>
     
 
@@ -2176,7 +2756,207 @@ var instance = $('selector').suggester('getInstance');
             
         
         
-        <a href="../files/src_Suggester.js.html#l851"><code>src&#x2F;Suggester.js:851</code></a>
+        <a href="../files/src_Suggester.js.html#l1916"><code>src&#x2F;Suggester.js:1916</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Given tag text, remove a tag from the internal collection and from the DOM</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">value</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The text of the tag</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Object</span>:
+                    
+                    The record associated with that tag
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method__spliceTagByIdx" class="method item">
+    <h3 class="name"><code>_spliceTagByIdx</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>idx</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="../classes/Suggester.Tag.html" class="crosslink">Suggester.Tag</a></span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_Suggester.js.html#l1929"><code>src&#x2F;Suggester.js:1929</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Given an array index, remove a tag from the internal collection and from the DOM</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">idx</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The index position in the internal collection</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="../classes/Suggester.Tag.html" class="crosslink">Suggester.Tag</a></span>:
+                    
+                    The Suggester.Tag object that was removed
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_abortFetch" class="method item">
+    <h3 class="name"><code>abortFetch</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="../classes/Suggester.html" class="crosslink">Suggester</a></span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <span class="flag chainable">chainable</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_Suggester.js.html#l884"><code>src&#x2F;Suggester.js:884</code></a>
         
         </p>
 
@@ -2199,7 +2979,7 @@ var instance = $('selector').suggester('getInstance');
             <div class="returns-description">
                 
                     
-                        <span class="type">jQuery.Suggester</span>:
+                        <span class="type"><a href="../classes/Suggester.html" class="crosslink">Suggester</a></span>:
                     
                 
             </div>
@@ -2432,7 +3212,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     
         <span class="returns-inline">
-            <span class="type">jQuery.Suggester</span>
+            <span class="type"><a href="../classes/Suggester.html" class="crosslink">Suggester</a></span>
         </span>
     
 
@@ -2505,7 +3285,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             <div class="returns-description">
                 
                     
-                        <span class="type">jQuery.Suggester</span>:
+                        <span class="type"><a href="../classes/Suggester.html" class="crosslink">Suggester</a></span>:
                     
                 
             </div>
@@ -2564,7 +3344,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l1905"><code>src&#x2F;Suggester.js:1905</code></a>
+        <a href="../files/src_Suggester.js.html#l2036"><code>src&#x2F;Suggester.js:2036</code></a>
         
         </p>
 
@@ -2659,7 +3439,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l1056"><code>src&#x2F;Suggester.js:1056</code></a>
+        <a href="../files/src_Suggester.js.html#l1118"><code>src&#x2F;Suggester.js:1118</code></a>
         
         </p>
 
@@ -2693,6 +3473,78 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 </div>
 
                 
+                    <div id="method_closeSuggestBox" class="method item">
+    <h3 class="name"><code>closeSuggestBox</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="../classes/Suggester.html" class="crosslink">Suggester</a></span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <span class="flag chainable">chainable</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_Suggester.js.html#l1008"><code>src&#x2F;Suggester.js:1008</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Hide the suggestion box</p>
+    </div>
+
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="../classes/Suggester.html" class="crosslink">Suggester</a></span>:
+                    
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
                     <div id="method_deselectAllItems" class="method item">
     <h3 class="name"><code>deselectAllItems</code></h3>
 
@@ -2702,7 +3554,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     
         <span class="returns-inline">
-            <span class="type">jQuery.Suggester</span>
+            <span class="type"><a href="../classes/Suggester.html" class="crosslink">Suggester</a></span>
         </span>
     
 
@@ -2752,7 +3604,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             <div class="returns-description">
                 
                     
-                        <span class="type">jQuery.Suggester</span>:
+                        <span class="type"><a href="../classes/Suggester.html" class="crosslink">Suggester</a></span>:
                     
                 
             </div>
@@ -2782,7 +3634,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     
         <span class="returns-inline">
-            <span class="type">jQuery.Suggester</span>
+            <span class="type"><a href="../classes/Suggester.html" class="crosslink">Suggester</a></span>
         </span>
     
 
@@ -2855,7 +3707,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             <div class="returns-description">
                 
                     
-                        <span class="type">jQuery.Suggester</span>:
+                        <span class="type"><a href="../classes/Suggester.html" class="crosslink">Suggester</a></span>:
                     
                 
             </div>
@@ -3008,7 +3860,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     
         <span class="returns-inline">
-            <span class="type">jQuery.Suggester</span>
+            <span class="type"><a href="../classes/Suggester.html" class="crosslink">Suggester</a></span>
         </span>
     
 
@@ -3037,7 +3889,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l1079"><code>src&#x2F;Suggester.js:1079</code></a>
+        <a href="../files/src_Suggester.js.html#l1141"><code>src&#x2F;Suggester.js:1141</code></a>
         
         </p>
 
@@ -3083,8 +3935,112 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             <div class="returns-description">
                 
                     
-                        <span class="type">jQuery.Suggester</span>:
+                        <span class="type"><a href="../classes/Suggester.html" class="crosslink">Suggester</a></span>:
                     
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_fetchResults" class="method item">
+    <h3 class="name"><code>fetchResults</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>text</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">JqXHR</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_Suggester.js.html#l816"><code>src&#x2F;Suggester.js:816</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Fetch suggestions from an ajax URL</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">text</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The text to search for</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">JqXHR</span>:
+                    
+                    The
                 
             </div>
         </div>
@@ -3113,7 +4069,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     
         <span class="returns-inline">
-            <span class="type">Object</span>
+            <span class="type">Object | False</span>
         </span>
     
 
@@ -3140,7 +4096,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l731"><code>src&#x2F;Suggester.js:731</code></a>
+        <a href="../files/src_Suggester.js.html#l733"><code>src&#x2F;Suggester.js:733</code></a>
         
         </p>
 
@@ -3151,7 +4107,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
     </div>
 
     <div class="description">
-        <p>Find a suggestion record by text</p>
+        <p>Find a suggestion record by text. Only applies when this.options.data is set.</p>
     </div>
 
     
@@ -3169,7 +4125,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
                     
 
                     <div class="param-description">
-                         
+                        <p>The text to search for</p>
                     </div>
 
                     
@@ -3186,8 +4142,9 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             <div class="returns-description">
                 
                     
-                        <span class="type">Object</span>:
+                        <span class="type">Object | False</span>:
                     
+                    The matched record object or false if nothing matched.
                 
             </div>
         </div>
@@ -3206,7 +4163,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     
         <span class="returns-inline">
-            <span class="type">jQuery.Suggester</span>
+            <span class="type"><a href="../classes/Suggester.html" class="crosslink">Suggester</a></span>
         </span>
     
 
@@ -3235,7 +4192,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l998"><code>src&#x2F;Suggester.js:998</code></a>
+        <a href="../files/src_Suggester.js.html#l1035"><code>src&#x2F;Suggester.js:1035</code></a>
         
         </p>
 
@@ -3258,7 +4215,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             <div class="returns-description">
                 
                     
-                        <span class="type">jQuery.Suggester</span>:
+                        <span class="type"><a href="../classes/Suggester.html" class="crosslink">Suggester</a></span>:
                     
                 
             </div>
@@ -3288,7 +4245,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     
         <span class="returns-inline">
-            <span class="type">jQuery.Suggester</span>
+            <span class="type"><a href="../classes/Suggester.html" class="crosslink">Suggester</a></span>
         </span>
     
 
@@ -3361,7 +4318,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             <div class="returns-description">
                 
                     
-                        <span class="type">jQuery.Suggester</span>:
+                        <span class="type"><a href="../classes/Suggester.html" class="crosslink">Suggester</a></span>:
                     
                 
             </div>
@@ -3451,7 +4408,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     
         <span class="returns-inline">
-            <span class="type">jQuery.Suggester</span>
+            <span class="type"><a href="../classes/Suggester.html" class="crosslink">Suggester</a></span>
         </span>
     
 
@@ -3478,7 +4435,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l1146"><code>src&#x2F;Suggester.js:1146</code></a>
+        <a href="../files/src_Suggester.js.html#l1208"><code>src&#x2F;Suggester.js:1208</code></a>
         
         </p>
 
@@ -3501,7 +4458,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             <div class="returns-description">
                 
                     
-                        <span class="type">jQuery.Suggester</span>:
+                        <span class="type"><a href="../classes/Suggester.html" class="crosslink">Suggester</a></span>:
                     
                 
             </div>
@@ -3558,7 +4515,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l1009"><code>src&#x2F;Suggester.js:1009</code></a>
+        <a href="../files/src_Suggester.js.html#l1046"><code>src&#x2F;Suggester.js:1046</code></a>
         
         </p>
 
@@ -3616,6 +4573,110 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 </div>
 
                 
+                    <div id="method_getTagIndex" class="method item">
+    <h3 class="name"><code>getTagIndex</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>value</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Number</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_Suggester.js.html#l1951"><code>src&#x2F;Suggester.js:1951</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Find a tag given value</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">value</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The text of the tag</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Number</span>:
+                    
+                    The index position of the tag in the internal collection or -1 if not found
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
                     <div id="method_getTags" class="method item">
     <h3 class="name"><code>getTags</code></h3>
 
@@ -3652,7 +4713,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l1071"><code>src&#x2F;Suggester.js:1071</code></a>
+        <a href="../files/src_Suggester.js.html#l1133"><code>src&#x2F;Suggester.js:1133</code></a>
         
         </p>
 
@@ -3722,7 +4783,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l1103"><code>src&#x2F;Suggester.js:1103</code></a>
+        <a href="../files/src_Suggester.js.html#l1165"><code>src&#x2F;Suggester.js:1165</code></a>
         
         </p>
 
@@ -3746,6 +4807,111 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
                 
                     
                         <span class="type">Array</span>:
+                    
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_handleSuggestions" class="method item">
+    <h3 class="name"><code>handleSuggestions</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>records</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="../classes/Suggester.html" class="crosslink">Suggester</a></span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <span class="flag chainable">chainable</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_Suggester.js.html#l896"><code>src&#x2F;Suggester.js:896</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Take the given records and build and display suggestion box. Usually only called internally.</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">records</code>
+                        <span class="type">Array</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The result records to use to build the suggestion list</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="../classes/Suggester.html" class="crosslink">Suggester</a></span>:
                     
                 
             </div>
@@ -3792,7 +4958,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l902"><code>src&#x2F;Suggester.js:902</code></a>
+        <a href="../files/src_Suggester.js.html#l946"><code>src&#x2F;Suggester.js:946</code></a>
         
         </p>
 
@@ -3914,6 +5080,78 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 </div>
 
                 
+                    <div id="method_openSuggestBox" class="method item">
+    <h3 class="name"><code>openSuggestBox</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="../classes/Suggester.html" class="crosslink">Suggester</a></span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <span class="flag chainable">chainable</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_Suggester.js.html#l954"><code>src&#x2F;Suggester.js:954</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Manually open the suggestion box in whatever state it is. Usually only called internally.</p>
+    </div>
+
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="../classes/Suggester.html" class="crosslink">Suggester</a></span>:
+                    
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
                     <div id="method_publish" class="method item">
     <h3 class="name"><code>publish</code></h3>
 
@@ -3966,7 +5204,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l1130"><code>src&#x2F;Suggester.js:1130</code></a>
+        <a href="../files/src_Suggester.js.html#l1192"><code>src&#x2F;Suggester.js:1192</code></a>
         
         </p>
 
@@ -4058,7 +5296,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     
         <span class="returns-inline">
-            <span class="type">jQuery.Suggester</span>
+            <span class="type"><a href="../classes/Suggester.html" class="crosslink">Suggester</a></span>
         </span>
     
 
@@ -4070,6 +5308,8 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     
 
+    
+        <span class="flag chainable">chainable</span>
     
 
     
@@ -4131,7 +5371,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             <div class="returns-description">
                 
                     
-                        <span class="type">jQuery.Suggester</span>:
+                        <span class="type"><a href="../classes/Suggester.html" class="crosslink">Suggester</a></span>:
                     
                 
             </div>
@@ -4161,7 +5401,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     
         <span class="returns-inline">
-            <span class="type">jQuery.Suggester</span>
+            <span class="type"><a href="../classes/Suggester.html" class="crosslink">Suggester</a></span>
         </span>
     
 
@@ -4234,8 +5474,79 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             <div class="returns-description">
                 
                     
-                        <span class="type">jQuery.Suggester</span>:
+                        <span class="type"><a href="../classes/Suggester.html" class="crosslink">Suggester</a></span>:
                     
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_save" class="method item">
+    <h3 class="name"><code>save</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">String</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_Suggester.js.html#l1869"><code>src&#x2F;Suggester.js:1869</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Set the value of the original input to a comma-delimited set of labels</p>
+    </div>
+
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">String</span>:
+                    
+                    The new value
                 
             </div>
         </div>
@@ -4264,7 +5575,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     
         <span class="returns-inline">
-            <span class="type">jQuery.Suggester</span>
+            <span class="type"><a href="../classes/Suggester.html" class="crosslink">Suggester</a></span>
         </span>
     
 
@@ -4337,7 +5648,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             <div class="returns-description">
                 
                     
-                        <span class="type">jQuery.Suggester</span>:
+                        <span class="type"><a href="../classes/Suggester.html" class="crosslink">Suggester</a></span>:
                     
                 
             </div>
@@ -4384,7 +5695,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l1090"><code>src&#x2F;Suggester.js:1090</code></a>
+        <a href="../files/src_Suggester.js.html#l1152"><code>src&#x2F;Suggester.js:1152</code></a>
         
         </p>
 
@@ -4437,7 +5748,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     
         <span class="returns-inline">
-            <span class="type">jQuery.Suggester</span>
+            <span class="type"><a href="../classes/Suggester.html" class="crosslink">Suggester</a></span>
         </span>
     
 
@@ -4510,7 +5821,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             <div class="returns-description">
                 
                     
-                        <span class="type">jQuery.Suggester</span>:
+                        <span class="type"><a href="../classes/Suggester.html" class="crosslink">Suggester</a></span>:
                     
                 
             </div>
@@ -4540,7 +5851,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     
         <span class="returns-inline">
-            <span class="type">jQuery.Suggester</span>
+            <span class="type"><a href="../classes/Suggester.html" class="crosslink">Suggester</a></span>
         </span>
     
 
@@ -4613,7 +5924,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             <div class="returns-description">
                 
                     
-                        <span class="type">jQuery.Suggester</span>:
+                        <span class="type"><a href="../classes/Suggester.html" class="crosslink">Suggester</a></span>:
                     
                 
             </div>
@@ -4643,7 +5954,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     
         <span class="returns-inline">
-            <span class="type">jQuery.Suggester</span>
+            <span class="type"><a href="../classes/Suggester.html" class="crosslink">Suggester</a></span>
         </span>
     
 
@@ -4672,7 +5983,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l1115"><code>src&#x2F;Suggester.js:1115</code></a>
+        <a href="../files/src_Suggester.js.html#l1177"><code>src&#x2F;Suggester.js:1177</code></a>
         
         </p>
 
@@ -4718,7 +6029,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             <div class="returns-description">
                 
                     
-                        <span class="type">jQuery.Suggester</span>:
+                        <span class="type"><a href="../classes/Suggester.html" class="crosslink">Suggester</a></span>:
                     
                 
             </div>
@@ -4738,7 +6049,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     
         <span class="returns-inline">
-            <span class="type">jQuery.Suggester</span>
+            <span class="type"><a href="../classes/Suggester.html" class="crosslink">Suggester</a></span>
         </span>
     
 
@@ -4750,6 +6061,8 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     
 
+    
+        <span class="flag chainable">chainable</span>
     
 
     
@@ -4765,7 +6078,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l800"><code>src&#x2F;Suggester.js:800</code></a>
+        <a href="../files/src_Suggester.js.html#l801"><code>src&#x2F;Suggester.js:801</code></a>
         
         </p>
 
@@ -4776,8 +6089,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
     </div>
 
     <div class="description">
-        <p>Show text indicating there are no suggestions
-Text is defined in this.options.emptyText</p>
+        <p>Show text indicating there are no suggestions - defined in this.options.emptyText</p>
     </div>
 
     
@@ -4789,7 +6101,7 @@ Text is defined in this.options.emptyText</p>
             <div class="returns-description">
                 
                     
-                        <span class="type">jQuery.Suggester</span>:
+                        <span class="type"><a href="../classes/Suggester.html" class="crosslink">Suggester</a></span>:
                     
                 
             </div>
@@ -4809,7 +6121,7 @@ Text is defined in this.options.emptyText</p>
 
     
         <span class="returns-inline">
-            <span class="type">jQuery.Suggester</span>
+            <span class="type"><a href="../classes/Suggester.html" class="crosslink">Suggester</a></span>
         </span>
     
 
@@ -4836,7 +6148,7 @@ Text is defined in this.options.emptyText</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l785"><code>src&#x2F;Suggester.js:785</code></a>
+        <a href="../files/src_Suggester.js.html#l787"><code>src&#x2F;Suggester.js:787</code></a>
         
         </p>
 
@@ -4847,8 +6159,7 @@ Text is defined in this.options.emptyText</p>
     </div>
 
     <div class="description">
-        <p>Show the prompt text to give a hint to users
-Only called when there are no items and this.options.prompt is truthy</p>
+        <p>Show the prompt text to give a hint to users. Only called when there are no items and this.options.prompt is truthy</p>
     </div>
 
     
@@ -4860,13 +6171,157 @@ Only called when there are no items and this.options.prompt is truthy</p>
             <div class="returns-description">
                 
                     
-                        <span class="type">jQuery.Suggester</span>:
+                        <span class="type"><a href="../classes/Suggester.html" class="crosslink">Suggester</a></span>:
                     
                 
             </div>
         </div>
     
 
+    
+</div>
+
+                
+                    <div id="method_subclass" class="method item">
+    <h3 class="name"><code>subclass</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>jQueryMethodName</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[properties]</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Function</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_Suggester.js.html#l2066"><code>src&#x2F;Suggester.js:2066</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Create a subclass of Suggester</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">jQueryMethodName</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The method name to add to jQuery.fn</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[properties]</code>
+                        <span class="type">Object</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Additional properties and methods to add to subclass</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Function</span>:
+                    
+                    The new class object
+                
+            </div>
+        </div>
+    
+
+    
+        <div class="example">
+            <h4>Example:</h4>
+
+            <div class="example-content">
+                <pre class="code prettyprint"><code>var MySuggester = $.Suggester.subclass('mysuggester', {
+    initialize: function($textInput, options) {
+        options = options || {};
+        this.options.myOption = options.myOptions || 'default';
+        this.callParent('initialize', $textInput, options);
+    }
+});
+// now call $(selector).mysuggester(options);
+</code></pre>
+            </div>
+        </div>
     
 </div>
 
@@ -4890,7 +6345,7 @@ Only called when there are no items and this.options.prompt is truthy</p>
 
     
         <span class="returns-inline">
-            <span class="type">jQuery.Suggester</span>
+            <span class="type"><a href="../classes/Suggester.html" class="crosslink">Suggester</a></span>
         </span>
     
 
@@ -4963,7 +6418,7 @@ Only called when there are no items and this.options.prompt is truthy</p>
             <div class="returns-description">
                 
                     
-                        <span class="type">jQuery.Suggester</span>:
+                        <span class="type"><a href="../classes/Suggester.html" class="crosslink">Suggester</a></span>:
                     
                 
             </div>
@@ -4983,7 +6438,7 @@ Only called when there are no items and this.options.prompt is truthy</p>
 
     
         <span class="returns-inline">
-            <span class="type">jQuery.Suggester</span>
+            <span class="type"><a href="../classes/Suggester.html" class="crosslink">Suggester</a></span>
         </span>
     
 
@@ -4995,6 +6450,8 @@ Only called when there are no items and this.options.prompt is truthy</p>
 
     
 
+    
+        <span class="flag chainable">chainable</span>
     
 
     
@@ -5010,7 +6467,7 @@ Only called when there are no items and this.options.prompt is truthy</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l766"><code>src&#x2F;Suggester.js:766</code></a>
+        <a href="../files/src_Suggester.js.html#l768"><code>src&#x2F;Suggester.js:768</code></a>
         
         </p>
 
@@ -5021,8 +6478,7 @@ Only called when there are no items and this.options.prompt is truthy</p>
     </div>
 
     <div class="description">
-        <p>Initiate suggestion process if the input text is >= this.options.minChars
-Otherwise show prompt</p>
+        <p>Initiate suggestion process if the input text is >= this.options.minChars, otherwise show prompt</p>
     </div>
 
     
@@ -5034,7 +6490,7 @@ Otherwise show prompt</p>
             <div class="returns-description">
                 
                     
-                        <span class="type">jQuery.Suggester</span>:
+                        <span class="type"><a href="../classes/Suggester.html" class="crosslink">Suggester</a></span>:
                     
                 
             </div>
@@ -5054,7 +6510,7 @@ Otherwise show prompt</p>
 
     
         <span class="returns-inline">
-            <span class="type">jQuery.Suggester</span>
+            <span class="type"><a href="../classes/Suggester.html" class="crosslink">Suggester</a></span>
         </span>
     
 
@@ -5104,7 +6560,7 @@ Otherwise show prompt</p>
             <div class="returns-description">
                 
                     
-                        <span class="type">jQuery.Suggester</span>:
+                        <span class="type"><a href="../classes/Suggester.html" class="crosslink">Suggester</a></span>:
                     
                 
             </div>
@@ -5855,7 +7311,7 @@ See Suggester/constructor:method for documentation on each option</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l1899"><code>src&#x2F;Suggester.js:1899</code></a>
+        <a href="../files/src_Suggester.js.html#l2030"><code>src&#x2F;Suggester.js:2030</code></a>
         
         </p>
 
@@ -7068,57 +8524,8 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 </div>
 
                 
-                    <div id="event_AfterClose
-    example  instance.bind(&#x27;AfterClose&#x27;, function(event) {
-                alert(&#x27;You chose &#x27; + instance.$currentItem.text());
-             });" class="events item">
-    <h3 class="name"><code>AfterClose
-    example  instance.bind(&#x27;AfterClose&#x27;, function(event) {
-                alert(&#x27;You chose &#x27; + instance.$currentItem.text());
-             });</code></h3>
-    <span class="type">!~YUIDOC_LINE~!                 event.preventDefault();!~YUIDOC_LINE~!                 window.location.href = '?page=' + instance.$currentItem.text();!~YUIDOC_LINE~!</span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_Suggester.js.html#l971"><code>src&#x2F;Suggester.js:971</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Hide the suggestion list</p>
-    </div>
-
-    
-
-
-    
-</div>
-
-                
-                    <div id="event_AfterFormat - able to alter the html after it has be constructed" class="events item">
-    <h3 class="name"><code>AfterFormat - able to alter the html after it has be constructed</code></h3>
+                    <div id="event_AfterAjax" class="events item">
+    <h3 class="name"><code>AfterAjax</code></h3>
     <span class="type"></span>
 
     
@@ -7140,7 +8547,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             
         
         
-        <a href="../files/src_Suggester.js.html#l1685"><code>src&#x2F;Suggester.js:1685</code></a>
+        <a href="../files/src_Suggester.js.html#l864"><code>src&#x2F;Suggester.js:864</code></a>
         
         </p>
 
@@ -7150,7 +8557,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
     </div>
 
     <div class="description">
-        <p>Format a suggestion before display</p>
+        <p>Access the jqXHR after initiating the ajax call but before it returns</p>
     </div>
 
     
@@ -7161,14 +8568,14 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             
                 <li class="param">
                     
-                        <code class="param-name">record</code>
+                        <code class="param-name">settings</code>
                         <span class="type">Object</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>The record that was suggested</p>
+                        <p>Settings sent to $.ajax()</p>
                     </div>
 
                     
@@ -7176,14 +8583,14 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             
                 <li class="param">
                     
-                        <code class="param-name">substr</code>
+                        <code class="param-name">term</code>
                         <span class="type">String</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>The string that generated the list of suggestions</p>
+                        <p>The term which was searched</p>
                     </div>
 
                     
@@ -7191,91 +8598,14 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             
                 <li class="param">
                     
-                        <code class="param-name">record</code>
-                        <span class="type">Object</span>
+                        <code class="param-name">jqXHR</code>
+                        <span class="type">JqXHR</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>The record object that is being suggested</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">substr</code>
-                        <span class="type">Object</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>The part of the string that matches the suggestion search fields</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">html</code>
-                        <span class="type">!~YUIDOC_LINE~!                      event.preventDefault();!~YUIDOC_LINE~!                      event.html = '<li>My suggestion html</li>';!~YUIDOC_LINE~!</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>If you set event.html and then call event.preventDefault(), that html will be used instead of the default generated html
-    example       instance.bind('BeforeFormat', function(event) );</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">record</code>
-                        <span class="type">Object</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>The record object that is being suggested</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">substr</code>
-                        <span class="type">Object</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>The part of the string that matches the suggestion search fields</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">html</code>
-                        <span class="type">!~YUIDOC_LINE~!                      event.preventDefault();!~YUIDOC_LINE~!                      event.html; // <li><strong class="sugg-match">Canis</strong> Major</li>!~YUIDOC_LINE~!                      event.html = event.html.replace(/<\/?strong\b/, 'em'),!~YUIDOC_LINE~!</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>Another chance to alter the html of the item after it has been generated
-    example       instance.bind('AfterFormat', function(event) );</p>
+                        <p>The jquery XMLHttpRequest object</p>
                     </div>
 
                     
@@ -7287,32 +8617,23 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
 
     
+        <div class="example">
+            <h4>Example:</h4>
+
+            <div class="example-content">
+                <pre class="code prettyprint"><code>instance.bind('AfterAjax', function(event) {
+    event.jqXHR.done(stopSpinner);  
+});
+</code></pre>
+            </div>
+        </div>
+    
 </div>
 
                 
-                    <div id="event_AfterOpen
-    example  instance.one(&#x27;AfterOpen&#x27;, function(event) {
-         this.$suggList.css({
-           borderTopWidth: &#x27;10px&#x27;,
-           borderTopColor: &#x27;red&#x27;
-         });
-                 alert(&#x27;Tip: You may choose an item from the suggestion list.&#x27;);
-                 this.$suggList.css({
-           borderTopWidth: &#x27;0&#x27;
-         });
-             });" class="events item">
-    <h3 class="name"><code>AfterOpen
-    example  instance.one(&#x27;AfterOpen&#x27;, function(event) {
-         this.$suggList.css({
-           borderTopWidth: &#x27;10px&#x27;,
-           borderTopColor: &#x27;red&#x27;
-         });
-                 alert(&#x27;Tip: You may choose an item from the suggestion list.&#x27;);
-                 this.$suggList.css({
-           borderTopWidth: &#x27;0&#x27;
-         });
-             });</code></h3>
-    <span class="type">!~YUIDOC_LINE~!                 event.preventDefault();!~YUIDOC_LINE~!                 alert('No suggestions for you!');!~YUIDOC_LINE~!</span>
+                    <div id="event_AfterClose" class="events item">
+    <h3 class="name"><code>AfterClose</code></h3>
+    <span class="type"></span>
 
     
 
@@ -7333,7 +8654,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             
         
         
-        <a href="../files/src_Suggester.js.html#l910"><code>src&#x2F;Suggester.js:910</code></a>
+        <a href="../files/src_Suggester.js.html#l1028"><code>src&#x2F;Suggester.js:1028</code></a>
         
         </p>
 
@@ -7343,7 +8664,424 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
     </div>
 
     <div class="description">
-        <p>Manually open the suggestion box in whatever state it is</p>
+        <p>Fired after suggestion box is hidden</p>
+    </div>
+
+    
+
+
+    
+</div>
+
+                
+                    <div id="event_AfterFetch" class="events item">
+    <h3 class="name"><code>AfterFetch</code></h3>
+    <span class="type"></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_Suggester.js.html#l1758"><code>src&#x2F;Suggester.js:1758</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+        <div class="params">
+            <h4>Event Payload:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">jqXHR</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The jQuery XHR object (see http://api.jquery.com/jQuery.ajax/#jqXHR)</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">records</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The Array of record objects returned from the XHR</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">term</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The term that was search for</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+
+    
+        <div class="example">
+            <h4>Example:</h4>
+
+            <div class="example-content">
+                <pre class="code prettyprint"><code>instance.bind('AfterFetch', function(event) {
+    event.data.push({value:'', label:'Adding a test suggestion at the end'});
+});
+</code></pre>
+            </div>
+        </div>
+    
+</div>
+
+                
+                    <div id="event_AfterFilter" class="events item">
+    <h3 class="name"><code>AfterFilter</code></h3>
+    <span class="type"></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_Suggester.js.html#l1099"><code>src&#x2F;Suggester.js:1099</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Called after the search for results</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Event Payload:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">text</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The that was searched for</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">results</code>
+                        <span class="type">Array</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The array of records that matched (writeable)</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+
+    
+        <div class="example">
+            <h4>Example:</h4>
+
+            <div class="example-content">
+                <pre class="code prettyprint"><code>instance.bind('AfterFilter', function(event) {
+    // add a result onto the beginning
+    event.results.unshift({value:'Search the web for "' + event.text '"');
+});
+</code></pre>
+            </div>
+        </div>
+    
+</div>
+
+                
+                    <div id="event_AfterFormat" class="events item">
+    <h3 class="name"><code>AfterFormat</code></h3>
+    <span class="type"></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_Suggester.js.html#l1840"><code>src&#x2F;Suggester.js:1840</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Alter the HTML that has been constructed before it is put into the DOM</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Event Payload:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">record</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The record object that is being suggested</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">substr</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The part of the string that matches the suggestion search fields</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">html</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Change the HTML before it is put into the dom</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+
+    
+        <div class="example">
+            <h4>Example:</h4>
+
+            <div class="example-content">
+                <pre class="code prettyprint"><code>instance.bind('AfterFormat', function(event) {
+    event.html; // &lt;li&gt;&lt;strong class="sugg-match"&gt;Canis&lt;/strong&gt; Major&lt;/li&gt;
+    event.html = event.html.replace(/&lt;\/?strong\b/, 'em');
+});
+</code></pre>
+            </div>
+        </div>
+    
+</div>
+
+                
+                    <div id="event_AfterHandleKey" class="events item">
+    <h3 class="name"><code>AfterHandleKey</code></h3>
+    <span class="type"></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_Suggester.js.html#l1540"><code>src&#x2F;Suggester.js:1540</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Access the keydown event after Suggester processes it</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Event Payload:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">keydown</code>
+                        <span class="type">Event</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The keydown event (a raw browser event, not jQuery.Event)</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+
+    
+</div>
+
+                
+                    <div id="event_AfterOpen" class="events item">
+    <h3 class="name"><code>AfterOpen</code></h3>
+    <span class="type"></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_Suggester.js.html#l1001"><code>src&#x2F;Suggester.js:1001</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Fires after suggestion box is displayed</p>
     </div>
 
     
@@ -7376,7 +9114,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             
         
         
-        <a href="../files/src_Suggester.js.html#l716"><code>src&#x2F;Suggester.js:716</code></a>
+        <a href="../files/src_Suggester.js.html#l717"><code>src&#x2F;Suggester.js:717</code></a>
         
         </p>
 
@@ -7404,7 +9142,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
                     
 
                     <div class="param-description">
-                        <p>The tag that was removed</p>
+                        <p>The tag element that was removed</p>
                     </div>
 
                     
@@ -7440,6 +9178,21 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
                     
                 </li>
             
+                <li class="param">
+                    
+                        <code class="param-name">The</code>
+                        <span class="type"><a href="../classes/Suggester.Tag.html" class="crosslink">Suggester.Tag</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>tag object that was removed</p>
+                    </div>
+
+                    
+                </li>
+            
             </ul>
         </div>
     
@@ -7449,15 +9202,9 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 </div>
 
                 
-                    <div id="event_AfterSave
-    example  instance.bind(&#x27;AfterSave&#x27;, function(event) {
-                 saveToServer(event.newValue);
-             });" class="events item">
-    <h3 class="name"><code>AfterSave
-    example  instance.bind(&#x27;AfterSave&#x27;, function(event) {
-                 saveToServer(event.newValue);
-             });</code></h3>
-    <span class="type">!~YUIDOC_LINE~!                 event.newValue += '!';!~YUIDOC_LINE~!</span>
+                    <div id="event_AfterSave" class="events item">
+    <h3 class="name"><code>AfterSave</code></h3>
+    <span class="type"></span>
 
     
 
@@ -7478,7 +9225,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             
         
         
-        <a href="../files/src_Suggester.js.html#l1752"><code>src&#x2F;Suggester.js:1752</code></a>
+        <a href="../files/src_Suggester.js.html#l1900"><code>src&#x2F;Suggester.js:1900</code></a>
         
         </p>
 
@@ -7488,50 +9235,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
     </div>
 
     <div class="description">
-        <p>Set the value of the original input to a comma-delimited set of labels</p>
-    </div>
-
-    
-
-
-    
-</div>
-
-                
-                    <div id="event_AfterSuggest!~YUIDOC_LINE~!    example     instance.bind(&#x27;AfterSuggest&#x27;, function(event) );" class="events item">
-    <h3 class="name"><code>AfterSuggest!~YUIDOC_LINE~!    example     instance.bind(&#x27;AfterSuggest&#x27;, function(event) );</code></h3>
-    <span class="type">!~YUIDOC_LINE~!                    alert('Choose a suggested item if you like.');!~YUIDOC_LINE~!</span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_Suggester.js.html#l862"><code>src&#x2F;Suggester.js:862</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Take result records and build and display suggestion box</p>
+        <p>Do something after saving value to original input</p>
     </div>
 
     
@@ -7542,16 +9246,14 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             
                 <li class="param">
                     
-                        <code class="param-name">text</code>
-                        <span class="type">!~YUIDOC_LINE~!                    if (evt.text == 'dont suggest') !~YUIDOC_LINE~!                         event.preventDefault(); // suggest box will not open!~YUIDOC_LINE~!</span>
+                        <code class="param-name">newValue</code>
+                        <span class="type">String</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>The text that was searched for
-    example     instance.bind('BeforeSuggest', function(event) 
-                });</p>
+                        <p>The value that was written to the original input</p>
                     </div>
 
                     
@@ -7559,6 +9261,60 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             
             </ul>
         </div>
+    
+
+
+    
+        <div class="example">
+            <h4>Example:</h4>
+
+            <div class="example-content">
+                <pre class="code prettyprint"><code>instance.bind('AfterSave', function(event) {
+    saveToServer(event.newValue);
+});
+</code></pre>
+            </div>
+        </div>
+    
+</div>
+
+                
+                    <div id="event_AfterSuggest" class="events item">
+    <h3 class="name"><code>AfterSuggest</code></h3>
+    <span class="type"></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_Suggester.js.html#l939"><code>src&#x2F;Suggester.js:939</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Fires after displaying suggestions</p>
+    </div>
+
     
 
 
@@ -7691,9 +9447,9 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 </div>
 
                 
-                    <div id="event_BeforeAjax - allows you to edit settings before ajax is sent!~YUIDOC_LINE~!example  instance.bind(&#x27;BeforeAjax&#x27;, function(event) );" class="events item">
-    <h3 class="name"><code>BeforeAjax - allows you to edit settings before ajax is sent!~YUIDOC_LINE~!example  instance.bind(&#x27;BeforeAjax&#x27;, function(event) );</code></h3>
-    <span class="type">!~YUIDOC_LINE~!             event.settings.type = 'post';!~YUIDOC_LINE~!</span>
+                    <div id="event_BeforeAjax" class="events item">
+    <h3 class="name"><code>BeforeAjax</code></h3>
+    <span class="type"></span>
 
     
 
@@ -7714,7 +9470,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             
         
         
-        <a href="../files/src_Suggester.js.html#l815"><code>src&#x2F;Suggester.js:815</code></a>
+        <a href="../files/src_Suggester.js.html#l839"><code>src&#x2F;Suggester.js:839</code></a>
         
         </p>
 
@@ -7724,7 +9480,240 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
     </div>
 
     <div class="description">
-        <p>Fetch suggestions from an ajax URL</p>
+        <p>Edit settings before ajax request is sent</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Event Payload:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">settings</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Settings sent to $.ajax()</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">term</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The term for which we will search</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+
+    
+        <div class="example">
+            <h4>Example:</h4>
+
+            <div class="example-content">
+                <pre class="code prettyprint"><code>instance.bind('BeforeAjax', function(event) {
+    event.settings.timeout = 5000;
+    startSpinner(event.term);
+});          
+</code></pre>
+            </div>
+        </div>
+    
+</div>
+
+                
+                    <div id="event_BeforeClose" class="events item">
+    <h3 class="name"><code>BeforeClose</code></h3>
+    <span class="type"></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_Suggester.js.html#l1016"><code>src&#x2F;Suggester.js:1016</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Fired before suggestion box is hidden</p>
+    </div>
+
+    
+
+
+    
+</div>
+
+                
+                    <div id="event_BeforeFetch" class="events item">
+    <h3 class="name"><code>BeforeFetch</code></h3>
+    <span class="type"></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_Suggester.js.html#l1724"><code>src&#x2F;Suggester.js:1724</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>A chance to access the jqXHR before the ajax request has been sent</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Event Payload:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">jqXHR</code>
+                        <span class="type">JqXHR</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>the jQuery XHR object (see http://api.jquery.com/jQuery.ajax/#jqXHR)</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">term</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>the term that is being searched for</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+
+    
+        <div class="example">
+            <h4>Example:</h4>
+
+            <div class="example-content">
+                <pre class="code prettyprint"><code>instance.bind('BeforeFetch', function(event) {
+    event.jqXHR.setRequestHeader('something','something');
+    event.jqXHR.fail(function() {
+        alert('ajax call failed');
+    }).always(function() {
+        alert('ajax call finished regardless of success or failure');
+    });
+});
+</code></pre>
+            </div>
+        </div>
+    
+</div>
+
+                
+                    <div id="event_BeforeFilter" class="events item">
+    <h3 class="name"><code>BeforeFilter</code></h3>
+    <span class="type"></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_Suggester.js.html#l1054"><code>src&#x2F;Suggester.js:1054</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Called before the search for results</p>
     </div>
 
     
@@ -7754,11 +9743,23 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
 
     
+        <div class="example">
+            <h4>Example:</h4>
+
+            <div class="example-content">
+                <pre class="code prettyprint"><code>instance.bind('BeforeFilter', function(event) {
+    // remove all special characters from input text
+    event.text = event.text.replace(/[^\w ]/g, '');
+});
+</code></pre>
+            </div>
+        </div>
+    
 </div>
 
                 
-                    <div id="event_BeforeFetch (if event.preventDefault() is called, the suggest box does not open)" class="events item">
-    <h3 class="name"><code>BeforeFetch (if event.preventDefault() is called, the suggest box does not open)</code></h3>
+                    <div id="event_BeforeFormat - use to do your own formatting" class="events item">
+    <h3 class="name"><code>BeforeFormat - use to do your own formatting</code></h3>
     <span class="type"></span>
 
     
@@ -7780,7 +9781,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             
         
         
-        <a href="../files/src_Suggester.js.html#l1650"><code>src&#x2F;Suggester.js:1650</code></a>
+        <a href="../files/src_Suggester.js.html#l1803"><code>src&#x2F;Suggester.js:1803</code></a>
         
         </p>
 
@@ -7790,7 +9791,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
     </div>
 
     <div class="description">
-        <p>Handler passed to $.ajax().done(function(){...}) that handles suggestion data that is returned</p>
+        <p>Call to dynamically inject your own formatting on each suggestion</p>
     </div>
 
     
@@ -7801,14 +9802,14 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             
                 <li class="param">
                     
-                        <code class="param-name">jqXHR</code>
+                        <code class="param-name">record</code>
                         <span class="type">Object</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>the jQuery XHR object (see http://api.jquery.com/jQuery.ajax/#jqXHR)</p>
+                        <p>The record object that is being suggested</p>
                     </div>
 
                     
@@ -7816,14 +9817,14 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             
                 <li class="param">
                     
-                        <code class="param-name">records</code>
-                        <span class="type">Object</span>
+                        <code class="param-name">substr</code>
+                        <span class="type">String</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>the object generated from the ajax returned from the XHR</p>
+                        <p>The part of the string that matches the suggestion search fields</p>
                     </div>
 
                     
@@ -7831,16 +9832,14 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             
                 <li class="param">
                     
-                        <code class="param-name">term</code>
-                        <span class="type">!~YUIDOC_LINE~!                        event.data.push(id:'', label:'Adding a test suggestion'</span>
+                        <code class="param-name">html</code>
+                        <span class="type">String</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>the term that was search for
-    example        instance.bind('AfterFetch', function(event) );
-                   });</p>
+                        <p>If you set event.html, it will be used instead of constructing the HTML</p>
                     </div>
 
                     
@@ -7852,108 +9851,22 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
 
     
-</div>
+        <div class="example">
+            <h4>Example:</h4>
 
-                
-                    <div id="event_BeforeFetch (if event.preventDefault() is called, XHR is not made and suggest box does not open)" class="events item">
-    <h3 class="name"><code>BeforeFetch (if event.preventDefault() is called, XHR is not made and suggest box does not open)</code></h3>
-    <span class="type"></span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_Suggester.js.html#l1591"><code>src&#x2F;Suggester.js:1591</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Handler for form submission</p>
-    </div>
-
-    
-        <div class="params">
-            <h4>Event Payload:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">jqEvent</code>
-                        <span class="type">JQuery</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>The submit event</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">event</code>
-                        <span class="type">Object</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>The jQuery-wrapped browser event</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">form</code>
-                        <span class="type">!~YUIDOC_LINE~!                     // pretty much the same as instance.$form.submit(...)!~YUIDOC_LINE~!                     // used internally to add tag on submit if options.addOnSubmit is true!~YUIDOC_LINE~!</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>The input's form (same as this.$form)
-    example      instance.bind('BeforeSubmit', function(event) );</p>
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
+            <div class="example-content">
+                <pre class="code prettyprint"><code>instance.bind('BeforeFormat', function(event) {
+    event.html = '&lt;li&gt;' + event.record.label.toUpperCase() + '&lt;/li&gt;';
+});              
+</code></pre>
+            </div>
         </div>
     
-
-
-    
 </div>
 
                 
-                    <div id="event_BeforeFetch (if event.preventDefault() is called, XHR is not made and suggest box does not open)" class="events item">
-    <h3 class="name"><code>BeforeFetch (if event.preventDefault() is called, XHR is not made and suggest box does not open)</code></h3>
+                    <div id="event_BeforeHandleKey" class="events item">
+    <h3 class="name"><code>BeforeHandleKey</code></h3>
     <span class="type"></span>
 
     
@@ -7975,7 +9888,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             
         
         
-        <a href="../files/src_Suggester.js.html#l1624"><code>src&#x2F;Suggester.js:1624</code></a>
+        <a href="../files/src_Suggester.js.html#l1495"><code>src&#x2F;Suggester.js:1495</code></a>
         
         </p>
 
@@ -7985,7 +9898,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
     </div>
 
     <div class="description">
-        <p>Handler passed to $.ajax({beforeSend:...}) to alter XHR if needed</p>
+        <p>Access the keydown event before Suggester processes it</p>
     </div>
 
     
@@ -7996,33 +9909,14 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             
                 <li class="param">
                     
-                        <code class="param-name">jqXHR</code>
-                        <span class="type">Object</span>
+                        <code class="param-name">keydown</code>
+                        <span class="type">Event</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>the jQuery XHR object (see http://api.jquery.com/jQuery.ajax/#jqXHR)</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">term</code>
-                        <span class="type">!~YUIDOC_LINE~!                     event.jqXHR.setRequestHeader('something','something');!~YUIDOC_LINE~!                     event.jqXHR.fail(function() !~YUIDOC_LINE~!                         alert('ajax call failed');!~YUIDOC_LINE~!</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>the term that is being searched for
-    example      instance.bind('BeforeFetch', function(event) ).always(function() {
-             alert('ajax call finished regardless of success or failure');
-                     });
-                 });</p>
+                        <p>The keydown event (a raw browser event, not jQuery.Event)</p>
                     </div>
 
                     
@@ -8144,6 +10038,49 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 </div>
 
                 
+                    <div id="event_BeforeOpen" class="events item">
+    <h3 class="name"><code>BeforeOpen</code></h3>
+    <span class="type"></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_Suggester.js.html#l982"><code>src&#x2F;Suggester.js:982</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Fires before suggestion box is displayed</p>
+    </div>
+
+    
+
+
+    
+</div>
+
+                
                     <div id="event_BeforeRemove" class="events item">
     <h3 class="name"><code>BeforeRemove</code></h3>
     <span class="type"></span>
@@ -8167,7 +10104,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             
         
         
-        <a href="../files/src_Suggester.js.html#l690"><code>src&#x2F;Suggester.js:690</code></a>
+        <a href="../files/src_Suggester.js.html#l691"><code>src&#x2F;Suggester.js:691</code></a>
         
         </p>
 
@@ -8276,7 +10213,84 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             
         
         
-        <a href="../files/src_Suggester.js.html#l1170"><code>src&#x2F;Suggester.js:1170</code></a>
+        <a href="../files/src_Suggester.js.html#l1240"><code>src&#x2F;Suggester.js:1240</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Modify this.$widget or any of its child elements before it is manipulated or appended. Can be used to modify this.options.template with DOM methods</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Event Payload:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">A</code>
+                        <span class="type">JQuery</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>reference to this.$widget</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+
+    
+        <div class="example">
+            <h4>Example:</h4>
+
+            <div class="example-content">
+                <pre class="code prettyprint"><code>instance.bind('BeforeRender', function(event) {
+    event.widget.find('.sugg-remove').text('').appendChild(myRemoveImage);
+});
+</code></pre>
+            </div>
+        </div>
+    
+</div>
+
+                
+                    <div id="event_BeforeRender" class="events item">
+    <h3 class="name"><code>BeforeRender</code></h3>
+    <span class="type"></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_Suggester.js.html#l1232"><code>src&#x2F;Suggester.js:1232</code></a>
         
         </p>
 
@@ -8292,6 +10306,256 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
     
 
 
+    
+</div>
+
+                
+                    <div id="event_BeforeSave" class="events item">
+    <h3 class="name"><code>BeforeSave</code></h3>
+    <span class="type"></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_Suggester.js.html#l1880"><code>src&#x2F;Suggester.js:1880</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Inject functionality before saving</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Event Payload:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">newValue</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The value that will be written to the original input (writeable)</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+
+    
+        <div class="example">
+            <h4>Example:</h4>
+
+            <div class="example-content">
+                <pre class="code prettyprint"><code>instance.bind('BeforeSave', function(event) {
+    event.newValue += '!';
+});
+</code></pre>
+            </div>
+        </div>
+    
+</div>
+
+                
+                    <div id="event_BeforeSubmit" class="events item">
+    <h3 class="name"><code>BeforeSubmit</code></h3>
+    <span class="type"></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_Suggester.js.html#l1683"><code>src&#x2F;Suggester.js:1683</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Respond before form is submitted and before Suggester adds on submit</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Event Payload:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">The</code>
+                        <span class="type">jQuery.Event</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>jQuery-wrapped browser event</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">form</code>
+                        <span class="type">HTMLFormElement</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The input's form (same as this.$form)</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+
+    
+        <div class="example">
+            <h4>Example:</h4>
+
+            <div class="example-content">
+                <pre class="code prettyprint"><code>instance.bind('BeforeSubmit', function(event) {
+    if (this.$input.val() !== '' &amp;&amp; !confirm('Are you sure you want to submit this form unfinished?')) {
+        event.preventDefault();
+    }
+});
+</code></pre>
+            </div>
+        </div>
+    
+</div>
+
+                
+                    <div id="event_BeforeSuggest" class="events item">
+    <h3 class="name"><code>BeforeSuggest</code></h3>
+    <span class="type"></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_Suggester.js.html#l917"><code>src&#x2F;Suggester.js:917</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Modify suggestion box behavior before it opens</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Event Payload:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">text</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The text that was searched for</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+
+    
+        <div class="example">
+            <h4>Example:</h4>
+
+            <div class="example-content">
+                <pre class="code prettyprint"><code>instance.bind('BeforeSuggest', function(event) {
+    if (evt.text == 'dont suggest') {
+        event.preventDefault(); // suggest box will not open
+    }
+});
+</code></pre>
+            </div>
+        </div>
     
 </div>
 
@@ -8319,7 +10583,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             
         
         
-        <a href="../files/src_Suggester.js.html#l248"><code>src&#x2F;Suggester.js:248</code></a>
+        <a href="../files/src_Suggester.js.html#l303"><code>src&#x2F;Suggester.js:303</code></a>
         
         </p>
 

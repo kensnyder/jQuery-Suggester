@@ -92,8 +92,7 @@ module.exports = function(grunt) {
 				options: {
 					paths: ['src'],
 					outdir: 'docs',
-					parseOnly: false,
-					logo: ''
+					parseOnly: false
 				}
 			}
 		}
@@ -109,6 +108,10 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-yuidoc');
 	grunt.loadNpmTasks('grunt-contrib-compress');
+	
+	grunt.registerTask('logo', 'Copy logo to yuidoc files', function() {
+		grunt.file.copy('demos/assets/img/logo.png', 'docs/assets/css/logo.png');
+	});
 	
 	// custom tasks	
 	function extractDocs(data) {
@@ -155,6 +158,6 @@ module.exports = function(grunt) {
 	})
 
 	// Default task.
-	grunt.registerTask('default', ['jshint', 'qunit', 'clean', 'copy', 'concat', 'cssmin', 'uglify', 'compress', 'yuidoc', 'readme']);
+	grunt.registerTask('default', ['jshint', 'qunit', 'clean', 'copy', 'concat', 'cssmin', 'uglify', 'compress', 'yuidoc', 'logo', 'readme']);
 
 };
