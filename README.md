@@ -283,158 +283,164 @@ Options
 	</tr>
 	<tr>
 		<td>{Function}</td>
-		<td><strong>onBeforeRender</strong></td>
-		<td>See the {{#crossLink &quot;Suggester/BeforeRender:event&quot;}}BeforeRender event{{/crossLink}}</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>{Function}</td>
 		<td><strong>onInitialize</strong></td>
-		<td>See Suggester#initialize()</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>{Function}</td>
-		<td><strong>onBeforeHandleKey</strong></td>
-		<td>see Suggester#_onKeydown()</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>{Function}</td>
-		<td><strong>onAfterHandleKey</strong></td>
-		<td>see Suggester#_onKeydown()</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>{Function}</td>
-		<td><strong>onBeforeAjax</strong></td>
-		<td>see Suggester#fetchResults()</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>{Function}</td>
-		<td><strong>onBeforeFetch</strong></td>
-		<td>see Suggester#_beforeFetch()</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>{Function}</td>
-		<td><strong>onAfterFetch</strong></td>
-		<td>see Suggester#_afterFetch()</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>{Function}</td>
-		<td><strong>onBeforeMove</strong></td>
-		<td>see Suggester#moveSelection()</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>{Function}</td>
-		<td><strong>onAfterMove</strong></td>
-		<td>see Suggester#moveSelection()</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>{Function}</td>
-		<td><strong>onBeforeSuggest</strong></td>
-		<td>see Suggester#handleSuggestions()</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>{Function}</td>
-		<td><strong>onAfterSuggest</strong></td>
-		<td>see Suggester#handleSuggestions()</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>{Function}</td>
-		<td><strong>onBeforeOpen</strong></td>
-		<td>see Suggester#openSuggstBox()</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>{Function}</td>
-		<td><strong>onAfterOpen</strong></td>
-		<td>see Suggester#openSuggestBox()</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>{Function}</td>
-		<td><strong>onBeforeClose</strong></td>
-		<td>see Suggester#closeSuggestBox()</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>{Function}</td>
-		<td><strong>onAfterClose</strong></td>
-		<td>see Suggester#closeSuggestBox()</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>{Function}</td>
-		<td><strong>onBeforeFormat</strong></td>
-		<td>see Suggester#_formatSuggestion()</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>{Function}</td>
-		<td><strong>onAfterFormat</strong></td>
-		<td>see Suggester#_formatSuggestion()</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>{Function}</td>
-		<td><strong>onBeforeFilter</strong></td>
-		<td>see Suggester#getResults()</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>{Function}</td>
-		<td><strong>onAfterFilter</strong></td>
-		<td>see Suggester#getResults()</td>
+		<td>Add a {{#crossLink &quot;Suggester/Initialize:event&quot;}}Initialize event{{/crossLink}}</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>{Function}</td>
 		<td><strong>onBeforeAdd</strong></td>
-		<td>see Suggester#add()</td>
+		<td>Add a {{#crossLink &quot;Suggester/BeforeAdd:event&quot;}}BeforeAdd event{{/crossLink}}</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>{Function}</td>
-		<td><strong>onAfterAdd</strong></td>
-		<td>see Suggester#add()</td>
+		<td><strong>onBeforeAjax</strong></td>
+		<td>Add a {{#crossLink &quot;Suggester/BeforeAjax:event&quot;}}BeforeAjax event{{/crossLink}}</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>{Function}</td>
+		<td><strong>onBeforeClose</strong></td>
+		<td>Add a {{#crossLink &quot;Suggester/BeforeClose:event&quot;}}BeforeClose event{{/crossLink}}</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>{Function}</td>
+		<td><strong>onBeforeFetch</strong></td>
+		<td>Add a {{#crossLink &quot;Suggester/BeforeFetch:event&quot;}}BeforeFetch event{{/crossLink}}</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>{Function}</td>
+		<td><strong>onBeforeFilter</strong></td>
+		<td>Add a {{#crossLink &quot;Suggester/BeforeFilter:event&quot;}}BeforeFilter event{{/crossLink}}</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>{Function}</td>
+		<td><strong>onBeforeFormat</strong></td>
+		<td>Add a {{#crossLink &quot;Suggester/BeforeFormat:event&quot;}}BeforeFormat event{{/crossLink}}</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>{Function}</td>
+		<td><strong>onBeforeHandleKey</strong></td>
+		<td>Add a {{#crossLink &quot;Suggester/BeforeHandleKey:event&quot;}}BeforeHandleKey event{{/crossLink}}</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>{Function}</td>
+		<td><strong>onBeforeMove</strong></td>
+		<td>Add a {{#crossLink &quot;Suggester/BeforeMove:event&quot;}}BeforeMove event{{/crossLink}}</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>{Function}</td>
+		<td><strong>onBeforeOpen</strong></td>
+		<td>Add a {{#crossLink &quot;Suggester/BeforeOpen:event&quot;}}BeforeOpen event{{/crossLink}}</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>{Function}</td>
 		<td><strong>onBeforeRemove</strong></td>
-		<td>see Suggester#remove()</td>
+		<td>Add a {{#crossLink &quot;Suggester/BeforeRemove:event&quot;}}BeforeRemove event{{/crossLink}}</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>{Function}</td>
-		<td><strong>onAfterRemove</strong></td>
-		<td>see Suggester#remove()</td>
+		<td><strong>onBeforeRender</strong></td>
+		<td>Add a {{#crossLink &quot;Suggester/BeforeRender:event&quot;}}BeforeRender event{{/crossLink}}</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>{Function}</td>
 		<td><strong>onBeforeSave</strong></td>
-		<td>see Suggester#save()</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>{Function}</td>
-		<td><strong>onAfterSave</strong></td>
-		<td>see Suggester#save()</td>
+		<td>Add a {{#crossLink &quot;Suggester/BeforeSave:event&quot;}}BeforeSave event{{/crossLink}}</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>{Function}</td>
 		<td><strong>onBeforeSubmit</strong></td>
-		<td>see Suggester#_onSubmit()</td>
+		<td>Add a {{#crossLink &quot;Suggester/BeforeSubmit:event&quot;}}BeforeSubmit event{{/crossLink}}</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>{Function}</td>
+		<td><strong>onBeforeSuggest</strong></td>
+		<td>Add a {{#crossLink &quot;Suggester/BeforeSuggest:event&quot;}}BeforeSuggest event{{/crossLink}}</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>{Function}</td>
+		<td><strong>onAfterAdd</strong></td>
+		<td>Add a {{#crossLink &quot;Suggester/AfterAdd:event&quot;}}AfterAdd event{{/crossLink}}</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>{Function}</td>
+		<td><strong>onAfterAjax</strong></td>
+		<td>Add a {{#crossLink &quot;Suggester/AfterAjax:event&quot;}}AfterAjax event{{/crossLink}}</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>{Function}</td>
+		<td><strong>onAfterClose</strong></td>
+		<td>Add a {{#crossLink &quot;Suggester/AfterClose:event&quot;}}AfterClose event{{/crossLink}}</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>{Function}</td>
+		<td><strong>onAfterFetch</strong></td>
+		<td>Add a {{#crossLink &quot;Suggester/AfterFetch:event&quot;}}AfterFetch event{{/crossLink}}</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>{Function}</td>
+		<td><strong>onAfterFilter</strong></td>
+		<td>Add a {{#crossLink &quot;Suggester/AfterFilter:event&quot;}}AfterFilter event{{/crossLink}}</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>{Function}</td>
+		<td><strong>onAfterFormat</strong></td>
+		<td>Add a {{#crossLink &quot;Suggester/AfterFormat:event&quot;}}AfterFormat event{{/crossLink}}</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>{Function}</td>
+		<td><strong>onAfterHandleKey</strong></td>
+		<td>Add a {{#crossLink &quot;Suggester/AfterHandleKey:event&quot;}}AfterHandleKey event{{/crossLink}}</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>{Function}</td>
+		<td><strong>onAfterMove</strong></td>
+		<td>Add a {{#crossLink &quot;Suggester/AfterMove:event&quot;}}AfterMove event{{/crossLink}}</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>{Function}</td>
+		<td><strong>onAfterOpen</strong></td>
+		<td>Add a {{#crossLink &quot;Suggester/AfterOpen:event&quot;}}AfterOpen event{{/crossLink}}</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>{Function}</td>
+		<td><strong>onAfterRemove</strong></td>
+		<td>Add a {{#crossLink &quot;Suggester/AfterRemove:event&quot;}}AfterRemove event{{/crossLink}}</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>{Function}</td>
+		<td><strong>onAfterSave</strong></td>
+		<td>Add a {{#crossLink &quot;Suggester/AfterSave:event&quot;}}AfterSave event{{/crossLink}}</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>{Function}</td>
+		<td><strong>onAfterSuggest</strong></td>
+		<td>Add a {{#crossLink &quot;Suggester/AfterSuggest:event&quot;}}AfterSuggest event{{/crossLink}}</td>
 		<td></td>
 	</tr>
 	
@@ -501,7 +507,7 @@ How is data passed to event callbacks?
 * Each event callback receives one argument: `event`
 * `event` is a jQuery event object
 * `event` also contains useful information related to the event. See the Available Events section below for more information.
-* When an event has a default action that can be prevented, `event` will have property `cancellable` set to true and `event.isCancellable()` will return true
+* When an event has a default action that can be prevented, `event` will have property `cancelable` set to true and `event.isCancelable()` will return true
 * To prevent a default action, call `event.preventDefault()`
 * To cancel the firing of other attached callbacks, call `event.stopImmediatePropagation()`
 * In some case, altering information on the `event` object will change the behavior of the default action
@@ -659,13 +665,6 @@ The following is a description of each event. See the Suggester Instance Methods
 	</tr>
 	<tr>
 		<td><strong>BeforeRender</strong></td>
-		<td>Fired after this.$widget is populated with this.options.template but before any sub elements are found</td>
-		<td>
-		</td>
-		<td>-</td>
-	</tr>
-	<tr>
-		<td><strong>BeforeRender</strong></td>
 		<td>Modify this.$widget or any of its child elements before it is manipulated or appended. Can be used to modify this.options.template with DOM methods</td>
 		<td>
 			{jQuery} A <em>reference to this.$widget</em><br />
@@ -717,7 +716,7 @@ The following is a description of each event. See the Suggester Instance Methods
 		<td>Nothing is done with results (i.e. suggestion box is not built and displayed)</td>
 	</tr>
 	<tr>
-		<td><strong>BeforeFormat - use to do your own formatting</strong></td>
+		<td><strong>BeforeFormat</strong></td>
 		<td>Call to dynamically inject your own formatting on each suggestion</td>
 		<td>
 			{Object} record <em>The record object that is being suggested</em><br />

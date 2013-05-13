@@ -141,7 +141,7 @@ How is data passed to event callbacks?
 * Each event callback receives one argument: `event`
 * `event` is a jQuery event object
 * `event` also contains useful information related to the event. See the Available Events section below for more information.
-* When an event has a default action that can be prevented, `event` will have property `cancellable` set to true and `event.isCancellable()` will return true
+* When an event has a default action that can be prevented, `event` will have property `cancelable` set to true and `event.isCancelable()` will return true
 * To prevent a default action, call `event.preventDefault()`
 * To cancel the firing of other attached callbacks, call `event.stopImmediatePropagation()`
 * In some case, altering information on the `event` object will change the behavior of the default action

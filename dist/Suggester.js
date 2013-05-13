@@ -137,33 +137,34 @@
 	</div>
 		
 		 *   @params {String} [options.listItemTemplate] Override the .sugg-item element in options.template
-		 *   @params {String} [options.theme="coolblue"] The css class to add to widget (e.g. "sugg-theme-coolblue"). The following themes come predefined in the CSS: "coolblue", "faceblue", "graybox", "grayred"
-		 *   @params {Function} [options.onBeforeRender] See the {{#crossLink "Suggester/BeforeRender:event"}}BeforeRender event{{/crossLink}}
-		 *   @params {Function} [options.onInitialize] See Suggester#initialize()
-		 *   @params {Function} [options.onBeforeHandleKey] see Suggester#_onKeydown()
-		 *   @params {Function} [options.onAfterHandleKey] see Suggester#_onKeydown()
-		 *   @params {Function} [options.onBeforeAjax] see Suggester#fetchResults()
-		 *   @params {Function} [options.onBeforeFetch] see Suggester#_beforeFetch()
-		 *   @params {Function} [options.onAfterFetch] see Suggester#_afterFetch()
-		 *   @params {Function} [options.onBeforeMove] see Suggester#moveSelection()
-		 *   @params {Function} [options.onAfterMove] see Suggester#moveSelection()
-		 *   @params {Function} [options.onBeforeSuggest] see Suggester#handleSuggestions()
-		 *   @params {Function} [options.onAfterSuggest] see Suggester#handleSuggestions()
-		 *   @params {Function} [options.onBeforeOpen] see Suggester#openSuggstBox()
-		 *   @params {Function} [options.onAfterOpen] see Suggester#openSuggestBox()
-		 *   @params {Function} [options.onBeforeClose] see Suggester#closeSuggestBox()
-		 *   @params {Function} [options.onAfterClose] see Suggester#closeSuggestBox()
-		 *   @params {Function} [options.onBeforeFormat] see Suggester#_formatSuggestion()
-		 *   @params {Function} [options.onAfterFormat] see Suggester#_formatSuggestion()
-		 *   @params {Function} [options.onBeforeFilter] see Suggester#getResults()
-		 *   @params {Function} [options.onAfterFilter] see Suggester#getResults()
-		 *   @params {Function} [options.onBeforeAdd] see Suggester#add()
-		 *   @params {Function} [options.onAfterAdd] see Suggester#add()
-		 *   @params {Function} [options.onBeforeRemove] see Suggester#remove()
-		 *   @params {Function} [options.onAfterRemove] see Suggester#remove()
-		 *   @params {Function} [options.onBeforeSave] see Suggester#save()
-		 *   @params {Function} [options.onAfterSave] see Suggester#save()
-		 *   @params {Function} [options.onBeforeSubmit] see Suggester#_onSubmit() 
+		 *   @params {String} [options.theme="coolblue"]  The css class to add to widget (e.g. "sugg-theme-coolblue"). The following themes come predefined in the CSS: "coolblue", "faceblue", "graybox", "grayred"
+		 *   @params {Function} [options.onInitialize]  Add a {{#crossLink "Suggester/Initialize:event"}}Initialize event{{/crossLink}}
+		 *   @params {Function} [options.onBeforeAdd]  Add a {{#crossLink "Suggester/BeforeAdd:event"}}BeforeAdd event{{/crossLink}}
+		 *   @params {Function} [options.onBeforeAjax]  Add a {{#crossLink "Suggester/BeforeAjax:event"}}BeforeAjax event{{/crossLink}}
+		 *   @params {Function} [options.onBeforeClose]  Add a {{#crossLink "Suggester/BeforeClose:event"}}BeforeClose event{{/crossLink}}
+		 *   @params {Function} [options.onBeforeFetch]  Add a {{#crossLink "Suggester/BeforeFetch:event"}}BeforeFetch event{{/crossLink}}
+		 *   @params {Function} [options.onBeforeFilter]  Add a {{#crossLink "Suggester/BeforeFilter:event"}}BeforeFilter event{{/crossLink}}
+		 *   @params {Function} [options.onBeforeFormat]  Add a {{#crossLink "Suggester/BeforeFormat:event"}}BeforeFormat event{{/crossLink}}
+		 *   @params {Function} [options.onBeforeHandleKey]  Add a {{#crossLink "Suggester/BeforeHandleKey:event"}}BeforeHandleKey event{{/crossLink}}
+		 *   @params {Function} [options.onBeforeMove]  Add a {{#crossLink "Suggester/BeforeMove:event"}}BeforeMove event{{/crossLink}}
+		 *   @params {Function} [options.onBeforeOpen]  Add a {{#crossLink "Suggester/BeforeOpen:event"}}BeforeOpen event{{/crossLink}}
+		 *   @params {Function} [options.onBeforeRemove]  Add a {{#crossLink "Suggester/BeforeRemove:event"}}BeforeRemove event{{/crossLink}}
+		 *   @params {Function} [options.onBeforeRender]  Add a {{#crossLink "Suggester/BeforeRender:event"}}BeforeRender event{{/crossLink}}
+		 *   @params {Function} [options.onBeforeSave]  Add a {{#crossLink "Suggester/BeforeSave:event"}}BeforeSave event{{/crossLink}}
+		 *   @params {Function} [options.onBeforeSubmit]  Add a {{#crossLink "Suggester/BeforeSubmit:event"}}BeforeSubmit event{{/crossLink}}
+		 *   @params {Function} [options.onBeforeSuggest]  Add a {{#crossLink "Suggester/BeforeSuggest:event"}}BeforeSuggest event{{/crossLink}}
+		 *   @params {Function} [options.onAfterAdd]  Add a {{#crossLink "Suggester/AfterAdd:event"}}AfterAdd event{{/crossLink}}
+		 *   @params {Function} [options.onAfterAjax]  Add a {{#crossLink "Suggester/AfterAjax:event"}}AfterAjax event{{/crossLink}}
+		 *   @params {Function} [options.onAfterClose]  Add a {{#crossLink "Suggester/AfterClose:event"}}AfterClose event{{/crossLink}}
+		 *   @params {Function} [options.onAfterFetch]  Add a {{#crossLink "Suggester/AfterFetch:event"}}AfterFetch event{{/crossLink}}
+		 *   @params {Function} [options.onAfterFilter]  Add a {{#crossLink "Suggester/AfterFilter:event"}}AfterFilter event{{/crossLink}}
+		 *   @params {Function} [options.onAfterFormat]  Add a {{#crossLink "Suggester/AfterFormat:event"}}AfterFormat event{{/crossLink}}
+		 *   @params {Function} [options.onAfterHandleKey]  Add a {{#crossLink "Suggester/AfterHandleKey:event"}}AfterHandleKey event{{/crossLink}}
+		 *   @params {Function} [options.onAfterMove]  Add a {{#crossLink "Suggester/AfterMove:event"}}AfterMove event{{/crossLink}}
+		 *   @params {Function} [options.onAfterOpen]  Add a {{#crossLink "Suggester/AfterOpen:event"}}AfterOpen event{{/crossLink}}
+		 *   @params {Function} [options.onAfterRemove]  Add a {{#crossLink "Suggester/AfterRemove:event"}}AfterRemove event{{/crossLink}}
+		 *   @params {Function} [options.onAfterSave]  Add a {{#crossLink "Suggester/AfterSave:event"}}AfterSave event{{/crossLink}}
+		 *   @params {Function} [options.onAfterSuggest]  Add a {{#crossLink "Suggester/AfterSuggest:event"}}AfterSuggest event{{/crossLink}}
 		 *   @example
 	
 	// EXAMPLE TEMPLATE CONFIG		
@@ -483,7 +484,7 @@
 				direction: direction,
 				current: this.$currentItem,
 				next: $nextItem, 
-				cancellable:true
+				cancelable:true
 			});
 			// allow BeforeMove callbacks to cancel movement
 			if (evt.isDefaultPrevented()) {
@@ -711,7 +712,7 @@
 				tag: $tag,
 				value: value,
 				label: label,
-				cancellable: true
+				cancelable: true
 			});
 			if (evt.isDefaultPrevented()) {
 				return this;
@@ -856,7 +857,7 @@
 			var evt = this.publish('BeforeAjax', {
 				settings: settings,
 				term: text,
-				cancellable: true
+				cancelable: true
 			});
 			if (evt.isDefaultPrevented()) {
 				this._afterFetch(evt.records || []);
@@ -933,7 +934,7 @@
 			*/			
 			var evt = this.publish('BeforeSuggest', {
 				text: this._text,
-				cancellable: true
+				cancelable: true
 			});
 			if (evt.isDefaultPrevented()) {
 				return this;
@@ -988,7 +989,7 @@
 			 * @ifprevented  Box is not displayed
 			 */			
 			evt = this.publish('BeforeOpen', {
-				cancellable: true
+				cancelable: true
 			});     
 			if (evt.isDefaultPrevented()) {
 				return this;
@@ -1022,7 +1023,7 @@
 			 * @ifprevented  Suggestion box will stay open
 			 */
 			var evt = this.publish('BeforeClose', {
-				cancellable:true
+				cancelable:true
 			});
 			if (!evt.isDefaultPrevented()) {
 				this.$suggList.hide();
@@ -1231,10 +1232,6 @@
 		/**
 		 * Render the widget and get handles to key elements
 		 * @method _render
-		 */
-		/**
-		 * Fired after this.$widget is populated with this.options.template but before any sub elements are found
-		 * @event BeforeRender
 		 */
 		_render: function() {
 			// The full widget
@@ -1503,7 +1500,7 @@
 			 */
 			var pubevent = this.publish('BeforeHandleKey', {
 				keydown: evt,
-				cancellable: true
+				cancelable: true
 			});
 			if (pubevent.isDefaultPrevented()) {
 				return;
@@ -1700,7 +1697,8 @@
 			 */   
 			var evt = this.publish('BeforeSubmit', {
 				event: jqEvent,
-				form: this.$form
+				form: this.$form,
+				cancelable: true
 			});
 			// cancel form submission
 			if (evt.isDefaultPrevented()) {
@@ -1746,7 +1744,7 @@
 			var evt = this.publish('BeforeFetch', {
 				jqXHR: this._jqXHR,
 				term: this._searchTerm,
-				cancellable: true
+				cancelable: true
 			});
 			if (evt.isDefaultPrevented()) {
 				this.abortFetch();
@@ -1775,7 +1773,7 @@
 				jqXHR: this._jqXHR,
 				records: records,
 				term: this._searchTerm,
-				cancellable: true
+				cancelable: true
 			});
 			this._jqXHR = null;
 			if (evt.isDefaultPrevented()) {
@@ -1805,7 +1803,7 @@
 			var evt, options, label, replacer, replacee, html;
 			/**
 			 * Call to dynamically inject your own formatting on each suggestion
-			 * @event BeforeFormat - use to do your own formatting
+			 * @event BeforeFormat
 			 * @param {Object} record  The record object that is being suggested
 			 * @param {String} substr  The part of the string that matches the suggestion search fields
 			 * @param {String} html    If you set event.html, it will be used instead of constructing the HTML
@@ -1819,8 +1817,7 @@
 			evt = this.publish('BeforeFormat', {
 				record: record, 
 				substr: substr, 
-				html:'', 
-				cancellable:true
+				html:''
 			});
 			if (evt.html === '') {
 				options = this.options;
@@ -1893,7 +1890,7 @@
 
 			 */
 			var evt = this.publish('BeforeSave', {
-				cancellable: true,
+				cancelable: true,
 				newValue: newValue
 			});
 			if (evt.isDefaultPrevented()) {
