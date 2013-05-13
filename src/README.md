@@ -35,7 +35,7 @@ Turn a text input into a Facebook-style multiple-tag input. Features include:
 * You can subscribe to any of 20+ events that allow you to inject custom functionality into nearly every action
 * You can define your own HTML structure for the widget output
 * Object-oriented structure makes it easy to extend
-* Less than 6kb minimized and gzipped
+* 4kb minimized and gzipped
 * Unit tested - [Unit tests](http://sandbox.kendsnyder.com/Suggester-1.1/test/Suggester.html) 
 * Works on IE8+, FF, Chrome, Safari
 * Compatible with AMD
@@ -44,7 +44,7 @@ Turn a text input into a Facebook-style multiple-tag input. Features include:
 How to Use
 -
 
-Suggester is compatible with jQuery 1.5+ and has been tested with jQuery 1.9. Download the files in [jQuery-Suggester.zip](https://github.com) and copy them to your scripts directory. Include them in your document's after jQuery is included:
+Suggester is compatible with jQuery 1.5+ and has been tested with jQuery 1.9. Download the files in [DOWNLOAD.zip](https://github.com/kensnyder/jQuery-Suggester/blob/master/DOWNLOAD.zip?raw=true) and copy them to your scripts directory. Include them in your document's after jQuery is included:
 
 ```html
 <script src="/js/Suggester.min.js"></script>
@@ -78,19 +78,6 @@ Options
 		<td><%- option.optdefault %></td>
 	</tr>
 	<% }); %>
-	<tr>
-		<td>{Array}</td>
-		<td><strong>data</strong></td>
-		<td>false</td>
-		<td>An array of suggestion strings or objects. Examples:<br />
-			<ul>
-				<li><code>["Dell","HP","Apple"]</code></li>
-				<li><code>[{"value":"Dell"},{"value":"HP"},{"value":"Apple"}]</code></li>
-				<li><code>[{"value":"Dell","founded":1984},{"value":"HP","founded":1939},...]</code></li>
-				<li>(Leave empty to use an ajax data source)</li>
-			</ul>
-		</td>
-	</tr>
 </table>
 
 Default value for **template** option:
@@ -251,7 +238,7 @@ suggester.bind('AfterClose', doStuff);
 suggester.focus();
 ```
 
-See the source on the [live demos](http://sandbox.kendsnyder.com/suggester/demo/demo.html) for lots more examples.
+See the source on the [live demos](http://sandbox.kendsnyder.com/Suggester-1.1/demo) for lots more examples.
 
 Changelog
 -
