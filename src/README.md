@@ -3,7 +3,7 @@
 
 Version <%- pkg.version %>, <%- grunt.template.today("mmm yyyy") %>, MIT License
 
-[Demos](http://sandbox.kendsnyder.com/Suggester-1.1/demo), [Unit tests](http://sandbox.kendsnyder.com/Suggester-1.1/test/Suggester.html)
+[Demos](http://sandbox.kendsnyder.com/Suggester-1.1/demos), [Unit tests](http://sandbox.kendsnyder.com/Suggester-1.1/test/Suggester.html)
 
 Table of Contents
 -
@@ -238,7 +238,7 @@ suggester.bind('AfterClose', doStuff);
 suggester.focus();
 ```
 
-See the source on the [live demos](http://sandbox.kendsnyder.com/Suggester-1.1/demo) for lots more examples.
+See the source on the [live demos](http://sandbox.kendsnyder.com/Suggester-1.1/demos) for lots more examples.
 
 Changelog
 -
