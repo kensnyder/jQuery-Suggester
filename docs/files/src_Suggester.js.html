@@ -117,9 +117,8 @@
 	/**
 	 * Default options. Change these to globally change the default options
 	 * See {{#crossLink &quot;Suggester/constructor:method&quot;}}constructor{{/crossLink}} for documentation on each option
-	 * @property defaultOptions
+	 * @property {Object} defaultOptions
 	 * @static
-	 * @type {Object}
 	*/
 	$.Suggester.defaultOptions = {
 		data: false,
@@ -321,6 +320,14 @@
 		/**
 		 * The element that is positioned relatively to hold the absolutely positioned suggestion list
 		 * @property {jQuery} $suggListWrapper
+		 */
+		/**
+		 * The element enclosing the empty text
+		 * @property {jQuery} $empty
+		 */
+		/**
+		 * The element enclosing the prompt
+		 * @property {jQuery} $prompt
 		 */
 		/**
 		 * The html to use for suggestion list items
@@ -898,12 +905,15 @@
 		 * @chainable
 		 */   
 		showEmptyText: function() {
-			if (!this.$empty) {
-				return this;
+			this.$suggList.html(&#x27;&#x27;);
+			if (!!this.options.emptyText) {
+				this.$empty.html(this.options.emptyText).appendTo(this.$suggList);
+				this.openSuggestBox();
+				this.$widget.addClass(&#x27;sugg-empty-shown&#x27;);				
 			}
-			this.$suggList.html(&#x27;&#x27;).append(this.$empty);
-			this.openSuggestBox();
-			this.$widget.addClass(&#x27;sugg-empty-shown&#x27;);
+			else {
+				this.closeSuggestBox();				
+			}
 			return this;
 		},
 		/**

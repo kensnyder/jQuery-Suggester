@@ -3,7 +3,7 @@ Suggester - A Better Autocomplete Widget
 
 Version 1.1.0, May 2013, MIT License
 
-[Demos](http://sandbox.kendsnyder.com/Suggester-1.1/demo), [Unit tests](http://sandbox.kendsnyder.com/Suggester-1.1/test/Suggester.html)
+[Demos](http://sandbox.kendsnyder.com/Suggester-1.1/demos), [Unit tests](http://sandbox.kendsnyder.com/Suggester-1.1/test/Suggester.html)
 
 Table of Contents
 -
@@ -74,180 +74,181 @@ Options
 	<tr>
 		<td>{Array|Boolean}</td>
 		<td><strong>data</strong></td>
-		<td>Initial data to use for suggestions</td>
 		<td>false</td>
+		<td>Initial data to use for suggestions</td>
 	</tr>
 	<tr>
 		<td>{String}</td>
 		<td><strong>valueProperty</strong></td>
-		<td>The name of object property that should be used as the tag&#x27;s value. Only applicable when options.data is set</td>
 		<td>&quot;value&quot;</td>
+		<td>The name of object property that should be used as the tag&#x27;s value. Only applicable when options.data is set</td>
 	</tr>
 	<tr>
 		<td>{String}</td>
 		<td><strong>labelProperty</strong></td>
-		<td>The name of object property that should be used as the tag&#x27;s display text. Only applicable when options.data is set</td>
 		<td>&quot;value&quot;</td>
+		<td>The name of object property that should be used as the tag&#x27;s display text. Only applicable when options.data is set</td>
 	</tr>
 	<tr>
 		<td>{Array}</td>
 		<td><strong>searchProperties</strong></td>
-		<td>The array of object property names that should be searched when generating suggestions. Only applicable when options.data is set</td>
 		<td>Array(&quot;value&quot;)</td>
+		<td>The array of object property names that should be searched when generating suggestions. Only applicable when options.data is set</td>
 	</tr>
 	<tr>
 		<td>{String|Number}</td>
 		<td><strong>matchAt</strong></td>
-		<td>Where to match when finding suggestions. It can be &quot;anywhere&quot;, &quot;start&quot;, &quot;end&quot; or an integer. Only applicable when options.data is set</td>
 		<td>&quot;anywhere&quot;</td>
+		<td>Where to match when finding suggestions. It can be &quot;anywhere&quot;, &quot;start&quot;, &quot;end&quot; or an integer. Only applicable when options.data is set</td>
 	</tr>
 	<tr>
 		<td>{Boolean}</td>
 		<td><strong>caseSensitive</strong></td>
-		<td>If true, find matches regardless of case. Only applicable when options.data is set. Only applicable when options.data is set</td>
 		<td>false</td>
+		<td>If true, find matches regardless of case. Only applicable when options.data is set. Only applicable when options.data is set</td>
 	</tr>
 	<tr>
 		<td>{String}</td>
 		<td><strong>dataUrl</strong></td>
-		<td>Url to call to get json or jsonp results. Use %s to indicate where search text should be inserted. e.g. &quot;http://example.com/myjson?query=%s&quot; or &quot;http://example.com/myjsonp?query=%s&amp;callback=%s&quot;</td>
 		<td>false</td>
+		<td>Url to call to get json or jsonp results. Use %s to indicate where search text should be inserted. e.g. &quot;http://example.com/myjson?query=%s&quot; or &quot;http://example.com/myjsonp?query=%s&amp;callback=%s&quot;</td>
 	</tr>
 	<tr>
 		<td>{String}</td>
 		<td><strong>dataType</strong></td>
-		<td>Can be &quot;json&quot; or &quot;jsonp&quot;. If json, options.dataUrl needs to be in the format &quot;http://example.com/myjsonp?query=%s&amp;mycallback=%s&quot;. To handle xml, you&#x27;ll need to register BeforeFetch and AfterFetch handlers or overwrite the fetchResults method</td>
 		<td>&quot;json&quot;</td>
+		<td>Can be &quot;json&quot; or &quot;jsonp&quot;. If json, options.dataUrl needs to be in the format &quot;http://example.com/myjsonp?query=%s&amp;mycallback=%s&quot;. To handle xml, you&#x27;ll need to register BeforeFetch and AfterFetch handlers or overwrite the fetchResults method</td>
 	</tr>
 	<tr>
 		<td>{String}</td>
 		<td><strong>fly</strong></td>
-		<td>Which way should the suggestion box fly. If &quot;up&quot;, the suggestion box will appear before the input box in the DOM tree. A css class of &quot;sugg-fly-up&quot; or &quot;sugg-fly-down&quot; is applied to the widget element based on this value</td>
 		<td>&quot;down&quot;</td>
+		<td>Which way should the suggestion box fly. If &quot;up&quot;, the suggestion box will appear before the input box in the DOM tree. A css class of &quot;sugg-fly-up&quot; or &quot;sugg-fly-down&quot; is applied to the widget element based on this value</td>
 	</tr>
 	<tr>
 		<td>{String}</td>
 		<td><strong>suggListPosition</strong></td>
-		<td>If &quot;absolute&quot;, the suggestion box will be appended to &lt;body&gt; and positioned and sized each time it is opened. This is useful for widgets within table elements</td>
 		<td>&quot;relative&quot;</td>
+		<td>If &quot;absolute&quot;, the suggestion box will be appended to &lt;body&gt; and positioned and sized each time it is opened. This is useful for widgets within table elements</td>
 	</tr>
 	<tr>
 		<td>{Boolean}</td>
 		<td><strong>multiselect</strong></td>
-		<td>If true, allow multiple tags</td>
 		<td>true</td>
+		<td>If true, allow multiple tags</td>
 	</tr>
 	<tr>
 		<td>{Boolean}</td>
 		<td><strong>preventDuplicates</strong></td>
-		<td>If true, the first tag will be removed when a duplicate is typed in</td>
 		<td>true</td>
+		<td>If true, the first tag will be removed when a duplicate is typed in</td>
 	</tr>
 	<tr>
 		<td>{Boolean}</td>
 		<td><strong>omitAlreadyChosenItems</strong></td>
-		<td>If true, don&#x27;t suggest items that have already been chosen as tags. Only applicable when options.data is set</td>
 		<td>true</td>
+		<td>If true, don&#x27;t suggest items that have already been chosen as tags. Only applicable when options.data is set</td>
 	</tr>
 	<tr>
 		<td>{Number}</td>
 		<td><strong>minChars</strong></td>
-		<td>The minimum number of characters a user must type before the suggestion box will appear. If 0, show choices when input is simply focused (like a faux select widget)</td>
 		<td>3</td>
+		<td>The minimum number of characters a user must type before the suggestion box will appear. If 0, show choices when input is simply focused (like a faux select widget)</td>
 	</tr>
 	<tr>
 		<td>{Number}</td>
 		<td><strong>keyDelay</strong></td>
-		<td>The number of milliseconds between keystrokes before the suggestion lookup begins</td>
 		<td>400</td>
+		<td>The number of milliseconds between keystrokes before the suggestion lookup begins</td>
 	</tr>
 	<tr>
 		<td>{Boolean}</td>
 		<td><strong>addOnComma</strong></td>
-		<td>If true, typing a comma will add the current text as a tag</td>
 		<td>true</td>
+		<td>If true, typing a comma will add the current text as a tag</td>
 	</tr>
 	<tr>
 		<td>{Boolean}</td>
 		<td><strong>addOnTab</strong></td>
-		<td>If true, typing a tab will add the current text as a tag</td>
 		<td>true</td>
+		<td>If true, typing a tab will add the current text as a tag</td>
 	</tr>
 	<tr>
 		<td>{Boolean}</td>
 		<td><strong>addOnSemicolon</strong></td>
-		<td>If true, typing a semicolon will add the current text as a tag</td>
 		<td>false</td>
+		<td>If true, typing a semicolon will add the current text as a tag</td>
 	</tr>
 	<tr>
 		<td>{Boolean}</td>
 		<td><strong>addOnSubmit</strong></td>
-		<td>If true, add tag on submit if user has entered text but not typed comma or tab</td>
 		<td>true</td>
+		<td>If true, add tag on submit if user has entered text but not typed comma or tab</td>
 	</tr>
 	<tr>
 		<td>{Boolean}</td>
 		<td><strong>addOnBlur</strong></td>
-		<td>If true, add tag on blur if user has entered text but not typed comma or tab</td>
 		<td>true</td>
+		<td>If true, add tag on blur if user has entered text but not typed comma or tab</td>
 	</tr>
 	<tr>
 		<td>{Boolean}</td>
 		<td><strong>submitOnEnter</strong></td>
-		<td>If false, prevent the form from submitting when the user presses enter on the empty input</td>
 		<td>false</td>
+		<td>If false, prevent the form from submitting when the user presses enter on the empty input</td>
 	</tr>
 	<tr>
 		<td>{String}</td>
 		<td><strong>inputSize</strong></td>
-		<td>Manually set the input size property to a certain width. If auto, set size to text width</td>
 		<td>auto</td>
+		<td>Manually set the input size property to a certain width. If auto, set size to text width</td>
 	</tr>
 	<tr>
 		<td>{String}</td>
 		<td><strong>placeholder</strong></td>
-		<td>Placeholder text to display when no tags are present. e.g. &quot;Enter tags...&quot;</td>
 		<td></td>
+		<td>Placeholder text to display when no tags are present. e.g. &quot;Enter tags...&quot;</td>
 	</tr>
 	<tr>
 		<td>{String}</td>
 		<td><strong>emptyText</strong></td>
-		<td>Message to show when there are no suggestions - default is &quot;(Type a comma to create a new item)&quot;</td>
 		<td></td>
+		<td>Message to show when there are no suggestions - default is &quot;(Type a comma to create a new item)&quot;</td>
 	</tr>
 	<tr>
 		<td>{String}</td>
 		<td><strong>prompt</strong></td>
-		<td>Message to display in suggestion list when below min char length</td>
 		<td></td>
+		<td>Message to display in suggestion list when below min char length</td>
 	</tr>
 	<tr>
 		<td>{Number}</td>
 		<td><strong>maxSuggestions</strong></td>
-		<td>Only display this many suggestions</td>
 		<td>10</td>
+		<td>Only display this many suggestions</td>
 	</tr>
 	<tr>
 		<td>{Boolean}</td>
 		<td><strong>addHiddenInputs</strong></td>
-		<td>If true, also add a hidden input for each tag (fieldname_tag[]) for easier server-side processing (See options.hiddenName to create a custom name)</td>
 		<td>true</td>
+		<td>If true, also add a hidden input for each tag (fieldname_tag[]) for easier server-side processing (See options.hiddenName to create a custom name)</td>
 	</tr>
 	<tr>
 		<td>{String}</td>
 		<td><strong>hiddenName</strong></td>
-		<td>The name to use for hidden elements (defaults to the original input&#x27;s name plus &quot;_tags[]&quot;)</td>
 		<td></td>
+		<td>The name to use for hidden elements (defaults to the original input&#x27;s name plus &quot;_tags[]&quot;)</td>
 	</tr>
 	<tr>
 		<td>{Boolean}</td>
 		<td><strong>highlightSubstring</strong></td>
-		<td>If true, wrap first matching substring in each suggestion with &lt;strong class=&quot;sugg-match&quot;&gt;&lt;/strong&gt;</td>
 		<td>true</td>
+		<td>If true, wrap first matching substring in each suggestion with &lt;strong class=&quot;sugg-match&quot;&gt;&lt;/strong&gt;</td>
 	</tr>
 	<tr>
 		<td>{String}</td>
 		<td><strong>template</strong></td>
+		<td></td>
 		<td>The html used to generate the widget. You can add more markup, change tag names, or add css classes, but all the sugg-* classes need to remain. See below for default.
 	
 	&lt;div class=&quot;sugg-widget&quot;&gt; &lt;!-- this.$widget --&gt;		
@@ -267,181 +268,180 @@ Options
 			&lt;/ul&gt;
 		&lt;/div&gt;
 	&lt;/div&gt;</td>
-		<td></td>
 	</tr>
 	<tr>
 		<td>{String}</td>
 		<td><strong>listItemTemplate</strong></td>
-		<td>Override the .sugg-item element in options.template</td>
 		<td></td>
+		<td>Override the .sugg-item element in options.template</td>
 	</tr>
 	<tr>
 		<td>{String}</td>
 		<td><strong>theme</strong></td>
-		<td>The css class to add to widget (e.g. &quot;sugg-theme-coolblue&quot;). The following themes come predefined in the CSS: &quot;coolblue&quot;, &quot;faceblue&quot;, &quot;graybox&quot;, &quot;grayred&quot;</td>
 		<td>&quot;coolblue&quot;</td>
+		<td>The css class to add to widget (e.g. &quot;sugg-theme-coolblue&quot;). The following themes come predefined in the CSS: &quot;coolblue&quot;, &quot;faceblue&quot;, &quot;graybox&quot;, &quot;grayred&quot;</td>
 	</tr>
 	<tr>
 		<td>{Function}</td>
 		<td><strong>onInitialize</strong></td>
-		<td>Add a {{#crossLink &quot;Suggester/Initialize:event&quot;}}Initialize event{{/crossLink}}</td>
 		<td></td>
+		<td>Add a Initialize event</td>
 	</tr>
 	<tr>
 		<td>{Function}</td>
 		<td><strong>onBeforeAdd</strong></td>
-		<td>Add a {{#crossLink &quot;Suggester/BeforeAdd:event&quot;}}BeforeAdd event{{/crossLink}}</td>
 		<td></td>
+		<td>Add a BeforeAdd event</td>
 	</tr>
 	<tr>
 		<td>{Function}</td>
 		<td><strong>onBeforeAjax</strong></td>
-		<td>Add a {{#crossLink &quot;Suggester/BeforeAjax:event&quot;}}BeforeAjax event{{/crossLink}}</td>
 		<td></td>
+		<td>Add a BeforeAjax event</td>
 	</tr>
 	<tr>
 		<td>{Function}</td>
 		<td><strong>onBeforeClose</strong></td>
-		<td>Add a {{#crossLink &quot;Suggester/BeforeClose:event&quot;}}BeforeClose event{{/crossLink}}</td>
 		<td></td>
+		<td>Add a BeforeClose event</td>
 	</tr>
 	<tr>
 		<td>{Function}</td>
 		<td><strong>onBeforeFetch</strong></td>
-		<td>Add a {{#crossLink &quot;Suggester/BeforeFetch:event&quot;}}BeforeFetch event{{/crossLink}}</td>
 		<td></td>
+		<td>Add a BeforeFetch event</td>
 	</tr>
 	<tr>
 		<td>{Function}</td>
 		<td><strong>onBeforeFilter</strong></td>
-		<td>Add a {{#crossLink &quot;Suggester/BeforeFilter:event&quot;}}BeforeFilter event{{/crossLink}}</td>
 		<td></td>
+		<td>Add a BeforeFilter event</td>
 	</tr>
 	<tr>
 		<td>{Function}</td>
 		<td><strong>onBeforeFormat</strong></td>
-		<td>Add a {{#crossLink &quot;Suggester/BeforeFormat:event&quot;}}BeforeFormat event{{/crossLink}}</td>
 		<td></td>
+		<td>Add a BeforeFormat event</td>
 	</tr>
 	<tr>
 		<td>{Function}</td>
 		<td><strong>onBeforeHandleKey</strong></td>
-		<td>Add a {{#crossLink &quot;Suggester/BeforeHandleKey:event&quot;}}BeforeHandleKey event{{/crossLink}}</td>
 		<td></td>
+		<td>Add a BeforeHandleKey event</td>
 	</tr>
 	<tr>
 		<td>{Function}</td>
 		<td><strong>onBeforeMove</strong></td>
-		<td>Add a {{#crossLink &quot;Suggester/BeforeMove:event&quot;}}BeforeMove event{{/crossLink}}</td>
 		<td></td>
+		<td>Add a BeforeMove event</td>
 	</tr>
 	<tr>
 		<td>{Function}</td>
 		<td><strong>onBeforeOpen</strong></td>
-		<td>Add a {{#crossLink &quot;Suggester/BeforeOpen:event&quot;}}BeforeOpen event{{/crossLink}}</td>
 		<td></td>
+		<td>Add a BeforeOpen event</td>
 	</tr>
 	<tr>
 		<td>{Function}</td>
 		<td><strong>onBeforeRemove</strong></td>
-		<td>Add a {{#crossLink &quot;Suggester/BeforeRemove:event&quot;}}BeforeRemove event{{/crossLink}}</td>
 		<td></td>
+		<td>Add a BeforeRemove event</td>
 	</tr>
 	<tr>
 		<td>{Function}</td>
 		<td><strong>onBeforeRender</strong></td>
-		<td>Add a {{#crossLink &quot;Suggester/BeforeRender:event&quot;}}BeforeRender event{{/crossLink}}</td>
 		<td></td>
+		<td>Add a BeforeRender event</td>
 	</tr>
 	<tr>
 		<td>{Function}</td>
 		<td><strong>onBeforeSave</strong></td>
-		<td>Add a {{#crossLink &quot;Suggester/BeforeSave:event&quot;}}BeforeSave event{{/crossLink}}</td>
 		<td></td>
+		<td>Add a BeforeSave event</td>
 	</tr>
 	<tr>
 		<td>{Function}</td>
 		<td><strong>onBeforeSubmit</strong></td>
-		<td>Add a {{#crossLink &quot;Suggester/BeforeSubmit:event&quot;}}BeforeSubmit event{{/crossLink}}</td>
 		<td></td>
+		<td>Add a BeforeSubmit event</td>
 	</tr>
 	<tr>
 		<td>{Function}</td>
 		<td><strong>onBeforeSuggest</strong></td>
-		<td>Add a {{#crossLink &quot;Suggester/BeforeSuggest:event&quot;}}BeforeSuggest event{{/crossLink}}</td>
 		<td></td>
+		<td>Add a BeforeSuggest event</td>
 	</tr>
 	<tr>
 		<td>{Function}</td>
 		<td><strong>onAfterAdd</strong></td>
-		<td>Add a {{#crossLink &quot;Suggester/AfterAdd:event&quot;}}AfterAdd event{{/crossLink}}</td>
 		<td></td>
+		<td>Add a AfterAdd event</td>
 	</tr>
 	<tr>
 		<td>{Function}</td>
 		<td><strong>onAfterAjax</strong></td>
-		<td>Add a {{#crossLink &quot;Suggester/AfterAjax:event&quot;}}AfterAjax event{{/crossLink}}</td>
 		<td></td>
+		<td>Add a AfterAjax event</td>
 	</tr>
 	<tr>
 		<td>{Function}</td>
 		<td><strong>onAfterClose</strong></td>
-		<td>Add a {{#crossLink &quot;Suggester/AfterClose:event&quot;}}AfterClose event{{/crossLink}}</td>
 		<td></td>
+		<td>Add a AfterClose event</td>
 	</tr>
 	<tr>
 		<td>{Function}</td>
 		<td><strong>onAfterFetch</strong></td>
-		<td>Add a {{#crossLink &quot;Suggester/AfterFetch:event&quot;}}AfterFetch event{{/crossLink}}</td>
 		<td></td>
+		<td>Add a AfterFetch event</td>
 	</tr>
 	<tr>
 		<td>{Function}</td>
 		<td><strong>onAfterFilter</strong></td>
-		<td>Add a {{#crossLink &quot;Suggester/AfterFilter:event&quot;}}AfterFilter event{{/crossLink}}</td>
 		<td></td>
+		<td>Add a AfterFilter event</td>
 	</tr>
 	<tr>
 		<td>{Function}</td>
 		<td><strong>onAfterFormat</strong></td>
-		<td>Add a {{#crossLink &quot;Suggester/AfterFormat:event&quot;}}AfterFormat event{{/crossLink}}</td>
 		<td></td>
+		<td>Add a AfterFormat event</td>
 	</tr>
 	<tr>
 		<td>{Function}</td>
 		<td><strong>onAfterHandleKey</strong></td>
-		<td>Add a {{#crossLink &quot;Suggester/AfterHandleKey:event&quot;}}AfterHandleKey event{{/crossLink}}</td>
 		<td></td>
+		<td>Add a AfterHandleKey event</td>
 	</tr>
 	<tr>
 		<td>{Function}</td>
 		<td><strong>onAfterMove</strong></td>
-		<td>Add a {{#crossLink &quot;Suggester/AfterMove:event&quot;}}AfterMove event{{/crossLink}}</td>
 		<td></td>
+		<td>Add a AfterMove event</td>
 	</tr>
 	<tr>
 		<td>{Function}</td>
 		<td><strong>onAfterOpen</strong></td>
-		<td>Add a {{#crossLink &quot;Suggester/AfterOpen:event&quot;}}AfterOpen event{{/crossLink}}</td>
 		<td></td>
+		<td>Add a AfterOpen event</td>
 	</tr>
 	<tr>
 		<td>{Function}</td>
 		<td><strong>onAfterRemove</strong></td>
-		<td>Add a {{#crossLink &quot;Suggester/AfterRemove:event&quot;}}AfterRemove event{{/crossLink}}</td>
 		<td></td>
+		<td>Add a AfterRemove event</td>
 	</tr>
 	<tr>
 		<td>{Function}</td>
 		<td><strong>onAfterSave</strong></td>
-		<td>Add a {{#crossLink &quot;Suggester/AfterSave:event&quot;}}AfterSave event{{/crossLink}}</td>
 		<td></td>
+		<td>Add a AfterSave event</td>
 	</tr>
 	<tr>
 		<td>{Function}</td>
 		<td><strong>onAfterSuggest</strong></td>
-		<td>Add a {{#crossLink &quot;Suggester/AfterSuggest:event&quot;}}AfterSuggest event{{/crossLink}}</td>
 		<td></td>
+		<td>Add a AfterSuggest event</td>
 	</tr>
 	
 </table>
@@ -751,10 +751,10 @@ Instance Properties
 		<th>Description</th>
 	<tr>
 	<tr>
-		<td>{{Object}}</td>
+		<td>{Object}</td>
 		<td><strong>defaultOptions</strong></td>
 		<td>Default options. Change these to globally change the default options
-See {{#crossLink &quot;Suggester/constructor:method&quot;}}constructor{{/crossLink}} for documentation on each option</td>
+See constructor for documentation on each option</td>
 	</tr>
 	<tr>
 		<td>{jQuery}</td>
@@ -827,6 +827,16 @@ See {{#crossLink &quot;Suggester/constructor:method&quot;}}constructor{{/crossLi
 		<td>The element that is positioned relatively to hold the absolutely positioned suggestion list</td>
 	</tr>
 	<tr>
+		<td>{jQuery}</td>
+		<td><strong>$empty</strong></td>
+		<td>The element enclosing the empty text</td>
+	</tr>
+	<tr>
+		<td>{jQuery}</td>
+		<td><strong>$prompt</strong></td>
+		<td>The element enclosing the prompt</td>
+	</tr>
+	<tr>
 		<td>{String}</td>
 		<td><strong>listItemTemplate</strong></td>
 		<td>The html to use for suggestion list items</td>
@@ -878,25 +888,25 @@ instance.methodName(arg1, arg2, argN);
 
 <tr>
 	<td>
-		{jQuery} <strong>`destroy`</strong>([options])<br />
+		<strong>destroy</strong>([options])<br />
 		Completely remove Suggester widget and replace with original input box (with values populated)<br />
-		{Object} [`options`] <br />
+		{Object} [options] <br />
 		Returns: {jQuery} The original input
 	</td>
 </tr>
 
 <tr>
 	<td>
-		{jQuery} <strong>`add`</strong>(value[, label=value][, $item])<br />
+		<strong>add</strong>(value[, label=value][, $item])<br />
 		Add a tag by a record<br />
-		{String} `value` the tag to add{String} [`label`=value] the text to display in the new tag{jQuery} [`$item`] Set internally when the record is added by choosing from the suggestion box<br />
+		{String} value the tag to add{String} [label=value] the text to display in the new tag{jQuery} [$item] Set internally when the record is added by choosing from the suggestion box<br />
 		Returns: {jQuery} The jQuery object containing the newly created label or undefined if one was not created
 	</td>
 </tr>
 
 <tr>
 	<td>
-		<strong>`addCurrentBuffer`</strong>()<br />
+		<strong>addCurrentBuffer</strong>()<br />
 		Add a tag with the contents of the input; e.g. when the user has typed something but clicks on another part of the form
 Note: this happens on blur when this.options.addOnBlur is true<br />
 		<br />
@@ -906,34 +916,34 @@ Note: this happens on blur when this.options.addOnBlur is true<br />
 
 <tr>
 	<td>
-		<strong>`moveSelection`</strong>([direction=up])<br />
+		<strong>moveSelection</strong>([direction=up])<br />
 		Move the selection up or down in the suggestion box<br />
-		{String} [`direction`=up] Either &quot;up&quot; or &quot;down&quot;<br />
+		{String} [direction=up] Either &quot;up&quot; or &quot;down&quot;<br />
 		Returns: {undefined}
 	</td>
 </tr>
 
 <tr>
 	<td>
-		{Suggester} <strong>`selectItem`</strong>($tag)<br />
+		<strong>selectItem</strong>($tag)<br />
 		Select a suggestion<br />
-		{jQuery} `$tag` <br />
+		{jQuery} $tag <br />
 		Returns: {Suggester} 
 	</td>
 </tr>
 
 <tr>
 	<td>
-		{Suggester} <strong>`deselectItem`</strong>($tag)<br />
+		<strong>deselectItem</strong>($tag)<br />
 		Deselect a suggestion<br />
-		{jQuery} `$tag` <br />
+		{jQuery} $tag <br />
 		Returns: {Suggester} 
 	</td>
 </tr>
 
 <tr>
 	<td>
-		{Suggester} <strong>`deselectAllItems`</strong>()<br />
+		<strong>deselectAllItems</strong>()<br />
 		Deselect all suggestions<br />
 		<br />
 		Returns: {Suggester} 
@@ -942,34 +952,34 @@ Note: this happens on blur when this.options.addOnBlur is true<br />
 
 <tr>
 	<td>
-		{Suggester} <strong>`suggest`</strong>(text)<br />
+		<strong>suggest</strong>(text)<br />
 		Open suggestion list for the given text<br />
-		{String} `text` <br />
+		{String} text <br />
 		Returns: {Suggester} 
 	</td>
 </tr>
 
 <tr>
 	<td>
-		{Suggester} <strong>`addData`</strong>(data)<br />
+		<strong>addData</strong>(data)<br />
 		Add more data records to the autosuggest list. Does not apply when dataUrl is set<br />
-		{Object[]} `data` More records in the same object format as initially set<br />
+		{Object[]} data More records in the same object format as initially set<br />
 		Returns: {Suggester} 
 	</td>
 </tr>
 
 <tr>
 	<td>
-		{Suggester} <strong>`setData`</strong>(data)<br />
+		<strong>setData</strong>(data)<br />
 		Set data records to the autosuggest list. Does not apply when dataUrl is set<br />
-		{Object[]} `data` <br />
+		{Object[]} data <br />
 		Returns: {Suggester} 
 	</td>
 </tr>
 
 <tr>
 	<td>
-		{Object[]} <strong>`getData`</strong>()<br />
+		<strong>getData</strong>()<br />
 		Get all the records in the autosuggest list. Does not apply when dataUrl is set<br />
 		<br />
 		Returns: {Object[]} 
@@ -978,25 +988,25 @@ Note: this happens on blur when this.options.addOnBlur is true<br />
 
 <tr>
 	<td>
-		{Suggester} <strong>`setFlyDirection`</strong>(direction)<br />
+		<strong>setFlyDirection</strong>(direction)<br />
 		Set the direction of the suggestion menu, to fly upwards or downwards<br />
-		{String} `direction` either &quot;up&quot; or &quot;down&quot;<br />
+		{String} direction either &quot;up&quot; or &quot;down&quot;<br />
 		Returns: {Suggester} 
 	</td>
 </tr>
 
 <tr>
 	<td>
-		{Suggester} <strong>`focusTag`</strong>($tag)<br />
+		<strong>focusTag</strong>($tag)<br />
 		Focus on a previously added tag<br />
-		{jQuery} `$tag` The .sugg-tag element to focus<br />
+		{jQuery} $tag The .sugg-tag element to focus<br />
 		Returns: {Suggester} 
 	</td>
 </tr>
 
 <tr>
 	<td>
-		{Suggester} <strong>`unfocusTag`</strong>()<br />
+		<strong>unfocusTag</strong>()<br />
 		Unfocus the previously focussed tag<br />
 		<br />
 		Returns: {Suggester} 
@@ -1005,34 +1015,34 @@ Note: this happens on blur when this.options.addOnBlur is true<br />
 
 <tr>
 	<td>
-		{Suggester} <strong>`removeFocusedTag`</strong>(evt)<br />
+		<strong>removeFocusedTag</strong>(evt)<br />
 		Remove the focused tag<br />
-		{jQuery.Event} `evt` (optional)  Used to check if $document keypress is backspace or delete<br />
+		{jQuery.Event} evt (optional)  Used to check if $document keypress is backspace or delete<br />
 		Returns: {Suggester} 
 	</td>
 </tr>
 
 <tr>
 	<td>
-		{Suggester} <strong>`remove`</strong>($tag)<br />
+		<strong>remove</strong>($tag)<br />
 		Remove a tag given its text or jQuery element or HTML element<br />
-		{String|jQuery|HTMLElement} `$tag` the tag to remove<br />
+		{String|jQuery|HTMLElement} $tag the tag to remove<br />
 		Returns: {Suggester} 
 	</td>
 </tr>
 
 <tr>
 	<td>
-		{Object|false} <strong>`findRecord`</strong>(text)<br />
+		<strong>findRecord</strong>(text)<br />
 		Find a suggestion record by text. Only applies when this.options.data is set.<br />
-		{String} `text` The text to search for<br />
+		{String} text The text to search for<br />
 		Returns: {Object|false} The matched record object or false if nothing matched.
 	</td>
 </tr>
 
 <tr>
 	<td>
-		{Suggester} <strong>`suggestIfNeeded`</strong>()<br />
+		<strong>suggestIfNeeded</strong>()<br />
 		Initiate suggestion process if the input text is &gt;= this.options.minChars, otherwise show prompt<br />
 		<br />
 		Returns: {Suggester} 
@@ -1041,7 +1051,7 @@ Note: this happens on blur when this.options.addOnBlur is true<br />
 
 <tr>
 	<td>
-		{Suggester} <strong>`showPrompt`</strong>()<br />
+		<strong>showPrompt</strong>()<br />
 		Show the prompt text to give a hint to users. Only called when there are no items and this.options.prompt is truthy<br />
 		<br />
 		Returns: {Suggester} 
@@ -1050,7 +1060,7 @@ Note: this happens on blur when this.options.addOnBlur is true<br />
 
 <tr>
 	<td>
-		{Suggester} <strong>`showEmptyText`</strong>()<br />
+		<strong>showEmptyText</strong>()<br />
 		Show text indicating there are no suggestions - defined in this.options.emptyText<br />
 		<br />
 		Returns: {Suggester} 
@@ -1059,16 +1069,16 @@ Note: this happens on blur when this.options.addOnBlur is true<br />
 
 <tr>
 	<td>
-		{JqXHR} <strong>`fetchResults`</strong>(text)<br />
+		<strong>fetchResults</strong>(text)<br />
 		Fetch suggestions from an ajax URL<br />
-		{String} `text` The text to search for<br />
+		{String} text The text to search for<br />
 		Returns: {JqXHR} The
 	</td>
 </tr>
 
 <tr>
 	<td>
-		{Suggester} <strong>`abortFetch`</strong>()<br />
+		<strong>abortFetch</strong>()<br />
 		Cancel the XHR. Used when user starts typing again before XHR completes<br />
 		<br />
 		Returns: {Suggester} 
@@ -1077,16 +1087,16 @@ Note: this happens on blur when this.options.addOnBlur is true<br />
 
 <tr>
 	<td>
-		{Suggester} <strong>`handleSuggestions`</strong>(records)<br />
+		<strong>handleSuggestions</strong>(records)<br />
 		Take the given records and build and display suggestion box. Usually only called internally.<br />
-		{Array} `records` The result records to use to build the suggestion list<br />
+		{Array} records The result records to use to build the suggestion list<br />
 		Returns: {Suggester} 
 	</td>
 </tr>
 
 <tr>
 	<td>
-		{Boolean} <strong>`isSuggestBoxOpen`</strong>()<br />
+		<strong>isSuggestBoxOpen</strong>()<br />
 		Return true if suggestion box is open<br />
 		<br />
 		Returns: {Boolean} 
@@ -1095,7 +1105,7 @@ Note: this happens on blur when this.options.addOnBlur is true<br />
 
 <tr>
 	<td>
-		{Suggester} <strong>`openSuggestBox`</strong>()<br />
+		<strong>openSuggestBox</strong>()<br />
 		Manually open the suggestion box in whatever state it is. Usually only called internally.<br />
 		<br />
 		Returns: {Suggester} 
@@ -1104,7 +1114,7 @@ Note: this happens on blur when this.options.addOnBlur is true<br />
 
 <tr>
 	<td>
-		{Suggester} <strong>`closeSuggestBox`</strong>()<br />
+		<strong>closeSuggestBox</strong>()<br />
 		Hide the suggestion box<br />
 		<br />
 		Returns: {Suggester} 
@@ -1113,7 +1123,7 @@ Note: this happens on blur when this.options.addOnBlur is true<br />
 
 <tr>
 	<td>
-		{Suggester} <strong>`focus`</strong>()<br />
+		<strong>focus</strong>()<br />
 		Focus cursor on text input box<br />
 		<br />
 		Returns: {Suggester} 
@@ -1122,16 +1132,16 @@ Note: this happens on blur when this.options.addOnBlur is true<br />
 
 <tr>
 	<td>
-		{Array} <strong>`getResults`</strong>(text)<br />
+		<strong>getResults</strong>(text)<br />
 		Get suggestion result records given some text (local data)<br />
-		{String} `text` Gather suggestions based on this text<br />
+		{String} text Gather suggestions based on this text<br />
 		Returns: {Array} Array of Objects of matching records
 	</td>
 </tr>
 
 <tr>
 	<td>
-		{Suggester} <strong>`clear`</strong>()<br />
+		<strong>clear</strong>()<br />
 		Clear all the chosen tags<br />
 		<br />
 		Returns: {Suggester} 
@@ -1140,7 +1150,7 @@ Note: this happens on blur when this.options.addOnBlur is true<br />
 
 <tr>
 	<td>
-		{Array} <strong>`getTags`</strong>()<br />
+		<strong>getTags</strong>()<br />
 		Get a collection of all the chosen tag objects<br />
 		<br />
 		Returns: {Array} 
@@ -1149,43 +1159,43 @@ Note: this happens on blur when this.options.addOnBlur is true<br />
 
 <tr>
 	<td>
-		{Suggester} <strong>`eachTag`</strong>(iterator)<br />
+		<strong>eachTag</strong>(iterator)<br />
 		Iterate through each of the chosen tag objects<br />
-		{Function} `iterator` The iterator function - function(i, tag) {}<br />
+		{Function} iterator The iterator function - function(i, tag) {}<br />
 		Returns: {Suggester} 
 	</td>
 </tr>
 
 <tr>
 	<td>
-		{String} <strong>`serialize`</strong>()<br />
-		Return a URL query string representing the hidden values of the input<br />
+		<strong>getValues</strong>()<br />
+		Pluck all the tag values from the chosen tags<br />
 		<br />
-		Returns: {String} 
+		Returns: {Array} 
 	</td>
 </tr>
 
 <tr>
 	<td>
-		{Suggester} <strong>`setTheme`</strong>(themeName)<br />
+		<strong>setTheme</strong>(themeName)<br />
 		Set the widget&#x27;s CSS theme - Adds a class &quot;sugg-theme-%name%&quot; to the widget<br />
-		{String} `themeName` The name of the theme to use<br />
+		{String} themeName The name of the theme to use<br />
 		Returns: {Suggester} 
 	</td>
 </tr>
 
 <tr>
 	<td>
-		{jQuery.Event} <strong>`publish`</strong>(type, data)<br />
+		<strong>publish</strong>(type, data)<br />
 		Publish the given event name and send the given data<br />
-		{String} `type` The name of the event to publish{Object} `data` Additional data to attach to the event object<br />
+		{String} type The name of the event to publish{Object} data Additional data to attach to the event object<br />
 		Returns: {jQuery.Event} The event object which behaves much like a DOM event object
 	</td>
 </tr>
 
 <tr>
 	<td>
-		{Suggester} <strong>`getInstance`</strong>()<br />
+		<strong>getInstance</strong>()<br />
 		Get this instance. Useful for jQuery-style usage:  var instance = $(&#x27;input&#x27;).suggester(options).suggester(&#x27;getInstance&#x27;)<br />
 		<br />
 		Returns: {Suggester} 
@@ -1194,16 +1204,16 @@ Note: this happens on blur when this.options.addOnBlur is true<br />
 
 <tr>
 	<td>
-		<strong>`_processOptions`</strong>(options)<br />
+		<strong>_processOptions</strong>(options)<br />
 		Set options and interpret options<br />
-		{Object} `options` Settings passed to constructor<br />
+		{Object} options Settings passed to constructor<br />
 		Returns: {undefined}
 	</td>
 </tr>
 
 <tr>
 	<td>
-		<strong>`_render`</strong>()<br />
+		<strong>_render</strong>()<br />
 		Render the widget and get handles to key elements<br />
 		<br />
 		Returns: {undefined}
@@ -1212,7 +1222,7 @@ Note: this happens on blur when this.options.addOnBlur is true<br />
 
 <tr>
 	<td>
-		<strong>`_handleStartValue`</strong>()<br />
+		<strong>_handleStartValue</strong>()<br />
 		Look at the initial element&#x27;s start value and populate tags as appropriate<br />
 		<br />
 		Returns: {undefined}
@@ -1221,7 +1231,7 @@ Note: this happens on blur when this.options.addOnBlur is true<br />
 
 <tr>
 	<td>
-		<strong>`_setupListeners`</strong>()<br />
+		<strong>_setupListeners</strong>()<br />
 		Attach event handlers<br />
 		<br />
 		Returns: {undefined}
@@ -1230,133 +1240,133 @@ Note: this happens on blur when this.options.addOnBlur is true<br />
 
 <tr>
 	<td>
-		<strong>`_onInputFocus`</strong>(evt)<br />
+		<strong>_onInputFocus</strong>(evt)<br />
 		Event handler for when this.$input is focused<br />
-		{jQuery.Event} `evt` The focus event<br />
+		{jQuery.Event} evt The focus event<br />
 		Returns: {undefined}
 	</td>
 </tr>
 
 <tr>
 	<td>
-		<strong>`_onInputBlur`</strong>(evt)<br />
+		<strong>_onInputBlur</strong>(evt)<br />
 		Event handler for when this.$input is blurred<br />
-		{jQuery.Event} `evt` blur event<br />
+		{jQuery.Event} evt blur event<br />
 		Returns: {undefined}
 	</td>
 </tr>
 
 <tr>
 	<td>
-		<strong>`_onTagRemoveClick`</strong>(evt)<br />
+		<strong>_onTagRemoveClick</strong>(evt)<br />
 		Event handler for when .sugg-remove is clicked<br />
-		{jQuery.Event} `evt` The click event<br />
+		{jQuery.Event} evt The click event<br />
 		Returns: {undefined}
 	</td>
 </tr>
 
 <tr>
 	<td>
-		<strong>`_onTagClick`</strong>(evt)<br />
+		<strong>_onTagClick</strong>(evt)<br />
 		Event handler for when .sugg-tag is clicked<br />
-		{jQuery.Event} `evt` The click event<br />
+		{jQuery.Event} evt The click event<br />
 		Returns: {undefined}
 	</td>
 </tr>
 
 <tr>
 	<td>
-		<strong>`_onListMouseover`</strong>(evt)<br />
+		<strong>_onListMouseover</strong>(evt)<br />
 		Event handler for when autosuggest list is moused over<br />
-		{jQuery.Event} `evt` The mouseover event<br />
+		{jQuery.Event} evt The mouseover event<br />
 		Returns: {undefined}
 	</td>
 </tr>
 
 <tr>
 	<td>
-		<strong>`_onListClick`</strong>(evt)<br />
+		<strong>_onListClick</strong>(evt)<br />
 		Event handler for when autosuggest list is clicked<br />
-		{jQuery.Event} `evt` The click event<br />
+		{jQuery.Event} evt The click event<br />
 		Returns: {undefined}
 	</td>
 </tr>
 
 <tr>
 	<td>
-		<strong>`_onBoxClick`</strong>(evt)<br />
+		<strong>_onBoxClick</strong>(evt)<br />
 		Event handler for when this.$box is clicked<br />
-		{jQuery.Event} `evt` The click event<br />
+		{jQuery.Event} evt The click event<br />
 		Returns: {undefined}
 	</td>
 </tr>
 
 <tr>
 	<td>
-		<strong>`_onKeydown`</strong>(evt)<br />
+		<strong>_onKeydown</strong>(evt)<br />
 		Handle keypresses while in tag input field<br />
-		{Event} `evt` The keydown event (a raw browser event, not jQuery.Event)<br />
+		{Event} evt The keydown event (a raw browser event, not jQuery.Event)<br />
 		Returns: {undefined}
 	</td>
 </tr>
 
 <tr>
 	<td>
-		<strong>`_onValueChange`</strong>(evt)<br />
+		<strong>_onValueChange</strong>(evt)<br />
 		Handle paste on this.$input<br />
-		{jQuery.Event} `evt` The paste event<br />
+		{jQuery.Event} evt The paste event<br />
 		Returns: {undefined}
 	</td>
 </tr>
 
 <tr>
 	<td>
-		<strong>`_key_UP`</strong>(evt)<br />
+		<strong>_key_UP</strong>(evt)<br />
 		Handle UP key on this.$input<br />
-		{Event} `evt` The keydown event<br />
+		{Event} evt The keydown event<br />
 		Returns: {undefined}
 	</td>
 </tr>
 
 <tr>
 	<td>
-		<strong>`_key_DOWN`</strong>(evt)<br />
+		<strong>_key_DOWN</strong>(evt)<br />
 		Handle DOWN key on this.$input<br />
-		{Event} `evt` The keydown event<br />
+		{Event} evt The keydown event<br />
 		Returns: {undefined}
 	</td>
 </tr>
 
 <tr>
 	<td>
-		<strong>`_beforeFetch`</strong>(jqXHR)<br />
+		<strong>_beforeFetch</strong>(jqXHR)<br />
 		The handler function that is passed to $.ajax({beforeSend:...}) to alter XHR if needed<br />
-		{JqXHR} `jqXHR` The jQuery XHR object (see http://api.jquery.com/jQuery.ajax/#jqXHR)<br />
+		{JqXHR} jqXHR The jQuery XHR object (see http://api.jquery.com/jQuery.ajax/#jqXHR)<br />
 		Returns: {undefined}
 	</td>
 </tr>
 
 <tr>
 	<td>
-		<strong>`_afterFetch`</strong>(records)<br />
+		<strong>_afterFetch</strong>(records)<br />
 		Handler passed to $.ajax().done(function(){...}) that handles suggestion data that is returned<br />
-		{Array} `records` The Array of record objects returned from the XHR<br />
+		{Array} records The Array of record objects returned from the XHR<br />
 		Returns: {undefined}
 	</td>
 </tr>
 
 <tr>
 	<td>
-		{String} <strong>`_formatSuggestion`</strong>(record, substr)<br />
+		<strong>_formatSuggestion</strong>(record, substr)<br />
 		Format a suggestion before display<br />
-		{Object} `record` The record that was suggested{String} `substr` The string that generated the list of suggestions<br />
+		{Object} record The record that was suggested{String} substr The string that generated the list of suggestions<br />
 		Returns: {String} HTML to use as the item (e.g. &#x27;&lt;li class=&quot;sugg-item&quot;&gt;Suggestion&lt;/li&gt;&#x27;)
 	</td>
 </tr>
 
 <tr>
 	<td>
-		{String} <strong>`save`</strong>()<br />
+		<strong>save</strong>()<br />
 		Set the value of the original input to a comma-delimited set of labels<br />
 		<br />
 		Returns: {String} The new value
@@ -1365,34 +1375,34 @@ Note: this happens on blur when this.options.addOnBlur is true<br />
 
 <tr>
 	<td>
-		{Object} <strong>`_spliceTag`</strong>(value)<br />
+		<strong>_spliceTag</strong>(value)<br />
 		Given tag text, remove a tag from the internal collection and from the DOM<br />
-		{String} `value` The text of the tag<br />
+		{String} value The text of the tag<br />
 		Returns: {Object} The record associated with that tag
 	</td>
 </tr>
 
 <tr>
 	<td>
-		{Suggester.Tag} <strong>`_spliceTagByIdx`</strong>(idx)<br />
+		<strong>_spliceTagByIdx</strong>(idx)<br />
 		Given an array index, remove a tag from the internal collection and from the DOM<br />
-		{Number} `idx` The index position in the internal collection<br />
+		{Number} idx The index position in the internal collection<br />
 		Returns: {Suggester.Tag} The Suggester.Tag object that was removed
 	</td>
 </tr>
 
 <tr>
 	<td>
-		{Number} <strong>`getTagIndex`</strong>(value)<br />
+		<strong>getTagIndex</strong>(value)<br />
 		Find a tag given value<br />
-		{String} `value` The text of the tag<br />
+		{String} value The text of the tag<br />
 		Returns: {Number} The index position of the tag in the internal collection or -1 if not found
 	</td>
 </tr>
 
 <tr>
 	<td>
-		<strong>`_setupPubsub`</strong>()<br />
+		<strong>_setupPubsub</strong>()<br />
 		Setup publish/subscribe system that uses jQuery&#x27;s event system. Allows subscribing this way: instance.bind(&#x27;AfterFilter&#x27;, myhandler)<br />
 		<br />
 		Returns: {undefined}
@@ -1401,7 +1411,7 @@ Note: this happens on blur when this.options.addOnBlur is true<br />
 
 <tr>
 	<td>
-		{Boolean} <strong>`_isCursorAtStart`</strong>()<br />
+		<strong>_isCursorAtStart</strong>()<br />
 		Given an input element, get the cursor position. Used to determine if backspace key should delete the previous tag<br />
 		<br />
 		Returns: {Boolean} true if the cursor is at the start and no text is selected
@@ -1410,28 +1420,28 @@ Note: this happens on blur when this.options.addOnBlur is true<br />
 
 <tr>
 	<td>
-		{Suggester} <strong>`addData`</strong>(data)<br />
+		<strong>addData</strong>(data)<br />
 		Add data to all instances<br />
-		{Object[]} `data` Add more data to all the registered instances<br />
+		{Object[]} data Add more data to all the registered instances<br />
 		Returns: {Suggester} 
 	</td>
 </tr>
 
 <tr>
 	<td>
-		{Function} <strong>`subclass`</strong>(jQueryMethodName[, properties])<br />
+		<strong>subclass</strong>(jQueryMethodName[, properties])<br />
 		Create a subclass of Suggester<br />
-		{String} `jQueryMethodName` The method name to add to jQuery.fn{Object} [`properties`] Additional properties and methods to add to subclass<br />
+		{String} jQueryMethodName The method name to add to jQuery.fn{Object} [properties] Additional properties and methods to add to subclass<br />
 		Returns: {Function} The new class object
 	</td>
 </tr>
 
 <tr>
 	<td>
-		{Array} <strong>`getValues`</strong>()<br />
-		Pluck all the tag values from the chosen tags<br />
+		<strong>serialize</strong>()<br />
+		Return a URL query string representing the hidden values of the input<br />
 		<br />
-		Returns: {Array} 
+		Returns: {String} 
 	</td>
 </tr>
 
@@ -1471,7 +1481,7 @@ suggester.bind('AfterClose', doStuff);
 suggester.focus();
 ```
 
-See the source on the [live demos](http://sandbox.kendsnyder.com/Suggester-1.1/demo) for lots more examples.
+See the source on the [live demos](http://sandbox.kendsnyder.com/Suggester-1.1/demos) for lots more examples.
 
 Changelog
 -

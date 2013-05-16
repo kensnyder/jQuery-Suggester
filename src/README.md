@@ -74,8 +74,8 @@ Options
 	<% _.forEach(options, function(option) { %><tr>
 		<td>{<%- option.type.replace('JQuery','jQuery') %>}</td>
 		<td><strong><%- option.name %></strong></td>
-		<td><%- option.description %></td>
 		<td><%- option.optdefault %></td>
+		<td><%- option.description %></td>
 	</tr>
 	<% }); %>
 </table>
@@ -195,9 +195,9 @@ instance.methodName(arg1, arg2, argN);
 <% _.forEach(methods, function(method) { %>
 <tr>
 	<td>
-		<% if (method.return) { %>{<%- method.return.type.replace('JQuery','jQuery') %>} <% } %><strong>`<%- method.name %>`</strong>(<% _.forEach(method.params || [], function(param, i) { %><% if (param.optional) { %>[<% } %><% if (i !== 0) { %>, <% } %><%- param.name %><% if (param.optdefault !== undefined) { %>=<%- param.optdefault %><% } %><% if (param.optional) { %>]<% } %><% }); %>)<br />
+		<strong><%- method.name %></strong>(<% _.forEach(method.params || [], function(param, i) { %><% if (param.optional) { %>[<% } %><% if (i !== 0) { %>, <% } %><%- param.name %><% if (param.optdefault !== undefined) { %>=<%- param.optdefault %><% } %><% if (param.optional) { %>]<% } %><% }); %>)<br />
 		<%- method.description %><br />
-		<% _.forEach(method.params || [], function(param, i) { %>{<%- param.type.replace('JQuery','jQuery') %>} <% if (param.optional) { %>[<% } %>`<%- param.name %>`<% if (param.optdefault !== undefined) { %>=<%- param.optdefault %><% } %><% if (param.optional) { %>]<% } %> <%- param.description %><% }); %><br />
+		<% _.forEach(method.params || [], function(param, i) { %>{<%- param.type.replace('JQuery','jQuery') %>} <% if (param.optional) { %>[<% } %><%- param.name %><% if (param.optdefault !== undefined) { %>=<%- param.optdefault %><% } %><% if (param.optional) { %>]<% } %> <%- param.description %><% }); %><br />
 		Returns: <% if (method.return) { %>{<%- method.return.type.replace('JQuery','jQuery') %>} <%- method.return.description %><% } else { %>{undefined}<% } %>
 	</td>
 </tr>

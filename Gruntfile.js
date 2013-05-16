@@ -15,14 +15,25 @@ module.exports = function(grunt) {
 		' Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %> */\n',
 		// Task configuration.
 		clean: {
-			files: ['dist','docs']
+			init: ['dist','docs','Suggester'],
+			compress: ['Suggester']
 		},
 		copy: {
-			main: {
+			css: {
 				files: [
 					{
-						src: ['src/Suggester.css'], 
-						dest: 'dist/Suggester.css'
+						src: ['./src/Suggester.css'], 
+						dest: './dist/Suggester.css'
+					}
+				]
+			},
+			compress: {
+				files: [
+					{
+						flatten: true,
+						expand: true,
+						src: ['./dist/*'],
+						dest: './Suggester'
 					}
 				]
 			}
@@ -43,7 +54,7 @@ module.exports = function(grunt) {
 			},
 			dist: {
 				src: '<%= concat.dist.dest %>',
-				dest: 'dist/<%= pkg.name %>.min.js'
+				dest: './dist/<%= pkg.name %>.min.js'
 			}
 		},
 		cssmin: {
@@ -53,20 +64,19 @@ module.exports = function(grunt) {
 			},
 			compress: {
 				files: {
-					'dist/Suggester.min.css': ['src/Suggester.css']
+					'./dist/Suggester.min.css': ['src/Suggester.css']
 				}
 			}
 		},
 		compress: {
 			main: {
 				options: {
-					archive: 'DOWNLOAD.zip'
+					archive: './DOWNLOAD.zip'
 				},
 				files: [
 					{
-						src: ['dist/*'], 
+						src: ['./Suggester/*'], 
 						dest: './',
-						flatten: true,
 						filter: 'isFile'
 					}
 				]
@@ -108,7 +118,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-yuidoc');
 	grunt.loadNpmTasks('grunt-contrib-compress');
-	
+		
 	grunt.registerTask('logo', 'Copy logo to yuidoc files', function() {
 		grunt.file.copy('demos/assets/img/logo.png', 'docs/assets/css/logo.png');
 	});
@@ -132,12 +142,25 @@ module.exports = function(grunt) {
 			if (item.itemtype == 'property' && item.name == 'options') {
 				docs.options = item.subprops;
 			}
-			else if (item.itemtype == 'method') docs.methods.push(item); 
-			else if (item.itemtype == 'property') docs.properties.push(item); 
-			else if (item['static'] && item.itemtype == 'method') docs.staticMethods.push(item); 
-			else if (item['static'] && item.itemtype == 'property') docs.staticProperties.push(item); 
-			else if (item.itemtype == 'event') docs.events.push(item); 
+			else if (item.itemtype == 'method') {
+				docs.methods.push(item); 
+			}
+			else if (item.itemtype == 'property') {
+				docs.properties.push(item); 
+			}
+			else if (item['static'] && item.itemtype == 'method') {
+				docs.staticMethods.push(item); 
+			}
+			else if (item['static'] && item.itemtype == 'property') {
+				docs.staticProperties.push(item); 
+			}
+			else if (item.itemtype == 'event') {
+				docs.events.push(item); 
+			}
 		});
+		// remove yuidoc crossLink mustache tags
+		var docStr = JSON.stringify(docs).replace(/\{\{.+?\}\}(.+?)\{\{.+?\}\}/g, '$1');
+		docs = JSON.parse(docStr);
 		return docs;
 	}
 	
@@ -158,6 +181,6 @@ module.exports = function(grunt) {
 	})
 
 	// Default task.
-	grunt.registerTask('default', ['jshint', 'qunit', 'clean', 'copy', 'concat', 'cssmin', 'uglify', 'compress', 'yuidoc', 'logo', 'readme']);
+	grunt.registerTask('default', ['jshint', 'qunit', 'clean:init', 'copy:css', 'concat:dist', 'cssmin', 'uglify', 'copy:compress', 'compress', 'clean:compress', 'yuidoc', 'logo', 'readme']);
 
 };
