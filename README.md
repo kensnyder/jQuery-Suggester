@@ -1,7 +1,7 @@
 Suggester - A Better Autocomplete Widget
 =
 
-Version 1.1.0, May 2013, MIT License
+Version 1.2.0, Jun 2013, MIT License
 
 [Demos](http://sandbox.kendsnyder.com/Suggester-1.1/demos), [Unit tests](http://sandbox.kendsnyder.com/Suggester-1.1/test/Suggester.html)
 
@@ -675,6 +675,26 @@ The following is a description of each event. See the Suggester Instance Methods
 		<td>-</td>
 	</tr>
 	<tr>
+		<td><strong>BeforePaste</strong></td>
+		<td>Respond before values are pasted</td>
+		<td>
+			{jQuery.Event} event <em>The paste event</em><br />
+			{String} value <em>The raw value that was pasted</em><br />
+			{Array} tags <em>The array of tags to be added (if the value was successfully split on tab, semicolon, or comma). If changed, the added tags will change.</em><br />
+		</td>
+		<td>tags are not added and paste is cancelled</td>
+	</tr>
+	<tr>
+		<td><strong>AfterPaste</strong></td>
+		<td>Respond after values are pasted</td>
+		<td>
+			{jQuery.Event} event <em>The paste event</em><br />
+			{String} value <em>The raw value that was pasted</em><br />
+			{Array} tags <em>The array of tags that were added (if the value was successfully split on tab, semicolon, or comma)</em><br />
+		</td>
+		<td>-</td>
+	</tr>
+	<tr>
 		<td><strong>BeforeSubmit</strong></td>
 		<td>Respond before form is submitted and before Suggester adds on submit</td>
 		<td>
@@ -1042,6 +1062,15 @@ Note: this happens on blur when this.options.addOnBlur is true<br />
 
 <tr>
 	<td>
+		<strong>searchData</strong>(value, props)<br />
+		Search through this.data to find a record with a value or label equal to the given value<br />
+		{String} value The value or label to find{Array} props An array of strings of property names to search<br />
+		Returns: {Object|Boolean} Returns the record if found, false if not found
+	</td>
+</tr>
+
+<tr>
+	<td>
 		<strong>suggestIfNeeded</strong>()<br />
 		Initiate suggestion process if the input text is &gt;= this.options.minChars, otherwise show prompt<br />
 		<br />
@@ -1168,10 +1197,19 @@ Note: this happens on blur when this.options.addOnBlur is true<br />
 
 <tr>
 	<td>
-		<strong>getValues</strong>()<br />
-		Pluck all the tag values from the chosen tags<br />
+		<strong>serialize</strong>()<br />
+		Return a URL query string representing the hidden values of the input<br />
 		<br />
-		Returns: {Array} 
+		Returns: {String} 
+	</td>
+</tr>
+
+<tr>
+	<td>
+		<strong>getValue</strong>()<br />
+		Get the current value as a comma-delimited string<br />
+		<br />
+		Returns: {String} 
 	</td>
 </tr>
 
@@ -1312,9 +1350,20 @@ Note: this happens on blur when this.options.addOnBlur is true<br />
 
 <tr>
 	<td>
-		<strong>_onValueChange</strong>(evt)<br />
-		Handle paste on this.$input<br />
-		{jQuery.Event} evt The paste event<br />
+		<strong>_onCutDelete</strong>(evt)<br />
+		Handle cut and delete on this.$input<br />
+		{jQuery.Event} evt The cut, paste, or delete event<br />
+		Returns: {undefined}
+	</td>
+</tr>
+
+<tr>
+	<td>
+		<strong>_onCutDelete</strong>(evt)<br />
+		Handle paste on this.$input. Look for places to split pasted value
+For example pasting &quot;a, b, c&quot; will immediately add 3 tags (when this.options.addOnComma is true)
+It attempts to split on tab, then if there are no tabs then semicolons, then if there are no semicolons, commas<br />
+		{jQuery.Event} evt the paste event<br />
 		Returns: {undefined}
 	</td>
 </tr>
@@ -1438,10 +1487,10 @@ Note: this happens on blur when this.options.addOnBlur is true<br />
 
 <tr>
 	<td>
-		<strong>serialize</strong>()<br />
-		Return a URL query string representing the hidden values of the input<br />
+		<strong>getValues</strong>()<br />
+		Pluck all the tag values from the chosen tags<br />
 		<br />
-		Returns: {String} 
+		Returns: {Array} 
 	</td>
 </tr>
 
@@ -1485,6 +1534,18 @@ See the source on the [live demos](http://sandbox.kendsnyder.com/Suggester-1.1/d
 
 Changelog
 -
+
+**Version 1.2.0, Jun 2013**
+
+* Allow pasting delimited values *
+
+* Speed improvements *
+
+* Search through this.data to find typed values when applicable *
+
+**Version 1.1.1, May 2013**
+
+* Fixed Suggester#getValues() *
 
 **Version 1.1.0, May 2013**
 

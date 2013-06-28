@@ -1,4 +1,4 @@
-/*! Suggester - A Better Autocomplete Widget - v1.1.0 - May 2013
+/*! Suggester - A Better Autocomplete Widget - v1.2.0 - Jun 2013
 * https://github.com/kensnyder/jQuery-Suggester
 * Copyright (c) 2013 Ken Snyder; Licensed MIT */
 (function (factory) {
@@ -273,7 +273,6 @@
 
 		 * @param {String|jQuery|HTMLElement} $textInput  The input element to convert into a widget
 		 * @param {Object} [options=Suggester.defaultOptions] See {{#crossLink "Suggester/options:property"}}options property{{/crossLink}} for full documentation
-		 * 
 		 */
 		initialize: function($textInput, options) {
 			// This is the original text input given
@@ -356,9 +355,27 @@
 		 *
 		 */
 		add: function(value, label/*optional*/, $item/*optional*/) {
-			var evt, idx, $hidden, $tag;
+			var evt, idx, $hidden, $tag, record;
+			// with only one argument, look for a matching record
+			if (arguments.length == 1) {
+				record = this.searchData(value, this.options.valueProperty === this.options.labelProperty ? [this.options.valueProperty] : [this.options.valueProperty,this.options.labelProperty]);
+				if (record) {
+					value = record[this.options.valueProperty];
+					label = record[this.options.labelProperty];
+				}
+			}
+			else if ($item) {
+				record = $item.data('tag-record');
+				if (record) {
+					value = record[this.options.valueProperty];
+					label = record[this.options.labelProperty];
+				}
+			}
 			if (typeof label != 'string') {
 				label = value;
+			}
+			if (typeof value != 'string') {
+				value = label;
 			}
 			/**
 			 * Fired before a tag is added
@@ -381,7 +398,7 @@
 				value: value,
 				label: label,
 				item: $item,
-				record: $item ? $item.data('tag-record') : undefined
+				record: record
 			});
 			if (evt.isDefaultPrevented()) {
 				return undefined;
@@ -748,34 +765,68 @@
 		 * @return {Object|false}  The matched record object or false if nothing matched.
 		 */   
 		findRecord: function(text) {
-			var record, sugg, _break;
-			_break = {};
-			record = false;
-			if (!this.options.caseSensitive) {
-				text = text.toLowerCase();
+			return this.searchData(text, this.options.searchProperties); 
+		}, 
+		/**
+		 * Search through this.data to find a record with a value or label equal to the given value
+		 * @method searchData
+		 * @param {String} value  The value or label to find
+		 * @param {Array} props  An array of strings of property names to search
+		 * @return {Object|Boolean}  Returns the record if found, false if not found
+		 */
+		searchData: function(value, props) {
+			var i, len, j, numProps, prop;
+			var data = this.getData();
+			len = data.length;
+			numProps = props.length;
+			if (len === 0 || numProps === 0) {
+				return false;
 			}
-			sugg = this;
-			try {
-				$.each(this.getData(), function(i, item) {  
-					$.each(sugg.options.searchProperties, function() {
-						var value = '' + (item[this] || '');
-						if (!sugg.options.caseSensitive) {
-							value = value.toLowerCase();
+			// ensure value is a string
+			value = '' + value;
+			// optimize for case when value there is only one property
+			if (numProps == 1) {
+				prop = props[0];
+				// run through each record
+				if (this.options.caseSensitive) {
+					for (i = 0; i < len; i++) {
+						if (data[i][prop] === value) {
+							return data[i];
 						}
-						if (value == text) {
-							record = item;
-							throw _break; // break out of both loops
+					}
+				} else {
+					value = value.toLowerCase();
+					for (i = 0; i < len; i++) {
+						// check the value lowercase property
+						if (typeof data[i][prop] == 'string' && data[i][prop].toLowerCase() === value) {
+							return data[i];
 						}
-					});
-				});
-			}
-			catch (e) {
-				if (e !== _break) {
-					throw e;
+					}
 				}
 			}
-			return record;      
-		},    
+			else {
+				// run through each record and each property			
+				if (this.options.caseSensitive) {
+					for (i = 0; i < len; i++) {
+						for (j = 0; j < numProps; j++) {						
+							if (data[i][ props[j] ] === value) {
+								return data[i];
+							}
+						}
+					}
+				} else {
+					value = value.toLowerCase();
+					for (i = 0; i < len; i++) {
+						for (j = 0; j < numProps; j++) {						
+							if (typeof data[i][ props[j] ] == 'string' && data[i][ props[j] ].toLowerCase() === value) {
+								return data[i];
+							}
+						}						
+					}
+				}				
+			}
+			return false;
+		},
 		/**
 		 * Initiate suggestion process if the input text is >= this.options.minChars, otherwise show prompt
 		 * @method suggestIfNeeded
@@ -919,15 +970,14 @@
 				this.showEmptyText();
 				return this;
 			}
-			var sugg = this;
+			var $suggestion;
 			// clear out the suggestion list including all nodes and data
-			sugg.$suggList.empty();
-			$.each(records, function() {
-				// TODO: format suggestion
-				var $suggestion = $(sugg._formatSuggestion(this, sugg._text));
-				$suggestion.data('tag-record', this);
-				sugg.$suggList.append($suggestion);
-			});
+			this.$suggList.empty();
+			for (var i = 0, len = records.length; i < len; i++) {
+				$suggestion = $(this._formatSuggestion(records[i], this._text));
+				$suggestion.data('tag-record', records[i]);
+				this.$suggList.append($suggestion);
+			}
 			/**
 			 * Modify suggestion box behavior before it opens
 			 * @event BeforeSuggest
@@ -1184,9 +1234,17 @@
 		getValues: function() {
 			var values = [];
 			$.each(this.tags, function() {
-				values.push(this.getValue);
+				values.push(this.getValue());
 			});
 			return values;
+		},
+		/**
+		 * Get the current value as a comma-delimited string
+		 * @method getValue
+		 * @return {String}
+		 */
+		getValue: function() {
+			return this.getValues().join(',');
 		},
 		/**
 		 * Set the widget's CSS theme - Adds a class "sugg-theme-%name%" to the widget
@@ -1367,7 +1425,8 @@
 			// handle various actions associated with keypresses
 			$.Suggester.quickBind(this.$input.get(0), 'keydown', $.proxy(this, '_onKeydown'));
 			// handle paste into tag field
-			this.$input.bind('cut paste propertychange', $.proxy(this, '_onValueChange'));
+			this.$input.bind('cut delete', $.proxy(this, '_onCutDelete'));
+			this.$input.bind('paste', $.proxy(this, '_onPaste'));
 			// auto add tags on submit
 			this.$form.submit($.proxy(this, '_onSubmit'));
 		},
@@ -1399,7 +1458,7 @@
 		 */
 		_onInputBlur: function(evt) {
 			var inputVal = $.trim(this.$input.val());
-			if (inputVal === this.options.placeholder) {
+			if (this.options.placeholder && inputVal === this.options.placeholder) {
 				this.$widget.addClass('sugg-placeholder-on');
 			}
 			else if (inputVal !== '' && this.options.addOnBlur) {
@@ -1557,13 +1616,107 @@
 			});
 		},
 		/**
-		 * Handle paste on this.$input
-		 * @method _onValueChange
-		 * @param {jQuery.Event} evt  The paste event
+		 * Handle cut and delete on this.$input
+		 * @method _onCutDelete
+		 * @param {jQuery.Event} evt  The cut, paste, or delete event
 		 */
-		_onValueChange: function(evt) {
-			// when paste fires, input hasn't yet been populated so run on timeout
+		_onCutDelete: function(evt) {
+			// when cut or delete fires, input hasn't yet been updated so run on timeout
 			setTimeout($.proxy(this._updateInputSize, this), 0);    
+		},
+		/**
+		 * Handle paste on this.$input. Look for places to split pasted value
+		 * For example pasting "a, b, c" will immediately add 3 tags (when this.options.addOnComma is true)
+		 * It attempts to split on tab, then if there are no tabs then semicolons, then if there are no semicolons, commas
+		 * @method _onCutDelete
+		 * @param {jQuery.Event} evt  the paste event
+		 */		
+		_onPaste: function(evt) {
+			var value, parts = [], tags = [], part, i, len;
+			// get pasted value (see http://stackoverflow.com/questions/6035071/intercept-paste-event-in-javascript)
+			try {
+				// modern browsers
+				value = evt.originalEvent.clipboardData.getData('text/plain');
+			}
+			catch (e) {
+				// Lesser IE
+				value = window.clipboardData.getData('Text');
+			}
+			evt.preventDefault();
+			if (this.options.addOnTab) {
+				parts = value.split('\t');
+			}
+			if (parts.length < 2 && this.options.addOnSemicolon) {
+				parts = value.split(';');
+			}
+			if (parts.length < 2 && this.options.addOnComma) {
+				parts = value.split(',');
+			}
+			if (parts.length > 0) {
+				for (i = 0, len = parts.length; i < len; i++) {				
+					part = $.trim(parts[i]);
+					if (part !== '') {
+						tags.push(part);
+					}
+				}
+			}
+			/**
+			 * Respond before values are pasted
+			 * @event BeforePaste
+			 * @param {jQuery.Event} event  The paste event
+			 * @param {String} value  The raw value that was pasted
+			 * @param {Array} tags  The array of tags to be added (if the value was successfully split on tab, semicolon, or comma). If changed, the added tags will change.
+			 * @ifprevented  tags are not added and paste is cancelled
+			 * @example      
+
+	instance.bind('BeforePaste', function(event) {
+		if (event.tags.length > 1 && !confirm('Did you mean to paste ' + event.tags.length + ' items?\n\nClick OK to continue. Click cancel to treat it as one item.')) {
+			this.$input.val(event.value);
+			event.preventDefault();
+		}
+	});
+
+			 */ 
+			var pubevt = this.publish('BeforePaste', {
+				event: evt,
+				value: value,
+				tags: tags
+			});
+			if (pubevt.isDefaultPrevented()) {
+				// don't add any tags
+				return;
+			}
+			if (pubevt.tags.length < 2) {				
+				// only text here (not a list of tags) so let the user continue typing;
+				this.$input.val( this.$input.val()+value );
+				this._updateInputSize();
+				return;
+			}
+			// we are going to add each tag
+			evt.preventDefault();
+			for (i = 0, len = pubevt.tags.length; i < len; i++) {				
+				this.add(tags[i]);
+			}
+			/**
+			 * Respond after values are pasted
+			 * @event AfterPaste
+			 * @param {jQuery.Event} event  The paste event
+			 * @param {String} value  The raw value that was pasted
+			 * @param {Array} tags  The array of tags that were added (if the value was successfully split on tab, semicolon, or comma)
+			 * @example      
+
+	instance.bind('AfterPaste', function(event) {
+		if (event.tags.length > 1) {
+			alert('You pasted ' + event.tags.length + ' tags');
+		}
+	});
+
+			 */
+			this.publish('AfterPaste', {
+				event: evt,
+				value: value,
+				tags: pubevt.tags
+			});
 		},
 		/**
 		 * Handle UP key on this.$input
@@ -1883,9 +2036,9 @@
 		 */
 		save: function() {
 			var vals = [], newValue;
-			$.each(this.tags, function() {
-				vals.push(this.value.replace(/,/g, '\\,'));
-			});
+			for (var i = 0, len = this.tags.length; i < len; i++) {
+				vals.push(this.tags[i].getValue().replace(/,/g, '\\,'));
+			}
 			newValue = vals.join(',');
 			/**
 			 * Inject functionality before saving

@@ -262,6 +262,7 @@
 		dataUrl: "http://query.yahooapis.com/v1/public/yql?q=select%20id%2C%20Title%2C%20Address%20from%20local.search%20where%20zip%3D'90014'%20and%20query%3D'%s'&format=json&callback=%s",
 		dataType: 'jsonp',
 		labelProperty: 'Title',
+		valueProperty: 'Address',
 		prompt: 'Enter the name of a business or place',
 		listItemTemplate: '<li class="sugg-item">{record.Title} - {record.Address}</li>',
 		onAfterFetch: function(event) {

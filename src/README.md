@@ -243,6 +243,18 @@ See the source on the [live demos](http://sandbox.kendsnyder.com/Suggester-1.1/d
 Changelog
 -
 
+**Version 1.2.0, Jun 2013**
+
+* Allow pasting delimited values *
+
+* Speed improvements *
+
+* Search through this.data to find typed values when applicable *
+
+**Version 1.1.1, May 2013**
+
+* Fixed Suggester#getValues() *
+
 **Version 1.1.0, May 2013**
 
 *Grunt build process*
