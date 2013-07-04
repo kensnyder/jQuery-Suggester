@@ -1,4 +1,4 @@
-/*! Suggester - A Better Autocomplete Widget - v1.2.0 - Jun 2013
+/*! Suggester - A Better Autocomplete Widget - v1.2.1 - Jul 2013
 * https://github.com/kensnyder/jQuery-Suggester
 * Copyright (c) 2013 Ken Snyder; Licensed MIT */
 (function (factory) {
@@ -309,7 +309,6 @@
 			// setup event handlers
 			this._setupListeners();
 			// we're all done
-			// Initialize callback now has access to the completed widget through this.$widget, this.$box, etc.
 			/**
 			 * Called after widget is initialized and rendered
 			 * @event Initialize
@@ -524,11 +523,11 @@
 			}
 			// reset our current items
 			this.$currentItem = evt.next;
-			/*
+			/**
 			 * Fired after selected suggestion is changed in response to up or down arrow
 			 * @event AfterMove
 			 * @param {String} direction  "up" or "down"
-			 * @param {jQuery} last       The previously selected item
+			 * @param {jQuery|null} last       The previously selected item
 			 * @param {jQuery} current    The newly selected item
 			 * @example
 	
@@ -700,20 +699,26 @@
 		remove: function($tag) {
 			var evt, value, label, removed;
 			if (typeof $tag.nodeType == 'number' && typeof $tag.style == 'object') {
+				// DOM Element
 				$tag = $($tag);
 			}
 			if ($tag instanceof $) {
+				// jQuery object
 				value = $tag.data('tag-value');
 			}
 			else {
+				// String
 				value = $tag;
 				$tag = false;
-				$.each(this.tags, function() {
-					if (value == this.value) {
-						$tag = this.$tag;
-						return false;
+				for (var i = 0, len = this.tags.length; i < len; i++) {
+					if (value == this.tags[i].getValue() || value == this.tags[i].getLabel()) {
+						$tag = this.tags[i].getElement();
+						break;
 					}
-				});
+				}
+				if (!$tag) {
+					return this;
+				}
 			}
 			label = $tag.data('tag-label');
 			/**
@@ -742,6 +747,8 @@
 				return this;
 			}     
 			removed = this._spliceTag(evt.value);
+			// save to our hidden input
+			this.save();
 			/**
 			 * Fired after a tag is removed
 			 * @event AfterRemove
@@ -981,7 +988,7 @@
 			/**
 			 * Modify suggestion box behavior before it opens
 			 * @event BeforeSuggest
-			 * @param text  The text that was searched for
+			 * @param {String} text  The text that was searched for
 			 * @ifprevented  The suggestion list is built but not displayed
 			 * @example
 
@@ -1220,10 +1227,9 @@
 		 */
 		serialize: function() {
 			var query = [];
-			$.each(this.tags, function() {
-				var $hidden = this.getHidden();
-				query.push(encodeURIComponent($hidden.name) + '=' + encodeURIComponent($hidden.value));
-			});
+			for (var i = 0, len = this.tags.length; i < len; i++) {
+				query.push( encodeURIComponent(this.tags[i].getHidden().name) + '=' + encodeURIComponent(this.tags[i].getHidden().value) );
+			}
 			return query.join('&');
 		},
 		/**
@@ -1233,9 +1239,9 @@
 		 */
 		getValues: function() {
 			var values = [];
-			$.each(this.tags, function() {
-				values.push(this.getValue());
-			});
+			for (var i = 0, len = this.tags.length; i < len; i++) {
+				values.push( this.tags[i].getValue() );
+			}
 			return values;
 		},
 		/**
@@ -1308,7 +1314,7 @@
 			/**
 			 * Modify this.$widget or any of its child elements before it is manipulated or appended. Can be used to modify this.options.template with DOM methods
 			 * @event BeforeRender
-			 * @param {jQuery}  A reference to this.$widget
+			 * @param {jQuery} widget  A reference to this.$widget
 			 * @example
 			 
 	instance.bind('BeforeRender', function(event) {
@@ -1378,6 +1384,20 @@
 			if (this.options.theme) {
 				this.setTheme(this.options.theme);
 			}
+			/**
+			 * Do something after the widget is completely rendered
+			 * @event AfterRender
+			 * @param {jQuery} widget  A reference to this.$widget
+			 * @example
+			 
+	instance.bind('AfterRender', function(event) {
+		heyItsAllRendered();
+	});
+			 
+			 */
+			this.publish('AfterRender', {
+				widget: this.$widget
+			});
 		},
 		/**
 		 * Look at the initial element's start value and populate tags as appropriate
@@ -2035,7 +2055,9 @@
 		 * @return {String}  The new value
 		 */
 		save: function() {
-			var vals = [], newValue;
+			var oldValue = this.$originalInput.val();
+			var newValue;
+			var vals = [];
 			for (var i = 0, len = this.tags.length; i < len; i++) {
 				vals.push(this.tags[i].getValue().replace(/,/g, '\\,'));
 			}
@@ -2054,15 +2076,17 @@
 			 */
 			var evt = this.publish('BeforeSave', {
 				cancelable: true,
+				oldValue: oldValue,
 				newValue: newValue
 			});
 			if (evt.isDefaultPrevented()) {
-				return this.$originalInput.val();
+				return oldValue;
 			}
 			this.$originalInput.val(evt.newValue);
 			/** 
 			 * Do something after saving value to original input
 			 * @event AfterSave
+			 * @param {String} oldValue  The value before saving
 			 * @param {String} newValue  The value that was written to the original input
 			 * @example
 
@@ -2072,8 +2096,27 @@
       
 			 */			
 			this.publish('AfterSave', {
+				oldValue: oldValue,
 				newValue: evt.newValue
 			});
+			if (oldValue != evt.newValue) {
+				/** 
+				 * Fired when the value changes as by adding or removing a tag
+				 * @event Change
+				 * @param {String} oldValue  The value before saving
+				 * @param {String} newValue  The new value
+				 * @example
+
+	instance.bind('AfterChange', function(event) {
+		noteSomeChange();
+	});
+
+				 */						
+				this.publish('Change', {
+					oldValue: oldValue,
+					newValue: evt.newValue
+				});
+			}
 			return evt.newValue;
 		},
 		/**
@@ -2098,16 +2141,17 @@
 		_spliceTagByIdx: function(idx) {
 			var tag = this.tags[idx];
 			var newTags = [];
-			var index = 0;
-			$.each(this.tags, function(i) {
-				if (i == idx) {
-					this.$hidden.remove();
-					this.$tag.remove();         
-					return;
+			var newIndex = 0;
+			for (var i = 0, len = this.tags.length; i < len; i++) {
+				if (i === idx) {
+					this.tags[i].getHidden().remove();
+					this.tags[i].getElement().remove();
 				}
-				this.index = index++;
-				newTags.push(this);
-			});
+				else {
+					this.tags[i].index = newIndex++;
+					newTags.push(this.tags[i]);
+				}
+			}
 			this.tags = newTags;
 			return tag;
 		},
@@ -2120,7 +2164,7 @@
 		getTagIndex: function(value) {
 			var idx = -1, i, len;
 			for (i = 0, len = this.tags.length; i < len; i++) {
-				if (this.tags[i].value == value) {
+				if (this.tags[i].getValue() == value) {
 					idx = i;
 					break;
 				}
@@ -2184,7 +2228,7 @@
 	//
 	// static properties and methods
 	//
-	$.Suggester.version = '1.0.2';
+	$.Suggester.version = '1.2.1';
 	/**
 	 * Pass to contructor to subclass (e.g. `MySuggester.prototype = new $.Suggester($.Suggester.doSubclass)`)
 	 * @var {Object}
@@ -2263,7 +2307,7 @@
 	function makePlugin(name, Ctor) {
 		$.fn[name] = function(options) {    
 			// handle where first arg is method name and additional args should be passed to that method
-			if (typeof options == 'string' && typeof this.data('SuggesterInstance')[options] == 'function') {
+			if (typeof options == 'string' && this.data('SuggesterInstance') instanceof $.Suggester && typeof this.data('SuggesterInstance')[options] == 'function') {
 				var args = Array.prototype.slice.call(arguments, 1);
 				return this.data('SuggesterInstance')[options].apply(this.data('SuggesterInstance'), args);
 			}

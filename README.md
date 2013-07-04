@@ -1,9 +1,11 @@
 Suggester - A Better Autocomplete Widget
 =
 
-Version 1.2.0, Jun 2013, MIT License
+Version 1.2.1, Jul 2013, MIT License
 
-[Demos](http://sandbox.kendsnyder.com/Suggester-1.1/demos), [Unit tests](http://sandbox.kendsnyder.com/Suggester-1.1/test/Suggester.html)
+[Download](https://github.com/kensnyder/jQuery-Suggester/blob/master/Suggester-1.2.1-Download.zip?raw=true), [Demos](http://sandbox.kendsnyder.com/Suggester-1.2.1/demos), [Unit tests](http://sandbox.kendsnyder.com/Suggester-1.2.1/test/Suggester.html)
+
+Usage: `var suggester = new $.Suggester($input, options);`
 
 Table of Contents
 -
@@ -36,7 +38,7 @@ Turn a text input into a Facebook-style multiple-tag input. Features include:
 * You can define your own HTML structure for the widget output
 * Object-oriented structure makes it easy to extend
 * 4kb minimized and gzipped
-* Unit tested - [Unit tests](http://sandbox.kendsnyder.com/Suggester-1.1/test/Suggester.html) 
+* Unit tested - [Unit tests](http://sandbox.kendsnyder.com/Suggester-1.2.1/test/Suggester.html) 
 * Works on IE8+, FF, Chrome, Safari
 * Compatible with AMD
 
@@ -44,7 +46,7 @@ Turn a text input into a Facebook-style multiple-tag input. Features include:
 How to Use
 -
 
-Suggester is compatible with jQuery 1.5+ and has been tested with jQuery 1.9. Download the files in [DOWNLOAD.zip](https://github.com/kensnyder/jQuery-Suggester/blob/master/DOWNLOAD.zip?raw=true) and copy them to your scripts directory. Include them in your document's after jQuery is included:
+Suggester is compatible with jQuery 1.5+ and has been unit tested with jQuery 1.9. Download the files in [Suggester-1.2.1-Download.zip](https://github.com/kensnyder/jQuery-Suggester/blob/master/Suggester-1.2.1-Download.zip?raw=true) and copy them to your scripts directory. Include them in your document's after jQuery is included:
 
 ```html
 <script src="/js/Suggester.min.js"></script>
@@ -498,7 +500,7 @@ How is data passed to event callbacks?
 * To prevent a default action, call `event.preventDefault()`
 * To cancel the firing of other attached callbacks, call `event.stopImmediatePropagation()`
 * In some case, altering information on the `event` object will change the behavior of the default action
-* The callback will be fired in the scope of the widget instance. In other words, using `this` in the callback will refer to the widget. See the Suggester Instance Properties and Suggester Instance Methods sections below for more information.
+* The callback will be fired in the scope of the Suggester instance. In other words, using `this` in the callback will refer to the Suggester instance. See the Suggester Instance Properties and Suggester Instance Methods sections below for more information.
 
 The following is a description of each event. See the Suggester Instance Methods section for event handler examples.
 
@@ -508,13 +510,6 @@ The following is a description of each event. See the Suggester Instance Methods
 		<th>Description</th>
 		<th>Data available on <code>event</code></th>
 		<th>If event.preventDefault() is called</th>
-	</tr>
-	<tr>
-		<td><strong>Initialize</strong></td>
-		<td>Called after widget is initialized and rendered</td>
-		<td>
-		</td>
-		<td>-</td>
 	</tr>
 	<tr>
 		<td><strong>BeforeAdd</strong></td>
@@ -541,37 +536,6 @@ The following is a description of each event. See the Suggester Instance Methods
 		<td>-</td>
 	</tr>
 	<tr>
-		<td><strong>BeforeMove</strong></td>
-		<td>Fire in response to up or down arrow while suggestion list is focused</td>
-		<td>
-			{String} direction <em>&quot;up&quot; or &quot;down&quot;</em><br />
-			{jQuery|null} current <em>jQuery object with the currently selected item or null if there isn&#x27;t one (writeable)</em><br />
-			{jQuery|null} next <em>jQuery object with the item that will be selected next (writeable)</em><br />
-		</td>
-		<td>Movement is cancelled</td>
-	</tr>
-	<tr>
-		<td><strong>BeforeRemove</strong></td>
-		<td>Fired before a tag is removed</td>
-		<td>
-			{jQuery} tag <em>The tag to be removed</em><br />
-			{String} value <em>The value of the tag to be removed (writeable)</em><br />
-			{String} label <em>The label of the tag to be removed</em><br />
-		</td>
-		<td>The tag will not be removed</td>
-	</tr>
-	<tr>
-		<td><strong>AfterRemove</strong></td>
-		<td>Fired after a tag is removed</td>
-		<td>
-			{jQuery} tag <em>The tag element that was removed</em><br />
-			{String} value <em>The value of the tag that was removed</em><br />
-			{String} label <em>The label of the tag that was removed</em><br />
-			{Suggester.Tag} The <em>tag object that was removed</em><br />
-		</td>
-		<td>-</td>
-	</tr>
-	<tr>
 		<td><strong>BeforeAjax</strong></td>
 		<td>Edit settings before ajax request is sent</td>
 		<td>
@@ -591,31 +555,11 @@ The following is a description of each event. See the Suggester Instance Methods
 		<td>-</td>
 	</tr>
 	<tr>
-		<td><strong>BeforeSuggest</strong></td>
-		<td>Modify suggestion box behavior before it opens</td>
+		<td><strong>Change</strong></td>
+		<td>Fired when the value changes as by adding or removing a tag</td>
 		<td>
-			{} text <em>The text that was searched for</em><br />
-		</td>
-		<td>The suggestion list is built but not displayed</td>
-	</tr>
-	<tr>
-		<td><strong>AfterSuggest</strong></td>
-		<td>Fires after displaying suggestions</td>
-		<td>
-		</td>
-		<td>-</td>
-	</tr>
-	<tr>
-		<td><strong>BeforeOpen</strong></td>
-		<td>Fires before suggestion box is displayed</td>
-		<td>
-		</td>
-		<td>Box is not displayed</td>
-	</tr>
-	<tr>
-		<td><strong>AfterOpen</strong></td>
-		<td>Fires after suggestion box is displayed</td>
-		<td>
+			{String} oldValue <em>The value before saving</em><br />
+			{String} newValue <em>The new value</em><br />
 		</td>
 		<td>-</td>
 	</tr>
@@ -632,6 +576,25 @@ The following is a description of each event. See the Suggester Instance Methods
 		<td>
 		</td>
 		<td>-</td>
+	</tr>
+	<tr>
+		<td><strong>BeforeFetch</strong></td>
+		<td>A chance to access the jqXHR before the ajax request has been sent</td>
+		<td>
+			{JqXHR} jqXHR <em>the jQuery XHR object (see http://api.jquery.com/jQuery.ajax/#jqXHR)</em><br />
+			{String} term <em>the term that is being searched for</em><br />
+		</td>
+		<td>XHR is aborted</td>
+	</tr>
+	<tr>
+		<td><strong>AfterFetch</strong></td>
+		<td></td>
+		<td>
+			{} jqXHR <em>The jQuery XHR object (see http://api.jquery.com/jQuery.ajax/#jqXHR)</em><br />
+			{} records <em>The Array of record objects returned from the XHR</em><br />
+			{} term <em>The term that was search for</em><br />
+		</td>
+		<td>Nothing is done with results (i.e. suggestion box is not built and displayed)</td>
 	</tr>
 	<tr>
 		<td><strong>BeforeFilter</strong></td>
@@ -651,10 +614,22 @@ The following is a description of each event. See the Suggester Instance Methods
 		<td>-</td>
 	</tr>
 	<tr>
-		<td><strong>BeforeRender</strong></td>
-		<td>Modify this.$widget or any of its child elements before it is manipulated or appended. Can be used to modify this.options.template with DOM methods</td>
+		<td><strong>BeforeFormat</strong></td>
+		<td>Call to dynamically inject your own formatting on each suggestion</td>
 		<td>
-			{jQuery} A <em>reference to this.$widget</em><br />
+			{Object} record <em>The record object that is being suggested</em><br />
+			{String} substr <em>The part of the string that matches the suggestion search fields</em><br />
+			{String} html <em>If you set event.html, it will be used instead of constructing the HTML</em><br />
+		</td>
+		<td>-</td>
+	</tr>
+	<tr>
+		<td><strong>AfterFormat</strong></td>
+		<td>Alter the HTML that has been constructed before it is put into the DOM</td>
+		<td>
+			{Object} record <em>The record object that is being suggested</em><br />
+			{String} substr <em>The part of the string that matches the suggestion search fields</em><br />
+			{String} html <em>Change the HTML before it is put into the dom</em><br />
 		</td>
 		<td>-</td>
 	</tr>
@@ -671,6 +646,47 @@ The following is a description of each event. See the Suggester Instance Methods
 		<td>Access the keydown event after Suggester processes it</td>
 		<td>
 			{Event} keydown <em>The keydown event (a raw browser event, not jQuery.Event)</em><br />
+		</td>
+		<td>-</td>
+	</tr>
+	<tr>
+		<td><strong>Initialize</strong></td>
+		<td>Called after widget is initialized and rendered</td>
+		<td>
+		</td>
+		<td>-</td>
+	</tr>
+	<tr>
+		<td><strong>BeforeMove</strong></td>
+		<td>Fire in response to up or down arrow while suggestion list is focused</td>
+		<td>
+			{String} direction <em>&quot;up&quot; or &quot;down&quot;</em><br />
+			{jQuery|null} current <em>jQuery object with the currently selected item or null if there isn&#x27;t one (writeable)</em><br />
+			{jQuery|null} next <em>jQuery object with the item that will be selected next (writeable)</em><br />
+		</td>
+		<td>Movement is cancelled</td>
+	</tr>
+	<tr>
+		<td><strong>AfterMove</strong></td>
+		<td>Fired after selected suggestion is changed in response to up or down arrow</td>
+		<td>
+			{String} direction <em>&quot;up&quot; or &quot;down&quot;</em><br />
+			{jQuery|null} last <em>The previously selected item</em><br />
+			{jQuery} current <em>The newly selected item</em><br />
+		</td>
+		<td>-</td>
+	</tr>
+	<tr>
+		<td><strong>BeforeOpen</strong></td>
+		<td>Fires before suggestion box is displayed</td>
+		<td>
+		</td>
+		<td>Box is not displayed</td>
+	</tr>
+	<tr>
+		<td><strong>AfterOpen</strong></td>
+		<td>Fires after suggestion box is displayed</td>
+		<td>
 		</td>
 		<td>-</td>
 	</tr>
@@ -695,50 +711,39 @@ The following is a description of each event. See the Suggester Instance Methods
 		<td>-</td>
 	</tr>
 	<tr>
-		<td><strong>BeforeSubmit</strong></td>
-		<td>Respond before form is submitted and before Suggester adds on submit</td>
+		<td><strong>BeforeRemove</strong></td>
+		<td>Fired before a tag is removed</td>
 		<td>
-			{jQuery.Event} The <em>jQuery-wrapped browser event</em><br />
-			{HTMLFormElement} form <em>The input&#x27;s form (same as this.$form)</em><br />
+			{jQuery} tag <em>The tag to be removed</em><br />
+			{String} value <em>The value of the tag to be removed (writeable)</em><br />
+			{String} label <em>The label of the tag to be removed</em><br />
 		</td>
-		<td>Form will not be submitted</td>
+		<td>The tag will not be removed</td>
 	</tr>
 	<tr>
-		<td><strong>BeforeFetch</strong></td>
-		<td>A chance to access the jqXHR before the ajax request has been sent</td>
+		<td><strong>AfterRemove</strong></td>
+		<td>Fired after a tag is removed</td>
 		<td>
-			{JqXHR} jqXHR <em>the jQuery XHR object (see http://api.jquery.com/jQuery.ajax/#jqXHR)</em><br />
-			{String} term <em>the term that is being searched for</em><br />
-		</td>
-		<td>XHR is aborted</td>
-	</tr>
-	<tr>
-		<td><strong>AfterFetch</strong></td>
-		<td></td>
-		<td>
-			{} jqXHR <em>The jQuery XHR object (see http://api.jquery.com/jQuery.ajax/#jqXHR)</em><br />
-			{} records <em>The Array of record objects returned from the XHR</em><br />
-			{} term <em>The term that was search for</em><br />
-		</td>
-		<td>Nothing is done with results (i.e. suggestion box is not built and displayed)</td>
-	</tr>
-	<tr>
-		<td><strong>BeforeFormat</strong></td>
-		<td>Call to dynamically inject your own formatting on each suggestion</td>
-		<td>
-			{Object} record <em>The record object that is being suggested</em><br />
-			{String} substr <em>The part of the string that matches the suggestion search fields</em><br />
-			{String} html <em>If you set event.html, it will be used instead of constructing the HTML</em><br />
+			{jQuery} tag <em>The tag element that was removed</em><br />
+			{String} value <em>The value of the tag that was removed</em><br />
+			{String} label <em>The label of the tag that was removed</em><br />
+			{Suggester.Tag} The <em>tag object that was removed</em><br />
 		</td>
 		<td>-</td>
 	</tr>
 	<tr>
-		<td><strong>AfterFormat</strong></td>
-		<td>Alter the HTML that has been constructed before it is put into the DOM</td>
+		<td><strong>BeforeRender</strong></td>
+		<td>Modify this.$widget or any of its child elements before it is manipulated or appended. Can be used to modify this.options.template with DOM methods</td>
 		<td>
-			{Object} record <em>The record object that is being suggested</em><br />
-			{String} substr <em>The part of the string that matches the suggestion search fields</em><br />
-			{String} html <em>Change the HTML before it is put into the dom</em><br />
+			{jQuery} widget <em>A reference to this.$widget</em><br />
+		</td>
+		<td>-</td>
+	</tr>
+	<tr>
+		<td><strong>AfterRender</strong></td>
+		<td>Do something after the widget is completely rendered</td>
+		<td>
+			{jQuery} widget <em>A reference to this.$widget</em><br />
 		</td>
 		<td>-</td>
 	</tr>
@@ -754,7 +759,32 @@ The following is a description of each event. See the Suggester Instance Methods
 		<td><strong>AfterSave</strong></td>
 		<td>Do something after saving value to original input</td>
 		<td>
+			{String} oldValue <em>The value before saving</em><br />
 			{String} newValue <em>The value that was written to the original input</em><br />
+		</td>
+		<td>-</td>
+	</tr>
+	<tr>
+		<td><strong>BeforeSubmit</strong></td>
+		<td>Respond before form is submitted and before Suggester adds on submit</td>
+		<td>
+			{jQuery.Event} The <em>jQuery-wrapped browser event</em><br />
+			{HTMLFormElement} form <em>The input&#x27;s form (same as this.$form)</em><br />
+		</td>
+		<td>Form will not be submitted</td>
+	</tr>
+	<tr>
+		<td><strong>BeforeSuggest</strong></td>
+		<td>Modify suggestion box behavior before it opens</td>
+		<td>
+			{String} text <em>The text that was searched for</em><br />
+		</td>
+		<td>The suggestion list is built but not displayed</td>
+	</tr>
+	<tr>
+		<td><strong>AfterSuggest</strong></td>
+		<td>Fires after displaying suggestions</td>
+		<td>
 		</td>
 		<td>-</td>
 	</tr>
@@ -1206,10 +1236,10 @@ Note: this happens on blur when this.options.addOnBlur is true<br />
 
 <tr>
 	<td>
-		<strong>getValue</strong>()<br />
-		Get the current value as a comma-delimited string<br />
+		<strong>getValues</strong>()<br />
+		Pluck all the tag values from the chosen tags<br />
 		<br />
-		Returns: {String} 
+		Returns: {Array} 
 	</td>
 </tr>
 
@@ -1487,10 +1517,10 @@ It attempts to split on tab, then if there are no tabs then semicolons, then if 
 
 <tr>
 	<td>
-		<strong>getValues</strong>()<br />
-		Pluck all the tag values from the chosen tags<br />
+		<strong>getValue</strong>()<br />
+		Get the current value as a comma-delimited string<br />
 		<br />
-		Returns: {Array} 
+		Returns: {String} 
 	</td>
 </tr>
 
@@ -1530,10 +1560,18 @@ suggester.bind('AfterClose', doStuff);
 suggester.focus();
 ```
 
-See the source on the [live demos](http://sandbox.kendsnyder.com/Suggester-1.1/demos) for lots more examples.
+See the source on the [live demos](http://sandbox.kendsnyder.com/Suggester-1.2.1/demos) for lots more examples.
 
 Changelog
 -
+
+**Version 1.2.1, Jul 2013**
+
+* Added onChange event *
+
+* Documentation fixes *
+
+* Tweaks on build process *
 
 **Version 1.2.0, Jun 2013**
 

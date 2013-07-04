@@ -3,7 +3,9 @@
 
 Version <%- pkg.version %>, <%- grunt.template.today("mmm yyyy") %>, MIT License
 
-[Demos](http://sandbox.kendsnyder.com/Suggester-1.1/demos), [Unit tests](http://sandbox.kendsnyder.com/Suggester-1.1/test/Suggester.html)
+[Download](https://github.com/kensnyder/jQuery-Suggester/blob/master/Suggester-<%- pkg.version %>-Download.zip?raw=true), [Demos](http://sandbox.kendsnyder.com/Suggester-<%- pkg.version %>/demos), [Unit tests](http://sandbox.kendsnyder.com/Suggester-<%- pkg.version %>/test/Suggester.html)
+
+Usage: `var suggester = new $.Suggester($input, options);`
 
 Table of Contents
 -
@@ -36,7 +38,7 @@ Turn a text input into a Facebook-style multiple-tag input. Features include:
 * You can define your own HTML structure for the widget output
 * Object-oriented structure makes it easy to extend
 * 4kb minimized and gzipped
-* Unit tested - [Unit tests](http://sandbox.kendsnyder.com/Suggester-1.1/test/Suggester.html) 
+* Unit tested - [Unit tests](http://sandbox.kendsnyder.com/Suggester-<%- pkg.version %>/test/Suggester.html) 
 * Works on IE8+, FF, Chrome, Safari
 * Compatible with AMD
 
@@ -44,7 +46,7 @@ Turn a text input into a Facebook-style multiple-tag input. Features include:
 How to Use
 -
 
-Suggester is compatible with jQuery 1.5+ and has been tested with jQuery 1.9. Download the files in [DOWNLOAD.zip](https://github.com/kensnyder/jQuery-Suggester/blob/master/DOWNLOAD.zip?raw=true) and copy them to your scripts directory. Include them in your document's after jQuery is included:
+Suggester is compatible with jQuery 1.5+ and has been unit tested with jQuery 1.9. Download the files in [Suggester-<%- pkg.version %>-Download.zip](https://github.com/kensnyder/jQuery-Suggester/blob/master/Suggester-<%- pkg.version %>-Download.zip?raw=true) and copy them to your scripts directory. Include them in your document's after jQuery is included:
 
 ```html
 <script src="/js/Suggester.min.js"></script>
@@ -132,7 +134,7 @@ How is data passed to event callbacks?
 * To prevent a default action, call `event.preventDefault()`
 * To cancel the firing of other attached callbacks, call `event.stopImmediatePropagation()`
 * In some case, altering information on the `event` object will change the behavior of the default action
-* The callback will be fired in the scope of the widget instance. In other words, using `this` in the callback will refer to the widget. See the Suggester Instance Properties and Suggester Instance Methods sections below for more information.
+* The callback will be fired in the scope of the Suggester instance. In other words, using `this` in the callback will refer to the Suggester instance. See the Suggester Instance Properties and Suggester Instance Methods sections below for more information.
 
 The following is a description of each event. See the Suggester Instance Methods section for event handler examples.
 
@@ -238,10 +240,18 @@ suggester.bind('AfterClose', doStuff);
 suggester.focus();
 ```
 
-See the source on the [live demos](http://sandbox.kendsnyder.com/Suggester-1.1/demos) for lots more examples.
+See the source on the [live demos](http://sandbox.kendsnyder.com/Suggester-<%- pkg.version %>/demos) for lots more examples.
 
 Changelog
 -
+
+**Version 1.2.1, Jul 2013**
+
+* Added onChange event *
+
+* Documentation fixes *
+
+* Tweaks on build process *
 
 **Version 1.2.0, Jun 2013**
 

@@ -71,7 +71,7 @@ module.exports = function(grunt) {
 		compress: {
 			main: {
 				options: {
-					archive: './DOWNLOAD.zip'
+					archive: './Suggester-<%= pkg.version %>-Download.zip'
 				},
 				files: [
 					{
@@ -158,6 +158,7 @@ module.exports = function(grunt) {
 				docs.events.push(item); 
 			}
 		});
+		docs.events = docs.events.sort(sortEventsByType);
 		// remove yuidoc crossLink mustache tags
 		var docStr = JSON.stringify(docs).replace(/\{\{.+?\}\}(.+?)\{\{.+?\}\}/g, '$1');
 		docs = JSON.parse(docStr);
@@ -173,14 +174,33 @@ module.exports = function(grunt) {
 		return nameA == nameB ? 0 : (nameA > nameB ? 1 : -1);
 	}
 	
+	function sortEventsByType(a, b) {
+		// Sort by the word following "Before" or "After"
+		var nameA = a.name.replace(/^(Before|After)/, '');
+		var nameB = b.name.replace(/^(Before|After)/, '');
+		// Sort descending so that Before comes before After
+		return nameA == nameB ? (a.name < b.name ? 1 : -1) : (nameA > nameB ? 1 : -1);
+	}
+	
 	grunt.registerTask('readme', 'Compile the README based on source documentation', function() {
 		var tpl = grunt.file.read('src/README.md');
 		var docData = extractDocs( grunt.file.readJSON('docs/data.json') );
 		var readme = grunt.template.process(tpl, {data:docData});
 		grunt.file.write('./README.md', readme);
-	})
+	});
+	
+	grunt.registerTask('updateVersions', 'Update version strings in files', function() {
+		// update in dist/Suggester.js ($.Suggester.version == '%VERSION%';)
+		var js = grunt.file.read('dist/Suggester.js');
+		js = js.replace('%VERSION%', pkg.version);
+		grunt.file.write('dist/Suggester.js', js);
+		// update version in package.json to match Suggester.jquery.json
+		var json = grunt.file.read('./package.json');
+		json = json.replace(/("version"\s*:\s*").+?"/, '$1'+pkg.version+'"');
+		grunt.file.write('./package.json', json);
+	});
 
 	// Default task.
-	grunt.registerTask('default', ['jshint', 'qunit', 'clean:init', 'copy:css', 'concat:dist', 'cssmin', 'uglify', 'copy:compress', 'compress', 'clean:compress', 'yuidoc', 'logo', 'readme']);
+	grunt.registerTask('default', ['jshint', 'qunit', 'clean:init', 'copy:css', 'concat:dist', 'updateVersions', 'cssmin', 'uglify', 'copy:compress', 'compress', 'clean:compress', 'yuidoc', 'logo', 'readme']);
 
 };
