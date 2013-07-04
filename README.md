@@ -1566,42 +1566,29 @@ Changelog
 -
 
 **Version 1.2.1, Jul 2013**
-
-* Added onChange event *
-
-* Documentation fixes *
-
-* Tweaks on build process *
+* Added onChange event
+* Documentation fixes
+* Tweaks on build process
 
 **Version 1.2.0, Jun 2013**
-
-* Allow pasting delimited values *
-
-* Speed improvements *
-
-* Search through this.data to find typed values when applicable *
+* Allow pasting delimited values
+* Speed improvements
+* Search through this.data to find typed values when applicable
 
 **Version 1.1.1, May 2013**
-
-* Fixed Suggester#getValues() *
+* Fixed Suggester#getValues()
 
 **Version 1.1.0, May 2013**
-
-*Grunt build process*
-
-*Suggester.tags is now a collection of $.Suggester.Tag objects*
+* Grunt build process
+* Suggester.tags is now a collection of $.Suggester.Tag objects
 
 **Version 1.0.2, April 2013**
-
-*CSS classes for sugg-active and sugg-placeholder-on*
-
-*Fix BeforeAdd event to let value to be altered and AfterAdd event to include record*
-
-*Documentation fixes*
+* CSS classes for sugg-active and sugg-placeholder-on
+* Fix BeforeAdd event to let value to be altered and AfterAdd event to include record
+* Documentation fixes
 
 **Version 1.0pre, December 2012**
-
-*initial version*
+* initial version
 
 License
 -
