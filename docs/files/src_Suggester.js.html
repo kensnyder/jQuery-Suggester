@@ -19,7 +19,7 @@
             
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.2.0</em>
+            <em>API Docs for: 1.2.1</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -398,7 +398,6 @@
 			// setup event handlers
 			this._setupListeners();
 			// we&#x27;re all done
-			// Initialize callback now has access to the completed widget through this.$widget, this.$box, etc.
 			/**
 			 * Called after widget is initialized and rendered
 			 * @event Initialize
@@ -613,11 +612,11 @@
 			}
 			// reset our current items
 			this.$currentItem = evt.next;
-			/*
+			/**
 			 * Fired after selected suggestion is changed in response to up or down arrow
 			 * @event AfterMove
 			 * @param {String} direction  &quot;up&quot; or &quot;down&quot;
-			 * @param {jQuery} last       The previously selected item
+			 * @param {jQuery|null} last       The previously selected item
 			 * @param {jQuery} current    The newly selected item
 			 * @example
 	
@@ -789,20 +788,26 @@
 		remove: function($tag) {
 			var evt, value, label, removed;
 			if (typeof $tag.nodeType == &#x27;number&#x27; &amp;&amp; typeof $tag.style == &#x27;object&#x27;) {
+				// DOM Element
 				$tag = $($tag);
 			}
 			if ($tag instanceof $) {
+				// jQuery object
 				value = $tag.data(&#x27;tag-value&#x27;);
 			}
 			else {
+				// String
 				value = $tag;
 				$tag = false;
-				$.each(this.tags, function() {
-					if (value == this.value) {
-						$tag = this.$tag;
-						return false;
+				for (var i = 0, len = this.tags.length; i &lt; len; i++) {
+					if (value == this.tags[i].getValue() || value == this.tags[i].getLabel()) {
+						$tag = this.tags[i].getElement();
+						break;
 					}
-				});
+				}
+				if (!$tag) {
+					return this;
+				}
 			}
 			label = $tag.data(&#x27;tag-label&#x27;);
 			/**
@@ -831,6 +836,8 @@
 				return this;
 			}     
 			removed = this._spliceTag(evt.value);
+			// save to our hidden input
+			this.save();
 			/**
 			 * Fired after a tag is removed
 			 * @event AfterRemove
@@ -1070,7 +1077,7 @@
 			/**
 			 * Modify suggestion box behavior before it opens
 			 * @event BeforeSuggest
-			 * @param text  The text that was searched for
+			 * @param {String} text  The text that was searched for
 			 * @ifprevented  The suggestion list is built but not displayed
 			 * @example
 
@@ -1309,10 +1316,9 @@
 		 */
 		serialize: function() {
 			var query = [];
-			$.each(this.tags, function() {
-				var $hidden = this.getHidden();
-				query.push(encodeURIComponent($hidden.name) + &#x27;=&#x27; + encodeURIComponent($hidden.value));
-			});
+			for (var i = 0, len = this.tags.length; i &lt; len; i++) {
+				query.push( encodeURIComponent(this.tags[i].getHidden().name) + &#x27;=&#x27; + encodeURIComponent(this.tags[i].getHidden().value) );
+			}
 			return query.join(&#x27;&amp;&#x27;);
 		},
 		/**
@@ -1322,9 +1328,9 @@
 		 */
 		getValues: function() {
 			var values = [];
-			$.each(this.tags, function() {
-				values.push(this.getValue());
-			});
+			for (var i = 0, len = this.tags.length; i &lt; len; i++) {
+				values.push( this.tags[i].getValue() );
+			}
 			return values;
 		},
 		/**
@@ -1397,7 +1403,7 @@
 			/**
 			 * Modify this.$widget or any of its child elements before it is manipulated or appended. Can be used to modify this.options.template with DOM methods
 			 * @event BeforeRender
-			 * @param {jQuery}  A reference to this.$widget
+			 * @param {jQuery} widget  A reference to this.$widget
 			 * @example
 			 
 	instance.bind(&#x27;BeforeRender&#x27;, function(event) {
@@ -1467,6 +1473,20 @@
 			if (this.options.theme) {
 				this.setTheme(this.options.theme);
 			}
+			/**
+			 * Do something after the widget is completely rendered
+			 * @event AfterRender
+			 * @param {jQuery} widget  A reference to this.$widget
+			 * @example
+			 
+	instance.bind(&#x27;AfterRender&#x27;, function(event) {
+		heyItsAllRendered();
+	});
+			 
+			 */
+			this.publish(&#x27;AfterRender&#x27;, {
+				widget: this.$widget
+			});
 		},
 		/**
 		 * Look at the initial element&#x27;s start value and populate tags as appropriate
@@ -2124,7 +2144,9 @@
 		 * @return {String}  The new value
 		 */
 		save: function() {
-			var vals = [], newValue;
+			var oldValue = this.$originalInput.val();
+			var newValue;
+			var vals = [];
 			for (var i = 0, len = this.tags.length; i &lt; len; i++) {
 				vals.push(this.tags[i].getValue().replace(/,/g, &#x27;\\,&#x27;));
 			}
@@ -2143,15 +2165,17 @@
 			 */
 			var evt = this.publish(&#x27;BeforeSave&#x27;, {
 				cancelable: true,
+				oldValue: oldValue,
 				newValue: newValue
 			});
 			if (evt.isDefaultPrevented()) {
-				return this.$originalInput.val();
+				return oldValue;
 			}
 			this.$originalInput.val(evt.newValue);
 			/** 
 			 * Do something after saving value to original input
 			 * @event AfterSave
+			 * @param {String} oldValue  The value before saving
 			 * @param {String} newValue  The value that was written to the original input
 			 * @example
 
@@ -2161,8 +2185,27 @@
       
 			 */			
 			this.publish(&#x27;AfterSave&#x27;, {
+				oldValue: oldValue,
 				newValue: evt.newValue
 			});
+			if (oldValue != evt.newValue) {
+				/** 
+				 * Fired when the value changes as by adding or removing a tag
+				 * @event Change
+				 * @param {String} oldValue  The value before saving
+				 * @param {String} newValue  The new value
+				 * @example
+
+	instance.bind(&#x27;AfterChange&#x27;, function(event) {
+		noteSomeChange();
+	});
+
+				 */						
+				this.publish(&#x27;Change&#x27;, {
+					oldValue: oldValue,
+					newValue: evt.newValue
+				});
+			}
 			return evt.newValue;
 		},
 		/**
@@ -2187,16 +2230,17 @@
 		_spliceTagByIdx: function(idx) {
 			var tag = this.tags[idx];
 			var newTags = [];
-			var index = 0;
-			$.each(this.tags, function(i) {
-				if (i == idx) {
-					this.$hidden.remove();
-					this.$tag.remove();         
-					return;
+			var newIndex = 0;
+			for (var i = 0, len = this.tags.length; i &lt; len; i++) {
+				if (i === idx) {
+					this.tags[i].getHidden().remove();
+					this.tags[i].getElement().remove();
 				}
-				this.index = index++;
-				newTags.push(this);
-			});
+				else {
+					this.tags[i].index = newIndex++;
+					newTags.push(this.tags[i]);
+				}
+			}
 			this.tags = newTags;
 			return tag;
 		},
@@ -2209,7 +2253,7 @@
 		getTagIndex: function(value) {
 			var idx = -1, i, len;
 			for (i = 0, len = this.tags.length; i &lt; len; i++) {
-				if (this.tags[i].value == value) {
+				if (this.tags[i].getValue() == value) {
 					idx = i;
 					break;
 				}
@@ -2273,7 +2317,7 @@
 	//
 	// static properties and methods
 	//
-	$.Suggester.version = &#x27;1.0.2&#x27;;
+	$.Suggester.version = &#x27;%VERSION%&#x27;;
 	/**
 	 * Pass to contructor to subclass (e.g. &#x60;MySuggester.prototype = new $.Suggester($.Suggester.doSubclass)&#x60;)
 	 * @var {Object}
@@ -2352,7 +2396,7 @@
 	function makePlugin(name, Ctor) {
 		$.fn[name] = function(options) {    
 			// handle where first arg is method name and additional args should be passed to that method
-			if (typeof options == &#x27;string&#x27; &amp;&amp; typeof this.data(&#x27;SuggesterInstance&#x27;)[options] == &#x27;function&#x27;) {
+			if (typeof options == &#x27;string&#x27; &amp;&amp; this.data(&#x27;SuggesterInstance&#x27;) instanceof $.Suggester &amp;&amp; typeof this.data(&#x27;SuggesterInstance&#x27;)[options] == &#x27;function&#x27;) {
 				var args = Array.prototype.slice.call(arguments, 1);
 				return this.data(&#x27;SuggesterInstance&#x27;)[options].apply(this.data(&#x27;SuggesterInstance&#x27;), args);
 			}
