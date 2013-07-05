@@ -2325,15 +2325,18 @@
             "params": [
                 {
                     "name": "jqXHR",
-                    "description": "The jQuery XHR object (see http://api.jquery.com/jQuery.ajax/#jqXHR)"
+                    "description": "The jQuery XHR object (see http://api.jquery.com/jQuery.ajax/#jqXHR)",
+                    "type": "JqXHR"
                 },
                 {
                     "name": "records",
-                    "description": "The Array of record objects returned from the XHR"
+                    "description": "The Array of record objects returned from the XHR",
+                    "type": "Object[]"
                 },
                 {
                     "name": "term",
-                    "description": "The term that was search for"
+                    "description": "The term that was search for",
+                    "type": "String"
                 }
             ],
             "ifprevented": "Nothing is done with results (i.e. suggestion box is not built and displayed)",

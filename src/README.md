@@ -134,22 +134,22 @@ How is data passed to event callbacks?
 * `event` also contains useful information related to the event. See the [Events](#events) section below for more information.
 * When an event has a default action that can be prevented, `event` will have property `cancelable` set to true and `event.isCancelable()` will return true
 * To prevent a default action, call `event.preventDefault()`
-* To cancel the firing of other attached callbacks, call `event.stopImmediatePropagation()`
+* To cancel the firing of other attached callbacks, call `event.stopPropagation()`
 * In some case, altering information on the `event` object will change the behavior of the default action
-* The callback will be fired in the scope of the Suggester instance. In other words, using `this` in the callback will refer to the Suggester instance. See the [Instance Properties](#instance-properties) and [Instance Methods](#instance-properties) sections below for more information.
+* The callback will be fired in the scope of the Suggester instance. In other words, using `this` in the callback will refer to the Suggester instance. See the [Instance Properties](#instance-properties) and [Instance Methods](#instance-methods) sections below for more information.
 
-The following is a description of each event. See the Suggester Instance Methods section for event handler examples.
+The following is a description of each event.
 
 <table>
 	<tr>
 		<th>Event</th>
 		<th>Data available on <code>event</code></th>
-		<th>If prevented</th>
+		<th>Effect of `event.preventDefault()`</th>
 	</tr>
 	<% _.forEach(events, function(event) { %><tr>
 		<td><strong><%- event.name %></strong><br /><%- event.description %></td>
 		<td>
-		<% _.forEach(event.params || [], function(param) { %>	{<%- (param.type || '').replace('JQuery','jQuery') %>} <%- param.name %> <em><%- param.description %></em><br />
+		<% _.forEach(event.params || [], function(param) { %>	{<%- (param.type || '').replace('JQuery','jQuery') %>} <strong><%- param.name %></strong> <%- param.description %><br />
 		<% }); %></td>
 		<td><%- event.ifprevented || '-' %></td>
 	</tr>

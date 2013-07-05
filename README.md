@@ -506,62 +506,62 @@ How is data passed to event callbacks?
 * `event` also contains useful information related to the event. See the [Events](#events) section below for more information.
 * When an event has a default action that can be prevented, `event` will have property `cancelable` set to true and `event.isCancelable()` will return true
 * To prevent a default action, call `event.preventDefault()`
-* To cancel the firing of other attached callbacks, call `event.stopImmediatePropagation()`
+* To cancel the firing of other attached callbacks, call `event.stopPropagation()`
 * In some case, altering information on the `event` object will change the behavior of the default action
-* The callback will be fired in the scope of the Suggester instance. In other words, using `this` in the callback will refer to the Suggester instance. See the [Instance Properties](#instance-properties) and [Instance Methods](#instance-properties) sections below for more information.
+* The callback will be fired in the scope of the Suggester instance. In other words, using `this` in the callback will refer to the Suggester instance. See the [Instance Properties](#instance-properties) and [Instance Methods](#instance-methods) sections below for more information.
 
-The following is a description of each event. See the Suggester Instance Methods section for event handler examples.
+The following is a description of each event.
 
 <table>
 	<tr>
 		<th>Event</th>
 		<th>Data available on <code>event</code></th>
-		<th>If prevented</th>
+		<th>Effect of `event.preventDefault()`</th>
 	</tr>
 	<tr>
 		<td><strong>BeforeAdd</strong><br />Fired before a tag is added</td>
 		<td>
-			{String} value <em>The tag to be added (writeable)</em><br />
-			{String} label <em>The value of the tag to be added (writeable)</em><br />
-			{jQuery} item <em>The suggestion that was chosen, if any (writeable)</em><br />
-			{Object} record <em>The record that was chosen, if any (writeable)</em><br />
+			{String} <strong>value</strong> The tag to be added (writeable)<br />
+			{String} <strong>label</strong> The value of the tag to be added (writeable)<br />
+			{jQuery} <strong>item</strong> The suggestion that was chosen, if any (writeable)<br />
+			{Object} <strong>record</strong> The record that was chosen, if any (writeable)<br />
 		</td>
 		<td>The tag is not added</td>
 	</tr>
 	<tr>
 		<td><strong>AfterAdd</strong><br />Allows you to take action after a tag is added</td>
 		<td>
-			{jQuery} item <em>The suggestion that was chosen, if any</em><br />
-			{jQuery} tag <em>The jQuery element of the tag that was added</em><br />
-			{jQuery} hidden <em>The hidden input that was generated</em><br />
-			{String} value <em>The value of the tag</em><br />
-			{String} label <em>The the label of the tag</em><br />
-			{String} record <em>The record that was chosen, if any</em><br />
+			{jQuery} <strong>item</strong> The suggestion that was chosen, if any<br />
+			{jQuery} <strong>tag</strong> The jQuery element of the tag that was added<br />
+			{jQuery} <strong>hidden</strong> The hidden input that was generated<br />
+			{String} <strong>value</strong> The value of the tag<br />
+			{String} <strong>label</strong> The the label of the tag<br />
+			{String} <strong>record</strong> The record that was chosen, if any<br />
 		</td>
 		<td>-</td>
 	</tr>
 	<tr>
 		<td><strong>BeforeAjax</strong><br />Edit settings before ajax request is sent</td>
 		<td>
-			{Object} settings <em>Settings sent to $.ajax()</em><br />
-			{String} term <em>The term for which we will search</em><br />
+			{Object} <strong>settings</strong> Settings sent to $.ajax()<br />
+			{String} <strong>term</strong> The term for which we will search<br />
 		</td>
 		<td>-</td>
 	</tr>
 	<tr>
 		<td><strong>AfterAjax</strong><br />Access the jqXHR after initiating the ajax call but before it returns</td>
 		<td>
-			{Object} settings <em>Settings sent to $.ajax()</em><br />
-			{String} term <em>The term which was searched</em><br />
-			{JqXHR} jqXHR <em>The jquery XMLHttpRequest object</em><br />
+			{Object} <strong>settings</strong> Settings sent to $.ajax()<br />
+			{String} <strong>term</strong> The term which was searched<br />
+			{JqXHR} <strong>jqXHR</strong> The jquery XMLHttpRequest object<br />
 		</td>
 		<td>-</td>
 	</tr>
 	<tr>
 		<td><strong>Change</strong><br />Fired when the value changes as by adding or removing a tag</td>
 		<td>
-			{String} oldValue <em>The value before saving</em><br />
-			{String} newValue <em>The new value</em><br />
+			{String} <strong>oldValue</strong> The value before saving<br />
+			{String} <strong>newValue</strong> The new value<br />
 		</td>
 		<td>-</td>
 	</tr>
@@ -580,64 +580,64 @@ The following is a description of each event. See the Suggester Instance Methods
 	<tr>
 		<td><strong>BeforeFetch</strong><br />A chance to access the jqXHR before the ajax request has been sent</td>
 		<td>
-			{JqXHR} jqXHR <em>the jQuery XHR object (see http://api.jquery.com/jQuery.ajax/#jqXHR)</em><br />
-			{String} term <em>the term that is being searched for</em><br />
+			{JqXHR} <strong>jqXHR</strong> the jQuery XHR object (see http://api.jquery.com/jQuery.ajax/#jqXHR)<br />
+			{String} <strong>term</strong> the term that is being searched for<br />
 		</td>
 		<td>XHR is aborted</td>
 	</tr>
 	<tr>
 		<td><strong>AfterFetch</strong><br /></td>
 		<td>
-			{} jqXHR <em>The jQuery XHR object (see http://api.jquery.com/jQuery.ajax/#jqXHR)</em><br />
-			{} records <em>The Array of record objects returned from the XHR</em><br />
-			{} term <em>The term that was search for</em><br />
+			{JqXHR} <strong>jqXHR</strong> The jQuery XHR object (see http://api.jquery.com/jQuery.ajax/#jqXHR)<br />
+			{Object[]} <strong>records</strong> The Array of record objects returned from the XHR<br />
+			{String} <strong>term</strong> The term that was search for<br />
 		</td>
 		<td>Nothing is done with results (i.e. suggestion box is not built and displayed)</td>
 	</tr>
 	<tr>
 		<td><strong>BeforeFilter</strong><br />Called before the search for results</td>
 		<td>
-			{String} text <em>The text to search for</em><br />
+			{String} <strong>text</strong> The text to search for<br />
 		</td>
 		<td>-</td>
 	</tr>
 	<tr>
 		<td><strong>AfterFilter</strong><br />Called after the search for results</td>
 		<td>
-			{String} text <em>The that was searched for</em><br />
-			{Array} results <em>The array of records that matched (writeable)</em><br />
+			{String} <strong>text</strong> The that was searched for<br />
+			{Array} <strong>results</strong> The array of records that matched (writeable)<br />
 		</td>
 		<td>-</td>
 	</tr>
 	<tr>
 		<td><strong>BeforeFormat</strong><br />Call to dynamically inject your own formatting on each suggestion</td>
 		<td>
-			{Object} record <em>The record object that is being suggested</em><br />
-			{String} substr <em>The part of the string that matches the suggestion search fields</em><br />
-			{String} html <em>If you set event.html, it will be used instead of constructing the HTML</em><br />
+			{Object} <strong>record</strong> The record object that is being suggested<br />
+			{String} <strong>substr</strong> The part of the string that matches the suggestion search fields<br />
+			{String} <strong>html</strong> If you set event.html, it will be used instead of constructing the HTML<br />
 		</td>
 		<td>-</td>
 	</tr>
 	<tr>
 		<td><strong>AfterFormat</strong><br />Alter the HTML that has been constructed before it is put into the DOM</td>
 		<td>
-			{Object} record <em>The record object that is being suggested</em><br />
-			{String} substr <em>The part of the string that matches the suggestion search fields</em><br />
-			{String} html <em>Change the HTML before it is put into the dom</em><br />
+			{Object} <strong>record</strong> The record object that is being suggested<br />
+			{String} <strong>substr</strong> The part of the string that matches the suggestion search fields<br />
+			{String} <strong>html</strong> Change the HTML before it is put into the dom<br />
 		</td>
 		<td>-</td>
 	</tr>
 	<tr>
 		<td><strong>BeforeHandleKey</strong><br />Access the keydown event before Suggester processes it</td>
 		<td>
-			{Event} keydown <em>The keydown event (a raw browser event, not jQuery.Event)</em><br />
+			{Event} <strong>keydown</strong> The keydown event (a raw browser event, not jQuery.Event)<br />
 		</td>
 		<td>Key is not handled by Suggester. You may want to call event.keydown.preventDefault();</td>
 	</tr>
 	<tr>
 		<td><strong>AfterHandleKey</strong><br />Access the keydown event after Suggester processes it</td>
 		<td>
-			{Event} keydown <em>The keydown event (a raw browser event, not jQuery.Event)</em><br />
+			{Event} <strong>keydown</strong> The keydown event (a raw browser event, not jQuery.Event)<br />
 		</td>
 		<td>-</td>
 	</tr>
@@ -650,18 +650,18 @@ The following is a description of each event. See the Suggester Instance Methods
 	<tr>
 		<td><strong>BeforeMove</strong><br />Fire in response to up or down arrow while suggestion list is focused</td>
 		<td>
-			{String} direction <em>&quot;up&quot; or &quot;down&quot;</em><br />
-			{jQuery|null} current <em>jQuery object with the currently selected item or null if there isn&#x27;t one (writeable)</em><br />
-			{jQuery|null} next <em>jQuery object with the item that will be selected next (writeable)</em><br />
+			{String} <strong>direction</strong> &quot;up&quot; or &quot;down&quot;<br />
+			{jQuery|null} <strong>current</strong> jQuery object with the currently selected item or null if there isn&#x27;t one (writeable)<br />
+			{jQuery|null} <strong>next</strong> jQuery object with the item that will be selected next (writeable)<br />
 		</td>
 		<td>Movement is cancelled</td>
 	</tr>
 	<tr>
 		<td><strong>AfterMove</strong><br />Fired after selected suggestion is changed in response to up or down arrow</td>
 		<td>
-			{String} direction <em>&quot;up&quot; or &quot;down&quot;</em><br />
-			{jQuery|null} last <em>The previously selected item</em><br />
-			{jQuery} current <em>The newly selected item</em><br />
+			{String} <strong>direction</strong> &quot;up&quot; or &quot;down&quot;<br />
+			{jQuery|null} <strong>last</strong> The previously selected item<br />
+			{jQuery} <strong>current</strong> The newly selected item<br />
 		</td>
 		<td>-</td>
 	</tr>
@@ -680,81 +680,81 @@ The following is a description of each event. See the Suggester Instance Methods
 	<tr>
 		<td><strong>BeforePaste</strong><br />Respond before values are pasted</td>
 		<td>
-			{jQuery.Event} event <em>The paste event</em><br />
-			{String} value <em>The raw value that was pasted</em><br />
-			{Array} tags <em>The array of tags to be added (if the value was successfully split on tab, semicolon, or comma). If changed, the added tags will change.</em><br />
+			{jQuery.Event} <strong>event</strong> The paste event<br />
+			{String} <strong>value</strong> The raw value that was pasted<br />
+			{Array} <strong>tags</strong> The array of tags to be added (if the value was successfully split on tab, semicolon, or comma). If changed, the added tags will change.<br />
 		</td>
 		<td>tags are not added and paste is cancelled</td>
 	</tr>
 	<tr>
 		<td><strong>AfterPaste</strong><br />Respond after values are pasted</td>
 		<td>
-			{jQuery.Event} event <em>The paste event</em><br />
-			{String} value <em>The raw value that was pasted</em><br />
-			{Array} tags <em>The array of tags that were added (if the value was successfully split on tab, semicolon, or comma)</em><br />
+			{jQuery.Event} <strong>event</strong> The paste event<br />
+			{String} <strong>value</strong> The raw value that was pasted<br />
+			{Array} <strong>tags</strong> The array of tags that were added (if the value was successfully split on tab, semicolon, or comma)<br />
 		</td>
 		<td>-</td>
 	</tr>
 	<tr>
 		<td><strong>BeforeRemove</strong><br />Fired before a tag is removed</td>
 		<td>
-			{jQuery} tag <em>The tag to be removed</em><br />
-			{String} value <em>The value of the tag to be removed (writeable)</em><br />
-			{String} label <em>The label of the tag to be removed</em><br />
+			{jQuery} <strong>tag</strong> The tag to be removed<br />
+			{String} <strong>value</strong> The value of the tag to be removed (writeable)<br />
+			{String} <strong>label</strong> The label of the tag to be removed<br />
 		</td>
 		<td>The tag will not be removed</td>
 	</tr>
 	<tr>
 		<td><strong>AfterRemove</strong><br />Fired after a tag is removed</td>
 		<td>
-			{jQuery} tag <em>The tag element that was removed</em><br />
-			{String} value <em>The value of the tag that was removed</em><br />
-			{String} label <em>The label of the tag that was removed</em><br />
-			{Suggester.Tag} The <em>tag object that was removed</em><br />
+			{jQuery} <strong>tag</strong> The tag element that was removed<br />
+			{String} <strong>value</strong> The value of the tag that was removed<br />
+			{String} <strong>label</strong> The label of the tag that was removed<br />
+			{Suggester.Tag} <strong>The</strong> tag object that was removed<br />
 		</td>
 		<td>-</td>
 	</tr>
 	<tr>
 		<td><strong>BeforeRender</strong><br />Modify this.$widget or any of its child elements before it is manipulated or appended. Can be used to modify this.options.template with DOM methods</td>
 		<td>
-			{jQuery} widget <em>A reference to this.$widget</em><br />
+			{jQuery} <strong>widget</strong> A reference to this.$widget<br />
 		</td>
 		<td>-</td>
 	</tr>
 	<tr>
 		<td><strong>AfterRender</strong><br />Do something after the widget is completely rendered</td>
 		<td>
-			{jQuery} widget <em>A reference to this.$widget</em><br />
+			{jQuery} <strong>widget</strong> A reference to this.$widget<br />
 		</td>
 		<td>-</td>
 	</tr>
 	<tr>
 		<td><strong>BeforeSave</strong><br />Inject functionality before saving</td>
 		<td>
-			{String} newValue <em>The value that will be written to the original input (writeable)</em><br />
+			{String} <strong>newValue</strong> The value that will be written to the original input (writeable)<br />
 		</td>
 		<td>-</td>
 	</tr>
 	<tr>
 		<td><strong>AfterSave</strong><br />Do something after saving value to original input</td>
 		<td>
-			{String} oldValue <em>The value before saving</em><br />
-			{String} newValue <em>The value that was written to the original input</em><br />
+			{String} <strong>oldValue</strong> The value before saving<br />
+			{String} <strong>newValue</strong> The value that was written to the original input<br />
 		</td>
 		<td>-</td>
 	</tr>
 	<tr>
 		<td><strong>BeforeSubmit</strong><br />Respond before form is submitted and before Suggester adds on submit</td>
 		<td>
-			{jQuery.Event} The <em>jQuery-wrapped browser event</em><br />
-			{HTMLFormElement} form <em>The input&#x27;s form (same as this.$form)</em><br />
+			{jQuery.Event} <strong>The</strong> jQuery-wrapped browser event<br />
+			{HTMLFormElement} <strong>form</strong> The input&#x27;s form (same as this.$form)<br />
 		</td>
 		<td>Form will not be submitted</td>
 	</tr>
 	<tr>
 		<td><strong>BeforeSuggest</strong><br />Modify suggestion box behavior before it opens</td>
 		<td>
-			{String} text <em>The text that was searched for</em><br />
+			{String} <strong>text</strong> The text that was searched for<br />
 		</td>
 		<td>The suggestion list is built but not displayed</td>
 	</tr>
