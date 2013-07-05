@@ -131,25 +131,23 @@ How is data passed to event callbacks?
 
 * Each event callback receives one argument: `event`
 * `event` is a jQuery event object
-* `event` also contains useful information related to the event. See the Available Events section below for more information.
+* `event` also contains useful information related to the event. See the [Events](#events) section below for more information.
 * When an event has a default action that can be prevented, `event` will have property `cancelable` set to true and `event.isCancelable()` will return true
 * To prevent a default action, call `event.preventDefault()`
 * To cancel the firing of other attached callbacks, call `event.stopImmediatePropagation()`
 * In some case, altering information on the `event` object will change the behavior of the default action
-* The callback will be fired in the scope of the Suggester instance. In other words, using `this` in the callback will refer to the Suggester instance. See the Suggester Instance Properties and Suggester Instance Methods sections below for more information.
+* The callback will be fired in the scope of the Suggester instance. In other words, using `this` in the callback will refer to the Suggester instance. See the [Instance Properties](#instance-properties) and [Instance Methods](#instance-properties) sections below for more information.
 
 The following is a description of each event. See the Suggester Instance Methods section for event handler examples.
 
 <table>
 	<tr>
-		<th>Name</th>
-		<th>Description</th>
+		<th>Event</th>
 		<th>Data available on <code>event</code></th>
-		<th>If event.preventDefault() is called</th>
+		<th>If prevented</th>
 	</tr>
 	<% _.forEach(events, function(event) { %><tr>
-		<td><strong><%- event.name %></strong></td>
-		<td><%- event.description %></td>
+		<td><strong><%- event.name %></strong><br /><%- event.description %></td>
 		<td>
 		<% _.forEach(event.params || [], function(param) { %>	{<%- (param.type || '').replace('JQuery','jQuery') %>} <%- param.name %> <em><%- param.description %></em><br />
 		<% }); %></td>
@@ -200,9 +198,9 @@ instance.methodName(arg1, arg2, argN);
 <tr>
 	<td>
 		<strong><%- method.name %></strong>(<% _.forEach(method.params || [], function(param, i) { %><% if (param.optional) { %>[<% } %><% if (i !== 0) { %>, <% } %><%- param.name %><% if (param.optdefault !== undefined) { %>=<%- param.optdefault %><% } %><% if (param.optional) { %>]<% } %><% }); %>)<br />
-		<%- method.description %><br />
-		<% _.forEach(method.params || [], function(param, i) { %>{<%- param.type.replace('JQuery','jQuery') %>} <% if (param.optional) { %>[<% } %><%- param.name %><% if (param.optdefault !== undefined) { %>=<%- param.optdefault %><% } %><% if (param.optional) { %>]<% } %> <%- param.description %><% }); %><br />
-		Returns: <% if (method.return) { %>{<%- method.return.type.replace('JQuery','jQuery') %>} <%- method.return.description %><% } else { %>{undefined}<% } %>
+		<%- method.description %><% if (_.size(method.params) > 0) { %><br /><% } %>
+		<% _.forEach(method.params || [], function(param, i) { %><strong>@param</strong> {<%- param.type.replace('JQuery','jQuery') %>} <% if (param.optional) { %>[<% } %><%- param.name %><% if (param.optdefault !== undefined) { %>=<%- param.optdefault %><% } %><% if (param.optional) { %>]<% } %> <%- param.description %><% }); %><br />
+		<strong>@return</strong> <% if (method.return) { %>{<%- method.return.type.replace('JQuery','jQuery') %>} <%- method.return.description %><% } else { %>{undefined}<% } %>
 	</td>
 </tr>
 <% }); %>

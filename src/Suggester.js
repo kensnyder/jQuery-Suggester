@@ -87,13 +87,13 @@
 		 *   @param {String} [options.valueProperty="value"]  The name of object property that should be used as the tag's value. Only applicable when options.data is set
 		 *   @param {String} [options.labelProperty="value"]  The name of object property that should be used as the tag's display text. Only applicable when options.data is set
 		 *   @param {Array} [options.searchProperties=Array("value")]  The array of object property names that should be searched when generating suggestions. Only applicable when options.data is set
-		 *   @params {String|Number} [options.matchAt="anywhere"]  Where to match when finding suggestions. It can be "anywhere", "start", "end" or an integer. Only applicable when options.data is set
-		 *   @params {Boolean} [options.caseSensitive=false]  If true, find matches regardless of case. Only applicable when options.data is set. Only applicable when options.data is set
-		 *   @params {String} [options.dataUrl=false]  Url to call to get json or jsonp results. Use %s to indicate where search text should be inserted. e.g. "http://example.com/myjson?query=%s" or "http://example.com/myjsonp?query=%s&callback=%s"
-		 *   @params {String} [options.dataType="json"]  Can be "json" or "jsonp". If json, options.dataUrl needs to be in the format "http://example.com/myjsonp?query=%s&mycallback=%s". To handle xml, you'll need to register BeforeFetch and AfterFetch handlers or overwrite the fetchResults method
-		 *   @params {String} [options.fly="down"]  Which way should the suggestion box fly. If "up", the suggestion box will appear before the input box in the DOM tree. A css class of "sugg-fly-up" or "sugg-fly-down" is applied to the widget element based on this value
+		 *   @param {String|Number} [options.matchAt="anywhere"]  Where to match when finding suggestions. It can be "anywhere", "start", "end" or an integer. Only applicable when options.data is set
+		 *   @param {Boolean} [options.caseSensitive=false]  If true, find matches regardless of case. Only applicable when options.data is set. Only applicable when options.data is set
+		 *   @param {String} [options.dataUrl=false]  Url to call to get json or jsonp results. Use %s to indicate where search text should be inserted. e.g. "http://example.com/myjson?query=%s" or "http://example.com/myjsonp?query=%s&callback=%s"
+		 *   @param {String} [options.dataType="json"]  Can be "json" or "jsonp". If json, options.dataUrl needs to be in the format "http://example.com/myjsonp?query=%s&mycallback=%s". To handle xml, you'll need to register BeforeFetch and AfterFetch handlers or overwrite the fetchResults method
+		 *   @param {String} [options.fly="down"]  Which way should the suggestion box fly. If "up", the suggestion box will appear before the input box in the DOM tree. A css class of "sugg-fly-up" or "sugg-fly-down" is applied to the widget element based on this value
 		 *   @params {String} [options.suggListPosition="relative"]  If "absolute", the suggestion box will be appended to <body> and positioned and sized each time it is opened. This is useful for widgets within table elements
-		 *   @params {Boolean} [options.multiselect=true]  If true, allow multiple tags
+		 *   @param {Boolean} [options.multiselect=true]  If true, allow multiple tags
 		 *   @param {Boolean} [options.preventDuplicates=true]  If true, the first tag will be removed when a duplicate is typed in
 		 *   @param {Boolean} [options.omitAlreadyChosenItems=true]  If true, don't suggest items that have already been chosen as tags. Only applicable when options.data is set
 		 *   @param {Number} [options.minChars=3]  The minimum number of characters a user must type before the suggestion box will appear. If 0, show choices when input is simply focused (like a faux select widget)
@@ -132,35 +132,36 @@
 		</div>
 	</div>
 		
-		 *   @params {String} [options.listItemTemplate] Override the .sugg-item element in options.template
-		 *   @params {String} [options.theme="coolblue"]  The css class to add to widget (e.g. "sugg-theme-coolblue"). The following themes come predefined in the CSS: "coolblue", "faceblue", "graybox", "grayred"
-		 *   @params {Function} [options.onInitialize]  Add a {{#crossLink "Suggester/Initialize:event"}}Initialize event{{/crossLink}}
-		 *   @params {Function} [options.onBeforeAdd]  Add a {{#crossLink "Suggester/BeforeAdd:event"}}BeforeAdd event{{/crossLink}}
-		 *   @params {Function} [options.onBeforeAjax]  Add a {{#crossLink "Suggester/BeforeAjax:event"}}BeforeAjax event{{/crossLink}}
-		 *   @params {Function} [options.onBeforeClose]  Add a {{#crossLink "Suggester/BeforeClose:event"}}BeforeClose event{{/crossLink}}
-		 *   @params {Function} [options.onBeforeFetch]  Add a {{#crossLink "Suggester/BeforeFetch:event"}}BeforeFetch event{{/crossLink}}
-		 *   @params {Function} [options.onBeforeFilter]  Add a {{#crossLink "Suggester/BeforeFilter:event"}}BeforeFilter event{{/crossLink}}
-		 *   @params {Function} [options.onBeforeFormat]  Add a {{#crossLink "Suggester/BeforeFormat:event"}}BeforeFormat event{{/crossLink}}
-		 *   @params {Function} [options.onBeforeHandleKey]  Add a {{#crossLink "Suggester/BeforeHandleKey:event"}}BeforeHandleKey event{{/crossLink}}
-		 *   @params {Function} [options.onBeforeMove]  Add a {{#crossLink "Suggester/BeforeMove:event"}}BeforeMove event{{/crossLink}}
-		 *   @params {Function} [options.onBeforeOpen]  Add a {{#crossLink "Suggester/BeforeOpen:event"}}BeforeOpen event{{/crossLink}}
-		 *   @params {Function} [options.onBeforeRemove]  Add a {{#crossLink "Suggester/BeforeRemove:event"}}BeforeRemove event{{/crossLink}}
-		 *   @params {Function} [options.onBeforeRender]  Add a {{#crossLink "Suggester/BeforeRender:event"}}BeforeRender event{{/crossLink}}
-		 *   @params {Function} [options.onBeforeSave]  Add a {{#crossLink "Suggester/BeforeSave:event"}}BeforeSave event{{/crossLink}}
-		 *   @params {Function} [options.onBeforeSubmit]  Add a {{#crossLink "Suggester/BeforeSubmit:event"}}BeforeSubmit event{{/crossLink}}
-		 *   @params {Function} [options.onBeforeSuggest]  Add a {{#crossLink "Suggester/BeforeSuggest:event"}}BeforeSuggest event{{/crossLink}}
-		 *   @params {Function} [options.onAfterAdd]  Add a {{#crossLink "Suggester/AfterAdd:event"}}AfterAdd event{{/crossLink}}
-		 *   @params {Function} [options.onAfterAjax]  Add a {{#crossLink "Suggester/AfterAjax:event"}}AfterAjax event{{/crossLink}}
-		 *   @params {Function} [options.onAfterClose]  Add a {{#crossLink "Suggester/AfterClose:event"}}AfterClose event{{/crossLink}}
-		 *   @params {Function} [options.onAfterFetch]  Add a {{#crossLink "Suggester/AfterFetch:event"}}AfterFetch event{{/crossLink}}
-		 *   @params {Function} [options.onAfterFilter]  Add a {{#crossLink "Suggester/AfterFilter:event"}}AfterFilter event{{/crossLink}}
-		 *   @params {Function} [options.onAfterFormat]  Add a {{#crossLink "Suggester/AfterFormat:event"}}AfterFormat event{{/crossLink}}
-		 *   @params {Function} [options.onAfterHandleKey]  Add a {{#crossLink "Suggester/AfterHandleKey:event"}}AfterHandleKey event{{/crossLink}}
-		 *   @params {Function} [options.onAfterMove]  Add a {{#crossLink "Suggester/AfterMove:event"}}AfterMove event{{/crossLink}}
-		 *   @params {Function} [options.onAfterOpen]  Add a {{#crossLink "Suggester/AfterOpen:event"}}AfterOpen event{{/crossLink}}
-		 *   @params {Function} [options.onAfterRemove]  Add a {{#crossLink "Suggester/AfterRemove:event"}}AfterRemove event{{/crossLink}}
-		 *   @params {Function} [options.onAfterSave]  Add a {{#crossLink "Suggester/AfterSave:event"}}AfterSave event{{/crossLink}}
-		 *   @params {Function} [options.onAfterSuggest]  Add a {{#crossLink "Suggester/AfterSuggest:event"}}AfterSuggest event{{/crossLink}}
+		 *   @param {String} [options.listItemTemplate] Override the .sugg-item element in options.template
+		 *   @param {String} [options.theme="coolblue"]  The css class to add to widget (e.g. "sugg-theme-coolblue"). The following themes come predefined in the CSS: "coolblue", "faceblue", "graybox", "grayred"
+		 *   @param {Function} [options.onInitialize]  Add a {{#crossLink "Suggester/Initialize:event"}}Initialize event{{/crossLink}}
+		 *   @param {Function} [options.onChange]  Add a {{#crossLink "Suggester/Change:event"}}Change event{{/crossLink}}
+		 *   @param {Function} [options.onBeforeAdd]  Add a {{#crossLink "Suggester/BeforeAdd:event"}}BeforeAdd event{{/crossLink}}
+		 *   @param {Function} [options.onBeforeAjax]  Add a {{#crossLink "Suggester/BeforeAjax:event"}}BeforeAjax event{{/crossLink}}
+		 *   @param {Function} [options.onBeforeClose]  Add a {{#crossLink "Suggester/BeforeClose:event"}}BeforeClose event{{/crossLink}}
+		 *   @param {Function} [options.onBeforeFetch]  Add a {{#crossLink "Suggester/BeforeFetch:event"}}BeforeFetch event{{/crossLink}}
+		 *   @param {Function} [options.onBeforeFilter]  Add a {{#crossLink "Suggester/BeforeFilter:event"}}BeforeFilter event{{/crossLink}}
+		 *   @param {Function} [options.onBeforeFormat]  Add a {{#crossLink "Suggester/BeforeFormat:event"}}BeforeFormat event{{/crossLink}}
+		 *   @param {Function} [options.onBeforeHandleKey]  Add a {{#crossLink "Suggester/BeforeHandleKey:event"}}BeforeHandleKey event{{/crossLink}}
+		 *   @param {Function} [options.onBeforeMove]  Add a {{#crossLink "Suggester/BeforeMove:event"}}BeforeMove event{{/crossLink}}
+		 *   @param {Function} [options.onBeforeOpen]  Add a {{#crossLink "Suggester/BeforeOpen:event"}}BeforeOpen event{{/crossLink}}
+		 *   @param {Function} [options.onBeforeRemove]  Add a {{#crossLink "Suggester/BeforeRemove:event"}}BeforeRemove event{{/crossLink}}
+		 *   @param {Function} [options.onBeforeRender]  Add a {{#crossLink "Suggester/BeforeRender:event"}}BeforeRender event{{/crossLink}}
+		 *   @param {Function} [options.onBeforeSave]  Add a {{#crossLink "Suggester/BeforeSave:event"}}BeforeSave event{{/crossLink}}
+		 *   @param {Function} [options.onBeforeSubmit]  Add a {{#crossLink "Suggester/BeforeSubmit:event"}}BeforeSubmit event{{/crossLink}}
+		 *   @param {Function} [options.onBeforeSuggest]  Add a {{#crossLink "Suggester/BeforeSuggest:event"}}BeforeSuggest event{{/crossLink}}
+		 *   @param {Function} [options.onAfterAdd]  Add a {{#crossLink "Suggester/AfterAdd:event"}}AfterAdd event{{/crossLink}}
+		 *   @param {Function} [options.onAfterAjax]  Add a {{#crossLink "Suggester/AfterAjax:event"}}AfterAjax event{{/crossLink}}
+		 *   @param {Function} [options.onAfterClose]  Add a {{#crossLink "Suggester/AfterClose:event"}}AfterClose event{{/crossLink}}
+		 *   @param {Function} [options.onAfterFetch]  Add a {{#crossLink "Suggester/AfterFetch:event"}}AfterFetch event{{/crossLink}}
+		 *   @param {Function} [options.onAfterFilter]  Add a {{#crossLink "Suggester/AfterFilter:event"}}AfterFilter event{{/crossLink}}
+		 *   @param {Function} [options.onAfterFormat]  Add a {{#crossLink "Suggester/AfterFormat:event"}}AfterFormat event{{/crossLink}}
+		 *   @param {Function} [options.onAfterHandleKey]  Add a {{#crossLink "Suggester/AfterHandleKey:event"}}AfterHandleKey event{{/crossLink}}
+		 *   @param {Function} [options.onAfterMove]  Add a {{#crossLink "Suggester/AfterMove:event"}}AfterMove event{{/crossLink}}
+		 *   @param {Function} [options.onAfterOpen]  Add a {{#crossLink "Suggester/AfterOpen:event"}}AfterOpen event{{/crossLink}}
+		 *   @param {Function} [options.onAfterRemove]  Add a {{#crossLink "Suggester/AfterRemove:event"}}AfterRemove event{{/crossLink}}
+		 *   @param {Function} [options.onAfterSave]  Add a {{#crossLink "Suggester/AfterSave:event"}}AfterSave event{{/crossLink}}
+		 *   @param {Function} [options.onAfterSuggest]  Add a {{#crossLink "Suggester/AfterSuggest:event"}}AfterSuggest event{{/crossLink}}
 		 *   @example
 	
 	// EXAMPLE TEMPLATE CONFIG		
@@ -886,7 +887,7 @@
 		 * Fetch suggestions from an ajax URL
 		 * @method fetchResults
 		 * @param {String} text  The text to search for
-		 * @return {jqXHR}  The 
+		 * @return {jqXHR}  The jQuery XHR transport that is fetching the data
 		 */
 		fetchResults: function(text) {
 			this._searchTerm = text;
@@ -1645,7 +1646,7 @@
 		 * Handle paste on this.$input. Look for places to split pasted value
 		 * For example pasting "a, b, c" will immediately add 3 tags (when this.options.addOnComma is true)
 		 * It attempts to split on tab, then if there are no tabs then semicolons, then if there are no semicolons, commas
-		 * @method _onCutDelete
+		 * @method _onPaste
 		 * @param {jQuery.Event} evt  the paste event
 		 */		
 		_onPaste: function(evt) {
