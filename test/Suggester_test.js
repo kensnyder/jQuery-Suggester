@@ -377,7 +377,7 @@
   if (window.location.protocol != 'file:') {
     asyncTest("Suggestions via Ajax", function() {
       expect(3);
-      var sugg = $input.suggester({dataUrl:'./assets/js/stars-canis-ajax.js?query=%s',keyDelay:2}).suggester('getInstance');
+      var sugg = $input.suggester({dataUrl:'./assets/stars-canis-ajax.js?query=%s',keyDelay:2}).suggester('getInstance');
       sendKeys(sugg, ['C','a','n','i','s'])
       setTimeout(function() {
         strictEqual($('.sugg-item').length, 2);
@@ -390,7 +390,7 @@
   if (window.location.protocol != 'file:' && window.location.href.match(/(\?|&)php\b/)) {
     asyncTest("Suggestions via JSONP", function() {
       expect(3);
-      var sugg = $input.suggester({dataType:'jsonp',dataUrl:'./assets/js/stars-canis-jsonp.php?query=%s&mycallback=%s',keyDelay:2}).suggester('getInstance');
+      var sugg = $input.suggester({dataType:'jsonp',dataUrl:'./assets/stars-canis-jsonp.php?query=%s&mycallback=%s',keyDelay:2}).suggester('getInstance');
       sendKeys(sugg, ['C','a','n','i','s'])
       setTimeout(function() {
         strictEqual($('.sugg-item').length, 2);
