@@ -1,9 +1,9 @@
 Suggester - A Better Autocomplete Widget
 =
 
-Version 1.2.1, Jul 2013, MIT License
+Version 1.2.2, Jul 2013, MIT License
 
-[Download](https://github.com/kensnyder/jQuery-Suggester/blob/master/Suggester-1.2.1-Download.zip?raw=true), [Demos](http://sandbox.kendsnyder.com/Suggester-1.2.1/demos), [Unit tests](http://sandbox.kendsnyder.com/Suggester-1.2.1/test/Suggester.html)
+[Download](https://github.com/kensnyder/jQuery-Suggester/blob/master/Suggester-1.2.2-Download.zip?raw=true), [Demos](http://sandbox.kendsnyder.com/Suggester-1.2.2/demos), [Unit tests](http://sandbox.kendsnyder.com/Suggester-1.2.2/test/Suggester.html)
 
 Usage: `var suggester = new $.Suggester($input, options);`
 
@@ -40,7 +40,7 @@ Turn a text input into a Facebook-style multiple-tag input. Features include:
 * You can define your own HTML structure for the widget output
 * Object-oriented structure makes it easy to extend
 * 4kb minimized and gzipped
-* Unit tested - [Unit tests](http://sandbox.kendsnyder.com/Suggester-1.2.1/test/Suggester.html) 
+* Unit tested - [Unit tests](http://sandbox.kendsnyder.com/Suggester-1.2.2/test/Suggester.html) 
 * Works on IE8+, FF, Chrome, Safari
 * Compatible with AMD
 
@@ -48,7 +48,7 @@ Turn a text input into a Facebook-style multiple-tag input. Features include:
 How to Use
 -
 
-Suggester is compatible with jQuery 1.5+ and has been unit tested with jQuery 1.9. Download the files in [Suggester-1.2.1-Download.zip](https://github.com/kensnyder/jQuery-Suggester/blob/master/Suggester-1.2.1-Download.zip?raw=true) and copy them to your scripts directory. Include them in your document's after jQuery is included:
+Suggester is compatible with jQuery 1.5+ and has been unit tested with jQuery 1.9. Download the files in [Suggester-1.2.2-Download.zip](https://github.com/kensnyder/jQuery-Suggester/blob/master/Suggester-1.2.2-Download.zip?raw=true) and copy them to your scripts directory. Include them in your document's after jQuery is included:
 
 ```html
 <script src="/js/Suggester.min.js"></script>
@@ -506,7 +506,7 @@ How is data passed to event callbacks?
 * `event` also contains useful information related to the event. See the [Events](#events) section below for more information.
 * When an event has a default action that can be prevented, `event` will have property `cancelable` set to true and `event.isCancelable()` will return true
 * To prevent a default action, call `event.preventDefault()`
-* To cancel the firing of other attached callbacks, call `event.stopPropagation()`
+* To cancel the firing of other attached callbacks, call `event.stopImmediatePropagation()`
 * In some case, altering information on the `event` object will change the behavior of the default action
 * The callback will be fired in the scope of the Suggester instance. In other words, using `this` in the callback will refer to the Suggester instance. See the [Instance Properties](#instance-properties) and [Instance Methods](#instance-methods) sections below for more information.
 
@@ -642,7 +642,7 @@ The following is a description of each event.
 		<td>-</td>
 	</tr>
 	<tr>
-		<td><strong>Initialize</strong><br />Called after widget is initialized and rendered</td>
+		<td><strong>Initialize</strong><br />Do something after the widget is completely rendered and initialized. Note that it fires during instantiation, so an onInitialize property must be set in the constructor.</td>
 		<td>
 		</td>
 		<td>-</td>
@@ -715,14 +715,14 @@ The following is a description of each event.
 		<td>-</td>
 	</tr>
 	<tr>
-		<td><strong>BeforeRender</strong><br />Modify this.$widget or any of its child elements before it is manipulated or appended. Can be used to modify this.options.template with DOM methods</td>
+		<td><strong>BeforeRender</strong><br />Modify this.$widget or any of its child elements before it is manipulated or appended. Can be used to modify this.options.template with DOM methods. Note that it fires during instantiation, so an onBeforeRender property must be set in the constructor.</td>
 		<td>
 			{jQuery} <strong>widget</strong> A reference to this.$widget<br />
 		</td>
 		<td>-</td>
 	</tr>
 	<tr>
-		<td><strong>AfterRender</strong><br />Do something after the widget is completely rendered</td>
+		<td><strong>AfterRender</strong><br />Do something after the widget is completely rendered. Note that it fires during instantiation, so an onAfterRender property must be set in the constructor.</td>
 		<td>
 			{jQuery} <strong>widget</strong> A reference to this.$widget<br />
 		</td>
@@ -1394,6 +1394,60 @@ It attempts to split on tab, then if there are no tabs then semicolons, then if 
 
 <tr>
 	<td>
+		<strong>_key_BACKSPACE</strong>(evt)<br />
+		Handle BACKSPACE key on this.$input<br />
+		<strong>@param</strong> {Event} evt The keydown event<br />
+		<strong>@return</strong> {undefined}
+	</td>
+</tr>
+
+<tr>
+	<td>
+		<strong>_key_TAB_COMMA</strong>(evt)<br />
+		Handle TAB and COMMA and SEMICOLON key on this.$input<br />
+		<strong>@param</strong> {Event} evt The keydown event<br />
+		<strong>@return</strong> {undefined}
+	</td>
+</tr>
+
+<tr>
+	<td>
+		<strong>_key_ESC</strong>(evt)<br />
+		Handle ESC key on this.$input<br />
+		<strong>@param</strong> {Event} evt The keydown event<br />
+		<strong>@return</strong> {undefined}
+	</td>
+</tr>
+
+<tr>
+	<td>
+		<strong>_key_ENTER</strong>(evt)<br />
+		Handle ENTER key on this.$input<br />
+		<strong>@param</strong> {Event} evt The keydown event<br />
+		<strong>@return</strong> {undefined}
+	</td>
+</tr>
+
+<tr>
+	<td>
+		<strong>_key_other</strong>(evt)<br />
+		Handle other keys (e.g. printable characters) on this.$input<br />
+		<strong>@param</strong> {Event} evt The keydown event<br />
+		<strong>@return</strong> {undefined}
+	</td>
+</tr>
+
+<tr>
+	<td>
+		<strong>_onSubmit</strong>(jqEvent)<br />
+		Handler for form submission<br />
+		<strong>@param</strong> {jQuery} jqEvent The submit event<br />
+		<strong>@return</strong> {undefined}
+	</td>
+</tr>
+
+<tr>
+	<td>
 		<strong>_beforeFetch</strong>(jqXHR)<br />
 		The handler function that is passed to $.ajax({beforeSend:...}) to alter XHR if needed<br />
 		<strong>@param</strong> {JqXHR} jqXHR The jQuery XHR object (see http://api.jquery.com/jQuery.ajax/#jqXHR)<br />
@@ -1412,10 +1466,28 @@ It attempts to split on tab, then if there are no tabs then semicolons, then if 
 
 <tr>
 	<td>
+		<strong>_closeOnOutsideClick</strong>(evt)<br />
+		Callback used to close the suggestion box when the user clicks off of it<br />
+		<strong>@param</strong> {jQuery.Event} evt The click event<br />
+		<strong>@return</strong> {undefined}
+	</td>
+</tr>
+
+<tr>
+	<td>
 		<strong>_formatSuggestion</strong>(record, substr)<br />
 		Format a suggestion before display<br />
 		<strong>@param</strong> {Object} record The record that was suggested<strong>@param</strong> {String} substr The string that generated the list of suggestions<br />
 		<strong>@return</strong> {String} HTML to use as the item (e.g. &#x27;&lt;li class=&quot;sugg-item&quot;&gt;Suggestion&lt;/li&gt;&#x27;)
+	</td>
+</tr>
+
+<tr>
+	<td>
+		<strong>_updateInputSize</strong>()<br />
+		Update the size when this.options.inputSize is &quot;auto&quot;
+		<br />
+		<strong>@return</strong> {undefined}
 	</td>
 </tr>
 
@@ -1433,7 +1505,7 @@ It attempts to split on tab, then if there are no tabs then semicolons, then if 
 		<strong>_spliceTag</strong>(value)<br />
 		Given tag text, remove a tag from the internal collection and from the DOM<br />
 		<strong>@param</strong> {String} value The text of the tag<br />
-		<strong>@return</strong> {Object} The record associated with that tag
+		<strong>@return</strong> {Object|undefined} The record associated with that tag or undefined if not found
 	</td>
 </tr>
 
@@ -1536,10 +1608,15 @@ suggester.bind('AfterClose', doStuff);
 suggester.focus();
 ```
 
-See the source on the [live demos](http://sandbox.kendsnyder.com/Suggester-1.2.1/demos) for lots more examples.
+See the source on the [live demos](http://sandbox.kendsnyder.com/Suggester-1.2.2/demos) for lots more examples.
 
 Changelog
 -
+
+**Version 1.2.2, Jul 2013**
+* Fixes to add()
+* Documentation improvements
+* More unit tests
 
 **Version 1.2.1, Jul 2013**
 * Added onChange event

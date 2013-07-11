@@ -134,7 +134,7 @@ How is data passed to event callbacks?
 * `event` also contains useful information related to the event. See the [Events](#events) section below for more information.
 * When an event has a default action that can be prevented, `event` will have property `cancelable` set to true and `event.isCancelable()` will return true
 * To prevent a default action, call `event.preventDefault()`
-* To cancel the firing of other attached callbacks, call `event.stopPropagation()`
+* To cancel the firing of other attached callbacks, call `event.stopImmediatePropagation()`
 * In some case, altering information on the `event` object will change the behavior of the default action
 * The callback will be fired in the scope of the Suggester instance. In other words, using `this` in the callback will refer to the Suggester instance. See the [Instance Properties](#instance-properties) and [Instance Methods](#instance-methods) sections below for more information.
 
@@ -244,6 +244,11 @@ See the source on the [live demos](http://sandbox.kendsnyder.com/Suggester-<%- p
 
 Changelog
 -
+
+**Version 1.2.2, Jul 2013**
+* Fixes to add()
+* Documentation improvements
+* More unit tests
 
 **Version 1.2.1, Jul 2013**
 * Added onChange event

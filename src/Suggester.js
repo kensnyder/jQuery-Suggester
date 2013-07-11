@@ -308,8 +308,16 @@
 			this._setupListeners();
 			// we're all done
 			/**
-			 * Called after widget is initialized and rendered
+			 * Do something after the widget is completely rendered and initialized. Note that it fires during instantiation, so an onInitialize property must be set in the constructor.
 			 * @event Initialize
+			 * @example
+			 
+	new $.Suggester($input, {
+		onInitialize: function(event) {
+			heyItsReady();
+		}
+	});
+			 
 			 */			
 			this.publish('Initialize');
 			return this;
@@ -356,22 +364,24 @@
 			// with only one argument, look for a matching record
 			if (arguments.length == 1) {
 				record = this.searchData(value, this.options.valueProperty === this.options.labelProperty ? [this.options.valueProperty] : [this.options.valueProperty,this.options.labelProperty]);
-				if (record) {
-					value = record[this.options.valueProperty];
-					label = record[this.options.labelProperty];
+			}
+			else if (arguments.length == 2) {
+				record = this.searchData(value, [this.options.valueProperty]);
+				if (!record || record[this.options.labelProperty] != label) {
+					record = undefined;
 				}
 			}
 			else if ($item) {
 				record = $item.data('tag-record');
-				if (record) {
-					value = record[this.options.valueProperty];
-					label = record[this.options.labelProperty];
-				}
 			}
-			if (typeof label != 'string') {
+			if (record) {
+				value = record[this.options.valueProperty];
+				label = record[this.options.labelProperty];
+			}
+			if (typeof label != 'string' && typeof label != 'number') {
 				label = value;
 			}
-			if (typeof value != 'string') {
+			if (typeof value != 'string' && typeof value != 'number') {
 				value = label;
 			}
 			/**
@@ -1292,6 +1302,7 @@
 		/**
 		 * Set options and interpret options
 		 * @method _processOptions
+		 * @private
 		 * @params {Object} options  Settings passed to constructor
 		 */
 		_processOptions: function(options) {
@@ -1304,20 +1315,22 @@
 		/**
 		 * Render the widget and get handles to key elements
 		 * @method _render
+		 * @private
 		 */
 		_render: function() {
 			// The full widget
 			this.$widget = $(this.options.template);
-			// BeforeRender callbacks now have the ability to modify this.$widget or any of its child elements
 			/**
-			 * Modify this.$widget or any of its child elements before it is manipulated or appended. Can be used to modify this.options.template with DOM methods
+			 * Modify this.$widget or any of its child elements before it is manipulated or appended. Can be used to modify this.options.template with DOM methods. Note that it fires during instantiation, so an onBeforeRender property must be set in the constructor.
 			 * @event BeforeRender
 			 * @param {jQuery} widget  A reference to this.$widget
 			 * @example
 			 
-	instance.bind('BeforeRender', function(event) {
-		event.widget.find('.sugg-remove').text('').appendChild(myRemoveImage);
-	});
+	new $.Suggester($input, {
+		onBeforeRender: function(event) {
+			event.widget.find('.sugg-remove').text('').appendChild(myRemoveImage);
+		}
+	});			
 			 
 			 */
 			this.publish('BeforeRender', {
@@ -1383,13 +1396,15 @@
 				this.setTheme(this.options.theme);
 			}
 			/**
-			 * Do something after the widget is completely rendered
+			 * Do something after the widget is completely rendered. Note that it fires during instantiation, so an onAfterRender property must be set in the constructor.
 			 * @event AfterRender
 			 * @param {jQuery} widget  A reference to this.$widget
 			 * @example
 			 
-	instance.bind('AfterRender', function(event) {
-		heyItsAllRendered();
+	new $.Suggester($input, {
+		onAfterRender: function(event) {
+			heyItsAllRendered();
+		}
 	});
 			 
 			 */
@@ -1400,6 +1415,7 @@
 		/**
 		 * Look at the initial element's start value and populate tags as appropriate
 		 * @method _handleStartValue
+		 * @private
 		 */
 		_handleStartValue: function() {
 			// get a list of tags to insert now based on the current value of the original input
@@ -1420,6 +1436,7 @@
 		/**
 		 * Attach event handlers
 		 * @method _setupListeners
+		 * @private
 		 */
 		_setupListeners: function() {
 			// proxy some methods to always be bound to our instance
@@ -1451,6 +1468,7 @@
 		/**
 		 * Event handler for when this.$input is focused
 		 * @method _onInputFocus
+		 * @private
 		 * @param {jQuery.Event} evt  The focus event
 		 */
 		_onInputFocus: function(evt) {
@@ -1472,6 +1490,7 @@
 		/**
 		 * Event handler for when this.$input is blurred
 		 * @method _onInputBlur
+		 * @private
 		 * @param {jQuery.Event} evt  blur event
 		 */
 		_onInputBlur: function(evt) {
@@ -1492,6 +1511,7 @@
 		/**
 		 * Event handler for when .sugg-remove is clicked
 		 * @method _onTagRemoveClick
+		 * @private
 		 * @param {jQuery.Event} evt  The click event
 		 */   
 		_onTagRemoveClick: function(evt) {
@@ -1504,6 +1524,7 @@
 		/**
 		 * Event handler for when .sugg-tag is clicked
 		 * @method _onTagClick
+		 * @private
 		 * @param {jQuery.Event} evt  The click event
 		 */     
 		_onTagClick: function(evt) {
@@ -1518,6 +1539,7 @@
 		/**
 		 * Event handler for when autosuggest list is moused over
 		 * @method _onListMouseover
+		 * @private
 		 * @param {jQuery.Event} evt  The mouseover event
 		 */     
 		_onListMouseover: function(evt) { 
@@ -1538,6 +1560,7 @@
 		/**
 		 * Event handler for when autosuggest list is clicked
 		 * @method _onListClick
+		 * @private
 		 * @param {jQuery.Event} evt  The click event
 		 */     
 		_onListClick: function(evt) {
@@ -1565,6 +1588,7 @@
 		/**
 		 * Event handler for when this.$box is clicked
 		 * @method _onBoxClick
+		 * @private
 		 * @param {jQuery.Event} evt  The click event
 		 */     
 		_onBoxClick: function(evt) {
@@ -1576,6 +1600,7 @@
 		/**
 		 * Handle keypresses while in tag input field
 		 * @method _onKeydown
+		 * @private
 		 * @param {Event} evt  The keydown event (a raw browser event, not jQuery.Event)
 		 */
 		_onKeydown: function(evt) {
@@ -1636,6 +1661,7 @@
 		/**
 		 * Handle cut and delete on this.$input
 		 * @method _onCutDelete
+		 * @private
 		 * @param {jQuery.Event} evt  The cut, paste, or delete event
 		 */
 		_onCutDelete: function(evt) {
@@ -1647,6 +1673,7 @@
 		 * For example pasting "a, b, c" will immediately add 3 tags (when this.options.addOnComma is true)
 		 * It attempts to split on tab, then if there are no tabs then semicolons, then if there are no semicolons, commas
 		 * @method _onPaste
+		 * @private
 		 * @param {jQuery.Event} evt  the paste event
 		 */		
 		_onPaste: function(evt) {
@@ -1739,6 +1766,7 @@
 		/**
 		 * Handle UP key on this.$input
 		 * @method _key_UP
+		 * @private
 		 * @param {Event} evt  The keydown event
 		 */
 		_key_UP: function(evt) {
@@ -1751,6 +1779,7 @@
 		/**
 		 * Handle DOWN key on this.$input
 		 * @method _key_DOWN
+		 * @private
 		 * @param {Event} evt  The keydown event
 		 */   
 		_key_DOWN: function(evt) {
@@ -1764,6 +1793,8 @@
 		},
 		/**
 		 * Handle BACKSPACE key on this.$input
+		 * @method _key_BACKSPACE
+		 * @private
 		 * @param {Event} evt  The keydown event
 		 */   
 		_key_BACKSPACE: function(evt) {
@@ -1790,6 +1821,8 @@
 		},
 		/**
 		 * Handle TAB and COMMA and SEMICOLON key on this.$input
+		 * @method _key_TAB_COMMA
+		 * @private
 		 * @param {Event} evt  The keydown event
 		 */   
 		_key_TAB_COMMA: function(evt) {
@@ -1814,6 +1847,8 @@
 		},
 		/**
 		 * Handle ESC key on this.$input
+		 * @method _key_ESC
+		 * @private
 		 * @param {Event} evt  The keydown event
 		 */   
 		_key_ESC: function(evt) {
@@ -1821,6 +1856,8 @@
 		},
 		/**
 		 * Handle ENTER key on this.$input
+		 * @method _key_ENTER
+		 * @private
 		 * @param {Event} evt  The keydown event
 		 */
 		_key_ENTER: function(evt) {
@@ -1841,6 +1878,8 @@
 		},
 		/**
 		 * Handle other keys (e.g. printable characters) on this.$input
+		 * @method _key_other
+		 * @private
 		 * @param {Event} evt  The keydown event
 		 */   
 		_key_other: function(evt) {
@@ -1857,7 +1896,8 @@
 		},
 		/**
 		 * Handler for form submission
-		 * 
+		 * @method _onSubmit
+		 * @private
 		 * @param {jQuery} jqEvent  The submit event
 		 */
 		_onSubmit: function(jqEvent) {
@@ -1900,6 +1940,7 @@
 		/**
 		 * The handler function that is passed to $.ajax({beforeSend:...}) to alter XHR if needed
 		 * @method _beforeFetch
+		 * @private
 		 * @param {jqXHR} jqXHR  The jQuery XHR object (see http://api.jquery.com/jQuery.ajax/#jqXHR)
 		 */
 		_beforeFetch: function(jqXHR) {
@@ -1934,6 +1975,7 @@
 		/**
 		 * Handler passed to $.ajax().done(function(){...}) that handles suggestion data that is returned
 		 * @method _afterFetch
+		 * @private
 		 * @param {Array} records  The Array of record objects returned from the XHR
 		 */
 		_afterFetch: function(records) {
@@ -1964,6 +2006,8 @@
 		},
 		/**
 		 * Callback used to close the suggestion box when the user clicks off of it
+		 * @method _closeOnOutsideClick
+		 * @private
 		 * @param {jQuery.Event} evt  The click event
 		 */
 		_closeOnOutsideClick: function(evt) {
@@ -1976,6 +2020,7 @@
 		/**
 		 * Format a suggestion before display
 		 * @method _formatSuggestion
+		 * @private
 		 * @param {Object} record  The record that was suggested
 		 * @param {String} substr  The string that generated the list of suggestions
 		 * @return {String}  HTML to use as the item (e.g. '<li class="sugg-item">Suggestion</li>')
@@ -2041,6 +2086,8 @@
 		},
 		/**
 		 * Update the size when this.options.inputSize is "auto"
+		 * @method _updateInputSize
+		 * @private
 		 */
 		_updateInputSize: function() {
 			if (this.options.inputSize == 'auto') {         
@@ -2120,8 +2167,9 @@
 		/**
 		 * Given tag text, remove a tag from the internal collection and from the DOM
 		 * @method _spliceTag
+		 * @private
 		 * @param {String} value      The text of the tag
-		 * @return {Object}  The record associated with that tag
+		 * @return {Object|undefined}  The record associated with that tag or undefined if not found
 		 */
 		_spliceTag: function(value) {
 			var idx = this.getTagIndex(value);      
@@ -2133,6 +2181,7 @@
 		/**
 		 * Given an array index, remove a tag from the internal collection and from the DOM
 		 * @method _spliceTagByIdx
+		 * @private
 		 * @param {Number} idx  The index position in the internal collection
 		 * @return {Suggester.Tag}  The Suggester.Tag object that was removed
 		 */   
@@ -2172,6 +2221,7 @@
 		/**
 		 * Setup publish/subscribe system that uses jQuery's event system. Allows subscribing this way: instance.bind('AfterFilter', myhandler)
 		 * @method _setupPubsub
+		 * @private
 		 */
 		_setupPubsub: function() {
 			this.pubsub = $(this);
@@ -2192,6 +2242,7 @@
 		/**
 		 * Given an input element, get the cursor position. Used to determine if backspace key should delete the previous tag
 		 * @method _isCursorAtStart
+		 * @private
 		 * @return {Boolean}  true if the cursor is at the start and no text is selected
 		 */
 		_isCursorAtStart: function() {
