@@ -598,7 +598,6 @@
 			strictEqual(evt.value, '1001', 'BeforeAdd event.value');
 			strictEqual(evt.label, 'Pencil', 'BeforeAdd event.label');
 			strictEqual(evt.item, undefined, 'BeforeAdd event.item');
-console.log(evt.record);			
 			deepEqual(evt.record, products[0], 'BeforeAdd event.record');
 		});
 		sugg.add('1001', 'Pencil');

@@ -364,15 +364,23 @@
 		 */
 		add: function(value, label/*optional*/, $item/*optional*/) {
 			var evt, idx, $hidden, $tag, record;
+			var valueIsEmpty = (value === null || value === undefined || value === false);
+			var labelIsEmpty = (label === null || label === undefined || label === false);
 			// with only one argument, look for a matching record
 			if (arguments.length == 1) {
 				record = this.searchData(value, this.options.valueProperty === this.options.labelProperty ? [this.options.valueProperty] : [this.options.valueProperty,this.options.labelProperty]);
 			}
-			else if (arguments.length == 2) {
+			else if (arguments.length == 2 && !valueIsEmpty && !labelIsEmpty) {
 				record = this.searchData(value, [this.options.valueProperty]);
 				if (!record || record[this.options.labelProperty] != label) {
 					record = undefined;
 				}
+			}
+			else if (arguments.length == 2 && valueIsEmpty && !labelIsEmpty) {
+				record = this.searchData(label, [this.options.labelProperty]);
+			}
+			else if (arguments.length == 2 && !valueIsEmpty && labelIsEmpty) {
+				record = this.searchData(value, [this.options.valueProperty]);
 			}
 			else if ($item) {
 				record = $item.data('tag-record');
