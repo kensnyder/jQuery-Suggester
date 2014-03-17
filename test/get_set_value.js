@@ -35,6 +35,7 @@
 		strictEqual($input.$form.find('input[type=hidden]').length, 2);
 		strictEqual($input.$form.find('input[type=hidden]').eq(0).val(), 'Uranus');
 		strictEqual($input.$form.find('input[type=hidden]').eq(1).val(), 'Jupiter');
+		$input.teardown();
 	});	
 	test("Pre-filled items with escaped comma", function() {
 		var $input = generateInput();
@@ -46,6 +47,7 @@
 		strictEqual($input.$form.find('input[type=hidden]').length, 2);
 		strictEqual($input.$form.find('input[type=hidden]').eq(0).val(), 'Piano Guys, The');
 		strictEqual($input.$form.find('input[type=hidden]').eq(1).val(), 'Knight\'s Tale, A');
+		$input.teardown();
 	});	
 	test("Call setValue()", function() {
 		var $input = generateInput();
@@ -57,6 +59,7 @@
 		strictEqual($input.$form.find('input[type=hidden]').length, 2);
 		strictEqual($input.$form.find('input[type=hidden]').eq(0).val(), 'Piano Guys, The');
 		strictEqual($input.$form.find('input[type=hidden]').eq(1).val(), 'Knight\'s Tale, A');		
+		$input.teardown();
 	});
 	asyncTest("Placeholders", function() {
 		var $input = generateInput();
@@ -69,6 +72,7 @@
 		setTimeout(function() {
 			strictEqual(sugg.$input.val(), '');
 			start();
+			$input.teardown();
 		}, 500);
 	});	
 }(jQuery));

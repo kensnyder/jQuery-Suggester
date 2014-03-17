@@ -4,7 +4,7 @@
 		var $form = $('<form class="sugg"><input type="text" name="suggestable" value="" /></form>').appendTo(document.body);
 		var $input = $form.find('input');
 		$input.teardown = function() {
-			$form.remove();
+			$form.empty().remove();
 		};
 		$input.$form = $form;
 		return $input;

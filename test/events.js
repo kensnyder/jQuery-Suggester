@@ -53,6 +53,7 @@
 		});
 		sugg.add('Foo');
 		strictEqual(timesFired, 4, "AfterAdd should fire four tiems");
+		$input.teardown();
 	});
 	test("Event deregistration via bind()/unbind()", function() {
 		var $input = generateInput();
@@ -66,6 +67,7 @@
 		sugg.unbind('AfterAdd', handler);		
 		sugg.add('Foo');
 		strictEqual(timesFired, 0, "Event should not fire if unbound");
+		$input.teardown();
 	});
 	// TODO: test removing all events
 	test("Event deregistration via on()/off()", function() {
@@ -80,6 +82,7 @@
 		sugg.off('AfterAdd', handler);		
 		sugg.add('Foo');
 		strictEqual(timesFired, 0, "Event should not fire if off() is called");
+		$input.teardown();
 	});
 	test("Event triggering", function() {
 		var $input = generateInput();
@@ -93,6 +96,7 @@
 		sugg.on('AfterAdd', handler);
 		sugg.trigger('AfterAdd', {foo:1});
 		strictEqual(timesFired, 1, "Event should fire on trigger()");
+		$input.teardown();
 	});
 	test("Initialize", function() {
 		var $input = generateInput();
@@ -100,6 +104,7 @@
 		var sugg = new $.Suggester($input, {
 			onInitialize: function(evt) {				
 				ok(true);
+				$input.teardown();
 			}
 		});
 	});
@@ -110,6 +115,7 @@
 			onBeforeRender: function(evt) {				
 				strictEqual(evt.widget, this.$widget, 'BeforeRender passes widget');
 				strictEqual(this.$box, undefined, 'Rendering has not completed');
+				setTimeout(function() { $input.teardown(); }, 1);
 			}
 		});
 	});
@@ -120,6 +126,7 @@
 			onAfterRender: function(evt) {				
 				strictEqual(evt.widget, this.$widget, 'AfterRender passes widget');
 				strictEqual(this.$box instanceof $, true, 'AfterRender has completed');
+				$input.teardown();
 			}
 		});
 	});
@@ -140,6 +147,7 @@
 			deepEqual(evt.record, products[0], 'BeforeAdd event.record');
 		});
 		sugg.add('1001', 'Pencil');
-		strictEqual(++order, 2, 'BeforeAdd fires before adding');		
+		strictEqual(++order, 2, 'BeforeAdd fires before adding');
+		$input.teardown();
 	});
 }(jQuery));

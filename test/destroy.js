@@ -31,5 +31,6 @@
 		sugg.destroy();
 		strictEqual($input.val(), 'One,Two');
 		strictEqual(sugg.tags.length, 0);
+		$input.teardown();
 	});
 }(jQuery));

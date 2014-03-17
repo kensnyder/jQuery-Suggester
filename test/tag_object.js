@@ -35,8 +35,9 @@
 		sugg.eachTag(function(i, tag) {
 			tags[i] = tag;
 		});
-		strictEqual(tags.length, 1, 'eachTag() should iterate properly')
-		strictEqual(sugg.tags[0], tags[0], 'eachTag() should iterate properly')
+		strictEqual(tags.length, 1, 'eachTag() should iterate properly');
+		strictEqual(sugg.tags[0], tags[0], 'eachTag() should iterate properly');
+		$input.teardown();
 	});
 	test('Properties', function() {
 		var $input = generateInput();
@@ -44,6 +45,7 @@
 		sugg.add('First');
 		strictEqual(sugg.tags[0].suggester, sugg, 'Should have a reference to suggester instance');
 		strictEqual(sugg.tags[0].getWidget(), sugg, 'getWidget() should return a reference to suggester instance');
+		$input.teardown();
 	});
 	test('Getters and setters', function() {
 		var $input = generateInput();
@@ -57,5 +59,6 @@
 		strictEqual(sugg.tags[0].getHidden().val(), 'Second', 'Value change should affect hidden input');
 		strictEqual($input.val(), 'Second', 'Value change should affect original input');
 		strictEqual(sugg.tags[0].getElement().find('.sugg-label').text(), 'First', 'Value change should NOT affect tag text');    
+		$input.teardown();
 	});
 }(jQuery));

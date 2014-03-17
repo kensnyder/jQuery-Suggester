@@ -27,11 +27,13 @@
 		var $input = generateInput();
 		$input.suggester();
 		strictEqual($input.is(':visible'), false);
+		$input.teardown();
 	});
 	test("Form has new text input", function() {
 		var $input = generateInput();
 		$input.suggester();
 		strictEqual($input.$form.find('input[type=text]:visible').length, 1);
+		$input.teardown();
 	});
 	test("add(value)", function() {
 		var $input = generateInput();
@@ -42,16 +44,18 @@
 		strictEqual($tag.data('tag-value'), 'Pluto');
 		strictEqual($input.$form.find('input[type=hidden]').val(), 'Pluto');
 		strictEqual($input.$form.find('.sugg-label').html(), 'Pluto');
+		$input.teardown();
 	}); 
 	test("add(value) custom", function() {
 		var $input = generateInput();
 		$input.suggester({
 			data:['one','two','three']
-			});
+		});
 		var $tag = $input.suggester('add', 'four');
 		strictEqual($tag.data('tag-value'), 'four');
 		strictEqual($input.$form.find('input[type=hidden]').val(), 'four');
 		strictEqual($input.$form.find('.sugg-label').html(), 'four');
+		$input.teardown();
 	}); 
 	test("add(value, label)", function() {
 		var $input = generateInput();
@@ -61,6 +65,7 @@
 		strictEqual($tag.data('tag-label'), 'four');
 		strictEqual($input.$form.find('input[type=hidden]').val(), '4');
 		strictEqual($input.$form.find('.sugg-label').html(), 'four');
+		$input.teardown();
 	}); 
 	test("Add by typing", function() {
 		var $input = generateInput();
@@ -72,6 +77,7 @@
 		strictEqual($input.$form.find('input[type=hidden]').val(), 'Mars');
 		strictEqual($input.$form.find('.sugg-label').html(), 'Mars');  
 		strictEqual(sugg.$input.val(), ''); 
+		$input.teardown();
 	});
 	test("Add by typing custom", function() {
 		var $input = generateInput();
@@ -83,6 +89,7 @@
 		strictEqual($input.$form.find('input[type=hidden]').val(), 'Custom');
 		strictEqual($input.$form.find('.sugg-label').html(), 'Custom');    
 		strictEqual(sugg.$input.val(), ''); 
+		$input.teardown();
 	});
 	test("Original input value properly populated", function() {
 		var $input = generateInput();
@@ -94,6 +101,7 @@
 		sugg.add('doe, john');
 		strictEqual($input.$form.find('.sugg-label').length, 3);
 		strictEqual($input.val(), 'Custom 1,lname\\, fname,doe\\, john');
+		$input.teardown();
 	});
 	test("add() then remove()", function() {
 		var $input = generateInput();
@@ -107,6 +115,7 @@
 		$input.suggester('remove', 'Earth');
 		strictEqual($input.$form.find('input[type=hidden]').length, 0);
 		strictEqual($input.$form.find('.sugg-label').length, 0);
+		$input.teardown();
 	});   
 	test("add() custom then remove()", function() {
 		var $input = generateInput();
@@ -120,6 +129,7 @@
 		$input.suggester('remove', 'Custom');
 		strictEqual($input.$form.find('input[type=hidden]').length, 0);
 		strictEqual($input.$form.find('.sugg-label').length, 0);
+		$input.teardown();
 	});   
 	test("add() then remove by backspace", function() {
 		var $input = generateInput();
@@ -132,6 +142,7 @@
 		sendKeys(sugg, ['BACKSPACE']);
 		strictEqual($input.$form.find('input[type=hidden]').length, 0);
 		strictEqual($input.$form.find('.sugg-label').length, 0);
+		$input.teardown();
 	});
 	test("add() then click to select", function() {
 		var $input = generateInput();
@@ -143,6 +154,7 @@
 			type: 'click'
 		});
 		strictEqual($tag.hasClass('sugg-focused'), true);
+		$input.teardown();
 	}); 
 	test("add() then remove by clicking `X`", function() {
 		var $input = generateInput();
@@ -155,6 +167,7 @@
 		});
 		strictEqual($input.$form.find('input[type=hidden]').length, 0);
 		strictEqual($input.$form.find('.sugg-label').length, 0);
+		$input.teardown();
 	});
 	test("add() then click to select, then delete key", function() {
 		var $input = generateInput();
@@ -167,7 +180,8 @@
 		});
 		sendKey(document, 'DELETE');
 		strictEqual($input.$form.find('input[type=hidden]').length, 0);
-		strictEqual($input.$form.find('.sugg-label').length, 0);   
+		strictEqual($input.$form.find('.sugg-label').length, 0); 
+		$input.teardown();
 	});
 	asyncTest("options.addOnBlur", function() {
 		var $input = generateInput();
@@ -183,6 +197,7 @@
 			strictEqual(sugg.tags.length, 1, 'Custom tag is added after blur');
 			strictEqual($input.val(), 'test', 'Custom tag has expected value');   
 			start();
+			$input.teardown();
 		}, 1000);
 	});
 	test("clear()", function() {
@@ -196,5 +211,6 @@
 		strictEqual($input.val(), '');
 		strictEqual(sugg.tags.length, 0);
 		strictEqual($input.$form.find('input[type=hidden]').length, 0);
+		$input.teardown();
 	});
 }(jQuery));

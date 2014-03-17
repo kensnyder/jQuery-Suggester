@@ -35,6 +35,7 @@
 		setTimeout(function() {
 			strictEqual($input.$form.find('.sugg-item').length, 0);
 			start();
+			$input.teardown();
 		}, 1);
 	});   
 	asyncTest("1 then 2 letters", function() {
@@ -55,6 +56,7 @@
 			setTimeout(function() {
 				strictEqual($input.$form.find('.sugg-item').length, 1);
 				strictEqual($input.$form.find('.sugg-item').eq(0).text(), 'Asteroid Belt');
+				$input.teardown();
 			}, 1);
 		}, 1);
 	});
@@ -72,6 +74,7 @@
 			strictEqual($input.$form.find('.sugg-item').length, 1);
 			strictEqual($input.$form.find('.sugg-item').eq(0).text(), 'Asteroid Belt');
 			start();
+			$input.teardown();
 		}, 1);
 	});
 	asyncTest("Close by clicking document", function() {
@@ -94,6 +97,7 @@
 				setTimeout(function() {
 					strictEqual($input.$form.find('.sugg-list:visible').length, 0);
 					start();                  
+					$input.teardown();
 				}, 1)
 			}, 1);
 		}, 1);
@@ -113,6 +117,7 @@
 			start();
 			sendKey(sugg, 'ESC');
 			strictEqual($input.$form.find('.sugg-list:visible').length, 0);
+			$input.teardown();
 		}, 1);
 	});
 	asyncTest("Navigate using arrows", function() {
@@ -137,6 +142,7 @@
 				strictEqual($input.$form.find('.sugg-item:visible').eq(1).hasClass('sugg-selected'), false);
 				strictEqual($input.$form.find('.sugg-item:visible').eq(2).hasClass('sugg-selected'), false);
 				strictEqual($input.$form.find('.sugg-item:visible').eq(3).hasClass('sugg-selected'), false);
+				$input.teardown();
 			}, 1);
 		}, 1);
 	});
@@ -163,6 +169,7 @@
 			strictEqual($input.$form.find('.sugg-item:visible').eq(1).hasClass('sugg-selected'), false);
 			strictEqual($input.$form.find('.sugg-item:visible').eq(2).hasClass('sugg-selected'), true);
 			strictEqual($input.$form.find('.sugg-item:visible').eq(3).hasClass('sugg-selected'), false);
+			$input.teardown();
 		}, 1);
 	});
 	asyncTest("Add via click on suggestion", function() {
@@ -186,6 +193,7 @@
 			strictEqual($input.$form.find('.sugg-label').html(), 'Mars');
 			strictEqual($input.$form.find('input[type=hidden]').val(), 'Mars');
 			strictEqual($input.val(), 'Mars');
+			$input.teardown();
 		}, 1);
 	});
 	asyncTest("Don't suggest an item that was already added", function() {
@@ -202,6 +210,7 @@
 			strictEqual($input.$form.find('.sugg-item').length, 1);
 			strictEqual($input.$form.find('.sugg-item').eq(0).text(), 'Mars');
 			start();
+			$input.teardown();
 		}, 1);
 	}); 
 	asyncTest("Set options.matchAt to 0 to match at beginning of word", function() {
@@ -219,6 +228,7 @@
 			strictEqual($input.$form.find('.sugg-item').eq(0).text(), 'Earth');
 			strictEqual($input.$form.find('.sugg-item').eq(1).text(), 'Eres');
 			start();
+			$input.teardown();
 		}, 1);
 	}); 
 	if (window.location.protocol != 'file:') {
@@ -235,6 +245,7 @@
 				strictEqual($input.$form.find('.sugg-item').eq(0).text(), 'Canis Major');
 				strictEqual($input.$form.find('.sugg-item').eq(1).text(), 'Canis Minor'); 
 				start();
+				$input.teardown();
 			}, 1500);
 		});   
 	}
@@ -253,6 +264,7 @@
 				strictEqual($input.$form.find('.sugg-item').eq(0).text(), 'Canis Major');
 				strictEqual($input.$form.find('.sugg-item').eq(1).text(), 'Canis Minor'); 
 				start();
+				$input.teardown();
 			}, 1500);
 		});   
 	}
