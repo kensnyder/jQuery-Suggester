@@ -19,8 +19,12 @@
     throws(block, [expected], [message])
 */
 (function($) {
-	module('Events', config);
+	//
+	// Events moduls
+	//
+	module('Events');
 	test("Event registration", function() {
+		var $input = generateInput();
 		expect(10);
 		var timesFired = 0;
 		var sugg = new $.Suggester($input, {
@@ -51,6 +55,7 @@
 		strictEqual(timesFired, 4, "AfterAdd should fire four tiems");
 	});
 	test("Event deregistration via bind()/unbind()", function() {
+		var $input = generateInput();
 		expect(1);
 		var timesFired = 0;
 		var sugg = new $.Suggester($input);
@@ -64,6 +69,7 @@
 	});
 	// TODO: test removing all events
 	test("Event deregistration via on()/off()", function() {
+		var $input = generateInput();
 		expect(1);
 		var timesFired = 0;
 		var sugg = new $.Suggester($input);
@@ -76,6 +82,7 @@
 		strictEqual(timesFired, 0, "Event should not fire if off() is called");
 	});
 	test("Event triggering", function() {
+		var $input = generateInput();
 		expect(2);
 		var timesFired = 0;
 		var sugg = new $.Suggester($input);
@@ -88,6 +95,7 @@
 		strictEqual(timesFired, 1, "Event should fire on trigger()");
 	});
 	test("Initialize", function() {
+		var $input = generateInput();
 		expect(1);
 		var sugg = new $.Suggester($input, {
 			onInitialize: function(evt) {				
@@ -96,6 +104,7 @@
 		});
 	});
 	test("BeforeRender", function() {
+		var $input = generateInput();
 		expect(2);
 		var sugg = new $.Suggester($input, {
 			onBeforeRender: function(evt) {				
@@ -105,6 +114,7 @@
 		});
 	});
 	test("AfterRender", function() {
+		var $input = generateInput();
 		expect(2);
 		var sugg = new $.Suggester($input, {
 			onAfterRender: function(evt) {				
@@ -114,6 +124,7 @@
 		});
 	});
 	test("BeforeAdd", function() {
+		var $input = generateInput();
 		expect(6);
 		var order = 0;
 		var sugg = new $.Suggester($input,{

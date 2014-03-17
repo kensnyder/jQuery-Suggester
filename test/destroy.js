@@ -22,8 +22,9 @@
 	//
 	// Destroy Module
 	//
-	module('Destroy', config);
+	module('Destroy');
 	test("destroy() keeps values on original input", function() {
+		var $input = generateInput();
 		var sugg = new $.Suggester($input);
 		sugg.add('One');
 		sugg.add('Two');

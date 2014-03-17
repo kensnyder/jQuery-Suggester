@@ -1373,24 +1373,30 @@
 		 * @chainable
 		 */
 		setValue: function(valueOrValues) {
+			var i, len, value, label, record, valProp, labelProp;
+			for (i = 0, len = this.tags.length; i < len; i++) {
+				this.tags[i].getHidden().remove();
+			}			
 			if ($.isArray(valueOrValues)) {
-				var self = this;
-				$.each(valueOrValues, function() {
-					var value, label, record;
-					record = this.searchData(this, self.options.valueProperty === self.options.labelProperty ? [self.options.valueProperty] : [self.options.valueProperty,self.options.labelProperty]);
+				valProp = this.options.valueProperty;
+				labelProp = this.options.labelProperty;
+				for (i = 0, len = valueOrValues.length; i < len; i++) {
+					record = this.searchData(valueOrValues[i], valProp === labelProp ? [valProp] : [valProp,labelProp]);
 					if (record) {
-						value = record[self.options.valueProperty];
-						label = record[self.options.labelProperty];
+						value = record[valProp];
+						label = record[labelProp];
+						this.pushTag(value, label);
 					}
-					this.pushTag(evt.value, evt.label);
-				});
+					else {
+						this.pushTag(valueOrValues[i]);
+					}
+				}
 			}
 			else {
-				var i, len, value;
-				var textTags = valueOrValues.replace(/\\,/g, '\u0001').split(/,/g);	
-				for (i = 0, len = this.tags.length; i < len; i++) {
-					this.tags[i].getHidden().remove();
-				}
+				// get a list of tags to insert now based on the given string
+				// replaces escaped commas with \u0001 such that tag labels can have commas
+				// if JavaScript RegExp supported lookbehinds we wouldn't need this \u0001 deal
+				var textTags = valueOrValues.replace(/\\,/g, '\u0001').split(/,/g);
 				for (i = 0, len = textTags.length; i < len; i++) {
 					value = $.trim(textTags[i].replace(/\u0001/g, ','));
 					this.pushTag(value, value);
@@ -1590,21 +1596,16 @@
 		 * @private
 		 */
 		_handleStartValue: function() {
-			// get a list of tags to insert now based on the current value of the original input
-			// replaces escaped commas with \u0001 such that tag labels can have commas
-			// if JavaScript RegExp supported lookbehinds we wouldn't need this \u0001 deal
 			var startVal = this.$originalInput.suggGetValue();
 			if (startVal) {
 				this.hidePlaceholder();
 				this.setValue(startVal);
 			}
+			if (this.tags.length === 0) {
+				this.showPlaceholder();
+			}
 			else {
-				if (this.tags.length === 0) {
-					this.showPlaceholder();
-				}
-				else {
-					this.hidePlaceholder();
-				}
+				this.hidePlaceholder();
 			}
 		},
 		/**
