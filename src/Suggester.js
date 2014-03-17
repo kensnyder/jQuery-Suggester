@@ -1373,10 +1373,12 @@
 		 * @chainable
 		 */
 		setValue: function(valueOrValues) {
-			var i, len, value, label, record, valProp, labelProp;
+			var i, len, value, label, record, valProp, labelProp, textTags;
 			for (i = 0, len = this.tags.length; i < len; i++) {
 				this.tags[i].getHidden().remove();
-			}			
+				this.tags[i].$tag.remove();
+			}
+			this.tags = [];
 			if ($.isArray(valueOrValues)) {
 				valProp = this.options.valueProperty;
 				labelProp = this.options.labelProperty;
@@ -1388,7 +1390,7 @@
 						this.pushTag(value, label);
 					}
 					else {
-						this.pushTag(valueOrValues[i]);
+						this.pushTag(valueOrValues[i], valueOrValues[i]);
 					}
 				}
 			}
@@ -1396,7 +1398,7 @@
 				// get a list of tags to insert now based on the given string
 				// replaces escaped commas with \u0001 such that tag labels can have commas
 				// if JavaScript RegExp supported lookbehinds we wouldn't need this \u0001 deal
-				var textTags = valueOrValues.replace(/\\,/g, '\u0001').split(/,/g);
+				textTags = valueOrValues.replace(/\\,/g, '\u0001').split(/,/g);
 				for (i = 0, len = textTags.length; i < len; i++) {
 					value = $.trim(textTags[i].replace(/\u0001/g, ','));
 					this.pushTag(value, value);
@@ -1407,14 +1409,7 @@
 			}
 			this.publish('Change');	
 			return this;
-		},
-//			if (this.options.preventDuplicates) {       
-//				idx = this.getTagIndex(value);
-//				if (idx > -1) {
-//					// duplicate: remove old and continue to add new so that new one will be at the end
-//					this._spliceTagByIdx(idx);
-//				}
-//			}				
+		},				
 		/**
 		 * Set the widget's CSS theme - Adds a class "sugg-theme-%name%" to the widget
 		 * @method setTheme
