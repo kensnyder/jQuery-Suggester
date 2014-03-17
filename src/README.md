@@ -76,7 +76,7 @@ Options
 		<th>Description</th>
 	<tr>
 	<% _.forEach(options, function(option) { %><tr>
-		<td>{<%- option.type.replace('JQuery','jQuery') %>}</td>
+		<td>{<%- (option.type || '').replace('JQuery','jQuery') %>}</td>
 		<td><strong><%- option.name %></strong></td>
 		<td><%- option.optdefault %></td>
 		<td><%- option.description %></td>
@@ -166,7 +166,7 @@ Instance Properties
 		<th>Description</th>
 	<tr>
 	<% _.forEach(properties, function(prop) { %><tr>
-		<td>{<%- prop.type.replace('JQuery','jQuery')%>}</td>
+		<td>{<%- (prop.type || '').replace('JQuery','jQuery')%>}</td>
 		<td><strong><%- prop.name %></strong></td>
 		<td><%- prop.description %></td>
 	</tr>
@@ -199,8 +199,8 @@ instance.methodName(arg1, arg2, argN);
 	<td>
 		<strong><%- method.name %></strong>(<% _.forEach(method.params || [], function(param, i) { %><% if (param.optional) { %>[<% } %><% if (i !== 0) { %>, <% } %><%- param.name %><% if (param.optdefault !== undefined) { %>=<%- param.optdefault %><% } %><% if (param.optional) { %>]<% } %><% }); %>)<br />
 		<%- method.description %><% if (_.size(method.params) > 0) { %><br /><% } %>
-		<% _.forEach(method.params || [], function(param, i) { %><strong>@param</strong> {<%- param.type.replace('JQuery','jQuery') %>} <% if (param.optional) { %>[<% } %><%- param.name %><% if (param.optdefault !== undefined) { %>=<%- param.optdefault %><% } %><% if (param.optional) { %>]<% } %> <%- param.description %><% }); %><br />
-		<strong>@return</strong> <% if (method.return) { %>{<%- method.return.type.replace('JQuery','jQuery') %>} <%- method.return.description %><% } else { %>{undefined}<% } %>
+		<% _.forEach(method.params || [], function(param, i) { %><strong>@param</strong> {<%- (param.type || '').replace('JQuery','jQuery') %>} <% if (param.optional) { %>[<% } %><%- param.name %><% if (param.optdefault !== undefined) { %>=<%- param.optdefault %><% } %><% if (param.optional) { %>]<% } %> <%- param.description %><% }); %><br />
+		<strong>@return</strong> <% if (method.return) { %>{<%- (method.return.type || '').replace('JQuery','jQuery') %>} <%- method.return.description %><% } else { %>{undefined}<% } %>
 	</td>
 </tr>
 <% }); %>

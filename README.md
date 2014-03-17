@@ -1,9 +1,9 @@
 Suggester - A Better Autocomplete Widget
 =
 
-Version 1.2.2, Jul 2013, MIT License
+Version 1.3.0, Jul 2013, MIT License
 
-[Download](https://github.com/kensnyder/jQuery-Suggester/blob/master/Suggester-1.2.2-Download.zip?raw=true), [Demos](http://sandbox.kendsnyder.com/Suggester-1.2.2/demos), [Unit tests](http://sandbox.kendsnyder.com/Suggester-1.2.2/test/Suggester.html)
+[Download](https://github.com/kensnyder/jQuery-Suggester/blob/master/Suggester-1.3.0-Download.zip?raw=true), [Demos](http://sandbox.kendsnyder.com/Suggester-1.3.0/demos), [Unit tests](http://sandbox.kendsnyder.com/Suggester-1.3.0/test/Suggester.html)
 
 Usage: `var suggester = new $.Suggester($input, options);`
 
@@ -40,7 +40,7 @@ Turn a text input into a Facebook-style multiple-tag input. Features include:
 * You can define your own HTML structure for the widget output
 * Object-oriented structure makes it easy to extend
 * 4kb minimized and gzipped
-* Unit tested - [Unit tests](http://sandbox.kendsnyder.com/Suggester-1.2.2/test/Suggester.html) 
+* Unit tested - [Unit tests](http://sandbox.kendsnyder.com/Suggester-1.3.0/test/Suggester.html) 
 * Works on IE8+, FF, Chrome, Safari
 * Compatible with AMD
 
@@ -48,7 +48,7 @@ Turn a text input into a Facebook-style multiple-tag input. Features include:
 How to Use
 -
 
-Suggester is compatible with jQuery 1.5+ and has been unit tested with jQuery 1.9. Download the files in [Suggester-1.2.2-Download.zip](https://github.com/kensnyder/jQuery-Suggester/blob/master/Suggester-1.2.2-Download.zip?raw=true) and copy them to your scripts directory. Include them in your document's after jQuery is included:
+Suggester is compatible with jQuery 1.5+ and has been unit tested with jQuery 1.9. Download the files in [Suggester-1.3.0-Download.zip](https://github.com/kensnyder/jQuery-Suggester/blob/master/Suggester-1.3.0-Download.zip?raw=true) and copy them to your scripts directory. Include them in your document's after jQuery is included:
 
 ```html
 <script src="/js/Suggester.min.js"></script>
@@ -192,7 +192,7 @@ Options
 	<tr>
 		<td>{Boolean}</td>
 		<td><strong>addOnBlur</strong></td>
-		<td>true</td>
+		<td>false</td>
 		<td>If true, add tag on blur if user has entered text but not typed comma or tab</td>
 	</tr>
 	<tr>
@@ -230,6 +230,12 @@ Options
 		<td><strong>maxSuggestions</strong></td>
 		<td>10</td>
 		<td>Only display this many suggestions</td>
+	</tr>
+	<tr>
+		<td>{Boolean}</td>
+		<td><strong>saveToInput</strong></td>
+		<td>true</td>
+		<td>If true, save back to original input each time a tag is added or removed</td>
 	</tr>
 	<tr>
 		<td>{Boolean}</td>
@@ -558,10 +564,8 @@ The following is a description of each event.
 		<td>-</td>
 	</tr>
 	<tr>
-		<td><strong>Change</strong><br />Fired when the value changes as by adding or removing a tag</td>
+		<td><strong>Change</strong><br />Fired after a tag is added or removed or after value is manually set</td>
 		<td>
-			{String} <strong>oldValue</strong> The value before saving<br />
-			{String} <strong>newValue</strong> The new value<br />
 		</td>
 		<td>-</td>
 	</tr>
@@ -932,6 +936,15 @@ instance.methodName(arg1, arg2, argN);
 
 <tr>
 	<td>
+		<strong>pushTag</strong>(value, label)<br />
+		Add a tag directly without triggering BeforeAdd or AfterAdd<br />
+		<strong>@param</strong> {String|Number} value The value of the tag<strong>@param</strong> {String} label The text to display on the tag<br />
+		<strong>@return</strong> {Suggester.Tag} The new tag object
+	</td>
+</tr>
+
+<tr>
+	<td>
 		<strong>addCurrentBuffer</strong>()<br />
 		Add a tag with the contents of the input; e.g. when the user has typed something but clicks on another part of the form
 Note: this happens on blur when this.options.addOnBlur is true
@@ -1186,7 +1199,7 @@ Note: this happens on blur when this.options.addOnBlur is true
 <tr>
 	<td>
 		<strong>getTags</strong>()<br />
-		Get a collection of all the chosen tag objects
+		Get a collection of all the chosen tag objects (a copy of this.tags)
 		<br />
 		<strong>@return</strong> {Array} 
 	</td>
@@ -1221,9 +1234,38 @@ Note: this happens on blur when this.options.addOnBlur is true
 
 <tr>
 	<td>
+		<strong>setValue</strong>()<br />
+		Set the tags using a comma-delimited string
+Commas inside the tag name may be escaped with a backslash
+		<br />
+		<strong>@return</strong> {Suggester} 
+	</td>
+</tr>
+
+<tr>
+	<td>
 		<strong>setTheme</strong>(themeName)<br />
 		Set the widget&#x27;s CSS theme - Adds a class &quot;sugg-theme-%name%&quot; to the widget<br />
 		<strong>@param</strong> {String} themeName The name of the theme to use<br />
+		<strong>@return</strong> {Suggester} 
+	</td>
+</tr>
+
+<tr>
+	<td>
+		<strong>showPlaceholder</strong>([text=this.options.placeholder])<br />
+		Replace the contents of this.$input with the placeholder value. Automatically fires when this.options.placeholder is set
+And there are no tags and we are blurring or initially rendering<br />
+		<strong>@param</strong> {String} [text=this.options.placeholder] The text to set for the placeholder (defaults to this.options.placeholder)<br />
+		<strong>@return</strong> {Suggester} 
+	</td>
+</tr>
+
+<tr>
+	<td>
+		<strong>hidePlaceholder</strong>()<br />
+		Replace placeholder string with empty text
+		<br />
 		<strong>@return</strong> {Suggester} 
 	</td>
 </tr>
@@ -1608,7 +1650,7 @@ suggester.bind('AfterClose', doStuff);
 suggester.focus();
 ```
 
-See the source on the [live demos](http://sandbox.kendsnyder.com/Suggester-1.2.2/demos) for lots more examples.
+See the source on the [live demos](http://sandbox.kendsnyder.com/Suggester-1.3.0/demos) for lots more examples.
 
 Changelog
 -

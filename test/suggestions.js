@@ -172,7 +172,9 @@
 	});
 	asyncTest("options.addOnBlur", function() {
 		expect(2);
-		var sugg = new $.Suggester($input);
+		var sugg = new $.Suggester($input, {
+			addOnBlur: true
+		});
 		sendKeys(sugg, ['t','e','s','t']);
 		sugg.$input.trigger({
 			type:'blur'
