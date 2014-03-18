@@ -3,7 +3,7 @@
 
 Version <%- pkg.version %>, <%- grunt.template.today("mmm yyyy") %>, MIT License
 
-[Download](https://github.com/kensnyder/jQuery-Suggester/blob/master/Suggester-<%- pkg.version %>-Download.zip?raw=true), [Demos](http://sandbox.kendsnyder.com/Suggester-<%- pkg.version %>/demos), [Unit tests](http://sandbox.kendsnyder.com/Suggester-<%- pkg.version %>/test/Suggester.html)
+[Download](https://github.com/kensnyder/jQuery-Suggester/blob/master/Suggester-<%- pkg.version %>-Download.zip?raw=true), [Demos](http://sandbox.kendsnyder.com/jQuery-Suggester/demos/), [Unit tests](http://sandbox.kendsnyder.com/jQuery-Suggester/test/index.html)
 
 Usage: `var suggester = new $.Suggester($input, options);`
 
@@ -39,9 +39,9 @@ Turn a text input into a Facebook-style multiple-tag input. Features include:
 * You can subscribe to any of 20+ events that allow you to inject custom functionality into nearly every action
 * You can define your own HTML structure for the widget output
 * Object-oriented structure makes it easy to extend
-* 4kb minimized and gzipped
-* Unit tested - [Unit tests](http://sandbox.kendsnyder.com/Suggester-<%- pkg.version %>/test/Suggester.html) 
+* Unit tested - [Unit tests](http://sandbox.kendsnyder.com/jQuery-Suggester/test/index.html) 
 * Works on IE8+, FF, Chrome, Safari
+* 27kb minimized and gzipped
 * Compatible with AMD
 
 
@@ -76,7 +76,7 @@ Options
 		<th>Description</th>
 	<tr>
 	<% _.forEach(options, function(option) { %><tr>
-		<td>{<%- option.type.replace('JQuery','jQuery') %>}</td>
+		<td>{<%- (option.type || '').replace('JQuery','jQuery') %>}</td>
 		<td><strong><%- option.name %></strong></td>
 		<td><%- option.optdefault %></td>
 		<td><%- option.description %></td>
@@ -166,7 +166,7 @@ Instance Properties
 		<th>Description</th>
 	<tr>
 	<% _.forEach(properties, function(prop) { %><tr>
-		<td>{<%- prop.type.replace('JQuery','jQuery')%>}</td>
+		<td>{<%- (prop.type || '').replace('JQuery','jQuery')%>}</td>
 		<td><strong><%- prop.name %></strong></td>
 		<td><%- prop.description %></td>
 	</tr>
@@ -199,8 +199,8 @@ instance.methodName(arg1, arg2, argN);
 	<td>
 		<strong><%- method.name %></strong>(<% _.forEach(method.params || [], function(param, i) { %><% if (param.optional) { %>[<% } %><% if (i !== 0) { %>, <% } %><%- param.name %><% if (param.optdefault !== undefined) { %>=<%- param.optdefault %><% } %><% if (param.optional) { %>]<% } %><% }); %>)<br />
 		<%- method.description %><% if (_.size(method.params) > 0) { %><br /><% } %>
-		<% _.forEach(method.params || [], function(param, i) { %><strong>@param</strong> {<%- param.type.replace('JQuery','jQuery') %>} <% if (param.optional) { %>[<% } %><%- param.name %><% if (param.optdefault !== undefined) { %>=<%- param.optdefault %><% } %><% if (param.optional) { %>]<% } %> <%- param.description %><% }); %><br />
-		<strong>@return</strong> <% if (method.return) { %>{<%- method.return.type.replace('JQuery','jQuery') %>} <%- method.return.description %><% } else { %>{undefined}<% } %>
+		<% _.forEach(method.params || [], function(param, i) { %><strong>@param</strong> {<%- (param.type || '').replace('JQuery','jQuery') %>} <% if (param.optional) { %>[<% } %><%- param.name %><% if (param.optdefault !== undefined) { %>=<%- param.optdefault %><% } %><% if (param.optional) { %>]<% } %> <%- param.description %><% }); %><br />
+		<strong>@return</strong> <% if (method.return) { %>{<%- (method.return.type || '').replace('JQuery','jQuery') %>} <%- method.return.description %><% } else { %>{undefined}<% } %>
 	</td>
 </tr>
 <% }); %>
@@ -240,10 +240,16 @@ suggester.bind('AfterClose', doStuff);
 suggester.focus();
 ```
 
-See the source on the [live demos](http://sandbox.kendsnyder.com/Suggester-<%- pkg.version %>/demos) for lots more examples.
+See the source on the [live demos](http://sandbox.kendsnyder.com/jQuery-Suggester/demos/) for lots more examples.
 
 Changelog
 -
+
+**Version 1.3.0, Mar 2014**
+* Fixes to setValue(), clear(), focus(), blur()
+* Use `git watch`
+* Documentation improvements
+* More unit tests
 
 **Version 1.2.2, Jul 2013**
 * Fixes to add()

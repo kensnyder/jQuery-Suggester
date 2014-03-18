@@ -19,7 +19,7 @@
             
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.2.2</em>
+            <em>API Docs for: 1.3.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -94,7 +94,7 @@
 
     
         <div class="foundat">
-            Defined in: <a href="../files/src_Suggester.js.html#l257"><code>src&#x2F;Suggester.js:257</code></a>
+            Defined in: <a href="../files/src_Suggester.js.html#l313"><code>src&#x2F;Suggester.js:313</code></a>
         </div>
     
 
@@ -164,7 +164,7 @@
             
         
         
-        <a href="../files/src_Suggester.js.html#l257"><code>src&#x2F;Suggester.js:257</code></a>
+        <a href="../files/src_Suggester.js.html#l313"><code>src&#x2F;Suggester.js:313</code></a>
         
         </p>
 
@@ -194,6 +194,7 @@
 
                     <div class="param-description">
                         <p>The input element to convert into a widget</p>
+
                     </div>
 
                     
@@ -210,6 +211,7 @@
 
                     <div class="param-description">
                         <p>See <a href="../classes/Suggester.html#property_options" class="crosslink">options property</a> for full documentation</p>
+
                     </div>
 
                     
@@ -227,15 +229,15 @@
 
             <div class="example-content">
                 <pre class="code prettyprint"><code>// Instantiate the OOP way
-var instance = new $.Suggester('selector', options)
+var instance = new $.Suggester(&#39;selector&#39;, options)
 
 // Instantiate the jQuery way
-$('selector').suggester(options);
+$(&#39;selector&#39;).suggester(options);
 // call methods on the instance
-$('selector').suggester('method', arg1, arg2);
+$(&#39;selector&#39;).suggester(&#39;method&#39;, arg1, arg2);
 // initialize and get back instance
-var instance = $('selector').suggester('getInstance');
-</code></pre>
+var instance = $(&#39;selector&#39;).suggester(&#39;getInstance&#39;);</code></pre>
+
             </div>
         </div>
     
@@ -293,6 +295,13 @@ var instance = $('selector').suggester('getInstance');
                         
                             <li class="index-item method private">
                                 <a href="#method__formatSuggestion">_formatSuggestion</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method private">
+                                <a href="#method__handleEmptyValue">_handleEmptyValue</a>
 
                                 
                                 
@@ -512,13 +521,20 @@ var instance = $('selector').suggester('getInstance');
                                 <a href="#method_addData">addData</a>
 
                                 
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_addData">addData</a>
+
+                                
                                     <span class="flag static">static</span>
                                 
                                 
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_addData">addData</a>
+                                <a href="#method_blur">blur</a>
 
                                 
                                 
@@ -651,6 +667,13 @@ var instance = $('selector').suggester('getInstance');
                             </li>
                         
                             <li class="index-item method">
+                                <a href="#method_hidePlaceholder">hidePlaceholder</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
                                 <a href="#method_isSuggestBoxOpen">isSuggestBoxOpen</a>
 
                                 
@@ -673,6 +696,13 @@ var instance = $('selector').suggester('getInstance');
                         
                             <li class="index-item method">
                                 <a href="#method_publish">publish</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_pushTag">pushTag</a>
 
                                 
                                 
@@ -742,7 +772,21 @@ var instance = $('selector').suggester('getInstance');
                             </li>
                         
                             <li class="index-item method">
+                                <a href="#method_setValue">setValue</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
                                 <a href="#method_showEmptyText">showEmptyText</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_showPlaceholder">showPlaceholder</a>
 
                                 
                                 
@@ -987,6 +1031,13 @@ var instance = $('selector').suggester('getInstance');
                             </li>
                         
                             <li class="index-item event">
+                                <a href="#event_AfterBlur">AfterBlur</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item event">
                                 <a href="#event_AfterClose">AfterClose</a>
 
                                 
@@ -1002,6 +1053,13 @@ var instance = $('selector').suggester('getInstance');
                         
                             <li class="index-item event">
                                 <a href="#event_AfterFilter">AfterFilter</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item event">
+                                <a href="#event_AfterFocus">AfterFocus</a>
 
                                 
                                 
@@ -1079,6 +1137,13 @@ var instance = $('selector').suggester('getInstance');
                         
                             <li class="index-item event">
                                 <a href="#event_BeforeAjax">BeforeAjax</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item event">
+                                <a href="#event_BeforeBlur">BeforeBlur</a>
 
                                 
                                 
@@ -1243,7 +1308,7 @@ var instance = $('selector').suggester('getInstance');
             
         
         
-        <a href="../files/src_Suggester.js.html#l1983"><code>src&#x2F;Suggester.js:1983</code></a>
+        <a href="../files/src_Suggester.js.html#l2263"><code>src&#x2F;Suggester.js:2263</code></a>
         
         </p>
 
@@ -1255,6 +1320,7 @@ var instance = $('selector').suggester('getInstance');
 
     <div class="description">
         <p>Handler passed to $.ajax().done(function(){...}) that handles suggestion data that is returned</p>
+
     </div>
 
     
@@ -1273,6 +1339,7 @@ var instance = $('selector').suggester('getInstance');
 
                     <div class="param-description">
                         <p>The Array of record objects returned from the XHR</p>
+
                     </div>
 
                     
@@ -1332,7 +1399,7 @@ var instance = $('selector').suggester('getInstance');
             
         
         
-        <a href="../files/src_Suggester.js.html#l1948"><code>src&#x2F;Suggester.js:1948</code></a>
+        <a href="../files/src_Suggester.js.html#l2228"><code>src&#x2F;Suggester.js:2228</code></a>
         
         </p>
 
@@ -1344,6 +1411,7 @@ var instance = $('selector').suggester('getInstance');
 
     <div class="description">
         <p>The handler function that is passed to $.ajax({beforeSend:...}) to alter XHR if needed</p>
+
     </div>
 
     
@@ -1361,7 +1429,8 @@ var instance = $('selector').suggester('getInstance');
                     
 
                     <div class="param-description">
-                        <p>The jQuery XHR object (see http://api.jquery.com/jQuery.ajax/#jqXHR)</p>
+                        <p>The jQuery XHR object (see <a href="http://api.jquery.com/jQuery.ajax/#jqXHR">http://api.jquery.com/jQuery.ajax/#jqXHR</a>)</p>
+
                     </div>
 
                     
@@ -1421,7 +1490,7 @@ var instance = $('selector').suggester('getInstance');
             
         
         
-        <a href="../files/src_Suggester.js.html#l2015"><code>src&#x2F;Suggester.js:2015</code></a>
+        <a href="../files/src_Suggester.js.html#l2295"><code>src&#x2F;Suggester.js:2295</code></a>
         
         </p>
 
@@ -1433,6 +1502,7 @@ var instance = $('selector').suggester('getInstance');
 
     <div class="description">
         <p>Callback used to close the suggestion box when the user clicks off of it</p>
+
     </div>
 
     
@@ -1451,6 +1521,7 @@ var instance = $('selector').suggester('getInstance');
 
                     <div class="param-description">
                         <p>The click event</p>
+
                     </div>
 
                     
@@ -1520,7 +1591,7 @@ var instance = $('selector').suggester('getInstance');
             
         
         
-        <a href="../files/src_Suggester.js.html#l2028"><code>src&#x2F;Suggester.js:2028</code></a>
+        <a href="../files/src_Suggester.js.html#l2308"><code>src&#x2F;Suggester.js:2308</code></a>
         
         </p>
 
@@ -1532,6 +1603,7 @@ var instance = $('selector').suggester('getInstance');
 
     <div class="description">
         <p>Format a suggestion before display</p>
+
     </div>
 
     
@@ -1550,6 +1622,7 @@ var instance = $('selector').suggester('getInstance');
 
                     <div class="param-description">
                         <p>The record that was suggested</p>
+
                     </div>
 
                     
@@ -1565,6 +1638,7 @@ var instance = $('selector').suggester('getInstance');
 
                     <div class="param-description">
                         <p>The string that generated the list of suggestions</p>
+
                     </div>
 
                     
@@ -1583,7 +1657,81 @@ var instance = $('selector').suggester('getInstance');
                     
                         <span class="type">String</span>:
                     
-                    HTML to use as the item (e.g. '<li>Suggestion</li>')
+                    <p>HTML to use as the item (e.g. &#39;<li class="sugg-item">Suggestion</li>&#39;)</p>
+
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method__handleEmptyValue" class="method item private">
+    <h3 class="name"><code>_handleEmptyValue</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="../classes/Suggester.html" class="crosslink">Suggester</a></span>
+        </span>
+    
+
+    
+
+    
+        <span class="flag private">private</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_Suggester.js.html#l1450"><code>src&#x2F;Suggester.js:1450</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Helper function for setValue()</p>
+
+    </div>
+
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="../classes/Suggester.html" class="crosslink">Suggester</a></span>:
+                    
                 
             </div>
         </div>
@@ -1627,7 +1775,7 @@ var instance = $('selector').suggester('getInstance');
             
         
         
-        <a href="../files/src_Suggester.js.html#l1423"><code>src&#x2F;Suggester.js:1423</code></a>
+        <a href="../files/src_Suggester.js.html#l1639"><code>src&#x2F;Suggester.js:1639</code></a>
         
         </p>
 
@@ -1638,7 +1786,8 @@ var instance = $('selector').suggester('getInstance');
     </div>
 
     <div class="description">
-        <p>Look at the initial element's start value and populate tags as appropriate</p>
+        <p>Look at the initial element&#39;s start value and populate tags as appropriate</p>
+
     </div>
 
     
@@ -1687,7 +1836,7 @@ var instance = $('selector').suggester('getInstance');
             
         
         
-        <a href="../files/src_Suggester.js.html#l2250"><code>src&#x2F;Suggester.js:2250</code></a>
+        <a href="../files/src_Suggester.js.html#l2515"><code>src&#x2F;Suggester.js:2515</code></a>
         
         </p>
 
@@ -1699,6 +1848,7 @@ var instance = $('selector').suggester('getInstance');
 
     <div class="description">
         <p>Given an input element, get the cursor position. Used to determine if backspace key should delete the previous tag</p>
+
     </div>
 
     
@@ -1712,7 +1862,8 @@ var instance = $('selector').suggester('getInstance');
                     
                         <span class="type">Boolean</span>:
                     
-                    true if the cursor is at the start and no text is selected
+                    <p>true if the cursor is at the start and no text is selected</p>
+
                 
             </div>
         </div>
@@ -1766,7 +1917,7 @@ var instance = $('selector').suggester('getInstance');
             
         
         
-        <a href="../files/src_Suggester.js.html#l1802"><code>src&#x2F;Suggester.js:1802</code></a>
+        <a href="../files/src_Suggester.js.html#l2082"><code>src&#x2F;Suggester.js:2082</code></a>
         
         </p>
 
@@ -1778,6 +1929,7 @@ var instance = $('selector').suggester('getInstance');
 
     <div class="description">
         <p>Handle BACKSPACE key on this.$input</p>
+
     </div>
 
     
@@ -1796,6 +1948,7 @@ var instance = $('selector').suggester('getInstance');
 
                     <div class="param-description">
                         <p>The keydown event</p>
+
                     </div>
 
                     
@@ -1855,7 +2008,7 @@ var instance = $('selector').suggester('getInstance');
             
         
         
-        <a href="../files/src_Suggester.js.html#l1787"><code>src&#x2F;Suggester.js:1787</code></a>
+        <a href="../files/src_Suggester.js.html#l2067"><code>src&#x2F;Suggester.js:2067</code></a>
         
         </p>
 
@@ -1867,6 +2020,7 @@ var instance = $('selector').suggester('getInstance');
 
     <div class="description">
         <p>Handle DOWN key on this.$input</p>
+
     </div>
 
     
@@ -1885,6 +2039,7 @@ var instance = $('selector').suggester('getInstance');
 
                     <div class="param-description">
                         <p>The keydown event</p>
+
                     </div>
 
                     
@@ -1944,7 +2099,7 @@ var instance = $('selector').suggester('getInstance');
             
         
         
-        <a href="../files/src_Suggester.js.html#l1865"><code>src&#x2F;Suggester.js:1865</code></a>
+        <a href="../files/src_Suggester.js.html#l2145"><code>src&#x2F;Suggester.js:2145</code></a>
         
         </p>
 
@@ -1956,6 +2111,7 @@ var instance = $('selector').suggester('getInstance');
 
     <div class="description">
         <p>Handle ENTER key on this.$input</p>
+
     </div>
 
     
@@ -1974,6 +2130,7 @@ var instance = $('selector').suggester('getInstance');
 
                     <div class="param-description">
                         <p>The keydown event</p>
+
                     </div>
 
                     
@@ -2033,7 +2190,7 @@ var instance = $('selector').suggester('getInstance');
             
         
         
-        <a href="../files/src_Suggester.js.html#l1856"><code>src&#x2F;Suggester.js:1856</code></a>
+        <a href="../files/src_Suggester.js.html#l2136"><code>src&#x2F;Suggester.js:2136</code></a>
         
         </p>
 
@@ -2045,6 +2202,7 @@ var instance = $('selector').suggester('getInstance');
 
     <div class="description">
         <p>Handle ESC key on this.$input</p>
+
     </div>
 
     
@@ -2063,6 +2221,7 @@ var instance = $('selector').suggester('getInstance');
 
                     <div class="param-description">
                         <p>The keydown event</p>
+
                     </div>
 
                     
@@ -2122,7 +2281,7 @@ var instance = $('selector').suggester('getInstance');
             
         
         
-        <a href="../files/src_Suggester.js.html#l1887"><code>src&#x2F;Suggester.js:1887</code></a>
+        <a href="../files/src_Suggester.js.html#l2167"><code>src&#x2F;Suggester.js:2167</code></a>
         
         </p>
 
@@ -2134,6 +2293,7 @@ var instance = $('selector').suggester('getInstance');
 
     <div class="description">
         <p>Handle other keys (e.g. printable characters) on this.$input</p>
+
     </div>
 
     
@@ -2152,6 +2312,7 @@ var instance = $('selector').suggester('getInstance');
 
                     <div class="param-description">
                         <p>The keydown event</p>
+
                     </div>
 
                     
@@ -2211,7 +2372,7 @@ var instance = $('selector').suggester('getInstance');
             
         
         
-        <a href="../files/src_Suggester.js.html#l1830"><code>src&#x2F;Suggester.js:1830</code></a>
+        <a href="../files/src_Suggester.js.html#l2110"><code>src&#x2F;Suggester.js:2110</code></a>
         
         </p>
 
@@ -2223,6 +2384,7 @@ var instance = $('selector').suggester('getInstance');
 
     <div class="description">
         <p>Handle TAB and COMMA and SEMICOLON key on this.$input</p>
+
     </div>
 
     
@@ -2241,6 +2403,7 @@ var instance = $('selector').suggester('getInstance');
 
                     <div class="param-description">
                         <p>The keydown event</p>
+
                     </div>
 
                     
@@ -2300,7 +2463,7 @@ var instance = $('selector').suggester('getInstance');
             
         
         
-        <a href="../files/src_Suggester.js.html#l1774"><code>src&#x2F;Suggester.js:1774</code></a>
+        <a href="../files/src_Suggester.js.html#l2054"><code>src&#x2F;Suggester.js:2054</code></a>
         
         </p>
 
@@ -2312,6 +2475,7 @@ var instance = $('selector').suggester('getInstance');
 
     <div class="description">
         <p>Handle UP key on this.$input</p>
+
     </div>
 
     
@@ -2330,6 +2494,7 @@ var instance = $('selector').suggester('getInstance');
 
                     <div class="param-description">
                         <p>The keydown event</p>
+
                     </div>
 
                     
@@ -2389,7 +2554,7 @@ var instance = $('selector').suggester('getInstance');
             
         
         
-        <a href="../files/src_Suggester.js.html#l1596"><code>src&#x2F;Suggester.js:1596</code></a>
+        <a href="../files/src_Suggester.js.html#l1876"><code>src&#x2F;Suggester.js:1876</code></a>
         
         </p>
 
@@ -2401,6 +2566,7 @@ var instance = $('selector').suggester('getInstance');
 
     <div class="description">
         <p>Event handler for when this.$box is clicked</p>
+
     </div>
 
     
@@ -2419,6 +2585,7 @@ var instance = $('selector').suggester('getInstance');
 
                     <div class="param-description">
                         <p>The click event</p>
+
                     </div>
 
                     
@@ -2478,7 +2645,7 @@ var instance = $('selector').suggester('getInstance');
             
         
         
-        <a href="../files/src_Suggester.js.html#l1669"><code>src&#x2F;Suggester.js:1669</code></a>
+        <a href="../files/src_Suggester.js.html#l1949"><code>src&#x2F;Suggester.js:1949</code></a>
         
         </p>
 
@@ -2490,6 +2657,7 @@ var instance = $('selector').suggester('getInstance');
 
     <div class="description">
         <p>Handle cut and delete on this.$input</p>
+
     </div>
 
     
@@ -2508,6 +2676,7 @@ var instance = $('selector').suggester('getInstance');
 
                     <div class="param-description">
                         <p>The cut, paste, or delete event</p>
+
                     </div>
 
                     
@@ -2567,7 +2736,7 @@ var instance = $('selector').suggester('getInstance');
             
         
         
-        <a href="../files/src_Suggester.js.html#l1498"><code>src&#x2F;Suggester.js:1498</code></a>
+        <a href="../files/src_Suggester.js.html#l1725"><code>src&#x2F;Suggester.js:1725</code></a>
         
         </p>
 
@@ -2579,6 +2748,7 @@ var instance = $('selector').suggester('getInstance');
 
     <div class="description">
         <p>Event handler for when this.$input is blurred</p>
+
     </div>
 
     
@@ -2597,6 +2767,7 @@ var instance = $('selector').suggester('getInstance');
 
                     <div class="param-description">
                         <p>blur event</p>
+
                     </div>
 
                     
@@ -2656,7 +2827,7 @@ var instance = $('selector').suggester('getInstance');
             
         
         
-        <a href="../files/src_Suggester.js.html#l1476"><code>src&#x2F;Suggester.js:1476</code></a>
+        <a href="../files/src_Suggester.js.html#l1689"><code>src&#x2F;Suggester.js:1689</code></a>
         
         </p>
 
@@ -2668,6 +2839,7 @@ var instance = $('selector').suggester('getInstance');
 
     <div class="description">
         <p>Event handler for when this.$input is focused</p>
+
     </div>
 
     
@@ -2686,6 +2858,7 @@ var instance = $('selector').suggester('getInstance');
 
                     <div class="param-description">
                         <p>The focus event</p>
+
                     </div>
 
                     
@@ -2745,7 +2918,7 @@ var instance = $('selector').suggester('getInstance');
             
         
         
-        <a href="../files/src_Suggester.js.html#l1608"><code>src&#x2F;Suggester.js:1608</code></a>
+        <a href="../files/src_Suggester.js.html#l1888"><code>src&#x2F;Suggester.js:1888</code></a>
         
         </p>
 
@@ -2757,6 +2930,7 @@ var instance = $('selector').suggester('getInstance');
 
     <div class="description">
         <p>Handle keypresses while in tag input field</p>
+
     </div>
 
     
@@ -2775,6 +2949,7 @@ var instance = $('selector').suggester('getInstance');
 
                     <div class="param-description">
                         <p>The keydown event (a raw browser event, not jQuery.Event)</p>
+
                     </div>
 
                     
@@ -2834,7 +3009,7 @@ var instance = $('selector').suggester('getInstance');
             
         
         
-        <a href="../files/src_Suggester.js.html#l1568"><code>src&#x2F;Suggester.js:1568</code></a>
+        <a href="../files/src_Suggester.js.html#l1848"><code>src&#x2F;Suggester.js:1848</code></a>
         
         </p>
 
@@ -2846,6 +3021,7 @@ var instance = $('selector').suggester('getInstance');
 
     <div class="description">
         <p>Event handler for when autosuggest list is clicked</p>
+
     </div>
 
     
@@ -2864,6 +3040,7 @@ var instance = $('selector').suggester('getInstance');
 
                     <div class="param-description">
                         <p>The click event</p>
+
                     </div>
 
                     
@@ -2923,7 +3100,7 @@ var instance = $('selector').suggester('getInstance');
             
         
         
-        <a href="../files/src_Suggester.js.html#l1547"><code>src&#x2F;Suggester.js:1547</code></a>
+        <a href="../files/src_Suggester.js.html#l1827"><code>src&#x2F;Suggester.js:1827</code></a>
         
         </p>
 
@@ -2935,6 +3112,7 @@ var instance = $('selector').suggester('getInstance');
 
     <div class="description">
         <p>Event handler for when autosuggest list is moused over</p>
+
     </div>
 
     
@@ -2953,6 +3131,7 @@ var instance = $('selector').suggester('getInstance');
 
                     <div class="param-description">
                         <p>The mouseover event</p>
+
                     </div>
 
                     
@@ -3012,7 +3191,7 @@ var instance = $('selector').suggester('getInstance');
             
         
         
-        <a href="../files/src_Suggester.js.html#l1679"><code>src&#x2F;Suggester.js:1679</code></a>
+        <a href="../files/src_Suggester.js.html#l1959"><code>src&#x2F;Suggester.js:1959</code></a>
         
         </p>
 
@@ -3024,8 +3203,9 @@ var instance = $('selector').suggester('getInstance');
 
     <div class="description">
         <p>Handle paste on this.$input. Look for places to split pasted value
-For example pasting "a, b, c" will immediately add 3 tags (when this.options.addOnComma is true)
+For example pasting &quot;a, b, c&quot; will immediately add 3 tags (when this.options.addOnComma is true)
 It attempts to split on tab, then if there are no tabs then semicolons, then if there are no semicolons, commas</p>
+
     </div>
 
     
@@ -3044,6 +3224,7 @@ It attempts to split on tab, then if there are no tabs then semicolons, then if 
 
                     <div class="param-description">
                         <p>the paste event</p>
+
                     </div>
 
                     
@@ -3103,7 +3284,7 @@ It attempts to split on tab, then if there are no tabs then semicolons, then if 
             
         
         
-        <a href="../files/src_Suggester.js.html#l1905"><code>src&#x2F;Suggester.js:1905</code></a>
+        <a href="../files/src_Suggester.js.html#l2185"><code>src&#x2F;Suggester.js:2185</code></a>
         
         </p>
 
@@ -3115,6 +3296,7 @@ It attempts to split on tab, then if there are no tabs then semicolons, then if 
 
     <div class="description">
         <p>Handler for form submission</p>
+
     </div>
 
     
@@ -3133,6 +3315,7 @@ It attempts to split on tab, then if there are no tabs then semicolons, then if 
 
                     <div class="param-description">
                         <p>The submit event</p>
+
                     </div>
 
                     
@@ -3192,7 +3375,7 @@ It attempts to split on tab, then if there are no tabs then semicolons, then if 
             
         
         
-        <a href="../files/src_Suggester.js.html#l1532"><code>src&#x2F;Suggester.js:1532</code></a>
+        <a href="../files/src_Suggester.js.html#l1812"><code>src&#x2F;Suggester.js:1812</code></a>
         
         </p>
 
@@ -3204,6 +3387,7 @@ It attempts to split on tab, then if there are no tabs then semicolons, then if 
 
     <div class="description">
         <p>Event handler for when .sugg-tag is clicked</p>
+
     </div>
 
     
@@ -3222,6 +3406,7 @@ It attempts to split on tab, then if there are no tabs then semicolons, then if 
 
                     <div class="param-description">
                         <p>The click event</p>
+
                     </div>
 
                     
@@ -3281,7 +3466,7 @@ It attempts to split on tab, then if there are no tabs then semicolons, then if 
             
         
         
-        <a href="../files/src_Suggester.js.html#l1519"><code>src&#x2F;Suggester.js:1519</code></a>
+        <a href="../files/src_Suggester.js.html#l1799"><code>src&#x2F;Suggester.js:1799</code></a>
         
         </p>
 
@@ -3293,6 +3478,7 @@ It attempts to split on tab, then if there are no tabs then semicolons, then if 
 
     <div class="description">
         <p>Event handler for when .sugg-remove is clicked</p>
+
     </div>
 
     
@@ -3311,6 +3497,7 @@ It attempts to split on tab, then if there are no tabs then semicolons, then if 
 
                     <div class="param-description">
                         <p>The click event</p>
+
                     </div>
 
                     
@@ -3370,7 +3557,7 @@ It attempts to split on tab, then if there are no tabs then semicolons, then if 
             
         
         
-        <a href="../files/src_Suggester.js.html#l1310"><code>src&#x2F;Suggester.js:1310</code></a>
+        <a href="../files/src_Suggester.js.html#l1531"><code>src&#x2F;Suggester.js:1531</code></a>
         
         </p>
 
@@ -3382,6 +3569,7 @@ It attempts to split on tab, then if there are no tabs then semicolons, then if 
 
     <div class="description">
         <p>Set options and interpret options</p>
+
     </div>
 
     
@@ -3400,6 +3588,7 @@ It attempts to split on tab, then if there are no tabs then semicolons, then if 
 
                     <div class="param-description">
                         <p>Settings passed to constructor</p>
+
                     </div>
 
                     
@@ -3449,7 +3638,7 @@ It attempts to split on tab, then if there are no tabs then semicolons, then if 
             
         
         
-        <a href="../files/src_Suggester.js.html#l1323"><code>src&#x2F;Suggester.js:1323</code></a>
+        <a href="../files/src_Suggester.js.html#l1544"><code>src&#x2F;Suggester.js:1544</code></a>
         
         </p>
 
@@ -3461,6 +3650,7 @@ It attempts to split on tab, then if there are no tabs then semicolons, then if 
 
     <div class="description">
         <p>Render the widget and get handles to key elements</p>
+
     </div>
 
     
@@ -3505,7 +3695,7 @@ It attempts to split on tab, then if there are no tabs then semicolons, then if 
             
         
         
-        <a href="../files/src_Suggester.js.html#l1444"><code>src&#x2F;Suggester.js:1444</code></a>
+        <a href="../files/src_Suggester.js.html#l1657"><code>src&#x2F;Suggester.js:1657</code></a>
         
         </p>
 
@@ -3517,6 +3707,7 @@ It attempts to split on tab, then if there are no tabs then semicolons, then if 
 
     <div class="description">
         <p>Attach event handlers</p>
+
     </div>
 
     
@@ -3561,7 +3752,7 @@ It attempts to split on tab, then if there are no tabs then semicolons, then if 
             
         
         
-        <a href="../files/src_Suggester.js.html#l2229"><code>src&#x2F;Suggester.js:2229</code></a>
+        <a href="../files/src_Suggester.js.html#l2494"><code>src&#x2F;Suggester.js:2494</code></a>
         
         </p>
 
@@ -3572,7 +3763,8 @@ It attempts to split on tab, then if there are no tabs then semicolons, then if 
     </div>
 
     <div class="description">
-        <p>Setup publish/subscribe system that uses jQuery's event system. Allows subscribing this way: instance.bind('AfterFilter', myhandler)</p>
+        <p>Setup publish/subscribe system that uses jQuery&#39;s event system. Allows subscribing this way: instance.bind(&#39;AfterFilter&#39;, myhandler)</p>
+
     </div>
 
     
@@ -3631,7 +3823,7 @@ It attempts to split on tab, then if there are no tabs then semicolons, then if 
             
         
         
-        <a href="../files/src_Suggester.js.html#l2175"><code>src&#x2F;Suggester.js:2175</code></a>
+        <a href="../files/src_Suggester.js.html#l2440"><code>src&#x2F;Suggester.js:2440</code></a>
         
         </p>
 
@@ -3643,6 +3835,7 @@ It attempts to split on tab, then if there are no tabs then semicolons, then if 
 
     <div class="description">
         <p>Given tag text, remove a tag from the internal collection and from the DOM</p>
+
     </div>
 
     
@@ -3661,6 +3854,7 @@ It attempts to split on tab, then if there are no tabs then semicolons, then if 
 
                     <div class="param-description">
                         <p>The text of the tag</p>
+
                     </div>
 
                     
@@ -3679,7 +3873,8 @@ It attempts to split on tab, then if there are no tabs then semicolons, then if 
                     
                         <span class="type">Object | Undefined</span>:
                     
-                    The record associated with that tag or undefined if not found
+                    <p>The record associated with that tag or undefined if not found</p>
+
                 
             </div>
         </div>
@@ -3737,7 +3932,7 @@ It attempts to split on tab, then if there are no tabs then semicolons, then if 
             
         
         
-        <a href="../files/src_Suggester.js.html#l2189"><code>src&#x2F;Suggester.js:2189</code></a>
+        <a href="../files/src_Suggester.js.html#l2454"><code>src&#x2F;Suggester.js:2454</code></a>
         
         </p>
 
@@ -3749,6 +3944,7 @@ It attempts to split on tab, then if there are no tabs then semicolons, then if 
 
     <div class="description">
         <p>Given an array index, remove a tag from the internal collection and from the DOM</p>
+
     </div>
 
     
@@ -3767,6 +3963,7 @@ It attempts to split on tab, then if there are no tabs then semicolons, then if 
 
                     <div class="param-description">
                         <p>The index position in the internal collection</p>
+
                     </div>
 
                     
@@ -3785,7 +3982,8 @@ It attempts to split on tab, then if there are no tabs then semicolons, then if 
                     
                         <span class="type"><a href="../classes/Suggester.Tag.html" class="crosslink">Suggester.Tag</a></span>:
                     
-                    The Suggester.Tag object that was removed
+                    <p>The Suggester.Tag object that was removed</p>
+
                 
             </div>
         </div>
@@ -3829,7 +4027,7 @@ It attempts to split on tab, then if there are no tabs then semicolons, then if 
             
         
         
-        <a href="../files/src_Suggester.js.html#l2095"><code>src&#x2F;Suggester.js:2095</code></a>
+        <a href="../files/src_Suggester.js.html#l2375"><code>src&#x2F;Suggester.js:2375</code></a>
         
         </p>
 
@@ -3840,7 +4038,8 @@ It attempts to split on tab, then if there are no tabs then semicolons, then if 
     </div>
 
     <div class="description">
-        <p>Update the size when this.options.inputSize is "auto"</p>
+        <p>Update the size when this.options.inputSize is &quot;auto&quot;</p>
+
     </div>
 
     
@@ -3889,7 +4088,7 @@ It attempts to split on tab, then if there are no tabs then semicolons, then if 
             
         
         
-        <a href="../files/src_Suggester.js.html#l972"><code>src&#x2F;Suggester.js:972</code></a>
+        <a href="../files/src_Suggester.js.html#l1067"><code>src&#x2F;Suggester.js:1067</code></a>
         
         </p>
 
@@ -3901,6 +4100,7 @@ It attempts to split on tab, then if there are no tabs then semicolons, then if 
 
     <div class="description">
         <p>Cancel the XHR. Used when user starts typing again before XHR completes</p>
+
     </div>
 
     
@@ -3981,7 +4181,7 @@ It attempts to split on tab, then if there are no tabs then semicolons, then if 
             
         
         
-        <a href="../files/src_Suggester.js.html#l353"><code>src&#x2F;Suggester.js:353</code></a>
+        <a href="../files/src_Suggester.js.html#l409"><code>src&#x2F;Suggester.js:409</code></a>
         
         </p>
 
@@ -3992,7 +4192,8 @@ It attempts to split on tab, then if there are no tabs then semicolons, then if 
     </div>
 
     <div class="description">
-        <p>Add a tag by a record</p>
+        <p>Add a tag by a record or value</p>
+
     </div>
 
     
@@ -4011,6 +4212,7 @@ It attempts to split on tab, then if there are no tabs then semicolons, then if 
 
                     <div class="param-description">
                         <p>the tag to add</p>
+
                     </div>
 
                     
@@ -4027,6 +4229,7 @@ It attempts to split on tab, then if there are no tabs then semicolons, then if 
 
                     <div class="param-description">
                         <p>the text to display in the new tag</p>
+
                     </div>
 
                     
@@ -4043,6 +4246,7 @@ It attempts to split on tab, then if there are no tabs then semicolons, then if 
 
                     <div class="param-description">
                         <p>Set internally when the record is added by choosing from the suggestion box</p>
+
                     </div>
 
                     
@@ -4061,7 +4265,8 @@ It attempts to split on tab, then if there are no tabs then semicolons, then if 
                     
                         <span class="type">JQuery</span>:
                     
-                    The jQuery object containing the newly created label or undefined if one was not created
+                    <p>The jQuery object containing the newly created label or undefined if one was not created</p>
+
                 
             </div>
         </div>
@@ -4079,7 +4284,9 @@ It attempts to split on tab, then if there are no tabs then semicolons, then if 
     
 
     
-
+        <span class="returns-inline">
+            <span class="type"><a href="../classes/Suggester.html" class="crosslink">Suggester</a></span>
+        </span>
     
 
     
@@ -4088,6 +4295,10 @@ It attempts to split on tab, then if there are no tabs then semicolons, then if 
 
     
 
+    
+
+    
+        <span class="flag chainable">chainable</span>
     
 
     
@@ -4103,7 +4314,7 @@ It attempts to split on tab, then if there are no tabs then semicolons, then if 
             
         
         
-        <a href="../files/src_Suggester.js.html#l479"><code>src&#x2F;Suggester.js:479</code></a>
+        <a href="../files/src_Suggester.js.html#l555"><code>src&#x2F;Suggester.js:555</code></a>
         
         </p>
 
@@ -4116,10 +4327,23 @@ It attempts to split on tab, then if there are no tabs then semicolons, then if 
     <div class="description">
         <p>Add a tag with the contents of the input; e.g. when the user has typed something but clicks on another part of the form
 Note: this happens on blur when this.options.addOnBlur is true</p>
+
     </div>
 
     
 
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="../classes/Suggester.html" class="crosslink">Suggester</a></span>:
+                    
+                
+            </div>
+        </div>
     
 
     
@@ -4156,9 +4380,9 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
     
 
     
-        <span class="flag static">static</span>
-    
 
+    
+        <span class="flag chainable">chainable</span>
     
 
     
@@ -4174,7 +4398,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l2300"><code>src&#x2F;Suggester.js:2300</code></a>
+        <a href="../files/src_Suggester.js.html#l692"><code>src&#x2F;Suggester.js:692</code></a>
         
         </p>
 
@@ -4185,7 +4409,8 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
     </div>
 
     <div class="description">
-        <p>Add data to all instances</p>
+        <p>Add more data records to the autosuggest list. Does not apply when dataUrl is set</p>
+
     </div>
 
     
@@ -4203,7 +4428,8 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
                     
 
                     <div class="param-description">
-                        <p>Add more data to all the registered instances</p>
+                        <p>More records in the same object format as initially set</p>
+
                     </div>
 
                     
@@ -4261,6 +4487,8 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
     
 
     
+        <span class="flag static">static</span>
+    
 
     
 
@@ -4277,7 +4505,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l607"><code>src&#x2F;Suggester.js:607</code></a>
+        <a href="../files/src_Suggester.js.html#l2565"><code>src&#x2F;Suggester.js:2565</code></a>
         
         </p>
 
@@ -4288,7 +4516,8 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
     </div>
 
     <div class="description">
-        <p>Add more data records to the autosuggest list. Does not apply when dataUrl is set</p>
+        <p>Add data to all instances</p>
+
     </div>
 
     
@@ -4306,7 +4535,8 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
                     
 
                     <div class="param-description">
-                        <p>More records in the same object format as initially set</p>
+                        <p>Add more data to all the registered instances</p>
+
                     </div>
 
                     
@@ -4314,6 +4544,79 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
             </ul>
         </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="../classes/Suggester.html" class="crosslink">Suggester</a></span>:
+                    
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_blur" class="method item">
+    <h3 class="name"><code>blur</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="../classes/Suggester.html" class="crosslink">Suggester</a></span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <span class="flag chainable">chainable</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_Suggester.js.html#l1231"><code>src&#x2F;Suggester.js:1231</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Unfocus the cursor from the text input box</p>
+
+    </div>
+
     
 
     
@@ -4372,7 +4675,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l1205"><code>src&#x2F;Suggester.js:1205</code></a>
+        <a href="../files/src_Suggester.js.html#l1328"><code>src&#x2F;Suggester.js:1328</code></a>
         
         </p>
 
@@ -4384,6 +4687,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     <div class="description">
         <p>Clear all the chosen tags</p>
+
     </div>
 
     
@@ -4444,7 +4748,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l1095"><code>src&#x2F;Suggester.js:1095</code></a>
+        <a href="../files/src_Suggester.js.html#l1190"><code>src&#x2F;Suggester.js:1190</code></a>
         
         </p>
 
@@ -4456,6 +4760,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     <div class="description">
         <p>Hide the suggestion box</p>
+
     </div>
 
     
@@ -4500,6 +4805,8 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
     
 
     
+        <span class="flag chainable">chainable</span>
+    
 
     
 
@@ -4514,7 +4821,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l582"><code>src&#x2F;Suggester.js:582</code></a>
+        <a href="../files/src_Suggester.js.html#l665"><code>src&#x2F;Suggester.js:665</code></a>
         
         </p>
 
@@ -4526,6 +4833,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     <div class="description">
         <p>Deselect all suggestions</p>
+
     </div>
 
     
@@ -4580,6 +4888,8 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
     
 
     
+        <span class="flag chainable">chainable</span>
+    
 
     
 
@@ -4594,7 +4904,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l572"><code>src&#x2F;Suggester.js:572</code></a>
+        <a href="../files/src_Suggester.js.html#l654"><code>src&#x2F;Suggester.js:654</code></a>
         
         </p>
 
@@ -4606,6 +4916,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     <div class="description">
         <p>Deselect a suggestion</p>
+
     </div>
 
     
@@ -4697,7 +5008,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l325"><code>src&#x2F;Suggester.js:325</code></a>
+        <a href="../files/src_Suggester.js.html#l381"><code>src&#x2F;Suggester.js:381</code></a>
         
         </p>
 
@@ -4708,7 +5019,8 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
     </div>
 
     <div class="description">
-        <p>Completely remove Suggester widget and replace with original input box (with values populated)</p>
+        <p>Completely remove Suggester widget and unhide the original input box (with values populated)</p>
+
     </div>
 
     
@@ -4742,6 +5054,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
                                 <div class="param-description">
                                     <p>If true, append all hidden inputs after the original input</p>
+
                                 </div>
 
                                 
@@ -4764,7 +5077,8 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
                     
                         <span class="type">JQuery</span>:
                     
-                    The original input
+                    <p>The original input</p>
+
                 
             </div>
         </div>
@@ -4822,7 +5136,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l1228"><code>src&#x2F;Suggester.js:1228</code></a>
+        <a href="../files/src_Suggester.js.html#l1346"><code>src&#x2F;Suggester.js:1346</code></a>
         
         </p>
 
@@ -4834,6 +5148,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     <div class="description">
         <p>Iterate through each of the chosen tag objects</p>
+
     </div>
 
     
@@ -4852,6 +5167,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
                     <div class="param-description">
                         <p>The iterator function - function(i, tag) {}</p>
+
                     </div>
 
                     
@@ -4925,7 +5241,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l904"><code>src&#x2F;Suggester.js:904</code></a>
+        <a href="../files/src_Suggester.js.html#l999"><code>src&#x2F;Suggester.js:999</code></a>
         
         </p>
 
@@ -4937,6 +5253,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     <div class="description">
         <p>Fetch suggestions from an ajax URL</p>
+
     </div>
 
     
@@ -4955,6 +5272,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
                     <div class="param-description">
                         <p>The text to search for</p>
+
                     </div>
 
                     
@@ -4973,7 +5291,8 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
                     
                         <span class="type">JqXHR</span>:
                     
-                    The jQuery XHR transport that is fetching the data
+                    <p>The jQuery XHR transport that is fetching the data</p>
+
                 
             </div>
         </div>
@@ -5029,7 +5348,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l784"><code>src&#x2F;Suggester.js:784</code></a>
+        <a href="../files/src_Suggester.js.html#l878"><code>src&#x2F;Suggester.js:878</code></a>
         
         </p>
 
@@ -5041,6 +5360,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     <div class="description">
         <p>Find a suggestion record by text. Only applies when this.options.data is set.</p>
+
     </div>
 
     
@@ -5059,6 +5379,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
                     <div class="param-description">
                         <p>The text to search for</p>
+
                     </div>
 
                     
@@ -5077,7 +5398,8 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
                     
                         <span class="type">Object | False</span>:
                     
-                    The matched record object or false if nothing matched.
+                    <p>The matched record object or false if nothing matched.</p>
+
                 
             </div>
         </div>
@@ -5125,7 +5447,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l1122"><code>src&#x2F;Suggester.js:1122</code></a>
+        <a href="../files/src_Suggester.js.html#l1217"><code>src&#x2F;Suggester.js:1217</code></a>
         
         </p>
 
@@ -5137,6 +5459,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     <div class="description">
         <p>Focus cursor on text input box</p>
+
     </div>
 
     
@@ -5191,6 +5514,8 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
     
 
     
+        <span class="flag chainable">chainable</span>
+    
 
     
 
@@ -5205,7 +5530,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l665"><code>src&#x2F;Suggester.js:665</code></a>
+        <a href="../files/src_Suggester.js.html#l753"><code>src&#x2F;Suggester.js:753</code></a>
         
         </p>
 
@@ -5217,6 +5542,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     <div class="description">
         <p>Focus on a previously added tag</p>
+
     </div>
 
     
@@ -5235,6 +5561,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
                     <div class="param-description">
                         <p>The .sugg-tag element to focus</p>
+
                     </div>
 
                     
@@ -5298,7 +5625,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l638"><code>src&#x2F;Suggester.js:638</code></a>
+        <a href="../files/src_Suggester.js.html#l725"><code>src&#x2F;Suggester.js:725</code></a>
         
         </p>
 
@@ -5310,6 +5637,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     <div class="description">
         <p>Get all the records in the autosuggest list. Does not apply when dataUrl is set</p>
+
     </div>
 
     
@@ -5368,7 +5696,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l1302"><code>src&#x2F;Suggester.js:1302</code></a>
+        <a href="../files/src_Suggester.js.html#l1523"><code>src&#x2F;Suggester.js:1523</code></a>
         
         </p>
 
@@ -5379,7 +5707,8 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
     </div>
 
     <div class="description">
-        <p>Get this instance. Useful for jQuery-style usage:  var instance = $('input').suggester(options).suggester('getInstance')</p>
+        <p>Get this instance. Useful for jQuery-style usage:  var instance = $(&#39;input&#39;).suggester(options).suggester(&#39;getInstance&#39;)</p>
+
     </div>
 
     
@@ -5448,7 +5777,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l1133"><code>src&#x2F;Suggester.js:1133</code></a>
+        <a href="../files/src_Suggester.js.html#l1252"><code>src&#x2F;Suggester.js:1252</code></a>
         
         </p>
 
@@ -5460,6 +5789,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     <div class="description">
         <p>Get suggestion result records given some text (local data)</p>
+
     </div>
 
     
@@ -5478,6 +5808,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
                     <div class="param-description">
                         <p>Gather suggestions based on this text</p>
+
                     </div>
 
                     
@@ -5496,7 +5827,8 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
                     
                         <span class="type">Array</span>:
                     
-                    Array of Objects of matching records
+                    <p>Array of Objects of matching records</p>
+
                 
             </div>
         </div>
@@ -5552,7 +5884,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l2213"><code>src&#x2F;Suggester.js:2213</code></a>
+        <a href="../files/src_Suggester.js.html#l2478"><code>src&#x2F;Suggester.js:2478</code></a>
         
         </p>
 
@@ -5564,6 +5896,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     <div class="description">
         <p>Find a tag given value</p>
+
     </div>
 
     
@@ -5582,6 +5915,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
                     <div class="param-description">
                         <p>The text of the tag</p>
+
                     </div>
 
                     
@@ -5600,7 +5934,8 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
                     
                         <span class="type">Number</span>:
                     
-                    The index position of the tag in the internal collection or -1 if not found
+                    <p>The index position of the tag in the internal collection or -1 if not found</p>
+
                 
             </div>
         </div>
@@ -5646,7 +5981,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l1220"><code>src&#x2F;Suggester.js:1220</code></a>
+        <a href="../files/src_Suggester.js.html#l1338"><code>src&#x2F;Suggester.js:1338</code></a>
         
         </p>
 
@@ -5657,7 +5992,8 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
     </div>
 
     <div class="description">
-        <p>Get a collection of all the chosen tag objects</p>
+        <p>Get a collection of all the chosen tag objects (a shallow copy of this.tags)</p>
+
     </div>
 
     
@@ -5716,7 +6052,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l1263"><code>src&#x2F;Suggester.js:1263</code></a>
+        <a href="../files/src_Suggester.js.html#l1381"><code>src&#x2F;Suggester.js:1381</code></a>
         
         </p>
 
@@ -5728,6 +6064,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     <div class="description">
         <p>Get the current value as a comma-delimited string</p>
+
     </div>
 
     
@@ -5786,7 +6123,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l1251"><code>src&#x2F;Suggester.js:1251</code></a>
+        <a href="../files/src_Suggester.js.html#l1369"><code>src&#x2F;Suggester.js:1369</code></a>
         
         </p>
 
@@ -5798,6 +6135,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     <div class="description">
         <p>Pluck all the tag values from the chosen tags</p>
+
     </div>
 
     
@@ -5868,7 +6206,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l984"><code>src&#x2F;Suggester.js:984</code></a>
+        <a href="../files/src_Suggester.js.html#l1079"><code>src&#x2F;Suggester.js:1079</code></a>
         
         </p>
 
@@ -5880,6 +6218,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     <div class="description">
         <p>Take the given records and build and display suggestion box. Usually only called internally.</p>
+
     </div>
 
     
@@ -5898,6 +6237,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
                     <div class="param-description">
                         <p>The result records to use to build the suggestion list</p>
+
                     </div>
 
                     
@@ -5905,6 +6245,79 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
             </ul>
         </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="../classes/Suggester.html" class="crosslink">Suggester</a></span>:
+                    
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_hidePlaceholder" class="method item">
+    <h3 class="name"><code>hidePlaceholder</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="../classes/Suggester.html" class="crosslink">Suggester</a></span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <span class="flag chainable">chainable</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_Suggester.js.html#l1496"><code>src&#x2F;Suggester.js:1496</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Replace placeholder string with empty text</p>
+
+    </div>
+
     
 
     
@@ -5961,7 +6374,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l1033"><code>src&#x2F;Suggester.js:1033</code></a>
+        <a href="../files/src_Suggester.js.html#l1128"><code>src&#x2F;Suggester.js:1128</code></a>
         
         </p>
 
@@ -5973,6 +6386,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     <div class="description">
         <p>Return true if suggestion box is open</p>
+
     </div>
 
     
@@ -6013,7 +6427,9 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
     
 
     
-
+        <span class="returns-inline">
+            <span class="type"><a href="../classes/Suggester.html" class="crosslink">Suggester</a></span>
+        </span>
     
 
     
@@ -6022,6 +6438,10 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     
 
+    
+
+    
+        <span class="flag chainable">chainable</span>
     
 
     
@@ -6037,7 +6457,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l491"><code>src&#x2F;Suggester.js:491</code></a>
+        <a href="../files/src_Suggester.js.html#l570"><code>src&#x2F;Suggester.js:570</code></a>
         
         </p>
 
@@ -6049,6 +6469,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     <div class="description">
         <p>Move the selection up or down in the suggestion box</p>
+
     </div>
 
     
@@ -6067,7 +6488,8 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
                     
 
                     <div class="param-description">
-                        <p>Either "up" or "down"</p>
+                        <p>Either &quot;up&quot; or &quot;down&quot;</p>
+
                     </div>
 
                     
@@ -6077,6 +6499,18 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
         </div>
     
 
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="../classes/Suggester.html" class="crosslink">Suggester</a></span>:
+                    
+                
+            </div>
+        </div>
     
 
     
@@ -6121,7 +6555,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l1041"><code>src&#x2F;Suggester.js:1041</code></a>
+        <a href="../files/src_Suggester.js.html#l1136"><code>src&#x2F;Suggester.js:1136</code></a>
         
         </p>
 
@@ -6133,6 +6567,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     <div class="description">
         <p>Manually open the suggestion box in whatever state it is. Usually only called internally.</p>
+
     </div>
 
     
@@ -6170,7 +6605,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
                 <li class="arg">
                     
-                        <code>data</code>
+                        <code class="optional">[data]</code>
                     
                 </li>
             
@@ -6207,7 +6642,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l1286"><code>src&#x2F;Suggester.js:1286</code></a>
+        <a href="../files/src_Suggester.js.html#l1507"><code>src&#x2F;Suggester.js:1507</code></a>
         
         </p>
 
@@ -6219,6 +6654,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     <div class="description">
         <p>Publish the given event name and send the given data</p>
+
     </div>
 
     
@@ -6237,6 +6673,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
                     <div class="param-description">
                         <p>The name of the event to publish</p>
+
                     </div>
 
                     
@@ -6244,14 +6681,16 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
                 <li class="param">
                     
-                        <code class="param-name">data</code>
+                        <code class="param-name optional">[data]</code>
                         <span class="type">Object</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
                     
 
                     
 
                     <div class="param-description">
                         <p>Additional data to attach to the event object</p>
+
                     </div>
 
                     
@@ -6270,7 +6709,137 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
                     
                         <span class="type">jQuery.Event</span>:
                     
-                    The event object which behaves much like a DOM event object
+                    <p>The event object which behaves much like a DOM event object</p>
+
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_pushTag" class="method item">
+    <h3 class="name"><code>pushTag</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>value</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>label</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="../classes/Suggester.Tag.html" class="crosslink">Suggester.Tag</a></span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_Suggester.js.html#l521"><code>src&#x2F;Suggester.js:521</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Add a tag directly without triggering BeforeAdd or AfterAdd</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">value</code>
+                        <span class="type">String | Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The value of the tag</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">label</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The text to display on the tag</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="../classes/Suggester.Tag.html" class="crosslink">Suggester.Tag</a></span>:
+                    
+                    <p>The new tag object</p>
+
                 
             </div>
         </div>
@@ -6328,7 +6897,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l708"><code>src&#x2F;Suggester.js:708</code></a>
+        <a href="../files/src_Suggester.js.html#l799"><code>src&#x2F;Suggester.js:799</code></a>
         
         </p>
 
@@ -6340,6 +6909,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     <div class="description">
         <p>Remove a tag given its text or jQuery element or HTML element</p>
+
     </div>
 
     
@@ -6358,6 +6928,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
                     <div class="param-description">
                         <p>the tag to remove</p>
+
                     </div>
 
                     
@@ -6417,6 +6988,8 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
     
 
     
+        <span class="flag chainable">chainable</span>
+    
 
     
 
@@ -6431,7 +7004,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l691"><code>src&#x2F;Suggester.js:691</code></a>
+        <a href="../files/src_Suggester.js.html#l781"><code>src&#x2F;Suggester.js:781</code></a>
         
         </p>
 
@@ -6443,6 +7016,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     <div class="description">
         <p>Remove the focused tag</p>
+
     </div>
 
     
@@ -6461,6 +7035,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
                     <div class="param-description">
                         <p>(optional)  Used to check if $document keypress is backspace or delete</p>
+
                     </div>
 
                     
@@ -6524,7 +7099,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l2105"><code>src&#x2F;Suggester.js:2105</code></a>
+        <a href="../files/src_Suggester.js.html#l2385"><code>src&#x2F;Suggester.js:2385</code></a>
         
         </p>
 
@@ -6536,6 +7111,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     <div class="description">
         <p>Set the value of the original input to a comma-delimited set of labels</p>
+
     </div>
 
     
@@ -6549,7 +7125,8 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
                     
                         <span class="type">String</span>:
                     
-                    The new value
+                    <p>The new value</p>
+
                 
             </div>
         </div>
@@ -6611,7 +7188,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l793"><code>src&#x2F;Suggester.js:793</code></a>
+        <a href="../files/src_Suggester.js.html#l887"><code>src&#x2F;Suggester.js:887</code></a>
         
         </p>
 
@@ -6623,6 +7200,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     <div class="description">
         <p>Search through this.data to find a record with a value or label equal to the given value</p>
+
     </div>
 
     
@@ -6641,6 +7219,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
                     <div class="param-description">
                         <p>The value or label to find</p>
+
                     </div>
 
                     
@@ -6656,6 +7235,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
                     <div class="param-description">
                         <p>An array of strings of property names to search</p>
+
                     </div>
 
                     
@@ -6674,7 +7254,8 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
                     
                         <span class="type">Object | Boolean</span>:
                     
-                    Returns the record if found, false if not found
+                    <p>Returns the record if found, false if not found</p>
+
                 
             </div>
         </div>
@@ -6716,6 +7297,8 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
     
 
     
+        <span class="flag chainable">chainable</span>
+    
 
     
 
@@ -6730,7 +7313,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l562"><code>src&#x2F;Suggester.js:562</code></a>
+        <a href="../files/src_Suggester.js.html#l643"><code>src&#x2F;Suggester.js:643</code></a>
         
         </p>
 
@@ -6742,6 +7325,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     <div class="description">
         <p>Select a suggestion</p>
+
     </div>
 
     
@@ -6823,7 +7407,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l1239"><code>src&#x2F;Suggester.js:1239</code></a>
+        <a href="../files/src_Suggester.js.html#l1357"><code>src&#x2F;Suggester.js:1357</code></a>
         
         </p>
 
@@ -6835,6 +7419,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     <div class="description">
         <p>Return a URL query string representing the hidden values of the input</p>
+
     </div>
 
     
@@ -6889,6 +7474,8 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
     
 
     
+        <span class="flag chainable">chainable</span>
+    
 
     
 
@@ -6903,7 +7490,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l627"><code>src&#x2F;Suggester.js:627</code></a>
+        <a href="../files/src_Suggester.js.html#l713"><code>src&#x2F;Suggester.js:713</code></a>
         
         </p>
 
@@ -6915,6 +7502,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     <div class="description">
         <p>Set data records to the autosuggest list. Does not apply when dataUrl is set</p>
+
     </div>
 
     
@@ -6992,6 +7580,8 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
     
 
     
+        <span class="flag chainable">chainable</span>
+    
 
     
 
@@ -7006,7 +7596,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l646"><code>src&#x2F;Suggester.js:646</code></a>
+        <a href="../files/src_Suggester.js.html#l733"><code>src&#x2F;Suggester.js:733</code></a>
         
         </p>
 
@@ -7018,6 +7608,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     <div class="description">
         <p>Set the direction of the suggestion menu, to fly upwards or downwards</p>
+
     </div>
 
     
@@ -7035,7 +7626,8 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
                     
 
                     <div class="param-description">
-                        <p>either "up" or "down"</p>
+                        <p>either &quot;up&quot; or &quot;down&quot;</p>
+
                     </div>
 
                     
@@ -7111,7 +7703,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l1271"><code>src&#x2F;Suggester.js:1271</code></a>
+        <a href="../files/src_Suggester.js.html#l1464"><code>src&#x2F;Suggester.js:1464</code></a>
         
         </p>
 
@@ -7122,7 +7714,8 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
     </div>
 
     <div class="description">
-        <p>Set the widget's CSS theme - Adds a class "sugg-theme-%name%" to the widget</p>
+        <p>Set the widget&#39;s CSS theme - Adds a class &quot;sugg-theme-%name%&quot; to the widget</p>
+
     </div>
 
     
@@ -7141,6 +7734,115 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
                     <div class="param-description">
                         <p>The name of the theme to use</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="../classes/Suggester.html" class="crosslink">Suggester</a></span>:
+                    
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_setValue" class="method item">
+    <h3 class="name"><code>setValue</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>valueOrValues</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="../classes/Suggester.html" class="crosslink">Suggester</a></span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <span class="flag chainable">chainable</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_Suggester.js.html#l1389"><code>src&#x2F;Suggester.js:1389</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Set the tags using an array or a comma-delimited string.
+Commas inside the tag name may be escaped with a backslash.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">valueOrValues</code>
+                        <span class="type">String | Array</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>To clear value, set to empty string, false, null or undefined</p>
+
                     </div>
 
                     
@@ -7206,7 +7908,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l886"><code>src&#x2F;Suggester.js:886</code></a>
+        <a href="../files/src_Suggester.js.html#l981"><code>src&#x2F;Suggester.js:981</code></a>
         
         </p>
 
@@ -7218,8 +7920,118 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     <div class="description">
         <p>Show text indicating there are no suggestions - defined in this.options.emptyText</p>
+
     </div>
 
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="../classes/Suggester.html" class="crosslink">Suggester</a></span>:
+                    
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_showPlaceholder" class="method item">
+    <h3 class="name"><code>showPlaceholder</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code class="optional">[text=this.options.placeholder]</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="../classes/Suggester.html" class="crosslink">Suggester</a></span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <span class="flag chainable">chainable</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_Suggester.js.html#l1479"><code>src&#x2F;Suggester.js:1479</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Replace the contents of this.$input with the placeholder value. Automatically fires when this.options.placeholder is set
+And there are no tags and we are blurring or initially rendering</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[text=this.options.placeholder]</code>
+                        <span class="type">String</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The text to set for the placeholder (defaults to this.options.placeholder)</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
     
 
     
@@ -7262,6 +8074,8 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
     
 
     
+        <span class="flag chainable">chainable</span>
+    
 
     
 
@@ -7276,7 +8090,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l872"><code>src&#x2F;Suggester.js:872</code></a>
+        <a href="../files/src_Suggester.js.html#l966"><code>src&#x2F;Suggester.js:966</code></a>
         
         </p>
 
@@ -7288,6 +8102,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     <div class="description">
         <p>Show the prompt text to give a hint to users. Only called when there are no items and this.options.prompt is truthy</p>
+
     </div>
 
     
@@ -7364,7 +8179,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l2330"><code>src&#x2F;Suggester.js:2330</code></a>
+        <a href="../files/src_Suggester.js.html#l2606"><code>src&#x2F;Suggester.js:2606</code></a>
         
         </p>
 
@@ -7376,6 +8191,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     <div class="description">
         <p>Create a subclass of Suggester</p>
+
     </div>
 
     
@@ -7394,6 +8210,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
                     <div class="param-description">
                         <p>The method name to add to jQuery.fn</p>
+
                     </div>
 
                     
@@ -7410,6 +8227,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
                     <div class="param-description">
                         <p>Additional properties and methods to add to subclass</p>
+
                     </div>
 
                     
@@ -7428,7 +8246,8 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
                     
                         <span class="type">Function</span>:
                     
-                    The new class object
+                    <p>The new class object</p>
+
                 
             </div>
         </div>
@@ -7439,15 +8258,15 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             <h4>Example:</h4>
 
             <div class="example-content">
-                <pre class="code prettyprint"><code>var MySuggester = $.Suggester.subclass('mysuggester', {
+                <pre class="code prettyprint"><code>var MySuggester = $.Suggester.subclass(&#39;mysuggester&#39;, {
     initialize: function($textInput, options) {
         options = options || {};
-        this.options.myOption = options.myOptions || 'default';
-        this.callParent('initialize', $textInput, options);
+        this.options.myOption = options.myOptions || &#39;default&#39;;
+        this.callParent(&#39;initialize&#39;, $textInput, options);
     }
 });
-// now call $(selector).mysuggester(options);
-</code></pre>
+// now call $(selector).mysuggester(options);</code></pre>
+
             </div>
         </div>
     
@@ -7486,6 +8305,8 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
     
 
     
+        <span class="flag chainable">chainable</span>
+    
 
     
 
@@ -7500,7 +8321,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l592"><code>src&#x2F;Suggester.js:592</code></a>
+        <a href="../files/src_Suggester.js.html#l676"><code>src&#x2F;Suggester.js:676</code></a>
         
         </p>
 
@@ -7512,6 +8333,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     <div class="description">
         <p>Open suggestion list for the given text</p>
+
     </div>
 
     
@@ -7595,7 +8417,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l853"><code>src&#x2F;Suggester.js:853</code></a>
+        <a href="../files/src_Suggester.js.html#l947"><code>src&#x2F;Suggester.js:947</code></a>
         
         </p>
 
@@ -7606,7 +8428,8 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
     </div>
 
     <div class="description">
-        <p>Initiate suggestion process if the input text is >= this.options.minChars, otherwise show prompt</p>
+        <p>Initiate suggestion process if the input text is &gt;= this.options.minChars, otherwise show prompt</p>
+
     </div>
 
     
@@ -7651,6 +8474,8 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
     
 
     
+        <span class="flag chainable">chainable</span>
+    
 
     
 
@@ -7665,7 +8490,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l678"><code>src&#x2F;Suggester.js:678</code></a>
+        <a href="../files/src_Suggester.js.html#l767"><code>src&#x2F;Suggester.js:767</code></a>
         
         </p>
 
@@ -7677,6 +8502,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     <div class="description">
         <p>Unfocus the previously focussed tag</p>
+
     </div>
 
     
@@ -7730,7 +8556,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l209"><code>src&#x2F;Suggester.js:209</code></a>
+        <a href="../files/src_Suggester.js.html#l265"><code>src&#x2F;Suggester.js:265</code></a>
         
         </p>
 
@@ -7741,6 +8567,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     <div class="description">
         <p>The container that holds the chosen tags</p>
+
     </div>
 
     
@@ -7774,7 +8601,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l197"><code>src&#x2F;Suggester.js:197</code></a>
+        <a href="../files/src_Suggester.js.html#l253"><code>src&#x2F;Suggester.js:253</code></a>
         
         </p>
 
@@ -7785,6 +8612,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     <div class="description">
         <p>The item currently selected in the suggestion box</p>
+
     </div>
 
     
@@ -7818,7 +8646,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l233"><code>src&#x2F;Suggester.js:233</code></a>
+        <a href="../files/src_Suggester.js.html#l289"><code>src&#x2F;Suggester.js:289</code></a>
         
         </p>
 
@@ -7829,6 +8657,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     <div class="description">
         <p>The element enclosing the empty text</p>
+
     </div>
 
     
@@ -7862,7 +8691,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l193"><code>src&#x2F;Suggester.js:193</code></a>
+        <a href="../files/src_Suggester.js.html#l249"><code>src&#x2F;Suggester.js:249</code></a>
         
         </p>
 
@@ -7873,6 +8702,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     <div class="description">
         <p>The tag that is selected for deletion</p>
+
     </div>
 
     
@@ -7906,7 +8736,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l217"><code>src&#x2F;Suggester.js:217</code></a>
+        <a href="../files/src_Suggester.js.html#l273"><code>src&#x2F;Suggester.js:273</code></a>
         
         </p>
 
@@ -7917,6 +8747,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     <div class="description">
         <p>The input that users type in</p>
+
     </div>
 
     
@@ -7950,7 +8781,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l221"><code>src&#x2F;Suggester.js:221</code></a>
+        <a href="../files/src_Suggester.js.html#l277"><code>src&#x2F;Suggester.js:277</code></a>
         
         </p>
 
@@ -7961,6 +8792,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     <div class="description">
         <p>The container for the input</p>
+
     </div>
 
     
@@ -7994,7 +8826,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l177"><code>src&#x2F;Suggester.js:177</code></a>
+        <a href="../files/src_Suggester.js.html#l233"><code>src&#x2F;Suggester.js:233</code></a>
         
         </p>
 
@@ -8005,6 +8837,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     <div class="description">
         <p>The input used to make the widget</p>
+
     </div>
 
     
@@ -8038,7 +8871,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l237"><code>src&#x2F;Suggester.js:237</code></a>
+        <a href="../files/src_Suggester.js.html#l293"><code>src&#x2F;Suggester.js:293</code></a>
         
         </p>
 
@@ -8049,6 +8882,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     <div class="description">
         <p>The element enclosing the prompt</p>
+
     </div>
 
     
@@ -8082,7 +8916,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l225"><code>src&#x2F;Suggester.js:225</code></a>
+        <a href="../files/src_Suggester.js.html#l281"><code>src&#x2F;Suggester.js:281</code></a>
         
         </p>
 
@@ -8093,6 +8927,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     <div class="description">
         <p>The suggestion list element</p>
+
     </div>
 
     
@@ -8126,7 +8961,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l229"><code>src&#x2F;Suggester.js:229</code></a>
+        <a href="../files/src_Suggester.js.html#l285"><code>src&#x2F;Suggester.js:285</code></a>
         
         </p>
 
@@ -8137,6 +8972,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     <div class="description">
         <p>The element that is positioned relatively to hold the absolutely positioned suggestion list</p>
+
     </div>
 
     
@@ -8170,7 +9006,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l213"><code>src&#x2F;Suggester.js:213</code></a>
+        <a href="../files/src_Suggester.js.html#l269"><code>src&#x2F;Suggester.js:269</code></a>
         
         </p>
 
@@ -8181,6 +9017,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     <div class="description">
         <p>The tag element that is cloned to make new tags</p>
+
     </div>
 
     
@@ -8214,7 +9051,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l205"><code>src&#x2F;Suggester.js:205</code></a>
+        <a href="../files/src_Suggester.js.html#l261"><code>src&#x2F;Suggester.js:261</code></a>
         
         </p>
 
@@ -8225,6 +9062,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     <div class="description">
         <p>The element that wraps the widget</p>
+
     </div>
 
     
@@ -8258,7 +9096,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l253"><code>src&#x2F;Suggester.js:253</code></a>
+        <a href="../files/src_Suggester.js.html#l309"><code>src&#x2F;Suggester.js:309</code></a>
         
         </p>
 
@@ -8268,7 +9106,8 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
     </div>
 
     <div class="description">
-        <p>The jQuery XHR object used initilized for fetching data - http://api.jquery.com/jQuery.ajax/#jqXHR</p>
+        <p>The jQuery XHR object used initilized for fetching data - <a href="http://api.jquery.com/jQuery.ajax/#jqXHR">http://api.jquery.com/jQuery.ajax/#jqXHR</a></p>
+
     </div>
 
     
@@ -8302,7 +9141,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l245"><code>src&#x2F;Suggester.js:245</code></a>
+        <a href="../files/src_Suggester.js.html#l301"><code>src&#x2F;Suggester.js:301</code></a>
         
         </p>
 
@@ -8313,6 +9152,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     <div class="description">
         <p>The search term we are currently searching for</p>
+
     </div>
 
     
@@ -8346,7 +9186,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l249"><code>src&#x2F;Suggester.js:249</code></a>
+        <a href="../files/src_Suggester.js.html#l305"><code>src&#x2F;Suggester.js:305</code></a>
         
         </p>
 
@@ -8357,6 +9197,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     <div class="description">
         <p>The text in the input box that will be used to fetch results (i.e. what the user just typed)</p>
+
     </div>
 
     
@@ -8390,7 +9231,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l181"><code>src&#x2F;Suggester.js:181</code></a>
+        <a href="../files/src_Suggester.js.html#l237"><code>src&#x2F;Suggester.js:237</code></a>
         
         </p>
 
@@ -8401,6 +9242,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
 
     <div class="description">
         <p>Array of static data used instead of an ajax call</p>
+
     </div>
 
     
@@ -8436,7 +9278,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l25"><code>src&#x2F;Suggester.js:25</code></a>
+        <a href="../files/src_Suggester.js.html#l79"><code>src&#x2F;Suggester.js:79</code></a>
         
         </p>
 
@@ -8448,6 +9290,7 @@ Note: this happens on blur when this.options.addOnBlur is true</p>
     <div class="description">
         <p>Default options. Change these to globally change the default options
 See Suggester/constructor:method for documentation on each option</p>
+
     </div>
 
     
@@ -8481,7 +9324,7 @@ See Suggester/constructor:method for documentation on each option</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l189"><code>src&#x2F;Suggester.js:189</code></a>
+        <a href="../files/src_Suggester.js.html#l245"><code>src&#x2F;Suggester.js:245</code></a>
         
         </p>
 
@@ -8491,7 +9334,8 @@ See Suggester/constructor:method for documentation on each option</p>
     </div>
 
     <div class="description">
-        <p>The name to use for hidden elements (defaults to the original input's name plus "_tags[]")</p>
+        <p>The name to use for hidden elements (defaults to the original input&#39;s name plus &quot;_tags[]&quot;)</p>
+
     </div>
 
     
@@ -8527,7 +9371,7 @@ See Suggester/constructor:method for documentation on each option</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l2294"><code>src&#x2F;Suggester.js:2294</code></a>
+        <a href="../files/src_Suggester.js.html#l2559"><code>src&#x2F;Suggester.js:2559</code></a>
         
         </p>
 
@@ -8538,6 +9382,7 @@ See Suggester/constructor:method for documentation on each option</p>
 
     <div class="description">
         <p>A collection of all the instances</p>
+
     </div>
 
     
@@ -8571,7 +9416,7 @@ See Suggester/constructor:method for documentation on each option</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l241"><code>src&#x2F;Suggester.js:241</code></a>
+        <a href="../files/src_Suggester.js.html#l297"><code>src&#x2F;Suggester.js:297</code></a>
         
         </p>
 
@@ -8582,6 +9427,7 @@ See Suggester/constructor:method for documentation on each option</p>
 
     <div class="description">
         <p>The html to use for suggestion list items</p>
+
     </div>
 
     
@@ -8615,7 +9461,7 @@ See Suggester/constructor:method for documentation on each option</p>
             
         
         
-        <a href="../files/src_Suggester.js.html#l83"><code>src&#x2F;Suggester.js:83</code></a>
+        <a href="../files/src_Suggester.js.html#l138"><code>src&#x2F;Suggester.js:138</code></a>
         
         </p>
 
@@ -8626,6 +9472,7 @@ See Suggester/constructor:method for documentation on each option</p>
 
     <div class="description">
         <p>The current options. Starts with value given in constructor</p>
+
     </div>
 
     
@@ -8635,15 +9482,15 @@ See Suggester/constructor:method for documentation on each option</p>
             <h4>Example:</h4>
 
             <div class="example-content">
-                <pre class="code prettyprint"><code>// EXAMPLE TEMPLATE CONFIG      
+                <pre class="code prettyprint"><code>// EXAMPLE TEMPLATE CONFIG        
 // change uls to divs and lis to spans
 options.template = $.Suggester.defaultOptions.template
-    .replace(/&lt;(\/)?ul/g, '&lt;$1div')
-    .replace(/&lt;(\/)?li/g, '&lt;$1span')
+    .replace(/&lt;(\/)?ul/g, &#39;&lt;$1div&#39;)
+    .replace(/&lt;(\/)?li/g, &#39;&lt;$1span&#39;)
 ;
 // custom list item template
-options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.fname} ({record.email})&lt;/li&gt;';    
-</code></pre>
+options.listItemTemplate = &#39;&lt;li class=&quot;sugg-item&quot;&gt;{record.lname}, {record.fname} ({record.email})&lt;/li&gt;&#39;;    </code></pre>
+
             </div>
         </div>
     
@@ -8662,6 +9509,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                 <div class="param-description">
                     <p>Initial data to use for suggestions</p>
+
                 </div>
 
                 
@@ -8675,7 +9523,8 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
                 
 
                 <div class="param-description">
-                    <p>The name of object property that should be used as the tag's value. Only applicable when options.data is set</p>
+                    <p>The name of object property that should be used as the tag&#39;s value. Only applicable when options.data is set</p>
+
                 </div>
 
                 
@@ -8689,7 +9538,8 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
                 
 
                 <div class="param-description">
-                    <p>The name of object property that should be used as the tag's display text. Only applicable when options.data is set</p>
+                    <p>The name of object property that should be used as the tag&#39;s display text. Only applicable when options.data is set</p>
+
                 </div>
 
                 
@@ -8704,6 +9554,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                 <div class="param-description">
                     <p>The array of object property names that should be searched when generating suggestions. Only applicable when options.data is set</p>
+
                 </div>
 
                 
@@ -8717,7 +9568,8 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
                 
 
                 <div class="param-description">
-                    <p>Where to match when finding suggestions. It can be "anywhere", "start", "end" or an integer. Only applicable when options.data is set</p>
+                    <p>Where to match when finding suggestions. It can be &quot;anywhere&quot;, &quot;start&quot;, &quot;end&quot; or an integer. Only applicable when options.data is set</p>
+
                 </div>
 
                 
@@ -8732,6 +9584,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                 <div class="param-description">
                     <p>If true, find matches regardless of case. Only applicable when options.data is set. Only applicable when options.data is set</p>
+
                 </div>
 
                 
@@ -8745,7 +9598,8 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
                 
 
                 <div class="param-description">
-                    <p>Url to call to get json or jsonp results. Use %s to indicate where search text should be inserted. e.g. "http://example.com/myjson?query=%s" or "http://example.com/myjsonp?query=%s&amp;callback=%s"</p>
+                    <p>Url to call to get json or jsonp results. Use %s to indicate where search text should be inserted. e.g. &quot;<a href="http://example.com/myjson?query=%s">http://example.com/myjson?query=%s</a>&quot; or &quot;<a href="http://example.com/myjsonp?query=%s&amp;callback=%s">http://example.com/myjsonp?query=%s&amp;callback=%s</a>&quot;</p>
+
                 </div>
 
                 
@@ -8759,7 +9613,8 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
                 
 
                 <div class="param-description">
-                    <p>Can be "json" or "jsonp". If json, options.dataUrl needs to be in the format "http://example.com/myjsonp?query=%s&amp;mycallback=%s". To handle xml, you'll need to register BeforeFetch and AfterFetch handlers or overwrite the fetchResults method</p>
+                    <p>Can be &quot;json&quot; or &quot;jsonp&quot;. If json, options.dataUrl needs to be in the format &quot;<a href="http://example.com/myjsonp?query=%s&amp;mycallback=%s">http://example.com/myjsonp?query=%s&amp;mycallback=%s</a>&quot;. To handle xml, you&#39;ll need to register BeforeFetch and AfterFetch handlers or overwrite the fetchResults method</p>
+
                 </div>
 
                 
@@ -8773,7 +9628,8 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
                 
 
                 <div class="param-description">
-                    <p>Which way should the suggestion box fly. If "up", the suggestion box will appear before the input box in the DOM tree. A css class of "sugg-fly-up" or "sugg-fly-down" is applied to the widget element based on this value</p>
+                    <p>Which way should the suggestion box fly. If &quot;up&quot;, the suggestion box will appear before the input box in the DOM tree. A css class of &quot;sugg-fly-up&quot; or &quot;sugg-fly-down&quot; is applied to the widget element based on this value</p>
+
                 </div>
 
                 
@@ -8787,7 +9643,8 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
                 
 
                 <div class="param-description">
-                    <p>If "absolute", the suggestion box will be appended to <body> and positioned and sized each time it is opened. This is useful for widgets within table elements</p>
+                    <p>If &quot;absolute&quot;, the suggestion box will be appended to <body> and positioned and sized each time it is opened. This is useful for widgets within table elements</p>
+
                 </div>
 
                 
@@ -8802,6 +9659,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                 <div class="param-description">
                     <p>If true, allow multiple tags</p>
+
                 </div>
 
                 
@@ -8816,6 +9674,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                 <div class="param-description">
                     <p>If true, the first tag will be removed when a duplicate is typed in</p>
+
                 </div>
 
                 
@@ -8829,7 +9688,8 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
                 
 
                 <div class="param-description">
-                    <p>If true, don't suggest items that have already been chosen as tags. Only applicable when options.data is set</p>
+                    <p>If true, don&#39;t suggest items that have already been chosen as tags. Only applicable when options.data is set</p>
+
                 </div>
 
                 
@@ -8844,6 +9704,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                 <div class="param-description">
                     <p>The minimum number of characters a user must type before the suggestion box will appear. If 0, show choices when input is simply focused (like a faux select widget)</p>
+
                 </div>
 
                 
@@ -8858,6 +9719,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                 <div class="param-description">
                     <p>The number of milliseconds between keystrokes before the suggestion lookup begins</p>
+
                 </div>
 
                 
@@ -8872,6 +9734,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                 <div class="param-description">
                     <p>If true, typing a comma will add the current text as a tag</p>
+
                 </div>
 
                 
@@ -8886,6 +9749,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                 <div class="param-description">
                     <p>If true, typing a tab will add the current text as a tag</p>
+
                 </div>
 
                 
@@ -8900,6 +9764,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                 <div class="param-description">
                     <p>If true, typing a semicolon will add the current text as a tag</p>
+
                 </div>
 
                 
@@ -8914,6 +9779,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                 <div class="param-description">
                     <p>If true, add tag on submit if user has entered text but not typed comma or tab</p>
+
                 </div>
 
                 
@@ -8921,13 +9787,14 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             
             <li class="param">
                 
-                    <code class="param-name optional">[addOnBlur=true]</code>
+                    <code class="param-name optional">[addOnBlur=false]</code>
                     <span class="type">Boolean</span>
                     <span class="flag optional" title="This property is optional.">optional</span>
                 
 
                 <div class="param-description">
                     <p>If true, add tag on blur if user has entered text but not typed comma or tab</p>
+
                 </div>
 
                 
@@ -8942,6 +9809,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                 <div class="param-description">
                     <p>If false, prevent the form from submitting when the user presses enter on the empty input</p>
+
                 </div>
 
                 
@@ -8956,6 +9824,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                 <div class="param-description">
                     <p>Manually set the input size property to a certain width. If auto, set size to text width</p>
+
                 </div>
 
                 
@@ -8969,7 +9838,8 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
                 
 
                 <div class="param-description">
-                    <p>Placeholder text to display when no tags are present. e.g. "Enter tags..."</p>
+                    <p>Placeholder text to display when no tags are present. e.g. &quot;Enter tags...&quot;</p>
+
                 </div>
 
                 
@@ -8983,7 +9853,8 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
                 
 
                 <div class="param-description">
-                    <p>Message to show when there are no suggestions - default is "(Type a comma to create a new item)"</p>
+                    <p>Message to show when there are no suggestions - default is &quot;(Type a comma to create a new item)&quot;</p>
+
                 </div>
 
                 
@@ -8998,6 +9869,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                 <div class="param-description">
                     <p>Message to display in suggestion list when below min char length</p>
+
                 </div>
 
                 
@@ -9012,6 +9884,22 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                 <div class="param-description">
                     <p>Only display this many suggestions</p>
+
+                </div>
+
+                
+            </li>
+            
+            <li class="param">
+                
+                    <code class="param-name optional">[saveToInput=true]</code>
+                    <span class="type">Boolean</span>
+                    <span class="flag optional" title="This property is optional.">optional</span>
+                
+
+                <div class="param-description">
+                    <p>If true, save back to original input each time a tag is added or removed</p>
+
                 </div>
 
                 
@@ -9026,6 +9914,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                 <div class="param-description">
                     <p>If true, also add a hidden input for each tag (fieldname_tag[]) for easier server-side processing (See options.hiddenName to create a custom name)</p>
+
                 </div>
 
                 
@@ -9039,7 +9928,8 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
                 
 
                 <div class="param-description">
-                    <p>The name to use for hidden elements (defaults to the original input's name plus "_tags[]")</p>
+                    <p>The name to use for hidden elements (defaults to the original input&#39;s name plus &quot;_tags[]&quot;)</p>
+
                 </div>
 
                 
@@ -9054,6 +9944,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                 <div class="param-description">
                     <p>If true, wrap first matching substring in each suggestion with <strong class="sugg-match"></strong></p>
+
                 </div>
 
                 
@@ -9068,25 +9959,24 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                 <div class="param-description">
                     <p>The html used to generate the widget. You can add more markup, change tag names, or add css classes, but all the sugg-* classes need to remain. See below for default.</p>
-
-<pre><code>&lt;div class="sugg-widget"&gt; &lt;!-- this.$widget --&gt;        
-    &lt;ul class="sugg-box"&gt; &lt;!-- this.$box --&gt;
-        &lt;li class="sugg-box-item sugg-tag"&gt;  &lt;!-- this.$tagTemplate --&gt;
-            &lt;span class="sugg-label"&gt;TAG TEXT GOES HERE&lt;/span&gt;&lt;span class="sugg-remove" title="Click to remove"&gt;&amp;times;&lt;/span&gt;
+<pre><code>&lt;div class=&quot;sugg-widget&quot;&gt; &lt;!-- this.$widget --&gt;        
+    &lt;ul class=&quot;sugg-box&quot;&gt; &lt;!-- this.$box --&gt;
+        &lt;li class=&quot;sugg-box-item sugg-tag&quot;&gt;  &lt;!-- this.$tagTemplate --&gt;
+            &lt;span class=&quot;sugg-label&quot;&gt;TAG TEXT GOES HERE&lt;/span&gt;&lt;span class=&quot;sugg-remove&quot; title=&quot;Click to remove&quot;&gt;&amp;times;&lt;/span&gt;
         &lt;/li&gt;
-        &lt;li class="sugg-box-item sugg-input-wrapper"&gt; &lt;!-- this.$inputWrapper --&gt;
-            &lt;input type="text" class="sugg-input" value="" autocomplete="off" /&gt; &lt;!-- this.$input --&gt;
+        &lt;li class=&quot;sugg-box-item sugg-input-wrapper&quot;&gt; &lt;!-- this.$inputWrapper --&gt;
+            &lt;input type=&quot;text&quot; class=&quot;sugg-input&quot; value=&quot;&quot; autocomplete=&quot;off&quot; /&gt; &lt;!-- this.$input --&gt;
         &lt;/li&gt;
     &lt;/ul&gt;
-    &lt;div class="sugg-list-wrapper"&gt;
-        &lt;ul class="sugg-list" style="display:none"&gt; &lt;!-- this.$suggList --&gt;
-            &lt;li class="sugg-item {record.cssClass}"&gt;{record.value}&lt;/li&gt; &lt;!-- innerHTML is used as this.listItemTemplate unless options.listItemTemplate is set --&gt;
-            &lt;li class="sugg-empty"&gt;&lt;/li&gt; &lt;!-- this.$empty --&gt;
-            &lt;li class="sugg-prompt"&gt;&lt;/li&gt; &lt;!-- this.$prompt --&gt;
+    &lt;div class=&quot;sugg-list-wrapper&quot;&gt;
+        &lt;ul class=&quot;sugg-list&quot; style=&quot;display:none&quot;&gt; &lt;!-- this.$suggList --&gt;
+            &lt;li class=&quot;sugg-item {record.cssClass}&quot;&gt;{record.value}&lt;/li&gt; &lt;!-- innerHTML is used as this.listItemTemplate unless options.listItemTemplate is set --&gt;
+            &lt;li class=&quot;sugg-empty&quot;&gt;&lt;/li&gt; &lt;!-- this.$empty --&gt;
+            &lt;li class=&quot;sugg-prompt&quot;&gt;&lt;/li&gt; &lt;!-- this.$prompt --&gt;
         &lt;/ul&gt;
     &lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
+&lt;/div&gt;</code></pre>
+
                 </div>
 
                 
@@ -9101,6 +9991,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                 <div class="param-description">
                     <p>Override the .sugg-item element in options.template</p>
+
                 </div>
 
                 
@@ -9114,7 +10005,8 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
                 
 
                 <div class="param-description">
-                    <p>The css class to add to widget (e.g. "sugg-theme-coolblue"). The following themes come predefined in the CSS: "coolblue", "faceblue", "graybox", "grayred"</p>
+                    <p>The css class to add to widget (e.g. &quot;sugg-theme-coolblue&quot;). The following themes come predefined in the CSS: &quot;coolblue&quot;, &quot;faceblue&quot;, &quot;graybox&quot;, &quot;grayred&quot;</p>
+
                 </div>
 
                 
@@ -9129,6 +10021,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                 <div class="param-description">
                     <p>Add a <a href="../classes/Suggester.html#event_Initialize" class="crosslink">Initialize event</a></p>
+
                 </div>
 
                 
@@ -9143,6 +10036,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                 <div class="param-description">
                     <p>Add a <a href="../classes/Suggester.html#event_Change" class="crosslink">Change event</a></p>
+
                 </div>
 
                 
@@ -9157,6 +10051,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                 <div class="param-description">
                     <p>Add a <a href="../classes/Suggester.html#event_BeforeAdd" class="crosslink">BeforeAdd event</a></p>
+
                 </div>
 
                 
@@ -9171,6 +10066,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                 <div class="param-description">
                     <p>Add a <a href="../classes/Suggester.html#event_BeforeAjax" class="crosslink">BeforeAjax event</a></p>
+
                 </div>
 
                 
@@ -9185,6 +10081,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                 <div class="param-description">
                     <p>Add a <a href="../classes/Suggester.html#event_BeforeClose" class="crosslink">BeforeClose event</a></p>
+
                 </div>
 
                 
@@ -9199,6 +10096,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                 <div class="param-description">
                     <p>Add a <a href="../classes/Suggester.html#event_BeforeFetch" class="crosslink">BeforeFetch event</a></p>
+
                 </div>
 
                 
@@ -9213,6 +10111,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                 <div class="param-description">
                     <p>Add a <a href="../classes/Suggester.html#event_BeforeFilter" class="crosslink">BeforeFilter event</a></p>
+
                 </div>
 
                 
@@ -9227,6 +10126,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                 <div class="param-description">
                     <p>Add a <a href="../classes/Suggester.html#event_BeforeFormat" class="crosslink">BeforeFormat event</a></p>
+
                 </div>
 
                 
@@ -9241,6 +10141,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                 <div class="param-description">
                     <p>Add a <a href="../classes/Suggester.html#event_BeforeHandleKey" class="crosslink">BeforeHandleKey event</a></p>
+
                 </div>
 
                 
@@ -9255,6 +10156,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                 <div class="param-description">
                     <p>Add a <a href="../classes/Suggester.html#event_BeforeMove" class="crosslink">BeforeMove event</a></p>
+
                 </div>
 
                 
@@ -9269,6 +10171,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                 <div class="param-description">
                     <p>Add a <a href="../classes/Suggester.html#event_BeforeOpen" class="crosslink">BeforeOpen event</a></p>
+
                 </div>
 
                 
@@ -9283,6 +10186,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                 <div class="param-description">
                     <p>Add a <a href="../classes/Suggester.html#event_BeforeRemove" class="crosslink">BeforeRemove event</a></p>
+
                 </div>
 
                 
@@ -9297,6 +10201,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                 <div class="param-description">
                     <p>Add a <a href="../classes/Suggester.html#event_BeforeRender" class="crosslink">BeforeRender event</a></p>
+
                 </div>
 
                 
@@ -9311,6 +10216,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                 <div class="param-description">
                     <p>Add a <a href="../classes/Suggester.html#event_BeforeSave" class="crosslink">BeforeSave event</a></p>
+
                 </div>
 
                 
@@ -9325,6 +10231,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                 <div class="param-description">
                     <p>Add a <a href="../classes/Suggester.html#event_BeforeSubmit" class="crosslink">BeforeSubmit event</a></p>
+
                 </div>
 
                 
@@ -9339,6 +10246,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                 <div class="param-description">
                     <p>Add a <a href="../classes/Suggester.html#event_BeforeSuggest" class="crosslink">BeforeSuggest event</a></p>
+
                 </div>
 
                 
@@ -9353,6 +10261,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                 <div class="param-description">
                     <p>Add a <a href="../classes/Suggester.html#event_AfterAdd" class="crosslink">AfterAdd event</a></p>
+
                 </div>
 
                 
@@ -9367,6 +10276,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                 <div class="param-description">
                     <p>Add a <a href="../classes/Suggester.html#event_AfterAjax" class="crosslink">AfterAjax event</a></p>
+
                 </div>
 
                 
@@ -9381,6 +10291,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                 <div class="param-description">
                     <p>Add a <a href="../classes/Suggester.html#event_AfterClose" class="crosslink">AfterClose event</a></p>
+
                 </div>
 
                 
@@ -9395,6 +10306,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                 <div class="param-description">
                     <p>Add a <a href="../classes/Suggester.html#event_AfterFetch" class="crosslink">AfterFetch event</a></p>
+
                 </div>
 
                 
@@ -9409,6 +10321,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                 <div class="param-description">
                     <p>Add a <a href="../classes/Suggester.html#event_AfterFilter" class="crosslink">AfterFilter event</a></p>
+
                 </div>
 
                 
@@ -9423,6 +10336,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                 <div class="param-description">
                     <p>Add a <a href="../classes/Suggester.html#event_AfterFormat" class="crosslink">AfterFormat event</a></p>
+
                 </div>
 
                 
@@ -9437,6 +10351,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                 <div class="param-description">
                     <p>Add a <a href="../classes/Suggester.html#event_AfterHandleKey" class="crosslink">AfterHandleKey event</a></p>
+
                 </div>
 
                 
@@ -9451,6 +10366,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                 <div class="param-description">
                     <p>Add a <a href="../classes/Suggester.html#event_AfterMove" class="crosslink">AfterMove event</a></p>
+
                 </div>
 
                 
@@ -9465,6 +10381,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                 <div class="param-description">
                     <p>Add a <a href="../classes/Suggester.html#event_AfterOpen" class="crosslink">AfterOpen event</a></p>
+
                 </div>
 
                 
@@ -9479,6 +10396,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                 <div class="param-description">
                     <p>Add a <a href="../classes/Suggester.html#event_AfterRemove" class="crosslink">AfterRemove event</a></p>
+
                 </div>
 
                 
@@ -9493,6 +10411,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                 <div class="param-description">
                     <p>Add a <a href="../classes/Suggester.html#event_AfterSave" class="crosslink">AfterSave event</a></p>
+
                 </div>
 
                 
@@ -9507,6 +10426,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                 <div class="param-description">
                     <p>Add a <a href="../classes/Suggester.html#event_AfterSuggest" class="crosslink">AfterSuggest event</a></p>
+
                 </div>
 
                 
@@ -9540,7 +10460,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             
         
         
-        <a href="../files/src_Suggester.js.html#l201"><code>src&#x2F;Suggester.js:201</code></a>
+        <a href="../files/src_Suggester.js.html#l257"><code>src&#x2F;Suggester.js:257</code></a>
         
         </p>
 
@@ -9551,6 +10471,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
     <div class="description">
         <p>The publish and subscribe handle - equal to $(this)</p>
+
     </div>
 
     
@@ -9584,7 +10505,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             
         
         
-        <a href="../files/src_Suggester.js.html#l185"><code>src&#x2F;Suggester.js:185</code></a>
+        <a href="../files/src_Suggester.js.html#l241"><code>src&#x2F;Suggester.js:241</code></a>
         
         </p>
 
@@ -9595,6 +10516,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
     <div class="description">
         <p>An array of Suggester.Tag objects</p>
+
     </div>
 
     
@@ -9638,7 +10560,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             
         
         
-        <a href="../files/src_Suggester.js.html#l453"><code>src&#x2F;Suggester.js:453</code></a>
+        <a href="../files/src_Suggester.js.html#l490"><code>src&#x2F;Suggester.js:490</code></a>
         
         </p>
 
@@ -9649,6 +10571,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
     <div class="description">
         <p>Allows you to take action after a tag is added</p>
+
     </div>
 
     
@@ -9656,6 +10579,22 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             <h4>Event Payload:</h4>
 
             <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">tag</code>
+                        <span class="type"><a href="../classes/Suggester.Tag.html" class="crosslink">Suggester.Tag</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The tag object that was added. Has methods such as getElement(), getHidden(), getValue(), getLabel(), etc.</p>
+
+                    </div>
+
+                    
+                </li>
             
                 <li class="param">
                     
@@ -9667,66 +10606,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                     <div class="param-description">
                         <p>The suggestion that was chosen, if any</p>
-                    </div>
 
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">tag</code>
-                        <span class="type">JQuery</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>The jQuery element of the tag that was added</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">hidden</code>
-                        <span class="type">JQuery</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>The hidden input that was generated</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">value</code>
-                        <span class="type">String</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>The value of the tag</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">label</code>
-                        <span class="type">String</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>The the label of the tag</p>
                     </div>
 
                     
@@ -9742,6 +10622,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                     <div class="param-description">
                         <p>The record that was chosen, if any</p>
+
                     </div>
 
                     
@@ -9757,11 +10638,11 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             <h4>Example:</h4>
 
             <div class="example-content">
-                <pre class="code prettyprint"><code>instance.bind('AfterAdd', function(event) {
+                <pre class="code prettyprint"><code>instance.bind(&#39;AfterAdd&#39;, function(event) {
     // fade in tag
-    event.tag.fadeIn(500);
-});
-</code></pre>
+    event.tag.getElement().fadeIn(500);
+});</code></pre>
+
             </div>
         </div>
     
@@ -9791,7 +10672,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             
         
         
-        <a href="../files/src_Suggester.js.html#l952"><code>src&#x2F;Suggester.js:952</code></a>
+        <a href="../files/src_Suggester.js.html#l1047"><code>src&#x2F;Suggester.js:1047</code></a>
         
         </p>
 
@@ -9802,6 +10683,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
     <div class="description">
         <p>Access the jqXHR after initiating the ajax call but before it returns</p>
+
     </div>
 
     
@@ -9820,6 +10702,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                     <div class="param-description">
                         <p>Settings sent to $.ajax()</p>
+
                     </div>
 
                     
@@ -9835,6 +10718,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                     <div class="param-description">
                         <p>The term which was searched</p>
+
                     </div>
 
                     
@@ -9850,6 +10734,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                     <div class="param-description">
                         <p>The jquery XMLHttpRequest object</p>
+
                     </div>
 
                     
@@ -9865,10 +10750,123 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             <h4>Example:</h4>
 
             <div class="example-content">
-                <pre class="code prettyprint"><code>instance.bind('AfterAjax', function(event) {
-    event.jqXHR.done(stopSpinner);  
-});
-</code></pre>
+                <pre class="code prettyprint"><code>instance.bind(&#39;AfterAjax&#39;, function(event) {
+    event.jqXHR.done(stopSpinner);    
+});</code></pre>
+
+            </div>
+        </div>
+    
+</div>
+
+                
+                    <div id="event_AfterBlur" class="events item">
+    <h3 class="name"><code>AfterBlur</code></h3>
+    <span class="type"></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_Suggester.js.html#l1759"><code>src&#x2F;Suggester.js:1759</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Respond after input box has blurred</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Event Payload:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">event</code>
+                        <span class="type">jQuery.Event</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The blur event</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">value</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The current value in the input box</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">newTag</code>
+                        <span class="type">JQuery | Undefined</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The new tag or undefined if the tag was not added on blur</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+
+    
+        <div class="example">
+            <h4>Example:</h4>
+
+            <div class="example-content">
+                <pre class="code prettyprint"><code>instance.bind(&#39;AfterBlur&#39;, function(event) {
+    if (!event.$newTag) {
+        $history.append(&#39;&lt;p&gt;You typed &quot;&#39; + event.value + &#39;&quot; but did not add it as a tag.&lt;/p&gt;&#39;);
+    }
+});</code></pre>
+
             </div>
         </div>
     
@@ -9898,7 +10896,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             
         
         
-        <a href="../files/src_Suggester.js.html#l1115"><code>src&#x2F;Suggester.js:1115</code></a>
+        <a href="../files/src_Suggester.js.html#l1210"><code>src&#x2F;Suggester.js:1210</code></a>
         
         </p>
 
@@ -9909,6 +10907,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
     <div class="description">
         <p>Fired after suggestion box is hidden</p>
+
     </div>
 
     
@@ -9941,7 +10940,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             
         
         
-        <a href="../files/src_Suggester.js.html#l1990"><code>src&#x2F;Suggester.js:1990</code></a>
+        <a href="../files/src_Suggester.js.html#l2270"><code>src&#x2F;Suggester.js:2270</code></a>
         
         </p>
 
@@ -9969,7 +10968,8 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
                     
 
                     <div class="param-description">
-                        <p>The jQuery XHR object (see http://api.jquery.com/jQuery.ajax/#jqXHR)</p>
+                        <p>The jQuery XHR object (see <a href="http://api.jquery.com/jQuery.ajax/#jqXHR">http://api.jquery.com/jQuery.ajax/#jqXHR</a>)</p>
+
                     </div>
 
                     
@@ -9985,6 +10985,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                     <div class="param-description">
                         <p>The Array of record objects returned from the XHR</p>
+
                     </div>
 
                     
@@ -10000,6 +11001,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                     <div class="param-description">
                         <p>The term that was search for</p>
+
                     </div>
 
                     
@@ -10015,10 +11017,10 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             <h4>Example:</h4>
 
             <div class="example-content">
-                <pre class="code prettyprint"><code>instance.bind('AfterFetch', function(event) {
-    event.data.push({value:'', label:'Adding a test suggestion at the end'});
-});
-</code></pre>
+                <pre class="code prettyprint"><code>instance.bind(&#39;AfterFetch&#39;, function(event) {
+    event.data.push({value:&#39;&#39;, label:&#39;Adding a test suggestion at the end&#39;});
+});</code></pre>
+
             </div>
         </div>
     
@@ -10048,7 +11050,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             
         
         
-        <a href="../files/src_Suggester.js.html#l1186"><code>src&#x2F;Suggester.js:1186</code></a>
+        <a href="../files/src_Suggester.js.html#l1309"><code>src&#x2F;Suggester.js:1309</code></a>
         
         </p>
 
@@ -10059,6 +11061,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
     <div class="description">
         <p>Called after the search for results</p>
+
     </div>
 
     
@@ -10077,6 +11080,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                     <div class="param-description">
                         <p>The that was searched for</p>
+
                     </div>
 
                     
@@ -10092,6 +11096,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                     <div class="param-description">
                         <p>The array of records that matched (writeable)</p>
+
                     </div>
 
                     
@@ -10107,11 +11112,90 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             <h4>Example:</h4>
 
             <div class="example-content">
-                <pre class="code prettyprint"><code>instance.bind('AfterFilter', function(event) {
+                <pre class="code prettyprint"><code>instance.bind(&#39;AfterFilter&#39;, function(event) {
     // add a result onto the beginning
-    event.results.unshift({value:'Search the web for "' + event.text '"');
-});
-</code></pre>
+    event.results.unshift({value:&#39;Search the web for &quot;&#39; + event.text &#39;&quot;&#39;);
+});</code></pre>
+
+            </div>
+        </div>
+    
+</div>
+
+                
+                    <div id="event_AfterFocus" class="events item">
+    <h3 class="name"><code>AfterFocus</code></h3>
+    <span class="type"></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_Suggester.js.html#l1710"><code>src&#x2F;Suggester.js:1710</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Respond after input box has focused</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Event Payload:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">event</code>
+                        <span class="type">jQuery.Event</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The focus event</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+
+    
+        <div class="example">
+            <h4>Example:</h4>
+
+            <div class="example-content">
+                <pre class="code prettyprint"><code>instance.bind(&#39;AfterFocus&#39;, function(event) {
+    $searchHints.show();
+});</code></pre>
+
             </div>
         </div>
     
@@ -10141,7 +11225,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             
         
         
-        <a href="../files/src_Suggester.js.html#l2074"><code>src&#x2F;Suggester.js:2074</code></a>
+        <a href="../files/src_Suggester.js.html#l2354"><code>src&#x2F;Suggester.js:2354</code></a>
         
         </p>
 
@@ -10152,6 +11236,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
     <div class="description">
         <p>Alter the HTML that has been constructed before it is put into the DOM</p>
+
     </div>
 
     
@@ -10170,6 +11255,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                     <div class="param-description">
                         <p>The record object that is being suggested</p>
+
                     </div>
 
                     
@@ -10185,6 +11271,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                     <div class="param-description">
                         <p>The part of the string that matches the suggestion search fields</p>
+
                     </div>
 
                     
@@ -10200,6 +11287,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                     <div class="param-description">
                         <p>Change the HTML before it is put into the dom</p>
+
                     </div>
 
                     
@@ -10215,11 +11303,11 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             <h4>Example:</h4>
 
             <div class="example-content">
-                <pre class="code prettyprint"><code>instance.bind('AfterFormat', function(event) {
-    event.html; // &lt;li&gt;&lt;strong class="sugg-match"&gt;Canis&lt;/strong&gt; Major&lt;/li&gt;
-    event.html = event.html.replace(/&lt;\/?strong\b/, 'em');
-});
-</code></pre>
+                <pre class="code prettyprint"><code>instance.bind(&#39;AfterFormat&#39;, function(event) {
+    event.html; // &lt;li&gt;&lt;strong class=&quot;sugg-match&quot;&gt;Canis&lt;/strong&gt; Major&lt;/li&gt;
+    event.html = event.html.replace(/&lt;\/?strong\b/, &#39;em&#39;);
+});</code></pre>
+
             </div>
         </div>
     
@@ -10249,7 +11337,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             
         
         
-        <a href="../files/src_Suggester.js.html#l1660"><code>src&#x2F;Suggester.js:1660</code></a>
+        <a href="../files/src_Suggester.js.html#l1940"><code>src&#x2F;Suggester.js:1940</code></a>
         
         </p>
 
@@ -10260,6 +11348,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
     <div class="description">
         <p>Access the keydown event after Suggester processes it</p>
+
     </div>
 
     
@@ -10278,6 +11367,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                     <div class="param-description">
                         <p>The keydown event (a raw browser event, not jQuery.Event)</p>
+
                     </div>
 
                     
@@ -10315,7 +11405,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             
         
         
-        <a href="../files/src_Suggester.js.html#l542"><code>src&#x2F;Suggester.js:542</code></a>
+        <a href="../files/src_Suggester.js.html#l623"><code>src&#x2F;Suggester.js:623</code></a>
         
         </p>
 
@@ -10326,6 +11416,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
     <div class="description">
         <p>Fired after selected suggestion is changed in response to up or down arrow</p>
+
     </div>
 
     
@@ -10343,7 +11434,8 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
                     
 
                     <div class="param-description">
-                        <p>"up" or "down"</p>
+                        <p>&quot;up&quot; or &quot;down&quot;</p>
+
                     </div>
 
                     
@@ -10359,6 +11451,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                     <div class="param-description">
                         <p>The previously selected item</p>
+
                     </div>
 
                     
@@ -10374,6 +11467,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                     <div class="param-description">
                         <p>The newly selected item</p>
+
                     </div>
 
                     
@@ -10389,10 +11483,10 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             <h4>Example:</h4>
 
             <div class="example-content">
-                <pre class="code prettyprint"><code>instance.bind('AfterMove', function(event) {
-    alert('The new selection is ' + event.current.text());
-});
-</code></pre>
+                <pre class="code prettyprint"><code>instance.bind(&#39;AfterMove&#39;, function(event) {
+    alert(&#39;The new selection is &#39; + event.current.text());
+});</code></pre>
+
             </div>
         </div>
     
@@ -10422,7 +11516,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             
         
         
-        <a href="../files/src_Suggester.js.html#l1088"><code>src&#x2F;Suggester.js:1088</code></a>
+        <a href="../files/src_Suggester.js.html#l1183"><code>src&#x2F;Suggester.js:1183</code></a>
         
         </p>
 
@@ -10433,6 +11527,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
     <div class="description">
         <p>Fires after suggestion box is displayed</p>
+
     </div>
 
     
@@ -10465,7 +11560,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             
         
         
-        <a href="../files/src_Suggester.js.html#l1753"><code>src&#x2F;Suggester.js:1753</code></a>
+        <a href="../files/src_Suggester.js.html#l2033"><code>src&#x2F;Suggester.js:2033</code></a>
         
         </p>
 
@@ -10476,6 +11571,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
     <div class="description">
         <p>Respond after values are pasted</p>
+
     </div>
 
     
@@ -10494,6 +11590,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                     <div class="param-description">
                         <p>The paste event</p>
+
                     </div>
 
                     
@@ -10509,6 +11606,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                     <div class="param-description">
                         <p>The raw value that was pasted</p>
+
                     </div>
 
                     
@@ -10524,6 +11622,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                     <div class="param-description">
                         <p>The array of tags that were added (if the value was successfully split on tab, semicolon, or comma)</p>
+
                     </div>
 
                     
@@ -10539,12 +11638,12 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             <h4>Example:</h4>
 
             <div class="example-content">
-                <pre class="code prettyprint"><code>instance.bind('AfterPaste', function(event) {
+                <pre class="code prettyprint"><code>instance.bind(&#39;AfterPaste&#39;, function(event) {
     if (event.tags.length &gt; 1) {
-        alert('You pasted ' + event.tags.length + ' tags');
+        alert(&#39;You pasted &#39; + event.tags.length + &#39; tags&#39;);
     }
-});
-</code></pre>
+});</code></pre>
+
             </div>
         </div>
     
@@ -10574,7 +11673,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             
         
         
-        <a href="../files/src_Suggester.js.html#l768"><code>src&#x2F;Suggester.js:768</code></a>
+        <a href="../files/src_Suggester.js.html#l861"><code>src&#x2F;Suggester.js:861</code></a>
         
         </p>
 
@@ -10585,6 +11684,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
     <div class="description">
         <p>Fired after a tag is removed</p>
+
     </div>
 
     
@@ -10603,6 +11703,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                     <div class="param-description">
                         <p>The tag element that was removed</p>
+
                     </div>
 
                     
@@ -10618,6 +11719,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                     <div class="param-description">
                         <p>The value of the tag that was removed</p>
+
                     </div>
 
                     
@@ -10633,6 +11735,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                     <div class="param-description">
                         <p>The label of the tag that was removed</p>
+
                     </div>
 
                     
@@ -10648,6 +11751,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                     <div class="param-description">
                         <p>tag object that was removed</p>
+
                     </div>
 
                     
@@ -10685,7 +11789,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             
         
         
-        <a href="../files/src_Suggester.js.html#l1406"><code>src&#x2F;Suggester.js:1406</code></a>
+        <a href="../files/src_Suggester.js.html#l1622"><code>src&#x2F;Suggester.js:1622</code></a>
         
         </p>
 
@@ -10696,6 +11800,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
     <div class="description">
         <p>Do something after the widget is completely rendered. Note that it fires during instantiation, so an onAfterRender property must be set in the constructor.</p>
+
     </div>
 
     
@@ -10714,6 +11819,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                     <div class="param-description">
                         <p>A reference to this.$widget</p>
+
                     </div>
 
                     
@@ -10733,8 +11839,8 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
     onAfterRender: function(event) {
         heyItsAllRendered();
     }
-});
-</code></pre>
+});</code></pre>
+
             </div>
         </div>
     
@@ -10764,7 +11870,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             
         
         
-        <a href="../files/src_Suggester.js.html#l2139"><code>src&#x2F;Suggester.js:2139</code></a>
+        <a href="../files/src_Suggester.js.html#l2422"><code>src&#x2F;Suggester.js:2422</code></a>
         
         </p>
 
@@ -10775,6 +11881,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
     <div class="description">
         <p>Do something after saving value to original input</p>
+
     </div>
 
     
@@ -10793,6 +11900,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                     <div class="param-description">
                         <p>The value before saving</p>
+
                     </div>
 
                     
@@ -10808,6 +11916,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                     <div class="param-description">
                         <p>The value that was written to the original input</p>
+
                     </div>
 
                     
@@ -10823,10 +11932,10 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             <h4>Example:</h4>
 
             <div class="example-content">
-                <pre class="code prettyprint"><code>instance.bind('AfterSave', function(event) {
+                <pre class="code prettyprint"><code>instance.bind(&#39;AfterSave&#39;, function(event) {
     saveToServer(event.newValue);
-});
-</code></pre>
+});</code></pre>
+
             </div>
         </div>
     
@@ -10856,7 +11965,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             
         
         
-        <a href="../files/src_Suggester.js.html#l1026"><code>src&#x2F;Suggester.js:1026</code></a>
+        <a href="../files/src_Suggester.js.html#l1121"><code>src&#x2F;Suggester.js:1121</code></a>
         
         </p>
 
@@ -10867,6 +11976,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
     <div class="description">
         <p>Fires after displaying suggestions</p>
+
     </div>
 
     
@@ -10899,7 +12009,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             
         
         
-        <a href="../files/src_Suggester.js.html#l395"><code>src&#x2F;Suggester.js:395</code></a>
+        <a href="../files/src_Suggester.js.html#l450"><code>src&#x2F;Suggester.js:450</code></a>
         
         </p>
 
@@ -10910,6 +12020,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
     <div class="description">
         <p>Fired before a tag is added</p>
+
     </div>
 
     
@@ -10928,6 +12039,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                     <div class="param-description">
                         <p>The tag to be added (writeable)</p>
+
                     </div>
 
                     
@@ -10943,6 +12055,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                     <div class="param-description">
                         <p>The value of the tag to be added (writeable)</p>
+
                     </div>
 
                     
@@ -10958,6 +12071,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                     <div class="param-description">
                         <p>The suggestion that was chosen, if any (writeable)</p>
+
                     </div>
 
                     
@@ -10973,6 +12087,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                     <div class="param-description">
                         <p>The record that was chosen, if any (writeable)</p>
+
                     </div>
 
                     
@@ -10988,13 +12103,13 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             <h4>Example:</h4>
 
             <div class="example-content">
-                <pre class="code prettyprint"><code>instance.bind('BeforeAdd', function(event) {
+                <pre class="code prettyprint"><code>instance.bind(&#39;BeforeAdd&#39;, function(event) {
     if (isSwearWord(evt.value)) {
         event.preventDefault();
-        alert('Tags cannot be swear words');
+        alert(&#39;Tags cannot be swear words&#39;);
     }
-});
-</code></pre>
+});</code></pre>
+
             </div>
         </div>
     
@@ -11024,7 +12139,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             
         
         
-        <a href="../files/src_Suggester.js.html#l927"><code>src&#x2F;Suggester.js:927</code></a>
+        <a href="../files/src_Suggester.js.html#l1022"><code>src&#x2F;Suggester.js:1022</code></a>
         
         </p>
 
@@ -11035,6 +12150,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
     <div class="description">
         <p>Edit settings before ajax request is sent</p>
+
     </div>
 
     
@@ -11053,6 +12169,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                     <div class="param-description">
                         <p>Settings sent to $.ajax()</p>
+
                     </div>
 
                     
@@ -11068,6 +12185,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                     <div class="param-description">
                         <p>The term for which we will search</p>
+
                     </div>
 
                     
@@ -11083,11 +12201,109 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             <h4>Example:</h4>
 
             <div class="example-content">
-                <pre class="code prettyprint"><code>instance.bind('BeforeAjax', function(event) {
+                <pre class="code prettyprint"><code>instance.bind(&#39;BeforeAjax&#39;, function(event) {
     event.settings.timeout = 5000;
     startSpinner(event.term);
-});          
-</code></pre>
+});             </code></pre>
+
+            </div>
+        </div>
+    
+</div>
+
+                
+                    <div id="event_BeforeBlur" class="events item">
+    <h3 class="name"><code>BeforeBlur</code></h3>
+    <span class="type"></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_Suggester.js.html#l1732"><code>src&#x2F;Suggester.js:1732</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Respond after user clicks or tabs out of input box</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Event Payload:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">event</code>
+                        <span class="type">jQuery.Event</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The blur event</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">value</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The current value in the input box. Changing it will change the effictive value.</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+
+    
+        <div class="example">
+            <h4>Example:</h4>
+
+            <div class="example-content">
+                <pre class="code prettyprint"><code>instance.bind(&#39;BeforeBlur&#39;, function(event) {
+    if (evt.value.match(/\d{16}/)) {
+        alert(&#39;Detected a credit card number. Scrubbing...&#39;);
+        event.value = &#39;**** &#39; + evt.value.substring(12);
+    }
+});</code></pre>
+
             </div>
         </div>
     
@@ -11117,7 +12333,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             
         
         
-        <a href="../files/src_Suggester.js.html#l1103"><code>src&#x2F;Suggester.js:1103</code></a>
+        <a href="../files/src_Suggester.js.html#l1198"><code>src&#x2F;Suggester.js:1198</code></a>
         
         </p>
 
@@ -11128,6 +12344,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
     <div class="description">
         <p>Fired before suggestion box is hidden</p>
+
     </div>
 
     
@@ -11160,7 +12377,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             
         
         
-        <a href="../files/src_Suggester.js.html#l1955"><code>src&#x2F;Suggester.js:1955</code></a>
+        <a href="../files/src_Suggester.js.html#l2235"><code>src&#x2F;Suggester.js:2235</code></a>
         
         </p>
 
@@ -11171,6 +12388,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
     <div class="description">
         <p>A chance to access the jqXHR before the ajax request has been sent</p>
+
     </div>
 
     
@@ -11188,7 +12406,8 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
                     
 
                     <div class="param-description">
-                        <p>the jQuery XHR object (see http://api.jquery.com/jQuery.ajax/#jqXHR)</p>
+                        <p>the jQuery XHR object (see <a href="http://api.jquery.com/jQuery.ajax/#jqXHR">http://api.jquery.com/jQuery.ajax/#jqXHR</a>)</p>
+
                     </div>
 
                     
@@ -11204,6 +12423,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                     <div class="param-description">
                         <p>the term that is being searched for</p>
+
                     </div>
 
                     
@@ -11219,15 +12439,15 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             <h4>Example:</h4>
 
             <div class="example-content">
-                <pre class="code prettyprint"><code>instance.bind('BeforeFetch', function(event) {
-    event.jqXHR.setRequestHeader('something','something');
+                <pre class="code prettyprint"><code>instance.bind(&#39;BeforeFetch&#39;, function(event) {
+    event.jqXHR.setRequestHeader(&#39;something&#39;,&#39;something&#39;);
     event.jqXHR.fail(function() {
-        alert('ajax call failed');
+        alert(&#39;ajax call failed&#39;);
     }).always(function() {
-        alert('ajax call finished regardless of success or failure');
+        alert(&#39;ajax call finished regardless of success or failure&#39;);
     });
-});
-</code></pre>
+});</code></pre>
+
             </div>
         </div>
     
@@ -11257,7 +12477,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             
         
         
-        <a href="../files/src_Suggester.js.html#l1141"><code>src&#x2F;Suggester.js:1141</code></a>
+        <a href="../files/src_Suggester.js.html#l1261"><code>src&#x2F;Suggester.js:1261</code></a>
         
         </p>
 
@@ -11268,6 +12488,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
     <div class="description">
         <p>Called before the search for results</p>
+
     </div>
 
     
@@ -11286,6 +12507,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                     <div class="param-description">
                         <p>The text to search for</p>
+
                     </div>
 
                     
@@ -11301,11 +12523,11 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             <h4>Example:</h4>
 
             <div class="example-content">
-                <pre class="code prettyprint"><code>instance.bind('BeforeFilter', function(event) {
+                <pre class="code prettyprint"><code>instance.bind(&#39;BeforeFilter&#39;, function(event) {
     // remove all special characters from input text
-    event.text = event.text.replace(/[^\w ]/g, '');
-});
-</code></pre>
+    event.text = event.text.replace(/[^\w ]/g, &#39;&#39;);
+});</code></pre>
+
             </div>
         </div>
     
@@ -11335,7 +12557,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             
         
         
-        <a href="../files/src_Suggester.js.html#l2038"><code>src&#x2F;Suggester.js:2038</code></a>
+        <a href="../files/src_Suggester.js.html#l2318"><code>src&#x2F;Suggester.js:2318</code></a>
         
         </p>
 
@@ -11346,6 +12568,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
     <div class="description">
         <p>Call to dynamically inject your own formatting on each suggestion</p>
+
     </div>
 
     
@@ -11364,6 +12587,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                     <div class="param-description">
                         <p>The record object that is being suggested</p>
+
                     </div>
 
                     
@@ -11379,6 +12603,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                     <div class="param-description">
                         <p>The part of the string that matches the suggestion search fields</p>
+
                     </div>
 
                     
@@ -11394,6 +12619,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                     <div class="param-description">
                         <p>If you set event.html, it will be used instead of constructing the HTML</p>
+
                     </div>
 
                     
@@ -11409,10 +12635,10 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             <h4>Example:</h4>
 
             <div class="example-content">
-                <pre class="code prettyprint"><code>instance.bind('BeforeFormat', function(event) {
-    event.html = '&lt;li&gt;' + event.record.label.toUpperCase() + '&lt;/li&gt;';
-});              
-</code></pre>
+                <pre class="code prettyprint"><code>instance.bind(&#39;BeforeFormat&#39;, function(event) {
+    event.html = &#39;&lt;li&gt;&#39; + event.record.label.toUpperCase() + &#39;&lt;/li&gt;&#39;;
+});              </code></pre>
+
             </div>
         </div>
     
@@ -11442,7 +12668,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             
         
         
-        <a href="../files/src_Suggester.js.html#l1615"><code>src&#x2F;Suggester.js:1615</code></a>
+        <a href="../files/src_Suggester.js.html#l1895"><code>src&#x2F;Suggester.js:1895</code></a>
         
         </p>
 
@@ -11453,6 +12679,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
     <div class="description">
         <p>Access the keydown event before Suggester processes it</p>
+
     </div>
 
     
@@ -11471,6 +12698,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                     <div class="param-description">
                         <p>The keydown event (a raw browser event, not jQuery.Event)</p>
+
                     </div>
 
                     
@@ -11508,7 +12736,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             
         
         
-        <a href="../files/src_Suggester.js.html#l508"><code>src&#x2F;Suggester.js:508</code></a>
+        <a href="../files/src_Suggester.js.html#l589"><code>src&#x2F;Suggester.js:589</code></a>
         
         </p>
 
@@ -11519,6 +12747,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
     <div class="description">
         <p>Fire in response to up or down arrow while suggestion list is focused</p>
+
     </div>
 
     
@@ -11536,7 +12765,8 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
                     
 
                     <div class="param-description">
-                        <p>"up" or "down"</p>
+                        <p>&quot;up&quot; or &quot;down&quot;</p>
+
                     </div>
 
                     
@@ -11551,7 +12781,8 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
                     
 
                     <div class="param-description">
-                        <p>jQuery object with the currently selected item or null if there isn't one (writeable)</p>
+                        <p>jQuery object with the currently selected item or null if there isn&#39;t one (writeable)</p>
+
                     </div>
 
                     
@@ -11567,6 +12798,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                     <div class="param-description">
                         <p>jQuery object with the item that will be selected next (writeable)</p>
+
                     </div>
 
                     
@@ -11582,10 +12814,10 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             <h4>Example:</h4>
 
             <div class="example-content">
-                <pre class="code prettyprint"><code>instance.bind('BeforeMove', function(event) {
-    alert('The new selection will be ' + event.next.text());
-});
-</code></pre>
+                <pre class="code prettyprint"><code>instance.bind(&#39;BeforeMove&#39;, function(event) {
+    alert(&#39;The new selection will be &#39; + event.next.text());
+});</code></pre>
+
             </div>
         </div>
     
@@ -11615,7 +12847,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             
         
         
-        <a href="../files/src_Suggester.js.html#l1069"><code>src&#x2F;Suggester.js:1069</code></a>
+        <a href="../files/src_Suggester.js.html#l1164"><code>src&#x2F;Suggester.js:1164</code></a>
         
         </p>
 
@@ -11626,6 +12858,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
     <div class="description">
         <p>Fires before suggestion box is displayed</p>
+
     </div>
 
     
@@ -11658,7 +12891,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             
         
         
-        <a href="../files/src_Suggester.js.html#l1716"><code>src&#x2F;Suggester.js:1716</code></a>
+        <a href="../files/src_Suggester.js.html#l1996"><code>src&#x2F;Suggester.js:1996</code></a>
         
         </p>
 
@@ -11669,6 +12902,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
     <div class="description">
         <p>Respond before values are pasted</p>
+
     </div>
 
     
@@ -11687,6 +12921,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                     <div class="param-description">
                         <p>The paste event</p>
+
                     </div>
 
                     
@@ -11702,6 +12937,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                     <div class="param-description">
                         <p>The raw value that was pasted</p>
+
                     </div>
 
                     
@@ -11717,6 +12953,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                     <div class="param-description">
                         <p>The array of tags to be added (if the value was successfully split on tab, semicolon, or comma). If changed, the added tags will change.</p>
+
                     </div>
 
                     
@@ -11732,13 +12969,13 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             <h4>Example:</h4>
 
             <div class="example-content">
-                <pre class="code prettyprint"><code>instance.bind('BeforePaste', function(event) {
-    if (event.tags.length &gt; 1 &amp;&amp; !confirm('Did you mean to paste ' + event.tags.length + ' items?\n\nClick OK to continue. Click cancel to treat it as one item.')) {
+                <pre class="code prettyprint"><code>instance.bind(&#39;BeforePaste&#39;, function(event) {
+    if (event.tags.length &gt; 1 &amp;&amp; !confirm(&#39;Did you mean to paste &#39; + event.tags.length + &#39; items?\n\nClick OK to continue. Click cancel to treat it as one item.&#39;)) {
         this.$input.val(event.value);
         event.preventDefault();
     }
-});
-</code></pre>
+});</code></pre>
+
             </div>
         </div>
     
@@ -11768,7 +13005,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             
         
         
-        <a href="../files/src_Suggester.js.html#l740"><code>src&#x2F;Suggester.js:740</code></a>
+        <a href="../files/src_Suggester.js.html#l831"><code>src&#x2F;Suggester.js:831</code></a>
         
         </p>
 
@@ -11779,6 +13016,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
     <div class="description">
         <p>Fired before a tag is removed</p>
+
     </div>
 
     
@@ -11797,6 +13035,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                     <div class="param-description">
                         <p>The tag to be removed</p>
+
                     </div>
 
                     
@@ -11812,6 +13051,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                     <div class="param-description">
                         <p>The value of the tag to be removed (writeable)</p>
+
                     </div>
 
                     
@@ -11827,6 +13067,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                     <div class="param-description">
                         <p>The label of the tag to be removed</p>
+
                     </div>
 
                     
@@ -11842,12 +13083,12 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             <h4>Example:</h4>
 
             <div class="example-content">
-                <pre class="code prettyprint"><code>instance.bind('BeforeRemove', function(event) {
-    if (!confirm('Are you sure you want to remove the tag "' + event.label + '"?')) {
+                <pre class="code prettyprint"><code>instance.bind(&#39;BeforeRemove&#39;, function(event) {
+    if (!confirm(&#39;Are you sure you want to remove the tag &quot;&#39; + event.label + &#39;&quot;?&#39;)) {
         event.preventDefault();
     }
-});
-</code></pre>
+});</code></pre>
+
             </div>
         </div>
     
@@ -11877,7 +13118,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             
         
         
-        <a href="../files/src_Suggester.js.html#l1331"><code>src&#x2F;Suggester.js:1331</code></a>
+        <a href="../files/src_Suggester.js.html#l1552"><code>src&#x2F;Suggester.js:1552</code></a>
         
         </p>
 
@@ -11888,6 +13129,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
     <div class="description">
         <p>Modify this.$widget or any of its child elements before it is manipulated or appended. Can be used to modify this.options.template with DOM methods. Note that it fires during instantiation, so an onBeforeRender property must be set in the constructor.</p>
+
     </div>
 
     
@@ -11906,6 +13148,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                     <div class="param-description">
                         <p>A reference to this.$widget</p>
+
                     </div>
 
                     
@@ -11923,10 +13166,10 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             <div class="example-content">
                 <pre class="code prettyprint"><code>new $.Suggester($input, {
     onBeforeRender: function(event) {
-        event.widget.find('.sugg-remove').text('').appendChild(myRemoveImage);
+        event.widget.find(&#39;.sugg-remove&#39;).text(&#39;&#39;).appendChild(myRemoveImage);
     }
-});         
-</code></pre>
+});            </code></pre>
+
             </div>
         </div>
     
@@ -11956,7 +13199,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             
         
         
-        <a href="../files/src_Suggester.js.html#l2118"><code>src&#x2F;Suggester.js:2118</code></a>
+        <a href="../files/src_Suggester.js.html#l2398"><code>src&#x2F;Suggester.js:2398</code></a>
         
         </p>
 
@@ -11967,6 +13210,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
     <div class="description">
         <p>Inject functionality before saving</p>
+
     </div>
 
     
@@ -11985,6 +13229,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                     <div class="param-description">
                         <p>The value that will be written to the original input (writeable)</p>
+
                     </div>
 
                     
@@ -12000,10 +13245,10 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             <h4>Example:</h4>
 
             <div class="example-content">
-                <pre class="code prettyprint"><code>instance.bind('BeforeSave', function(event) {
-    event.newValue += '!';
-});
-</code></pre>
+                <pre class="code prettyprint"><code>instance.bind(&#39;BeforeSave&#39;, function(event) {
+    event.newValue += &#39;!&#39;;
+});</code></pre>
+
             </div>
         </div>
     
@@ -12033,7 +13278,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             
         
         
-        <a href="../files/src_Suggester.js.html#l1912"><code>src&#x2F;Suggester.js:1912</code></a>
+        <a href="../files/src_Suggester.js.html#l2192"><code>src&#x2F;Suggester.js:2192</code></a>
         
         </p>
 
@@ -12044,6 +13289,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
     <div class="description">
         <p>Respond before form is submitted and before Suggester adds on submit</p>
+
     </div>
 
     
@@ -12062,6 +13308,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                     <div class="param-description">
                         <p>jQuery-wrapped browser event</p>
+
                     </div>
 
                     
@@ -12076,7 +13323,8 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
                     
 
                     <div class="param-description">
-                        <p>The input's form (same as this.$form)</p>
+                        <p>The input&#39;s form (same as this.$form)</p>
+
                     </div>
 
                     
@@ -12092,12 +13340,12 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             <h4>Example:</h4>
 
             <div class="example-content">
-                <pre class="code prettyprint"><code>instance.bind('BeforeSubmit', function(event) {
-    if (this.$input.val() !== '' &amp;&amp; !confirm('Are you sure you want to submit this form unfinished?')) {
+                <pre class="code prettyprint"><code>instance.bind(&#39;BeforeSubmit&#39;, function(event) {
+    if (this.$input.val() !== &#39;&#39; &amp;&amp; !confirm(&#39;Are you sure you want to submit this form unfinished?&#39;)) {
         event.preventDefault();
     }
-});
-</code></pre>
+});</code></pre>
+
             </div>
         </div>
     
@@ -12127,7 +13375,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             
         
         
-        <a href="../files/src_Suggester.js.html#l1004"><code>src&#x2F;Suggester.js:1004</code></a>
+        <a href="../files/src_Suggester.js.html#l1099"><code>src&#x2F;Suggester.js:1099</code></a>
         
         </p>
 
@@ -12138,6 +13386,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
     <div class="description">
         <p>Modify suggestion box behavior before it opens</p>
+
     </div>
 
     
@@ -12156,6 +13405,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
                     <div class="param-description">
                         <p>The text that was searched for</p>
+
                     </div>
 
                     
@@ -12171,12 +13421,12 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             <h4>Example:</h4>
 
             <div class="example-content">
-                <pre class="code prettyprint"><code>instance.bind('BeforeSuggest', function(event) {
-    if (evt.text == 'dont suggest') {
+                <pre class="code prettyprint"><code>instance.bind(&#39;BeforeSuggest&#39;, function(event) {
+    if (evt.text == &#39;dont suggest&#39;) {
         event.preventDefault(); // suggest box will not open
     }
-});
-</code></pre>
+});</code></pre>
+
             </div>
         </div>
     
@@ -12206,7 +13456,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             
         
         
-        <a href="../files/src_Suggester.js.html#l2156"><code>src&#x2F;Suggester.js:2156</code></a>
+        <a href="../files/src_Suggester.js.html#l508"><code>src&#x2F;Suggester.js:508</code></a>
         
         </p>
 
@@ -12216,47 +13466,10 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
     </div>
 
     <div class="description">
-        <p>Fired when the value changes as by adding or removing a tag</p>
+        <p>Fired after a tag is added or removed or after value is manually set</p>
+
     </div>
 
-    
-        <div class="params">
-            <h4>Event Payload:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">oldValue</code>
-                        <span class="type">String</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>The value before saving</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">newValue</code>
-                        <span class="type">String</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>The new value</p>
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
     
 
 
@@ -12265,10 +13478,10 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             <h4>Example:</h4>
 
             <div class="example-content">
-                <pre class="code prettyprint"><code>instance.bind('AfterChange', function(event) {
+                <pre class="code prettyprint"><code>instance.bind(&#39;Change&#39;, function(event) {
     noteSomeChange();
-});
-</code></pre>
+});</code></pre>
+
             </div>
         </div>
     
@@ -12298,7 +13511,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
             
         
         
-        <a href="../files/src_Suggester.js.html#l310"><code>src&#x2F;Suggester.js:310</code></a>
+        <a href="../files/src_Suggester.js.html#l366"><code>src&#x2F;Suggester.js:366</code></a>
         
         </p>
 
@@ -12309,6 +13522,7 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
 
     <div class="description">
         <p>Do something after the widget is completely rendered and initialized. Note that it fires during instantiation, so an onInitialize property must be set in the constructor.</p>
+
     </div>
 
     
@@ -12323,8 +13537,8 @@ options.listItemTemplate = '&lt;li class="sugg-item"&gt;{record.lname}, {record.
     onInitialize: function(event) {
         heyItsReady();
     }
-});
-</code></pre>
+});</code></pre>
+
             </div>
         </div>
     

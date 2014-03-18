@@ -1,9 +1,9 @@
 Suggester - A Better Autocomplete Widget
 =
 
-Version 1.2.2, Jul 2013, MIT License
+Version 1.3.0, Mar 2014, MIT License
 
-[Download](https://github.com/kensnyder/jQuery-Suggester/blob/master/Suggester-1.2.2-Download.zip?raw=true), [Demos](http://sandbox.kendsnyder.com/jQuery-Suggester/demos/), [Unit tests](http://sandbox.kendsnyder.com/jQuery-Suggester/test/Suggester.html)
+[Download](https://github.com/kensnyder/jQuery-Suggester/blob/master/Suggester-1.3.0-Download.zip?raw=true), [Demos](http://sandbox.kendsnyder.com/jQuery-Suggester/demos/), [Unit tests](http://sandbox.kendsnyder.com/jQuery-Suggester/test/index.html)
 
 Usage: `var suggester = new $.Suggester($input, options);`
 
@@ -39,16 +39,16 @@ Turn a text input into a Facebook-style multiple-tag input. Features include:
 * You can subscribe to any of 20+ events that allow you to inject custom functionality into nearly every action
 * You can define your own HTML structure for the widget output
 * Object-oriented structure makes it easy to extend
-* 4kb minimized and gzipped
-* Unit tested - [Unit tests](http://sandbox.kendsnyder.com/jQuery-Suggester/test/Suggester.html) 
+* Unit tested - [Unit tests](http://sandbox.kendsnyder.com/jQuery-Suggester/test/index.html) 
 * Works on IE8+, FF, Chrome, Safari
+* 27kb minimized and gzipped
 * Compatible with AMD
 
 
 How to Use
 -
 
-Suggester is compatible with jQuery 1.5+ and has been unit tested with jQuery 1.9. Download the files in [Suggester-1.2.2-Download.zip](https://github.com/kensnyder/jQuery-Suggester/blob/master/Suggester-1.2.2-Download.zip?raw=true) and copy them to your scripts directory. Include them in your document's after jQuery is included:
+Suggester is compatible with jQuery 1.5+ and has been unit tested with jQuery 1.9. Download the files in [Suggester-1.3.0-Download.zip](https://github.com/kensnyder/jQuery-Suggester/blob/master/Suggester-1.3.0-Download.zip?raw=true) and copy them to your scripts directory. Include them in your document's after jQuery is included:
 
 ```html
 <script src="/js/Suggester.min.js"></script>
@@ -192,7 +192,7 @@ Options
 	<tr>
 		<td>{Boolean}</td>
 		<td><strong>addOnBlur</strong></td>
-		<td>true</td>
+		<td>false</td>
 		<td>If true, add tag on blur if user has entered text but not typed comma or tab</td>
 	</tr>
 	<tr>
@@ -230,6 +230,12 @@ Options
 		<td><strong>maxSuggestions</strong></td>
 		<td>10</td>
 		<td>Only display this many suggestions</td>
+	</tr>
+	<tr>
+		<td>{Boolean}</td>
+		<td><strong>saveToInput</strong></td>
+		<td>true</td>
+		<td>If true, save back to original input each time a tag is added or removed</td>
 	</tr>
 	<tr>
 		<td>{Boolean}</td>
@@ -531,11 +537,8 @@ The following is a description of each event.
 	<tr>
 		<td><strong>AfterAdd</strong><br />Allows you to take action after a tag is added</td>
 		<td>
+			{Suggester.Tag} <strong>tag</strong> The tag object that was added. Has methods such as getElement(), getHidden(), getValue(), getLabel(), etc.<br />
 			{jQuery} <strong>item</strong> The suggestion that was chosen, if any<br />
-			{jQuery} <strong>tag</strong> The jQuery element of the tag that was added<br />
-			{jQuery} <strong>hidden</strong> The hidden input that was generated<br />
-			{String} <strong>value</strong> The value of the tag<br />
-			{String} <strong>label</strong> The the label of the tag<br />
 			{String} <strong>record</strong> The record that was chosen, if any<br />
 		</td>
 		<td>-</td>
@@ -558,10 +561,25 @@ The following is a description of each event.
 		<td>-</td>
 	</tr>
 	<tr>
-		<td><strong>Change</strong><br />Fired when the value changes as by adding or removing a tag</td>
+		<td><strong>BeforeBlur</strong><br />Respond after user clicks or tabs out of input box</td>
 		<td>
-			{String} <strong>oldValue</strong> The value before saving<br />
-			{String} <strong>newValue</strong> The new value<br />
+			{jQuery.Event} <strong>event</strong> The blur event<br />
+			{String} <strong>value</strong> The current value in the input box. Changing it will change the effictive value.<br />
+		</td>
+		<td>Input box remains focused</td>
+	</tr>
+	<tr>
+		<td><strong>AfterBlur</strong><br />Respond after input box has blurred</td>
+		<td>
+			{jQuery.Event} <strong>event</strong> The blur event<br />
+			{String} <strong>value</strong> The current value in the input box<br />
+			{jQuery|undefined} <strong>newTag</strong> The new tag or undefined if the tag was not added on blur<br />
+		</td>
+		<td>-</td>
+	</tr>
+	<tr>
+		<td><strong>Change</strong><br />Fired after a tag is added or removed or after value is manually set</td>
+		<td>
 		</td>
 		<td>-</td>
 	</tr>
@@ -606,6 +624,13 @@ The following is a description of each event.
 		<td>
 			{String} <strong>text</strong> The that was searched for<br />
 			{Array} <strong>results</strong> The array of records that matched (writeable)<br />
+		</td>
+		<td>-</td>
+	</tr>
+	<tr>
+		<td><strong>AfterFocus</strong><br />Respond after input box has focused</td>
+		<td>
+			{jQuery.Event} <strong>event</strong> The focus event<br />
 		</td>
 		<td>-</td>
 	</tr>
@@ -915,7 +940,7 @@ instance.methodName(arg1, arg2, argN);
 <tr>
 	<td>
 		<strong>destroy</strong>([options])<br />
-		Completely remove Suggester widget and replace with original input box (with values populated)<br />
+		Completely remove Suggester widget and unhide the original input box (with values populated)<br />
 		<strong>@param</strong> {Object} [options] <br />
 		<strong>@return</strong> {jQuery} The original input
 	</td>
@@ -924,9 +949,18 @@ instance.methodName(arg1, arg2, argN);
 <tr>
 	<td>
 		<strong>add</strong>(value[, label=value][, $item])<br />
-		Add a tag by a record<br />
+		Add a tag by a record or value<br />
 		<strong>@param</strong> {String} value the tag to add<strong>@param</strong> {String} [label=value] the text to display in the new tag<strong>@param</strong> {jQuery} [$item] Set internally when the record is added by choosing from the suggestion box<br />
 		<strong>@return</strong> {jQuery} The jQuery object containing the newly created label or undefined if one was not created
+	</td>
+</tr>
+
+<tr>
+	<td>
+		<strong>pushTag</strong>(value, label)<br />
+		Add a tag directly without triggering BeforeAdd or AfterAdd<br />
+		<strong>@param</strong> {String|Number} value The value of the tag<strong>@param</strong> {String} label The text to display on the tag<br />
+		<strong>@return</strong> {Suggester.Tag} The new tag object
 	</td>
 </tr>
 
@@ -936,7 +970,7 @@ instance.methodName(arg1, arg2, argN);
 		Add a tag with the contents of the input; e.g. when the user has typed something but clicks on another part of the form
 Note: this happens on blur when this.options.addOnBlur is true
 		<br />
-		<strong>@return</strong> {undefined}
+		<strong>@return</strong> {Suggester} 
 	</td>
 </tr>
 
@@ -945,7 +979,7 @@ Note: this happens on blur when this.options.addOnBlur is true
 		<strong>moveSelection</strong>([direction=up])<br />
 		Move the selection up or down in the suggestion box<br />
 		<strong>@param</strong> {String} [direction=up] Either &quot;up&quot; or &quot;down&quot;<br />
-		<strong>@return</strong> {undefined}
+		<strong>@return</strong> {Suggester} 
 	</td>
 </tr>
 
@@ -1167,6 +1201,15 @@ Note: this happens on blur when this.options.addOnBlur is true
 
 <tr>
 	<td>
+		<strong>blur</strong>()<br />
+		Unfocus the cursor from the text input box
+		<br />
+		<strong>@return</strong> {Suggester} 
+	</td>
+</tr>
+
+<tr>
+	<td>
 		<strong>getResults</strong>(text)<br />
 		Get suggestion result records given some text (local data)<br />
 		<strong>@param</strong> {String} text Gather suggestions based on this text<br />
@@ -1186,7 +1229,7 @@ Note: this happens on blur when this.options.addOnBlur is true
 <tr>
 	<td>
 		<strong>getTags</strong>()<br />
-		Get a collection of all the chosen tag objects
+		Get a collection of all the chosen tag objects (a shallow copy of this.tags)
 		<br />
 		<strong>@return</strong> {Array} 
 	</td>
@@ -1221,6 +1264,24 @@ Note: this happens on blur when this.options.addOnBlur is true
 
 <tr>
 	<td>
+		<strong>getValue</strong>()<br />
+		Get the current value as a comma-delimited string
+		<br />
+		<strong>@return</strong> {String} 
+	</td>
+</tr>
+
+<tr>
+	<td>
+		<strong>_handleEmptyValue</strong>()<br />
+		Helper function for setValue()
+		<br />
+		<strong>@return</strong> {Suggester} 
+	</td>
+</tr>
+
+<tr>
+	<td>
 		<strong>setTheme</strong>(themeName)<br />
 		Set the widget&#x27;s CSS theme - Adds a class &quot;sugg-theme-%name%&quot; to the widget<br />
 		<strong>@param</strong> {String} themeName The name of the theme to use<br />
@@ -1230,9 +1291,28 @@ Note: this happens on blur when this.options.addOnBlur is true
 
 <tr>
 	<td>
-		<strong>publish</strong>(type, data)<br />
+		<strong>showPlaceholder</strong>([text=this.options.placeholder])<br />
+		Replace the contents of this.$input with the placeholder value. Automatically fires when this.options.placeholder is set
+And there are no tags and we are blurring or initially rendering<br />
+		<strong>@param</strong> {String} [text=this.options.placeholder] The text to set for the placeholder (defaults to this.options.placeholder)<br />
+		<strong>@return</strong> {Suggester} 
+	</td>
+</tr>
+
+<tr>
+	<td>
+		<strong>hidePlaceholder</strong>()<br />
+		Replace placeholder string with empty text
+		<br />
+		<strong>@return</strong> {Suggester} 
+	</td>
+</tr>
+
+<tr>
+	<td>
+		<strong>publish</strong>(type[, data])<br />
 		Publish the given event name and send the given data<br />
-		<strong>@param</strong> {String} type The name of the event to publish<strong>@param</strong> {Object} data Additional data to attach to the event object<br />
+		<strong>@param</strong> {String} type The name of the event to publish<strong>@param</strong> {Object} [data] Additional data to attach to the event object<br />
 		<strong>@return</strong> {jQuery.Event} The event object which behaves much like a DOM event object
 	</td>
 </tr>
@@ -1565,10 +1645,11 @@ It attempts to split on tab, then if there are no tabs then semicolons, then if 
 
 <tr>
 	<td>
-		<strong>getValue</strong>()<br />
-		Get the current value as a comma-delimited string
-		<br />
-		<strong>@return</strong> {String} 
+		<strong>setValue</strong>(valueOrValues)<br />
+		Set the tags using an array or a comma-delimited string.
+Commas inside the tag name may be escaped with a backslash.<br />
+		<strong>@param</strong> {String|Array} valueOrValues To clear value, set to empty string, false, null or undefined<br />
+		<strong>@return</strong> {Suggester} 
 	</td>
 </tr>
 
@@ -1608,10 +1689,16 @@ suggester.bind('AfterClose', doStuff);
 suggester.focus();
 ```
 
-See the source on the [live demos](http://sandbox.kendsnyder.com/jQuery-Suggester/demos) for lots more examples.
+See the source on the [live demos](http://sandbox.kendsnyder.com/jQuery-Suggester/demos/) for lots more examples.
 
 Changelog
 -
+
+**Version 1.3.0, Mar 2014**
+* Fixes to setValue(), clear(), focus(), blur()
+* Use `git watch`
+* Documentation improvements
+* More unit tests
 
 **Version 1.2.2, Jul 2013**
 * Fixes to add()
