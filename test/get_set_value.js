@@ -37,6 +37,19 @@
 		strictEqual($input.$form.find('input[type=hidden]').eq(1).val(), 'Jupiter');
 		$input.teardown();
 	});	
+	test("Pre-filled items that are records", function() {
+		var $input = generateInput();
+		$input.val('Pencil,Paper');
+		var sugg = new $.Suggester($input, {
+			data:products,
+			valueProperty: 'id',
+			labelProperty: 'name'
+		});
+		strictEqual(sugg.tags.length, 2);
+		strictEqual(sugg.tags[0].getLabel(), 'Pencil');
+		strictEqual(sugg.tags[0].getValue(), '1001');
+		$input.teardown();
+	});	
 	test("Pre-filled items with escaped comma", function() {
 		var $input = generateInput();
 		$input.val('Piano Guys\\, The, Knight\'s Tale\\, A');
@@ -73,7 +86,7 @@
 		strictEqual($input.$form.find('input[type=hidden]').eq(1).val(), 'two');		
 		$input.teardown();
 	});
-	test("Pre-filled items", function() {
+	test("Pre-filled items, then call setValue()", function() {
 		var $input = generateInput();
 		$input.val('Uranus,Jupiter');
 		var sugg = new $.Suggester($input, {
@@ -92,6 +105,107 @@
 		strictEqual($input.$form.find('input[type=hidden]').length, 1);
 		strictEqual($input.$form.find('input[type=hidden]').eq(0).val(), 'Mars');		
 		strictEqual(sugg.tags.length, 1, 'Tags collection has length 1');
+		$input.teardown();
+	});
+	test("setValue(null)", function() {
+		var $input = generateInput();
+		var sugg = new $.Suggester($input, {
+			data:products,
+			valueProperty: 'id',
+			labelProperty: 'name'
+		});
+		sugg.setValue('Pen');
+		strictEqual(sugg.tags.length, 1);
+		strictEqual(sugg.tags[0].getValue(), '1004');
+		strictEqual(sugg.tags[0].getLabel(), 'Pen');
+		sugg.setValue(null);
+		strictEqual($input.$form.find('input[type=hidden]').length, 0);
+		strictEqual(sugg.tags.length, 0);		
+		$input.teardown();
+	});
+	test("setValue(false) with placeholder", function() {
+		var $input = generateInput();
+		var sugg = new $.Suggester($input, {
+			placeholder: 'Tags'
+		});
+		sugg.setValue('One, Two');
+		sugg.setValue(false);
+		strictEqual($input.val(), '');
+		strictEqual(sugg.$input.val(), 'Tags');
+		$input.teardown();
+	});
+	test("clear() with placeholder", function() {
+		var $input = generateInput();
+		var sugg = new $.Suggester($input, {
+			placeholder: 'Tags'
+		});
+		sugg.setValue('One, Two');
+		sugg.clear();
+		strictEqual($input.val(), '');
+		strictEqual(sugg.$input.val(), 'Tags');
+		$input.teardown();
+	});
+	test("setValue(undefined)", function() {
+		var $input = generateInput();
+		var sugg = new $.Suggester($input, {
+			data:products,
+			valueProperty: 'id',
+			labelProperty: 'name'
+		});
+		sugg.setValue('Pen');
+		strictEqual(sugg.tags.length, 1);
+		strictEqual(sugg.tags[0].getValue(), '1004');
+		strictEqual(sugg.tags[0].getLabel(), 'Pen');
+		sugg.setValue();
+		strictEqual($input.$form.find('input[type=hidden]').length, 0);
+		strictEqual(sugg.tags.length, 0);		
+		$input.teardown();
+	});
+	test("setValue('')", function() {
+		var $input = generateInput();
+		var sugg = new $.Suggester($input, {
+			data:products,
+			valueProperty: 'id',
+			labelProperty: 'name'
+		});
+		sugg.setValue('Pen');
+		strictEqual(sugg.tags.length, 1);
+		strictEqual(sugg.tags[0].getValue(), '1004');
+		strictEqual(sugg.tags[0].getLabel(), 'Pen');
+		sugg.setValue('');
+		strictEqual($input.$form.find('input[type=hidden]').length, 0);
+		strictEqual(sugg.tags.length, 0);		
+		$input.teardown();
+	});
+	test("setValue(['',''])", function() {
+		var $input = generateInput();
+		var sugg = new $.Suggester($input, {
+			data:products,
+			valueProperty: 'id',
+			labelProperty: 'name'
+		});
+		sugg.setValue('Pen');
+		strictEqual(sugg.tags.length, 1);
+		strictEqual(sugg.tags[0].getValue(), '1004');
+		strictEqual(sugg.tags[0].getLabel(), 'Pen');
+		sugg.setValue(['','']);
+		strictEqual($input.$form.find('input[type=hidden]').length, 0);
+		strictEqual(sugg.tags.length, 0);		
+		$input.teardown();
+	});
+	test("setValue(['Pen','Eraser'])", function() {
+		var $input = generateInput();
+		var sugg = new $.Suggester($input, {
+			data:products,
+			valueProperty: 'id',
+			labelProperty: 'name'
+		});
+		sugg.setValue(['Pen','Eraser']);
+		strictEqual(sugg.tags.length, 2);
+		strictEqual(sugg.tags[0].getValue(), '1004');
+		strictEqual(sugg.tags[0].getLabel(), 'Pen');
+		strictEqual(sugg.tags[1].getValue(), '1003');
+		strictEqual(sugg.tags[1].getLabel(), 'Eraser');
 		$input.teardown();
 	});
 	asyncTest("Placeholders", function() {

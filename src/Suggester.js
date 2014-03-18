@@ -56,6 +56,15 @@
 		var element = document.createElement(tag);
 		return $(element);
 	}
+	function arrayUnique(arr) {
+		var unique = [];
+		for (var i = 0, len = arr.length; i < len; i++) {
+			if (unique.indexOf(arr[i]) == -1) {
+				unique.push(arr[i]);
+			}
+		}
+		return unique;
+	}
 	
 	// get our document once
 	var $document = $(document);
@@ -1196,6 +1205,9 @@
 		 * @chainable
 		 */
 		focus: function() {
+			if (this.tags.length === 0 && this.options.placeholder) {
+				this.hidePlaceholder();
+			}
 			// use the dom method to focus
 			this.$input[0].focus();
 			return this;
@@ -1206,8 +1218,11 @@
 		 * @return {Suggester}
 		 * @chainable
 		 */
-		blur: function() {
+		blur: function() {			
 			this.$input[0].blur();
+			if (this.tags.length === 0 && this.options.placeholder) {
+				this.showPlaceholder();
+			}
 			this.closeSuggestBox();
 			return this;
 		},
@@ -1301,20 +1316,10 @@
 		 * @chainable
 		 */
 		clear: function() {
-			for (var i = 0, len = this.tags.length; i < len; i++) {
-				this.tags[i].getHidden().remove();
-				this.tags[i].getElement().remove(); 
-			}
-			this.tags = [];
-			if (this.options.saveToInput) {
-				// set the value of the original input
-				this.save();      
-			}
-			this.publish('Change');
-			return this;
+			return this.setValue(null);
 		},
 		/**
-		 * Get a collection of all the chosen tag objects (a copy of this.tags)
+		 * Get a collection of all the chosen tag objects (a shallow copy of this.tags)
 		 * @method getTags
 		 * @return {Array}
 		 */
@@ -1368,48 +1373,71 @@
 		 * Set the tags using an array or a comma-delimited string.
 		 * Commas inside the tag name may be escaped with a backslash.
 		 * @method setValue
-		 * @param {String|Array}
+		 * @param {String|Array} valueOrValues  To clear value, set to empty string, false, null or undefined
 		 * @return {Suggester}
 		 * @chainable
 		 */
 		setValue: function(valueOrValues) {
-			var i, len, value, label, record, valProp, labelProp, textTags;
+			var i, len, value, values, label, record;
+			// first remove all existing tag elements
 			for (i = 0, len = this.tags.length; i < len; i++) {
 				this.tags[i].getHidden().remove();
 				this.tags[i].$tag.remove();
 			}
 			this.tags = [];
-			if ($.isArray(valueOrValues)) {
-				valProp = this.options.valueProperty;
-				labelProp = this.options.labelProperty;
-				for (i = 0, len = valueOrValues.length; i < len; i++) {
-					record = this.searchData(valueOrValues[i], valProp === labelProp ? [valProp] : [valProp,labelProp]);
-					if (record) {
-						value = record[valProp];
-						label = record[labelProp];
-						this.pushTag(value, label);
-					}
-					else {
-						this.pushTag(valueOrValues[i], valueOrValues[i]);
-					}
-				}
-			}
-			else {
+			// then turn string into array when string is passed
+			if (typeof valueOrValues == 'string' || typeof valueOrValues == 'number') {
 				// get a list of tags to insert now based on the given string
 				// replaces escaped commas with \u0001 such that tag labels can have commas
 				// if JavaScript RegExp supported lookbehinds we wouldn't need this \u0001 deal
-				textTags = valueOrValues.replace(/\\,/g, '\u0001').split(/,/g);
-				for (i = 0, len = textTags.length; i < len; i++) {
-					value = $.trim(textTags[i].replace(/\u0001/g, ','));
-					this.pushTag(value, value);
+				valueOrValues = String(valueOrValues).replace(/\\,/g, '\u0001').split(/,/g);
+				for (i = 0, len = valueOrValues.length; i < len; i++) {
+					valueOrValues[i] = valueOrValues[i].replace(/\u0001/g, ',');
 				}
+			}
+			// ensure we now have a non-empty array
+			if (!$.isArray(valueOrValues) || valueOrValues.length === 0) {
+				return this._handleEmptyValue();
+			}
+			// trim each value and discard empty strings
+			values = [];
+			for (i = 0, len = valueOrValues.length; i < len; i++) {
+				value = $.trim(valueOrValues[i]);
+				if (value !== '') {
+					values.push(value);
+				}
+			}
+			// ensure we have a non-empty array
+			if (values.length === 0) {
+				return this._handleEmptyValue();
+			}
+			// ensure all values are unique
+			values = arrayUnique(values);
+			// search through data if we have it
+			for (var i = 0, len = values.length; i < len; i++) {
+				if (this.data.length > 0 && (record = this.searchData(values[i], [this.options.labelProperty]))) {
+					value = record[this.options.valueProperty];
+					label = record[this.options.labelProperty];
+					this.pushTag(value, label);
+				}
+				else {
+					this.pushTag(values[i], values[i]);
+				}				
 			}
 			if (this.options.saveToInput) {
 				this.save();
 			}
 			this.publish('Change');	
 			return this;
-		},				
+		},
+		_handleEmptyValue: function() {
+			this.showPlaceholder();
+			if (this.options.saveToInput) {
+				this.save();
+			}				
+			this.publish('Change');	
+			return this;			
+		},
 		/**
 		 * Set the widget's CSS theme - Adds a class "sugg-theme-%name%" to the widget
 		 * @method setTheme
