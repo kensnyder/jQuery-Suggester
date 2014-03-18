@@ -1431,7 +1431,7 @@
 			// ensure all values are unique
 			values = arrayUnique(values);
 			// search through data if we have it
-			for (var i = 0, len = values.length; i < len; i++) {
+			for (i = 0, len = values.length; i < len; i++) {
 				if (this.data.length > 0 && (record = this.searchData(values[i], [this.options.labelProperty]))) {
 					value = record[this.options.valueProperty];
 					label = record[this.options.labelProperty];
@@ -1717,7 +1717,7 @@
 		$searchHints.show();
 	});
 
-			 */ 			
+			 */
 			this.publish('AfterFocus', {
 				event: evt
 			});
@@ -1744,7 +1744,7 @@
 		}
 	});
 
-			 */ 
+			 */
 			var inputVal = $.trim(this.$input.suggGetValue());
 			var pubevt = this.publish('BeforeBlur', {
 				event: evt,
@@ -1771,8 +1771,7 @@
 		}
 	});
 
-			 */ 			
-			
+			 */
 			var sugg = this;
 			if (this.options.placeholder && pubevt.value === '') {
 				if (this.tags.length === 0) {
