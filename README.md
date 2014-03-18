@@ -41,7 +41,7 @@ Turn a text input into a Facebook-style multiple-tag input. Features include:
 * Object-oriented structure makes it easy to extend
 * Unit tested - [Unit tests](http://sandbox.kendsnyder.com/jQuery-Suggester/test/index.html) 
 * Works on IE8+, FF, Chrome, Safari
-* 27kb minimized and gzipped
+* 5kb minimized and gzipped
 * Compatible with AMD
 
 
