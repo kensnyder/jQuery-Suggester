@@ -1756,7 +1756,6 @@
 				evt.preventDefault();
 				return;
 			}
-			
 			/**
 			 * Respond after input box has blurred
 			 * @event AfterBlur
