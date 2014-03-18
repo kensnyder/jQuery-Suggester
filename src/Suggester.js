@@ -379,7 +379,7 @@
 			return this;
 		},
 		/**
-		 * Completely remove Suggester widget and replace with original input box (with values populated)
+		 * Completely remove Suggester widget and unhide the original input box (with values populated)
 		 * @method destroy
 		 * @param {Object} [options]
 		 *    @param {Boolean} [options.keepHiddenInputs=false]  If true, append all hidden inputs after the original input
@@ -407,7 +407,7 @@
 			return this.$originalInput;
 		},    
 		/**
-		 * Add a tag by a record
+		 * Add a tag by a record or value
 		 * @method add
 		 * @param {String} value  the tag to add
 		 * @param {String} [label=value]  the text to display in the new tag
@@ -556,18 +556,23 @@
 		 * Add a tag with the contents of the input; e.g. when the user has typed something but clicks on another part of the form
 		 * Note: this happens on blur when this.options.addOnBlur is true
 		 * @method addCurrentBuffer
+		 * @return {Suggester}
+		 * @chainable
 		 */
 		addCurrentBuffer: function() {
 			var inputVal = $.trim(this.$input.suggGetValue());
 			if (inputVal !== this.options.placeholder && inputVal !== '') {
 				this.add(inputVal);
 				this.$input.suggSetValue('');
-			}     
+			}
+			return this;
 		},
 		/**
 		 * Move the selection up or down in the suggestion box
 		 * @method moveSelection
 		 * @param {String} [direction=up]  Either "up" or "down"
+		 * @return {Suggester}
+		 * @chainable
 		 */
 		moveSelection: function(direction) {
 			// find all the suggestion items
@@ -640,6 +645,7 @@
 		 * @method selectItem
 		 * @param {jQuery} $tag
 		 * @return {Suggester}
+		 * @chainable
 		 */
 		selectItem: function($tag) {
 			$tag.addClass('sugg-selected');
@@ -650,6 +656,7 @@
 		 * @method deselectItem
 		 * @param {jQuery} $tag
 		 * @return {Suggester}
+		 * @chainable
 		 */   
 		deselectItem: function($tag) {
 			$tag.removeClass('sugg-selected');
@@ -659,6 +666,7 @@
 		 * Deselect all suggestions
 		 * @method deselectAllItems
 		 * @return {Suggester}
+		 * @chainable
 		 */     
 		deselectAllItems: function() {
 			this.$suggList.find('.sugg-item').removeClass('sugg-selected');
@@ -670,6 +678,7 @@
 		 * @method suggest
 		 * @param {String} text
 		 * @return {Suggester}
+		 * @chainable
 		 */
 		suggest: function(text) {
 			this._text = text;
@@ -685,6 +694,7 @@
 		 * @method addData
 		 * @params {Object[]} data  More records in the same object format as initially set
 		 * @return {Suggester}
+		 * @chainable
 		 */
 		addData: function(data) {     
 			var i, len, record;
@@ -705,6 +715,7 @@
 		 * @method setData
 		 * @params {Object[]} data
 		 * @return {Suggester}
+		 * @chainable
 		 */   
 		setData: function(data) {
 			this.data = [];
@@ -724,6 +735,7 @@
 		 * @method setFlyDirection
 		 * @param {String} direction  either "up" or "down"
 		 * @return {Suggester}
+		 * @chainable
 		 */
 		setFlyDirection: function(direction) {
 			// if the suggestion list should fly upwards instead of downwards, put the suggestion list before the input container in the dom tree
@@ -743,6 +755,7 @@
 		 * @method focusTag
 		 * @params {jQuery} $tag  The .sugg-tag element to focus
 		 * @return {Suggester}
+		 * @chainable
 		 */
 		focusTag: function($tag) {
 			this.unfocusTag();
@@ -755,6 +768,7 @@
 		 * Unfocus the previously focussed tag
 		 * @method unfocusTag
 		 * @return {Suggester}
+		 * @chainable
 		 */
 		unfocusTag: function() {
 			$document.unbind('keydown', this.removeFocusedTag).unbind('click', this.unfocusTag);
@@ -769,6 +783,7 @@
 		 * @method removeFocusedTag
 		 * @param {jQuery.Event} evt (optional)  Used to check if $document keypress is backspace or delete
 		 * @return {Suggester}
+		 * @chainable
 		 */
 		removeFocusedTag: function(evt) {
 			if (evt && evt.which && (evt.which == 8 || evt.which == 46)) {
@@ -952,6 +967,7 @@
 		 * Show the prompt text to give a hint to users. Only called when there are no items and this.options.prompt is truthy
 		 * @method showPrompt
 		 * @return {Suggester}
+		 * @chainable
 		 */
 		showPrompt: function() {
 			if (!this.$prompt) {
@@ -1316,7 +1332,8 @@
 		 * @chainable
 		 */
 		clear: function() {
-			return this.setValue(null);
+			this.setValue(null);
+			return this;
 		},
 		/**
 		 * Get a collection of all the chosen tag objects (a shallow copy of this.tags)
@@ -1430,6 +1447,12 @@
 			this.publish('Change');	
 			return this;
 		},
+		/**
+		 * Helper function for setValue()
+		 * @method _handleEmptyValue
+		 * @private
+		 * @returns {Suggester}
+		 */
 		_handleEmptyValue: function() {
 			this.showPlaceholder();
 			if (this.options.saveToInput) {
@@ -1485,7 +1508,7 @@
 		 * Publish the given event name and send the given data
 		 * @method publish
 		 * @param {String} type  The name of the event to publish
-		 * @param {Object} data  Additional data to attach to the event object
+		 * @param {Object} [data]  Additional data to attach to the event object
 		 * @return {jQuery.Event}  The event object which behaves much like a DOM event object
 		 */
 		publish: function(type, data) {
