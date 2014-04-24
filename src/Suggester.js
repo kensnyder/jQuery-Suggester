@@ -46,6 +46,12 @@
 		}
 		return this;		
 	};
+	$.fn.suggGetAttr = function(name) {
+		if (this.length > 0) {
+			return this[0].getAttribute(name);
+		}
+		return undefined;
+	};	
 	$.fn.suggSetAttr = function(name, value) {
 		if (this.length > 0) {
 			this[0].setAttribute(name, value);
@@ -351,7 +357,7 @@
 			// a collection of tags and tag data
 			this.tags = [];
 			// the name given to the hidden $input elements
-			this.hiddenName = this.options.hiddenName || this.$originalInput.suggSetAttr('name') + '_tags[]';
+			this.hiddenName = this.options.hiddenName || this.$originalInput.suggGetAttr('name') + '_tags[]';
 			// the tag that is clicked to prepare for deletion
 			this.$focusedTag = false;
 			// the currently selected suggestion
@@ -1502,6 +1508,7 @@
 		hidePlaceholder: function() {
 			this.$widget.removeClass('sugg-placeholder-on');
 			this.$input.suggSetValue('');
+			this._updateInputSize();
 			return this;
 		},
 		/**

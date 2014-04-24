@@ -245,6 +245,10 @@ See the source on the [live demos](http://sandbox.kendsnyder.com/jQuery-Suggeste
 Changelog
 -
 
+**Version 1.3.1, Apr 2014**
+* Fix to hidePlaceholder()
+* Fix input hidden name
+
 **Version 1.3.0, Mar 2014**
 * Fixes to setValue(), clear(), focus(), blur()
 * Use `git watch`

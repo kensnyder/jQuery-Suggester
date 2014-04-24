@@ -1,4 +1,4 @@
-/*! Suggester - A Better Autocomplete Widget - v1.3.0 - Mar 2014
+/*! Suggester - A Better Autocomplete Widget - v1.3.1 - Apr 2014
 * https://github.com/kensnyder/jQuery-Suggester
 * Copyright (c) 2014 Ken Snyder; Licensed MIT */
 (function (factory) {
@@ -49,6 +49,12 @@
 		}
 		return this;		
 	};
+	$.fn.suggGetAttr = function(name) {
+		if (this.length > 0) {
+			return this[0].getAttribute(name);
+		}
+		return undefined;
+	};	
 	$.fn.suggSetAttr = function(name, value) {
 		if (this.length > 0) {
 			this[0].setAttribute(name, value);
@@ -354,7 +360,7 @@
 			// a collection of tags and tag data
 			this.tags = [];
 			// the name given to the hidden $input elements
-			this.hiddenName = this.options.hiddenName || this.$originalInput.suggSetAttr('name') + '_tags[]';
+			this.hiddenName = this.options.hiddenName || this.$originalInput.suggGetAttr('name') + '_tags[]';
 			// the tag that is clicked to prepare for deletion
 			this.$focusedTag = false;
 			// the currently selected suggestion
@@ -1505,6 +1511,7 @@
 		hidePlaceholder: function() {
 			this.$widget.removeClass('sugg-placeholder-on');
 			this.$input.suggSetValue('');
+			this._updateInputSize();
 			return this;
 		},
 		/**
@@ -2553,7 +2560,7 @@
 	//
 	// static properties and methods
 	//
-	$.Suggester.version = '1.3.0';
+	$.Suggester.version = '1.3.1';
 	/**
 	 * Pass to contructor to subclass (e.g. `MySuggester.prototype = new $.Suggester($.Suggester.doSubclass)`)
 	 * @var {Object}

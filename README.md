@@ -1,9 +1,9 @@
 Suggester - A Better Autocomplete Widget
 =
 
-Version 1.3.0, Mar 2014, MIT License
+Version 1.3.1, Apr 2014, MIT License
 
-[Download](https://github.com/kensnyder/jQuery-Suggester/blob/master/Suggester-1.3.0-Download.zip?raw=true), [Demos](http://sandbox.kendsnyder.com/jQuery-Suggester/demos/), [Unit tests](http://sandbox.kendsnyder.com/jQuery-Suggester/test/index.html)
+[Download](https://github.com/kensnyder/jQuery-Suggester/blob/master/Suggester-1.3.1-Download.zip?raw=true), [Demos](http://sandbox.kendsnyder.com/jQuery-Suggester/demos/), [Unit tests](http://sandbox.kendsnyder.com/jQuery-Suggester/test/index.html)
 
 Usage: `var suggester = new $.Suggester($input, options);`
 
@@ -48,7 +48,7 @@ Turn a text input into a Facebook-style multiple-tag input. Features include:
 How to Use
 -
 
-Suggester is compatible with jQuery 1.5+ and has been unit tested with jQuery 1.9. Download the files in [Suggester-1.3.0-Download.zip](https://github.com/kensnyder/jQuery-Suggester/blob/master/Suggester-1.3.0-Download.zip?raw=true) and copy them to your scripts directory. Include them in your document's after jQuery is included:
+Suggester is compatible with jQuery 1.5+ and has been unit tested with jQuery 1.9. Download the files in [Suggester-1.3.1-Download.zip](https://github.com/kensnyder/jQuery-Suggester/blob/master/Suggester-1.3.1-Download.zip?raw=true) and copy them to your scripts directory. Include them in your document's after jQuery is included:
 
 ```html
 <script src="/js/Suggester.min.js"></script>
@@ -1693,6 +1693,10 @@ See the source on the [live demos](http://sandbox.kendsnyder.com/jQuery-Suggeste
 
 Changelog
 -
+
+**Version 1.3.1, Apr 2014**
+* Fix to hidePlaceholder()
+* Fix input hidden name
 
 **Version 1.3.0, Mar 2014**
 * Fixes to setValue(), clear(), focus(), blur()
