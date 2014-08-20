@@ -175,7 +175,7 @@
 		 *   @param {String} [options.placeholder]  Placeholder text to display when no tags are present. e.g. "Enter tags..."
 		 *   @param {String} [options.emptyText]  Message to show when there are no suggestions - default is "(Type a comma to create a new item)"
 		 *   @param {String} [options.prompt]  Message to display in suggestion list when below min char length
-		 *   @param {Number} [options.maxSuggestions=10]  Only display this many suggestions
+		 *   @param {Number} [options.maxSuggestions=10]  Only display this many suggestions (use 0 for no limit)
 		 *   @param {Boolean} [options.saveToInput=true]  If true, save back to original input each time a tag is added or removed
 		 *   @param {Boolean} [options.addHiddenInputs=true]  If true, also add a hidden input for each tag (fieldname_tag[]) for easier server-side processing (See options.hiddenName to create a custom name)
 		 *   @param {String} [options.hiddenName]  The name to use for hidden elements (defaults to the original input's name plus "_tags[]")
@@ -1755,7 +1755,10 @@
 	});
 				
 			 */	
-				suggestions = (this.data || []).slice(0, this.options.maxSuggestions || 0);
+				suggestions = (this.data || []);
+				if (this.options.maxSuggestions > 0) {
+					suggestions = suggestions.slice(0, this.options.maxSuggestions);
+				}
 				pubevt = this.publish('DefaultSuggestions', {
 					suggestions: suggestions
 				});

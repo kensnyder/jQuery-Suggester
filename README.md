@@ -229,7 +229,7 @@ Options
 		<td>{Number}</td>
 		<td><strong>maxSuggestions</strong></td>
 		<td>10</td>
-		<td>Only display this many suggestions</td>
+		<td>Only display this many suggestions (use 0 for no limit)</td>
 	</tr>
 	<tr>
 		<td>{Boolean}</td>
