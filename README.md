@@ -1,9 +1,9 @@
 Suggester - A Better Autocomplete Widget
 =
 
-Version 1.3.1, Apr 2014, MIT License
+Version 1.4.0, Aug 2014, MIT License
 
-[Download](https://github.com/kensnyder/jQuery-Suggester/blob/master/Suggester-1.3.1-Download.zip?raw=true), [Demos](http://sandbox.kendsnyder.com/jQuery-Suggester/demos/), [Unit tests](http://sandbox.kendsnyder.com/jQuery-Suggester/test/index.html)
+[Download](https://github.com/kensnyder/jQuery-Suggester/blob/master/Suggester-1.4.0-Download.zip?raw=true), [Demos](http://sandbox.kendsnyder.com/jQuery-Suggester/demos/), [Unit tests](http://sandbox.kendsnyder.com/jQuery-Suggester/test/index.html)
 
 Usage: `var suggester = new $.Suggester($input, options);`
 
@@ -48,7 +48,7 @@ Turn a text input into a Facebook-style multiple-tag input. Features include:
 How to Use
 -
 
-Suggester is compatible with jQuery 1.5+ and has been unit tested with jQuery 1.9. Download the files in [Suggester-1.3.1-Download.zip](https://github.com/kensnyder/jQuery-Suggester/blob/master/Suggester-1.3.1-Download.zip?raw=true) and copy them to your scripts directory. Include them in your document's after jQuery is included:
+Suggester is compatible with jQuery 1.5+ and has been unit tested with jQuery 1.9. Download the files in [Suggester-1.4.0-Download.zip](https://github.com/kensnyder/jQuery-Suggester/blob/master/Suggester-1.4.0-Download.zip?raw=true) and copy them to your scripts directory. Include them in your document's after jQuery is included:
 
 ```html
 <script src="/js/Suggester.min.js"></script>
@@ -305,6 +305,12 @@ Options
 	</tr>
 	<tr>
 		<td>{Function}</td>
+		<td><strong>onDefaultSuggestions</strong></td>
+		<td></td>
+		<td>Add a DefaultSuggestions event</td>
+	</tr>
+	<tr>
+		<td>{Function}</td>
 		<td><strong>onBeforeAdd</strong></td>
 		<td></td>
 		<td>Add a BeforeAdd event</td>
@@ -502,7 +508,7 @@ $(input).suggester({
 // Register events later
 $(input).suggester({
 	data: myData
-}).suggester('bind', 'BeforeOpen', doStuff);
+}).suggester('on', 'BeforeOpen', doStuff);
 ```
 
 How is data passed to event callbacks?
@@ -594,6 +600,13 @@ The following is a description of each event.
 		<td>
 		</td>
 		<td>-</td>
+	</tr>
+	<tr>
+		<td><strong>DefaultSuggestions</strong><br />Fired when options.minChars is 0 to allow you to update how default suggestions are displayed. e.g. show the most commonly used values</td>
+		<td>
+			{Array} <strong>suggetions</strong> The suggestions to show by default. Defaults to the first options.maxSuggestions within this.data. Edit value to use your own suggestions.<br />
+		</td>
+		<td>No default suggestions are displayed</td>
 	</tr>
 	<tr>
 		<td><strong>BeforeFetch</strong><br />A chance to access the jqXHR before the ajax request has been sent</td>
@@ -1273,9 +1286,10 @@ Note: this happens on blur when this.options.addOnBlur is true
 
 <tr>
 	<td>
-		<strong>_handleEmptyValue</strong>()<br />
-		Helper function for setValue()
-		<br />
+		<strong>setValue</strong>(valueOrValues)<br />
+		Set the tags using an array or a comma-delimited string.
+Commas inside the tag name may be escaped with a backslash.<br />
+		<strong>@param</strong> {String|Array} valueOrValues To clear value, set to empty string, false, null or undefined<br />
 		<strong>@return</strong> {Suggester} 
 	</td>
 </tr>
@@ -1610,7 +1624,7 @@ It attempts to split on tab, then if there are no tabs then semicolons, then if 
 <tr>
 	<td>
 		<strong>_setupPubsub</strong>()<br />
-		Setup publish/subscribe system that uses jQuery&#x27;s event system. Allows subscribing this way: instance.bind(&#x27;AfterFilter&#x27;, myhandler)
+		Setup publish/subscribe system that uses jQuery&#x27;s event system. Allows subscribing this way: instance.on(&#x27;AfterFilter&#x27;, myhandler)
 		<br />
 		<strong>@return</strong> {undefined}
 	</td>
@@ -1645,10 +1659,9 @@ It attempts to split on tab, then if there are no tabs then semicolons, then if 
 
 <tr>
 	<td>
-		<strong>setValue</strong>(valueOrValues)<br />
-		Set the tags using an array or a comma-delimited string.
-Commas inside the tag name may be escaped with a backslash.<br />
-		<strong>@param</strong> {String|Array} valueOrValues To clear value, set to empty string, false, null or undefined<br />
+		<strong>_handleEmptyValue</strong>()<br />
+		Helper function for setValue()
+		<br />
 		<strong>@return</strong> {Suggester} 
 	</td>
 </tr>
@@ -1685,7 +1698,7 @@ var suggester = new $.Suggester('.my-text-input', {
         saveToServer(event.newValue);
     }
 });
-suggester.bind('AfterClose', doStuff);
+suggester.on('AfterClose', doStuff);
 suggester.focus();
 ```
 
@@ -1693,6 +1706,12 @@ See the source on the [live demos](http://sandbox.kendsnyder.com/jQuery-Suggeste
 
 Changelog
 -
+
+**Version 1.4.0, Aug 2014**
+* new event DefaultSuggestions
+* cite some jsPerf results
+* change 'bind' to 'on' in examples and internal usage
+* fix [Object object] in tag hidden input names
 
 **Version 1.3.1, Apr 2014**
 * Fix to hidePlaceholder()

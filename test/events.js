@@ -150,4 +150,71 @@
 		strictEqual(++order, 2, 'BeforeAdd fires before adding');
 		$input.teardown();
 	});
+	// test with data, without data, cancel event
+	test("DefaultSuggestions with custom suggestions", function() {
+		var $input = generateInput();
+		var sugg = new $.Suggester($input, {
+			data: products,
+			valueProperty: 'id',
+			labelProperty: 'name',
+			listItemTemplate: '<li class="sugg-item">{record.name}</li>',
+			minChars: 0,
+			onDefaultSuggestions: function(evt) {
+				evt.suggestions = [
+					{"id":"1005","name":"Ruler"},
+					{"id":"1006","name":"Marker"}
+				];
+			}
+		});
+		sugg.focus();
+		strictEqual(sugg.$suggList.find('.sugg-item').length, 2);		
+		strictEqual(sugg.$suggList.find('.sugg-item').eq(0).text(), 'Ruler');		
+		strictEqual(sugg.$suggList.find('.sugg-item').eq(1).text(), 'Marker');		
+		$input.teardown();
+	});
+	test("DefaultSuggestions with own data", function() {
+		var $input = generateInput();
+		var sugg = new $.Suggester($input, {
+			data: products,
+			valueProperty: 'id',
+			labelProperty: 'name',
+			listItemTemplate: '<li class="sugg-item">{record.name}</li>',
+			minChars: 0
+		});
+		sugg.focus();
+		strictEqual(sugg.$suggList.find('.sugg-item').length, products.length);		
+		strictEqual(sugg.$suggList.find('.sugg-item').eq(0).text(), products[0].name);		
+		$input.teardown();
+	});
+	test("DefaultSuggestions with own data and maxSuggestions", function() {
+		var $input = generateInput();
+		var sugg = new $.Suggester($input, {
+			data: products,
+			valueProperty: 'id',
+			labelProperty: 'name',
+			listItemTemplate: '<li class="sugg-item">{record.name}</li>',
+			minChars: 0,
+			maxSuggestions: 2
+		});
+		sugg.focus();
+		strictEqual(sugg.$suggList.find('.sugg-item').length, sugg.options.maxSuggestions);		
+		strictEqual(sugg.$suggList.find('.sugg-item').eq(0).text(), products[0].name);		
+		$input.teardown();
+	});
+	test("DefaultSuggestions preventDefault", function() {
+		var $input = generateInput();
+		var sugg = new $.Suggester($input, {
+			data: products,
+			valueProperty: 'id',
+			labelProperty: 'name',
+			listItemTemplate: '<li class="sugg-item">{record.name}</li>',
+			minChars: 0,
+			onDefaultSuggestions: function(evt) {
+				evt.preventDefault();
+			}
+		});
+		sugg.focus();
+		strictEqual(sugg.$suggList.find('.sugg-item').length, 0);		
+		$input.teardown();
+	});
 }(jQuery));

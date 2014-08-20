@@ -2,7 +2,7 @@
     "project": {
         "name": "Suggester",
         "description": "Turn a text input into a Facebook-style multiple-tag input. Lots of options and event hooks.",
-        "version": "1.3.1",
+        "version": "1.4.0",
         "url": "https://github.com/kensnyder/jQuery-Suggester"
     },
     "files": {
@@ -35,7 +35,7 @@
             },
             "tag": "module",
             "file": "src/Suggester.js",
-            "line": 2673
+            "line": 2729
         }
     },
     "classes": {
@@ -50,7 +50,7 @@
             "module": "jQuery",
             "namespace": "",
             "file": "src/Suggester.js",
-            "line": 319,
+            "line": 326,
             "is_constructor": 1,
             "example": [
                 "\n\n\t// Instantiate the OOP way\n\tvar instance = new $.Suggester('selector', options)\n\t\t\n\t// Instantiate the jQuery way\n\t$('selector').suggester(options);\n\t// call methods on the instance\n\t$('selector').suggester('method', arg1, arg2);\n\t// initialize and get back instance\n\tvar instance = $('selector').suggester('getInstance');"
@@ -81,7 +81,7 @@
             "module": "jQuery",
             "namespace": "Suggester",
             "file": "src/Suggester.js",
-            "line": 2673,
+            "line": 2729,
             "is_constructor": 1,
             "params": [
                 {
@@ -132,7 +132,7 @@
     "classitems": [
         {
             "file": "src/Suggester.js",
-            "line": 85,
+            "line": 91,
             "description": "Default options. Change these to globally change the default options\nSee {{#crossLink \"Suggester/constructor:method\"}}constructor{{/crossLink}} for documentation on each option",
             "itemtype": "property",
             "name": "defaultOptions",
@@ -143,7 +143,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 144,
+            "line": 150,
             "description": "The current options. Starts with value given in constructor",
             "itemtype": "property",
             "name": "options",
@@ -392,6 +392,12 @@
                     "optional": true
                 },
                 {
+                    "name": "onDefaultSuggestions",
+                    "description": "Add a {{#crossLink \"Suggester/DefaultSuggestions:event\"}}DefaultSuggestions event{{/crossLink}}",
+                    "type": "Function",
+                    "optional": true
+                },
+                {
                     "name": "onBeforeAdd",
                     "description": "Add a {{#crossLink \"Suggester/BeforeAdd:event\"}}BeforeAdd event{{/crossLink}}",
                     "type": "Function",
@@ -551,7 +557,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 239,
+            "line": 246,
             "description": "The input used to make the widget",
             "itemtype": "property",
             "name": "$originalInput",
@@ -561,7 +567,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 243,
+            "line": 250,
             "description": "Array of static data used instead of an ajax call",
             "itemtype": "property",
             "name": "data",
@@ -571,7 +577,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 247,
+            "line": 254,
             "description": "An array of Suggester.Tag objects",
             "itemtype": "property",
             "name": "tags",
@@ -581,7 +587,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 251,
+            "line": 258,
             "description": "The name to use for hidden elements (defaults to the original input's name plus \"_tags[]\")",
             "itemtype": "property",
             "name": "hiddenName",
@@ -591,7 +597,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 255,
+            "line": 262,
             "description": "The tag that is selected for deletion",
             "itemtype": "property",
             "name": "$focusedTag",
@@ -601,7 +607,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 259,
+            "line": 266,
             "description": "The item currently selected in the suggestion box",
             "itemtype": "property",
             "name": "$currentItem",
@@ -611,7 +617,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 263,
+            "line": 270,
             "description": "The publish and subscribe handle - equal to $(this)",
             "itemtype": "property",
             "name": "pubsub",
@@ -621,7 +627,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 267,
+            "line": 274,
             "description": "The element that wraps the widget",
             "itemtype": "property",
             "name": "$widget",
@@ -631,7 +637,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 271,
+            "line": 278,
             "description": "The container that holds the chosen tags",
             "itemtype": "property",
             "name": "$box",
@@ -641,7 +647,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 275,
+            "line": 282,
             "description": "The tag element that is cloned to make new tags",
             "itemtype": "property",
             "name": "$tagTemplate",
@@ -651,7 +657,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 279,
+            "line": 286,
             "description": "The input that users type in",
             "itemtype": "property",
             "name": "$input",
@@ -661,7 +667,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 283,
+            "line": 290,
             "description": "The container for the input",
             "itemtype": "property",
             "name": "$inputWrapper",
@@ -671,7 +677,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 287,
+            "line": 294,
             "description": "The suggestion list element",
             "itemtype": "property",
             "name": "$suggList",
@@ -681,7 +687,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 291,
+            "line": 298,
             "description": "The element that is positioned relatively to hold the absolutely positioned suggestion list",
             "itemtype": "property",
             "name": "$suggListWrapper",
@@ -691,7 +697,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 295,
+            "line": 302,
             "description": "The element enclosing the empty text",
             "itemtype": "property",
             "name": "$empty",
@@ -701,7 +707,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 299,
+            "line": 306,
             "description": "The element enclosing the prompt",
             "itemtype": "property",
             "name": "$prompt",
@@ -711,7 +717,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 303,
+            "line": 310,
             "description": "The html to use for suggestion list items",
             "itemtype": "property",
             "name": "listItemTemplate",
@@ -721,7 +727,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 307,
+            "line": 314,
             "description": "The search term we are currently searching for",
             "itemtype": "property",
             "name": "_searchTerm",
@@ -731,7 +737,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 311,
+            "line": 318,
             "description": "The text in the input box that will be used to fetch results (i.e. what the user just typed)",
             "itemtype": "property",
             "name": "_text",
@@ -741,7 +747,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 315,
+            "line": 322,
             "description": "The jQuery XHR object used initilized for fetching data - http://api.jquery.com/jQuery.ajax/#jqXHR",
             "itemtype": "property",
             "name": "_jqXHR",
@@ -751,7 +757,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 372,
+            "line": 382,
             "description": "Do something after the widget is completely rendered and initialized. Note that it fires during instantiation, so an onInitialize property must be set in the constructor.",
             "itemtype": "event",
             "name": "Initialize",
@@ -763,7 +769,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 387,
+            "line": 397,
             "description": "Completely remove Suggester widget and unhide the original input box (with values populated)",
             "itemtype": "method",
             "name": "destroy",
@@ -793,7 +799,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 415,
+            "line": 425,
             "description": "Add a tag by a record or value",
             "itemtype": "method",
             "name": "add",
@@ -826,7 +832,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 456,
+            "line": 466,
             "description": "Fired before a tag is added",
             "itemtype": "event",
             "name": "BeforeAdd",
@@ -854,14 +860,14 @@
             ],
             "ifprevented": "The tag is not added",
             "example": [
-                "       \n\t\t\t \n\tinstance.bind('BeforeAdd', function(event) {\n\t\tif (isSwearWord(evt.value)) {\n\t\t\tevent.preventDefault();\n\t\t\talert('Tags cannot be swear words');\n\t\t}\n\t});"
+                "       \n\t\t\t \n\tinstance.on('BeforeAdd', function(event) {\n\t\tif (isSwearWord(event.value)) {\n\t\t\tevent.preventDefault();\n\t\t\talert('Tags cannot be swear words');\n\t\t}\n\t});\n\t\t\t"
             ],
             "class": "Suggester",
             "module": "jQuery"
         },
         {
             "file": "src/Suggester.js",
-            "line": 496,
+            "line": 507,
             "description": "Allows you to take action after a tag is added",
             "itemtype": "event",
             "name": "AfterAdd",
@@ -883,26 +889,26 @@
                 }
             ],
             "example": [
-                "\n\t\t\t \n\tinstance.bind('AfterAdd', function(event) {\n\t\t// fade in tag\n\t\tevent.tag.getElement().fadeIn(500);\n\t});"
+                "\n\t\t\t \n\tinstance.on('AfterAdd', function(event) {\n\t\t// fade in tag\n\t\tevent.tag.getElement().fadeIn(500);\n\t});\n\t\t\t"
             ],
             "class": "Suggester",
             "module": "jQuery"
         },
         {
             "file": "src/Suggester.js",
-            "line": 514,
+            "line": 526,
             "description": "Fired after a tag is added or removed or after value is manually set",
             "itemtype": "event",
             "name": "Change",
             "example": [
-                "\n\n\tinstance.bind('Change', function(event) {\n\t\tnoteSomeChange();\n\t});\n"
+                "\n\n\tinstance.on('Change', function(event) {\n\t\tnoteSomeChange();\n\t});\n"
             ],
             "class": "Suggester",
             "module": "jQuery"
         },
         {
             "file": "src/Suggester.js",
-            "line": 527,
+            "line": 539,
             "description": "Add a tag directly without triggering BeforeAdd or AfterAdd",
             "itemtype": "method",
             "name": "pushTag",
@@ -927,7 +933,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 561,
+            "line": 573,
             "description": "Add a tag with the contents of the input; e.g. when the user has typed something but clicks on another part of the form\nNote: this happens on blur when this.options.addOnBlur is true",
             "itemtype": "method",
             "name": "addCurrentBuffer",
@@ -941,7 +947,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 576,
+            "line": 588,
             "description": "Move the selection up or down in the suggestion box",
             "itemtype": "method",
             "name": "moveSelection",
@@ -964,7 +970,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 595,
+            "line": 607,
             "description": "Fire in response to up or down arrow while suggestion list is focused",
             "itemtype": "event",
             "name": "BeforeMove",
@@ -987,14 +993,14 @@
             ],
             "ifprevented": "Movement is cancelled",
             "example": [
-                "\n\n\tinstance.bind('BeforeMove', function(event) {\n\t\talert('The new selection will be ' + event.next.text());\n\t});\n\t\t\t"
+                "\n\n\tinstance.on('BeforeMove', function(event) {\n\t\talert('The new selection will be ' + event.next.text());\n\t});\n\t\t\t"
             ],
             "class": "Suggester",
             "module": "jQuery"
         },
         {
             "file": "src/Suggester.js",
-            "line": 629,
+            "line": 641,
             "description": "Fired after selected suggestion is changed in response to up or down arrow",
             "itemtype": "event",
             "name": "AfterMove",
@@ -1016,14 +1022,14 @@
                 }
             ],
             "example": [
-                "\n\t\n\tinstance.bind('AfterMove', function(event) {\n\t\talert('The new selection is ' + event.current.text());\n\t});\n\t\t\t"
+                "\n\t\n\tinstance.on('AfterMove', function(event) {\n\t\talert('The new selection is ' + event.current.text());\n\t});\n\t\t\t"
             ],
             "class": "Suggester",
             "module": "jQuery"
         },
         {
             "file": "src/Suggester.js",
-            "line": 649,
+            "line": 661,
             "description": "Select a suggestion",
             "itemtype": "method",
             "name": "selectItem",
@@ -1044,7 +1050,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 660,
+            "line": 672,
             "description": "Deselect a suggestion",
             "itemtype": "method",
             "name": "deselectItem",
@@ -1065,7 +1071,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 671,
+            "line": 683,
             "description": "Deselect all suggestions",
             "itemtype": "method",
             "name": "deselectAllItems",
@@ -1079,7 +1085,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 682,
+            "line": 694,
             "description": "Open suggestion list for the given text",
             "itemtype": "method",
             "name": "suggest",
@@ -1100,7 +1106,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 698,
+            "line": 710,
             "description": "Add more data records to the autosuggest list. Does not apply when dataUrl is set",
             "itemtype": "method",
             "name": "addData",
@@ -1121,7 +1127,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 719,
+            "line": 731,
             "description": "Set data records to the autosuggest list. Does not apply when dataUrl is set",
             "itemtype": "method",
             "name": "setData",
@@ -1142,7 +1148,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 731,
+            "line": 743,
             "description": "Get all the records in the autosuggest list. Does not apply when dataUrl is set",
             "itemtype": "method",
             "name": "getData",
@@ -1155,7 +1161,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 739,
+            "line": 751,
             "description": "Set the direction of the suggestion menu, to fly upwards or downwards",
             "itemtype": "method",
             "name": "setFlyDirection",
@@ -1176,7 +1182,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 759,
+            "line": 771,
             "description": "Focus on a previously added tag",
             "itemtype": "method",
             "name": "focusTag",
@@ -1197,7 +1203,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 773,
+            "line": 785,
             "description": "Unfocus the previously focussed tag",
             "itemtype": "method",
             "name": "unfocusTag",
@@ -1211,7 +1217,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 787,
+            "line": 799,
             "description": "Remove the focused tag",
             "itemtype": "method",
             "name": "removeFocusedTag",
@@ -1232,7 +1238,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 805,
+            "line": 817,
             "description": "Remove a tag given its text or jQuery element or HTML element",
             "itemtype": "method",
             "name": "remove",
@@ -1253,7 +1259,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 837,
+            "line": 849,
             "description": "Fired before a tag is removed",
             "itemtype": "event",
             "name": "BeforeRemove",
@@ -1276,14 +1282,14 @@
             ],
             "ifprevented": "The tag will not be removed",
             "example": [
-                "\n\t\t\t \n\tinstance.bind('BeforeRemove', function(event) {\n\t\tif (!confirm('Are you sure you want to remove the tag \"' + event.label + '\"?')) {\n\t\t\tevent.preventDefault();\n\t\t}\n\t});\n\t\t\t "
+                "\n\t\t\t \n\tinstance.on('BeforeRemove', function(event) {\n\t\tif (!confirm('Are you sure you want to remove the tag \"' + event.label + '\"?')) {\n\t\t\tevent.preventDefault();\n\t\t}\n\t});\n\t\t\t "
             ],
             "class": "Suggester",
             "module": "jQuery"
         },
         {
             "file": "src/Suggester.js",
-            "line": 867,
+            "line": 879,
             "description": "Fired after a tag is removed",
             "itemtype": "event",
             "name": "AfterRemove",
@@ -1314,7 +1320,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 884,
+            "line": 896,
             "description": "Find a suggestion record by text. Only applies when this.options.data is set.",
             "itemtype": "method",
             "name": "findRecord",
@@ -1334,7 +1340,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 893,
+            "line": 905,
             "description": "Search through this.data to find a record with a value or label equal to the given value",
             "itemtype": "method",
             "name": "searchData",
@@ -1359,7 +1365,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 953,
+            "line": 965,
             "description": "Initiate suggestion process if the input text is >= this.options.minChars, otherwise show prompt",
             "itemtype": "method",
             "name": "suggestIfNeeded",
@@ -1373,7 +1379,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 972,
+            "line": 984,
             "description": "Show the prompt text to give a hint to users. Only called when there are no items and this.options.prompt is truthy",
             "itemtype": "method",
             "name": "showPrompt",
@@ -1387,7 +1393,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 987,
+            "line": 999,
             "description": "Show text indicating there are no suggestions - defined in this.options.emptyText",
             "itemtype": "method",
             "name": "showEmptyText",
@@ -1401,7 +1407,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 1005,
+            "line": 1017,
             "description": "Fetch suggestions from an ajax URL",
             "itemtype": "method",
             "name": "fetchResults",
@@ -1421,7 +1427,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 1028,
+            "line": 1040,
             "description": "Edit settings before ajax request is sent",
             "itemtype": "event",
             "name": "BeforeAjax",
@@ -1439,14 +1445,14 @@
             ],
             "ifcancelled": "Ajax is not run and this._afterFetch is run",
             "example": [
-                "\n\t\t\t \n\tinstance.bind('BeforeAjax', function(event) {\n\t\tevent.settings.timeout = 5000;\n\t\tstartSpinner(event.term);\n\t});\t\t\t \n\t\t\t "
+                "\n\t\t\t \n\tinstance.on('BeforeAjax', function(event) {\n\t\tevent.settings.timeout = 5000;\n\t\tstartSpinner(event.term);\n\t});\t\t\t \n\t\t\t "
             ],
             "class": "Suggester",
             "module": "jQuery"
         },
         {
             "file": "src/Suggester.js",
-            "line": 1053,
+            "line": 1065,
             "description": "Access the jqXHR after initiating the ajax call but before it returns",
             "itemtype": "event",
             "name": "AfterAjax",
@@ -1468,14 +1474,14 @@
                 }
             ],
             "example": [
-                "\n\t\t\t \n\tinstance.bind('AfterAjax', function(event) {\n\t\tevent.jqXHR.done(stopSpinner);\t\n\t});\n\t\t\t "
+                "\n\t\t\t \n\tinstance.on('AfterAjax', function(event) {\n\t\tevent.jqXHR.done(stopSpinner);\t\n\t});\n\t\t\t "
             ],
             "class": "Suggester",
             "module": "jQuery"
         },
         {
             "file": "src/Suggester.js",
-            "line": 1073,
+            "line": 1085,
             "description": "Cancel the XHR. Used when user starts typing again before XHR completes",
             "itemtype": "method",
             "name": "abortFetch",
@@ -1489,7 +1495,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 1085,
+            "line": 1097,
             "description": "Take the given records and build and display suggestion box. Usually only called internally.",
             "itemtype": "method",
             "name": "handleSuggestions",
@@ -1510,7 +1516,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 1105,
+            "line": 1117,
             "description": "Modify suggestion box behavior before it opens",
             "itemtype": "event",
             "name": "BeforeSuggest",
@@ -1523,14 +1529,14 @@
             ],
             "ifprevented": "The suggestion list is built but not displayed",
             "example": [
-                "\n\n\tinstance.bind('BeforeSuggest', function(event) {\n\t\tif (evt.text == 'dont suggest') {\n\t\t\tevent.preventDefault(); // suggest box will not open\n\t\t}\n\t});\n"
+                "\n\n\tinstance.on('BeforeSuggest', function(event) {\n\t\tif (evt.text == 'dont suggest') {\n\t\t\tevent.preventDefault(); // suggest box will not open\n\t\t}\n\t});\n"
             ],
             "class": "Suggester",
             "module": "jQuery"
         },
         {
             "file": "src/Suggester.js",
-            "line": 1127,
+            "line": 1139,
             "description": "Fires after displaying suggestions",
             "itemtype": "event",
             "name": "AfterSuggest",
@@ -1539,7 +1545,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 1134,
+            "line": 1146,
             "description": "Return true if suggestion box is open",
             "itemtype": "method",
             "name": "isSuggestBoxOpen",
@@ -1552,7 +1558,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 1142,
+            "line": 1154,
             "description": "Manually open the suggestion box in whatever state it is. Usually only called internally.",
             "itemtype": "method",
             "name": "openSuggestBox",
@@ -1566,7 +1572,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 1170,
+            "line": 1182,
             "description": "Fires before suggestion box is displayed",
             "itemtype": "event",
             "name": "BeforeOpen",
@@ -1576,7 +1582,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 1189,
+            "line": 1201,
             "description": "Fires after suggestion box is displayed",
             "itemtype": "event",
             "name": "AfterOpen",
@@ -1585,7 +1591,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 1196,
+            "line": 1208,
             "description": "Hide the suggestion box",
             "itemtype": "method",
             "name": "closeSuggestBox",
@@ -1599,7 +1605,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 1204,
+            "line": 1216,
             "description": "Fired before suggestion box is hidden",
             "itemtype": "event",
             "name": "BeforeClose",
@@ -1609,7 +1615,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 1216,
+            "line": 1228,
             "description": "Fired after suggestion box is hidden",
             "itemtype": "event",
             "name": "AfterClose",
@@ -1618,7 +1624,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 1223,
+            "line": 1235,
             "description": "Focus cursor on text input box",
             "itemtype": "method",
             "name": "focus",
@@ -1632,7 +1638,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 1237,
+            "line": 1249,
             "description": "Unfocus the cursor from the text input box",
             "itemtype": "method",
             "name": "blur",
@@ -1646,7 +1652,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 1251,
+            "line": 1263,
             "description": "Return true if cursor is focused on input box",
             "return": {
                 "description": "",
@@ -1657,7 +1663,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 1258,
+            "line": 1270,
             "description": "Get suggestion result records given some text (local data)",
             "itemtype": "method",
             "name": "getResults",
@@ -1677,7 +1683,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 1267,
+            "line": 1279,
             "description": "Called before the search for results",
             "itemtype": "event",
             "name": "BeforeFilter",
@@ -1689,14 +1695,14 @@
                 }
             ],
             "example": [
-                "\n\n\tinstance.bind('BeforeFilter', function(event) {\n\t\t// remove all special characters from input text\n\t\tevent.text = event.text.replace(/[^\\w ]/g, '');\n\t});\n"
+                "\n\n\tinstance.on('BeforeFilter', function(event) {\n\t\t// remove all special characters from input text\n\t\tevent.text = event.text.replace(/[^\\w ]/g, '');\n\t});\n\n\tinstance.on('BeforeFilter', function(event) {\n\t\t// implement our own search\n\t\tvar keywords = event.text.split(/\\W+/);\n\t\tvar numKeywords = keywords.length;\n\t\tevent.results = [];\n\t\t// keywords can match in any order\n\t\t// for example, a search of \"software & technology\" will match \"software technology\"\n\t\t$.each(this.getData(), function(record) {\n\t\t\tfor (var i = 0; i < numKeywords; i++) {\n\t\t\t\tif (record.value.indexOf(keywords[i]) === -1) {\n\t\t\t\t\treturn;\n\t\t\t\t}\n\t\t\t}\n\t\t\tevent.results.push(record);\n\t\t});\n\t});\n"
             ],
             "class": "Suggester",
             "module": "jQuery"
         },
         {
             "file": "src/Suggester.js",
-            "line": 1315,
+            "line": 1351,
             "description": "Called after the search for results",
             "itemtype": "event",
             "name": "AfterFilter",
@@ -1713,14 +1719,14 @@
                 }
             ],
             "example": [
-                "\n\n\tinstance.bind('AfterFilter', function(event) {\n\t\t// add a result onto the beginning\n\t\tevent.results.unshift({value:'Search the web for \"' + event.text '\"');\n\t});\n"
+                "\n\n\tinstance.on('AfterFilter', function(event) {\n\t\t// add a result onto the beginning\n\t\tevent.results.unshift({value:'Search the web for \"' + event.text '\"');\n\t});\n"
             ],
             "class": "Suggester",
             "module": "jQuery"
         },
         {
             "file": "src/Suggester.js",
-            "line": 1334,
+            "line": 1370,
             "description": "Clear all the chosen tags",
             "itemtype": "method",
             "name": "clear",
@@ -1734,7 +1740,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 1344,
+            "line": 1380,
             "description": "Get a collection of all the chosen tag objects (a shallow copy of this.tags)",
             "itemtype": "method",
             "name": "getTags",
@@ -1747,7 +1753,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 1352,
+            "line": 1388,
             "description": "Iterate through each of the chosen tag objects",
             "itemtype": "method",
             "name": "eachTag",
@@ -1768,7 +1774,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 1363,
+            "line": 1399,
             "description": "Return a URL query string representing the hidden values of the input",
             "itemtype": "method",
             "name": "serialize",
@@ -1781,7 +1787,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 1375,
+            "line": 1411,
             "description": "Pluck all the tag values from the chosen tags",
             "itemtype": "method",
             "name": "getValues",
@@ -1794,7 +1800,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 1387,
+            "line": 1423,
             "description": "Get the current value as a comma-delimited string",
             "itemtype": "method",
             "name": "getValue",
@@ -1807,7 +1813,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 1395,
+            "line": 1431,
             "description": "Set the tags using an array or a comma-delimited string.\nCommas inside the tag name may be escaped with a backslash.",
             "itemtype": "method",
             "name": "setValue",
@@ -1828,7 +1834,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 1456,
+            "line": 1492,
             "description": "Helper function for setValue()",
             "itemtype": "method",
             "name": "_handleEmptyValue",
@@ -1843,7 +1849,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 1470,
+            "line": 1506,
             "description": "Set the widget's CSS theme - Adds a class \"sugg-theme-%name%\" to the widget",
             "itemtype": "method",
             "name": "setTheme",
@@ -1864,7 +1870,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 1485,
+            "line": 1521,
             "description": "Replace the contents of this.$input with the placeholder value. Automatically fires when this.options.placeholder is set\nAnd there are no tags and we are blurring or initially rendering",
             "itemtype": "method",
             "name": "showPlaceholder",
@@ -1887,7 +1893,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 1502,
+            "line": 1538,
             "description": "Replace placeholder string with empty text",
             "itemtype": "method",
             "name": "hidePlaceholder",
@@ -1901,7 +1907,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 1514,
+            "line": 1550,
             "description": "Publish the given event name and send the given data",
             "itemtype": "method",
             "name": "publish",
@@ -1927,7 +1933,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 1530,
+            "line": 1566,
             "description": "Get this instance. Useful for jQuery-style usage:  var instance = $('input').suggester(options).suggester('getInstance')",
             "itemtype": "method",
             "name": "getInstance",
@@ -1940,7 +1946,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 1538,
+            "line": 1574,
             "description": "Set options and interpret options",
             "itemtype": "method",
             "name": "_processOptions",
@@ -1958,7 +1964,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 1551,
+            "line": 1587,
             "description": "Render the widget and get handles to key elements",
             "itemtype": "method",
             "name": "_render",
@@ -1969,7 +1975,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 1559,
+            "line": 1595,
             "description": "Modify this.$widget or any of its child elements before it is manipulated or appended. Can be used to modify this.options.template with DOM methods. Note that it fires during instantiation, so an onBeforeRender property must be set in the constructor.",
             "itemtype": "event",
             "name": "BeforeRender",
@@ -1988,7 +1994,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 1629,
+            "line": 1665,
             "description": "Do something after the widget is completely rendered. Note that it fires during instantiation, so an onAfterRender property must be set in the constructor.",
             "itemtype": "event",
             "name": "AfterRender",
@@ -2007,7 +2013,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 1646,
+            "line": 1682,
             "description": "Look at the initial element's start value and populate tags as appropriate",
             "itemtype": "method",
             "name": "_handleStartValue",
@@ -2018,7 +2024,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 1664,
+            "line": 1700,
             "description": "Attach event handlers",
             "itemtype": "method",
             "name": "_setupListeners",
@@ -2029,7 +2035,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 1696,
+            "line": 1732,
             "description": "Event handler for when this.$input is focused",
             "itemtype": "method",
             "name": "_onInputFocus",
@@ -2047,7 +2053,27 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 1717,
+            "line": 1746,
+            "description": "Fired when options.minChars is 0 to allow you to update how default suggestions are displayed. e.g. show the most commonly used values",
+            "params": [
+                {
+                    "name": "suggetions",
+                    "description": "The suggestions to show by default. Defaults to the first options.maxSuggestions within this.data. Edit value to use your own suggestions.",
+                    "type": "Array"
+                }
+            ],
+            "itemtype": "event",
+            "name": "DefaultSuggestions",
+            "ifprevented": "No default suggestions are displayed",
+            "example": [
+                "       \n\t\t\t \n\tinstance.on('DefaultSuggestions', function(event) {\n\t\tevent.suggestions = mostRecentChoicesArray;\n\t});\n\t\t\t\t"
+            ],
+            "class": "Suggester",
+            "module": "jQuery"
+        },
+        {
+            "file": "src/Suggester.js",
+            "line": 1773,
             "description": "Respond after input box has focused",
             "itemtype": "event",
             "name": "AfterFocus",
@@ -2059,14 +2085,14 @@
                 }
             ],
             "example": [
-                "      \n\n\tinstance.bind('AfterFocus', function(event) {\n\t\t$searchHints.show();\n\t});\n"
+                "      \n\n\tinstance.on('AfterFocus', function(event) {\n\t\t$searchHints.show();\n\t});\n"
             ],
             "class": "Suggester",
             "module": "jQuery"
         },
         {
             "file": "src/Suggester.js",
-            "line": 1732,
+            "line": 1788,
             "description": "Event handler for when this.$input is blurred",
             "itemtype": "method",
             "name": "_onInputBlur",
@@ -2084,7 +2110,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 1739,
+            "line": 1795,
             "description": "Respond after user clicks or tabs out of input box",
             "itemtype": "event",
             "name": "BeforeBlur",
@@ -2102,14 +2128,14 @@
             ],
             "ifprevented": "Input box remains focused",
             "example": [
-                "      \n\n\tinstance.bind('BeforeBlur', function(event) {\n\t\tif (evt.value.match(/\\d{16}/)) {\n\t\t\talert('Detected a credit card number. Scrubbing...');\n\t\t\tevent.value = '**** ' + evt.value.substring(12);\n\t\t}\n\t});\n"
+                "      \n\n\tinstance.on('BeforeBlur', function(event) {\n\t\tif (evt.value.match(/\\d{16}/)) {\n\t\t\talert('Detected a credit card number. Scrubbing...');\n\t\t\tevent.value = '**** ' + evt.value.substring(12);\n\t\t}\n\t});\n"
             ],
             "class": "Suggester",
             "module": "jQuery"
         },
         {
             "file": "src/Suggester.js",
-            "line": 1766,
+            "line": 1822,
             "description": "Respond after input box has blurred",
             "itemtype": "event",
             "name": "AfterBlur",
@@ -2131,14 +2157,14 @@
                 }
             ],
             "example": [
-                "      \n\n\tinstance.bind('AfterBlur', function(event) {\n\t\tif (!event.$newTag) {\n\t\t\t$history.append('<p>You typed \"' + event.value + '\" but did not add it as a tag.</p>');\n\t\t}\n\t});\n"
+                "      \n\n\tinstance.on('AfterBlur', function(event) {\n\t\tif (!event.$newTag) {\n\t\t\t$history.append('<p>You typed \"' + event.value + '\" but did not add it as a tag.</p>');\n\t\t}\n\t});\n"
             ],
             "class": "Suggester",
             "module": "jQuery"
         },
         {
             "file": "src/Suggester.js",
-            "line": 1806,
+            "line": 1862,
             "description": "Event handler for when .sugg-remove is clicked",
             "itemtype": "method",
             "name": "_onTagRemoveClick",
@@ -2156,7 +2182,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 1819,
+            "line": 1875,
             "description": "Event handler for when .sugg-tag is clicked",
             "itemtype": "method",
             "name": "_onTagClick",
@@ -2174,7 +2200,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 1834,
+            "line": 1890,
             "description": "Event handler for when autosuggest list is moused over",
             "itemtype": "method",
             "name": "_onListMouseover",
@@ -2192,7 +2218,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 1855,
+            "line": 1911,
             "description": "Event handler for when autosuggest list is clicked",
             "itemtype": "method",
             "name": "_onListClick",
@@ -2210,7 +2236,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 1883,
+            "line": 1939,
             "description": "Event handler for when this.$box is clicked",
             "itemtype": "method",
             "name": "_onBoxClick",
@@ -2228,7 +2254,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 1895,
+            "line": 1951,
             "description": "Handle keypresses while in tag input field",
             "itemtype": "method",
             "name": "_onKeydown",
@@ -2246,7 +2272,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 1902,
+            "line": 1958,
             "description": "Access the keydown event before Suggester processes it",
             "itemtype": "event",
             "name": "BeforeHandleKey",
@@ -2263,7 +2289,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 1947,
+            "line": 2003,
             "description": "Access the keydown event after Suggester processes it",
             "itemtype": "event",
             "name": "AfterHandleKey",
@@ -2279,7 +2305,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 1956,
+            "line": 2012,
             "description": "Handle cut and delete on this.$input",
             "itemtype": "method",
             "name": "_onCutDelete",
@@ -2297,7 +2323,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 1966,
+            "line": 2022,
             "description": "Handle paste on this.$input. Look for places to split pasted value\nFor example pasting \"a, b, c\" will immediately add 3 tags (when this.options.addOnComma is true)\nIt attempts to split on tab, then if there are no tabs then semicolons, then if there are no semicolons, commas",
             "itemtype": "method",
             "name": "_onPaste",
@@ -2315,7 +2341,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 2003,
+            "line": 2059,
             "description": "Respond before values are pasted",
             "itemtype": "event",
             "name": "BeforePaste",
@@ -2338,14 +2364,14 @@
             ],
             "ifprevented": "tags are not added and paste is cancelled",
             "example": [
-                "      \n\n\tinstance.bind('BeforePaste', function(event) {\n\t\tif (event.tags.length > 1 && !confirm('Did you mean to paste ' + event.tags.length + ' items?\\n\\nClick OK to continue. Click cancel to treat it as one item.')) {\n\t\t\tthis.$input.val(event.value);\n\t\t\tevent.preventDefault();\n\t\t}\n\t});\n"
+                "      \n\n\tinstance.on('BeforePaste', function(event) {\n\t\tif (event.tags.length > 1 && !confirm('Did you mean to paste ' + event.tags.length + ' items?\\n\\nClick OK to continue. Click cancel to treat it as one item.')) {\n\t\t\tthis.$input.val(event.value);\n\t\t\tevent.preventDefault();\n\t\t}\n\t});\n"
             ],
             "class": "Suggester",
             "module": "jQuery"
         },
         {
             "file": "src/Suggester.js",
-            "line": 2040,
+            "line": 2096,
             "description": "Respond after values are pasted",
             "itemtype": "event",
             "name": "AfterPaste",
@@ -2367,14 +2393,14 @@
                 }
             ],
             "example": [
-                "      \n\n\tinstance.bind('AfterPaste', function(event) {\n\t\tif (event.tags.length > 1) {\n\t\t\talert('You pasted ' + event.tags.length + ' tags');\n\t\t}\n\t});\n"
+                "      \n\n\tinstance.on('AfterPaste', function(event) {\n\t\tif (event.tags.length > 1) {\n\t\t\talert('You pasted ' + event.tags.length + ' tags');\n\t\t}\n\t});\n"
             ],
             "class": "Suggester",
             "module": "jQuery"
         },
         {
             "file": "src/Suggester.js",
-            "line": 2061,
+            "line": 2117,
             "description": "Handle UP key on this.$input",
             "itemtype": "method",
             "name": "_key_UP",
@@ -2392,7 +2418,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 2074,
+            "line": 2130,
             "description": "Handle DOWN key on this.$input",
             "itemtype": "method",
             "name": "_key_DOWN",
@@ -2410,7 +2436,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 2089,
+            "line": 2145,
             "description": "Handle BACKSPACE key on this.$input",
             "itemtype": "method",
             "name": "_key_BACKSPACE",
@@ -2428,7 +2454,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 2117,
+            "line": 2173,
             "description": "Handle TAB and COMMA and SEMICOLON key on this.$input",
             "itemtype": "method",
             "name": "_key_TAB_COMMA",
@@ -2446,7 +2472,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 2143,
+            "line": 2199,
             "description": "Handle ESC key on this.$input",
             "itemtype": "method",
             "name": "_key_ESC",
@@ -2464,7 +2490,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 2152,
+            "line": 2208,
             "description": "Handle ENTER key on this.$input",
             "itemtype": "method",
             "name": "_key_ENTER",
@@ -2482,7 +2508,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 2174,
+            "line": 2230,
             "description": "Handle other keys (e.g. printable characters) on this.$input",
             "itemtype": "method",
             "name": "_key_other",
@@ -2500,7 +2526,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 2192,
+            "line": 2248,
             "description": "Handler for form submission",
             "itemtype": "method",
             "name": "_onSubmit",
@@ -2518,7 +2544,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 2199,
+            "line": 2255,
             "description": "Respond before form is submitted and before Suggester adds on submit",
             "itemtype": "event",
             "name": "BeforeSubmit",
@@ -2536,14 +2562,14 @@
             ],
             "ifprevented": "Form will not be submitted",
             "example": [
-                "      \n\n\tinstance.bind('BeforeSubmit', function(event) {\n\t\tif (this.$input.val() !== '' && !confirm('Are you sure you want to submit this form unfinished?')) {\n\t\t\tevent.preventDefault();\n\t\t}\n\t});\n"
+                "      \n\n\tinstance.on('BeforeSubmit', function(event) {\n\t\tif (this.$input.val() !== '' && !confirm('Are you sure you want to submit this form unfinished?')) {\n\t\t\tevent.preventDefault();\n\t\t}\n\t});\n"
             ],
             "class": "Suggester",
             "module": "jQuery"
         },
         {
             "file": "src/Suggester.js",
-            "line": 2235,
+            "line": 2291,
             "description": "The handler function that is passed to $.ajax({beforeSend:...}) to alter XHR if needed",
             "itemtype": "method",
             "name": "_beforeFetch",
@@ -2561,7 +2587,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 2242,
+            "line": 2298,
             "description": "A chance to access the jqXHR before the ajax request has been sent",
             "itemtype": "event",
             "name": "BeforeFetch",
@@ -2579,14 +2605,14 @@
             ],
             "ifprevented": "XHR is aborted",
             "example": [
-                "\n\n\tinstance.bind('BeforeFetch', function(event) {\n\t\tevent.jqXHR.setRequestHeader('something','something');\n\t\tevent.jqXHR.fail(function() {\n\t\t\talert('ajax call failed');\n\t\t}).always(function() {\n\t\t\talert('ajax call finished regardless of success or failure');\n\t\t});\n\t});\n\t\t\t"
+                "\n\n\tinstance.on('BeforeFetch', function(event) {\n\t\tevent.jqXHR.setRequestHeader('something','something');\n\t\tevent.jqXHR.fail(function() {\n\t\t\talert('ajax call failed');\n\t\t}).always(function() {\n\t\t\talert('ajax call finished regardless of success or failure');\n\t\t});\n\t});\n\t\t\t"
             ],
             "class": "Suggester",
             "module": "jQuery"
         },
         {
             "file": "src/Suggester.js",
-            "line": 2270,
+            "line": 2326,
             "description": "Handler passed to $.ajax().done(function(){...}) that handles suggestion data that is returned",
             "itemtype": "method",
             "name": "_afterFetch",
@@ -2604,7 +2630,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 2277,
+            "line": 2333,
             "itemtype": "event",
             "name": "AfterFetch",
             "params": [
@@ -2626,14 +2652,14 @@
             ],
             "ifprevented": "Nothing is done with results (i.e. suggestion box is not built and displayed)",
             "example": [
-                "\n\n\tinstance.bind('AfterFetch', function(event) {\n\t\tevent.data.push({value:'', label:'Adding a test suggestion at the end'});\n\t});\n\t\t\t"
+                "\n\n\tinstance.on('AfterFetch', function(event) {\n\t\tevent.data.push({value:'', label:'Adding a test suggestion at the end'});\n\t});\n\t\t\t"
             ],
             "class": "Suggester",
             "module": "jQuery"
         },
         {
             "file": "src/Suggester.js",
-            "line": 2302,
+            "line": 2358,
             "description": "Callback used to close the suggestion box when the user clicks off of it",
             "itemtype": "method",
             "name": "_closeOnOutsideClick",
@@ -2651,7 +2677,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 2315,
+            "line": 2371,
             "description": "Format a suggestion before display",
             "itemtype": "method",
             "name": "_formatSuggestion",
@@ -2678,7 +2704,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 2325,
+            "line": 2381,
             "description": "Call to dynamically inject your own formatting on each suggestion",
             "itemtype": "event",
             "name": "BeforeFormat",
@@ -2700,14 +2726,14 @@
                 }
             ],
             "example": [
-                "\n\n\tinstance.bind('BeforeFormat', function(event) {\n\t\tevent.html = '<li>' + event.record.label.toUpperCase() + '</li>';\n\t});              \n"
+                "\n\n\tinstance.on('BeforeFormat', function(event) {\n\t\tevent.html = '<li>' + event.record.label.toUpperCase() + '</li>';\n\t});              \n"
             ],
             "class": "Suggester",
             "module": "jQuery"
         },
         {
             "file": "src/Suggester.js",
-            "line": 2361,
+            "line": 2417,
             "description": "Alter the HTML that has been constructed before it is put into the DOM",
             "itemtype": "event",
             "name": "AfterFormat",
@@ -2729,14 +2755,14 @@
                 }
             ],
             "example": [
-                "\n\n\tinstance.bind('AfterFormat', function(event) {\n\t\tevent.html; // <li><strong class=\"sugg-match\">Canis</strong> Major</li>\n\t\tevent.html = event.html.replace(/<\\/?strong\\b/, 'em');\n\t});\n"
+                "\n\n\tinstance.on('AfterFormat', function(event) {\n\t\tevent.html; // <li><strong class=\"sugg-match\">Canis</strong> Major</li>\n\t\tevent.html = event.html.replace(/<\\/?strong\\b/, 'em');\n\t});\n"
             ],
             "class": "Suggester",
             "module": "jQuery"
         },
         {
             "file": "src/Suggester.js",
-            "line": 2382,
+            "line": 2438,
             "description": "Update the size when this.options.inputSize is \"auto\"",
             "itemtype": "method",
             "name": "_updateInputSize",
@@ -2747,7 +2773,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 2392,
+            "line": 2448,
             "description": "Set the value of the original input to a comma-delimited set of labels",
             "itemtype": "method",
             "name": "save",
@@ -2760,7 +2786,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 2405,
+            "line": 2461,
             "description": "Inject functionality before saving",
             "itemtype": "event",
             "name": "BeforeSave",
@@ -2773,14 +2799,14 @@
             ],
             "ifcancelled": "The original input will not be populated with the new value",
             "example": [
-                "\n\n\tinstance.bind('BeforeSave', function(event) {\n\t\tevent.newValue += '!';\n\t});\n"
+                "\n\n\tinstance.on('BeforeSave', function(event) {\n\t\tevent.newValue += '!';\n\t});\n"
             ],
             "class": "Suggester",
             "module": "jQuery"
         },
         {
             "file": "src/Suggester.js",
-            "line": 2429,
+            "line": 2485,
             "description": "Do something after saving value to original input",
             "itemtype": "event",
             "name": "AfterSave",
@@ -2797,14 +2823,14 @@
                 }
             ],
             "example": [
-                "\n\n\tinstance.bind('AfterSave', function(event) {\n\t\tsaveToServer(event.newValue);\n\t});\n     "
+                "\n\n\tinstance.on('AfterSave', function(event) {\n\t\tsaveToServer(event.newValue);\n\t});\n     "
             ],
             "class": "Suggester",
             "module": "jQuery"
         },
         {
             "file": "src/Suggester.js",
-            "line": 2447,
+            "line": 2503,
             "description": "Given tag text, remove a tag from the internal collection and from the DOM",
             "itemtype": "method",
             "name": "_spliceTag",
@@ -2826,7 +2852,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 2461,
+            "line": 2517,
             "description": "Given an array index, remove a tag from the internal collection and from the DOM",
             "itemtype": "method",
             "name": "_spliceTagByIdx",
@@ -2848,7 +2874,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 2485,
+            "line": 2541,
             "description": "Find a tag given value",
             "itemtype": "method",
             "name": "getTagIndex",
@@ -2868,8 +2894,8 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 2501,
-            "description": "Setup publish/subscribe system that uses jQuery's event system. Allows subscribing this way: instance.bind('AfterFilter', myhandler)",
+            "line": 2557,
+            "description": "Setup publish/subscribe system that uses jQuery's event system. Allows subscribing this way: instance.on('AfterFilter', myhandler)",
             "itemtype": "method",
             "name": "_setupPubsub",
             "access": "private",
@@ -2879,7 +2905,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 2522,
+            "line": 2578,
             "description": "Given an input element, get the cursor position. Used to determine if backspace key should delete the previous tag",
             "itemtype": "method",
             "name": "_isCursorAtStart",
@@ -2894,7 +2920,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 2561,
+            "line": 2617,
             "description": "Pass to contructor to subclass (e.g. `MySuggester.prototype = new $.Suggester($.Suggester.doSubclass)`)",
             "var": "{Object}",
             "class": "Suggester",
@@ -2902,7 +2928,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 2566,
+            "line": 2622,
             "description": "A collection of all the instances",
             "itemtype": "property",
             "name": "instances",
@@ -2913,7 +2939,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 2572,
+            "line": 2628,
             "description": "Add data to all instances",
             "itemtype": "method",
             "name": "addData",
@@ -2934,7 +2960,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 2585,
+            "line": 2641,
             "description": "Set data for all registered instances",
             "params": [
                 {
@@ -2952,14 +2978,14 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 2596,
+            "line": 2652,
             "description": "Lightweight event handler to allow keydown to have less overhead (i.e. bypass jQuery's event system)",
             "class": "Suggester",
             "module": "jQuery"
         },
         {
             "file": "src/Suggester.js",
-            "line": 2613,
+            "line": 2669,
             "description": "Create a subclass of Suggester",
             "itemtype": "method",
             "name": "subclass",
@@ -2989,7 +3015,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 2689,
+            "line": 2745,
             "description": "The Suggester to which this tag belongs",
             "itemtype": "property",
             "name": "suggester",
@@ -3000,7 +3026,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 2693,
+            "line": 2749,
             "description": "The value of the tag",
             "itemtype": "property",
             "name": "value",
@@ -3011,7 +3037,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 2697,
+            "line": 2753,
             "description": "The display text if the tag",
             "itemtype": "property",
             "name": "label",
@@ -3022,7 +3048,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 2701,
+            "line": 2757,
             "description": "The index relative to other tags",
             "itemtype": "property",
             "name": "index",
@@ -3033,7 +3059,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 2705,
+            "line": 2761,
             "description": "The hidden input element",
             "itemtype": "property",
             "name": "$hidden",
@@ -3044,7 +3070,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 2709,
+            "line": 2765,
             "description": "The tag elements",
             "itemtype": "property",
             "name": "$tag",
@@ -3055,7 +3081,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 2713,
+            "line": 2769,
             "description": "The record corresponding to this tag, if any",
             "itemtype": "property",
             "name": "",
@@ -3066,7 +3092,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 2718,
+            "line": 2774,
             "description": "Get the Suggester widget to which this tag belongs",
             "itemtype": "method",
             "name": "getWidget",
@@ -3080,7 +3106,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 2726,
+            "line": 2782,
             "description": "Remove this tag from the tag collection",
             "itemtype": "method",
             "name": "remove",
@@ -3095,7 +3121,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 2736,
+            "line": 2792,
             "description": "Get thee index of this tag relative to others",
             "itemtype": "method",
             "name": "getIndex",
@@ -3109,7 +3135,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 2744,
+            "line": 2800,
             "description": "Get the hidden value of this tag",
             "itemtype": "method",
             "name": "getValue",
@@ -3123,7 +3149,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 2752,
+            "line": 2808,
             "description": "Set the hidden value of this tag",
             "params": [
                 {
@@ -3143,7 +3169,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 2767,
+            "line": 2823,
             "description": "Get the visible label of this tag",
             "itemtype": "method",
             "name": "getLabel",
@@ -3157,7 +3183,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 2775,
+            "line": 2831,
             "description": "Set the visibile label of this tag",
             "itemtype": "method",
             "name": "setLabel",
@@ -3172,7 +3198,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 2786,
+            "line": 2842,
             "description": "Get the hidden value of the tag",
             "itemtype": "method",
             "name": "getHidden",
@@ -3186,7 +3212,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 2794,
+            "line": 2850,
             "description": "Get the tag element",
             "itemtype": "method",
             "name": "getElement",
@@ -3200,7 +3226,7 @@
         },
         {
             "file": "src/Suggester.js",
-            "line": 2802,
+            "line": 2858,
             "description": "Get the record that generated this tag, if any",
             "return": {
                 "description": "",
@@ -3214,115 +3240,119 @@
     "warnings": [
         {
             "message": "replacing incorrect tag: params with param",
-            "line": " src/Suggester.js:144"
+            "line": " src/Suggester.js:150"
         },
         {
             "message": "unknown tag: ifprevented",
-            "line": " src/Suggester.js:456"
+            "line": " src/Suggester.js:466"
         },
         {
             "message": "unknown tag: ifprevented",
-            "line": " src/Suggester.js:595"
+            "line": " src/Suggester.js:607"
         },
         {
             "message": "replacing incorrect tag: params with param",
-            "line": " src/Suggester.js:698"
+            "line": " src/Suggester.js:710"
         },
         {
             "message": "replacing incorrect tag: params with param",
-            "line": " src/Suggester.js:719"
+            "line": " src/Suggester.js:731"
         },
         {
             "message": "replacing incorrect tag: params with param",
-            "line": " src/Suggester.js:759"
+            "line": " src/Suggester.js:771"
         },
         {
             "message": "unknown tag: ifprevented",
-            "line": " src/Suggester.js:837"
+            "line": " src/Suggester.js:849"
         },
         {
             "message": "unknown tag: ifcancelled",
-            "line": " src/Suggester.js:1028"
+            "line": " src/Suggester.js:1040"
         },
         {
             "message": "unknown tag: ifprevented",
-            "line": " src/Suggester.js:1105"
+            "line": " src/Suggester.js:1117"
         },
         {
             "message": "unknown tag: ifprevented",
-            "line": " src/Suggester.js:1170"
+            "line": " src/Suggester.js:1182"
         },
         {
             "message": "unknown tag: ifprevented",
-            "line": " src/Suggester.js:1204"
+            "line": " src/Suggester.js:1216"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src/Suggester.js:1251"
+            "line": " src/Suggester.js:1263"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src/Suggester.js:1456"
+            "line": " src/Suggester.js:1492"
         },
         {
             "message": "replacing incorrect tag: params with param",
-            "line": " src/Suggester.js:1538"
+            "line": " src/Suggester.js:1574"
         },
         {
             "message": "unknown tag: ifprevented",
-            "line": " src/Suggester.js:1739"
+            "line": " src/Suggester.js:1746"
         },
         {
             "message": "unknown tag: ifprevented",
-            "line": " src/Suggester.js:1902"
+            "line": " src/Suggester.js:1795"
         },
         {
             "message": "unknown tag: ifprevented",
-            "line": " src/Suggester.js:2003"
+            "line": " src/Suggester.js:1958"
         },
         {
             "message": "unknown tag: ifprevented",
-            "line": " src/Suggester.js:2199"
+            "line": " src/Suggester.js:2059"
         },
         {
             "message": "unknown tag: ifprevented",
-            "line": " src/Suggester.js:2242"
+            "line": " src/Suggester.js:2255"
         },
         {
             "message": "unknown tag: ifprevented",
-            "line": " src/Suggester.js:2277"
+            "line": " src/Suggester.js:2298"
+        },
+        {
+            "message": "unknown tag: ifprevented",
+            "line": " src/Suggester.js:2333"
         },
         {
             "message": "unknown tag: ifcancelled",
-            "line": " src/Suggester.js:2405"
+            "line": " src/Suggester.js:2461"
         },
         {
             "message": "unknown tag: var",
-            "line": " src/Suggester.js:2561"
+            "line": " src/Suggester.js:2617"
         },
         {
             "message": "Missing item type\nReturn true if cursor is focused on input box",
-            "line": " src/Suggester.js:1251"
+            "line": " src/Suggester.js:1263"
         },
         {
             "message": "Missing item type\nPass to contructor to subclass (e.g. `MySuggester.prototype = new $.Suggester($.Suggester.doSubclass)`)",
-            "line": " src/Suggester.js:2561"
+            "line": " src/Suggester.js:2617"
         },
         {
             "message": "Missing item type\nSet data for all registered instances",
-            "line": " src/Suggester.js:2585"
+            "line": " src/Suggester.js:2641"
         },
         {
             "message": "Missing item type\nLightweight event handler to allow keydown to have less overhead (i.e. bypass jQuery's event system)",
-            "line": " src/Suggester.js:2596"
+            "line": " src/Suggester.js:2652"
         },
         {
             "message": "Missing item type\nSet the hidden value of this tag",
-            "line": " src/Suggester.js:2752"
+            "line": " src/Suggester.js:2808"
         },
         {
             "message": "Missing item type\nGet the record that generated this tag, if any",
-            "line": " src/Suggester.js:2802"
+            "line": " src/Suggester.js:2858"
         }
     ]
 }

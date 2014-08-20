@@ -19,7 +19,7 @@
             
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 1.3.1</em>
+            <em>API Docs for: 1.4.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -106,16 +106,20 @@
 	 * @module jQuery
 	 */
 	// make some fast plugins and functions for our common tasks
+	
+	// about 3x to 6x faster than jQuery#val() - http://jsperf.com/jquery-val-vs-simplified-setval
 	$.fn.suggSetValue = function(newValue) {
 		if (this.length &gt; 0) {
 			this[0].value = newValue;
 		}
 		return this;
 	};
+	// about 9x to 80x faster than jQuery#val() - http://jsperf.com/jquery-val-vs-simplified-getval
 	$.fn.suggGetValue = function() {
 		return this.length === 0 ? undefined : this[0].value;
 	};
-	$.fn.suggAppend = function($el) {
+	// about 12x faster than jQuery#append() - http://jsperf.com/jquery-appendto-vs-simplified-append
+	$.fn.suggAppendChild = function($el) {
 		if (this.length &gt; 0 &amp;&amp; $el.length &gt; 0) {
 			this[0].appendChild($el[0]);
 		}
@@ -138,12 +142,14 @@
 		}
 		return this;		
 	};
+	// about 10x faster than jQuery#attr() - http://jsperf.com/jquery-attr-vs-simplified-attr
 	$.fn.suggGetAttr = function(name) {
 		if (this.length &gt; 0) {
 			return this[0].getAttribute(name);
 		}
 		return undefined;
 	};	
+	// about 40% faster than jQuery#attr() - http://jsperf.com/jquery-attr-vs-simplified-jquery-setattr
 	$.fn.suggSetAttr = function(name, value) {
 		if (this.length &gt; 0) {
 			this[0].setAttribute(name, value);
@@ -290,6 +296,7 @@
 		 *   @param {String} [options.theme=&quot;coolblue&quot;]  The css class to add to widget (e.g. &quot;sugg-theme-coolblue&quot;). The following themes come predefined in the CSS: &quot;coolblue&quot;, &quot;faceblue&quot;, &quot;graybox&quot;, &quot;grayred&quot;
 		 *   @param {Function} [options.onInitialize]  Add a {{#crossLink &quot;Suggester/Initialize:event&quot;}}Initialize event{{/crossLink}}
 		 *   @param {Function} [options.onChange]  Add a {{#crossLink &quot;Suggester/Change:event&quot;}}Change event{{/crossLink}}
+		 *   @param {Function} [options.onDefaultSuggestions]  Add a {{#crossLink &quot;Suggester/DefaultSuggestions:event&quot;}}DefaultSuggestions event{{/crossLink}}
 		 *   @param {Function} [options.onBeforeAdd]  Add a {{#crossLink &quot;Suggester/BeforeAdd:event&quot;}}BeforeAdd event{{/crossLink}}
 		 *   @param {Function} [options.onBeforeAjax]  Add a {{#crossLink &quot;Suggester/BeforeAjax:event&quot;}}BeforeAjax event{{/crossLink}}
 		 *   @param {Function} [options.onBeforeClose]  Add a {{#crossLink &quot;Suggester/BeforeClose:event&quot;}}BeforeClose event{{/crossLink}}
@@ -439,6 +446,9 @@
 			if (this.$originalInput.length === 0) {
 				// no input found. User could explicitly call initialize later
 				// if not, there will likely be errors
+				if (window.console &amp;&amp; window.console.warn) {
+					window.console.warn(&#x27;Suggester: text input not found. Passed value=&#x27;, $textInput);
+				}
 				return this;
 			}
 			// TODO: allow input to be a select
@@ -555,12 +565,13 @@
 			 * @ifprevented  The tag is not added
 			 * @example       
 			 
-	instance.bind(&#x27;BeforeAdd&#x27;, function(event) {
-		if (isSwearWord(evt.value)) {
+	instance.on(&#x27;BeforeAdd&#x27;, function(event) {
+		if (isSwearWord(event.value)) {
 			event.preventDefault();
 			alert(&#x27;Tags cannot be swear words&#x27;);
 		}
 	});
+			
 			 */
 			evt = this.publish(&#x27;BeforeAdd&#x27;, {
 				value: value,
@@ -593,10 +604,11 @@
 			 * @param {String} record  The record that was chosen, if any
 			 * @example
 			 
-	instance.bind(&#x27;AfterAdd&#x27;, function(event) {
+	instance.on(&#x27;AfterAdd&#x27;, function(event) {
 		// fade in tag
 		event.tag.getElement().fadeIn(500);
 	});
+			
 			 */
 			this.publish(&#x27;AfterAdd&#x27;, {
 				tag: tag,
@@ -608,7 +620,7 @@
 			 * @event Change
 			 * @example
 
-	instance.bind(&#x27;Change&#x27;, function(event) {
+	instance.on(&#x27;Change&#x27;, function(event) {
 		noteSomeChange();
 	});
 
@@ -628,7 +640,7 @@
 			// append our hidden input to the widget
 			if (this.options.addHiddenInputs) {
 				$hidden = createElement$(&#x27;input&#x27;).suggSetAttr(&#x27;type&#x27;,&#x27;hidden&#x27;).suggSetAttr(&#x27;name&#x27;, this.hiddenName).suggSetValue(value);
-				this.$widget.suggAppend($hidden);
+				this.$widget.suggAppendChild($hidden);
 			}
 			$tag = this.$tagTemplate.clone().data(&#x27;tag-value&#x27;, value).data(&#x27;tag-label&#x27;, label);			
 			tag = new $.Suggester.Tag({
@@ -693,7 +705,7 @@
 			 * @ifprevented  Movement is cancelled
 			 * @example
 
-	instance.bind(&#x27;BeforeMove&#x27;, function(event) {
+	instance.on(&#x27;BeforeMove&#x27;, function(event) {
 		alert(&#x27;The new selection will be &#x27; + event.next.text());
 	});
 			
@@ -726,7 +738,7 @@
 			 * @param {jQuery} current    The newly selected item
 			 * @example
 	
-	instance.bind(&#x27;AfterMove&#x27;, function(event) {
+	instance.on(&#x27;AfterMove&#x27;, function(event) {
 		alert(&#x27;The new selection is &#x27; + event.current.text());
 	});
 			
@@ -869,7 +881,7 @@
 		 * @chainable
 		 */
 		unfocusTag: function() {
-			$document.unbind(&#x27;keydown&#x27;, this.removeFocusedTag).unbind(&#x27;click&#x27;, this.unfocusTag);
+			$document.off(&#x27;keydown&#x27;, this.removeFocusedTag).off(&#x27;click&#x27;, this.unfocusTag);
 			if (this.$focusedTag) {
 				this.$focusedTag.removeClass(&#x27;sugg-focused&#x27;);
 			}
@@ -935,7 +947,7 @@
 			 * @ifprevented The tag will not be removed
 			 * @example
 			 
-	instance.bind(&#x27;BeforeRemove&#x27;, function(event) {
+	instance.on(&#x27;BeforeRemove&#x27;, function(event) {
 		if (!confirm(&#x27;Are you sure you want to remove the tag &quot;&#x27; + event.label + &#x27;&quot;?&#x27;)) {
 			event.preventDefault();
 		}
@@ -1071,7 +1083,7 @@
 			if (!this.$prompt) {
 				return this;
 			}
-			this.$suggList.html(&#x27;&#x27;).suggAppend(this.$prompt);
+			this.$suggList.html(&#x27;&#x27;).suggAppendChild(this.$prompt);
 			this.openSuggestBox();
 			this.$widget.addClass(&#x27;sugg-prompt-shown&#x27;);
 			return this;
@@ -1125,7 +1137,7 @@
 			 * @ifcancelled  Ajax is not run and this._afterFetch is run
 			 * @example
 			 
-	instance.bind(&#x27;BeforeAjax&#x27;, function(event) {
+	instance.on(&#x27;BeforeAjax&#x27;, function(event) {
 		event.settings.timeout = 5000;
 		startSpinner(event.term);
 	});			 
@@ -1150,7 +1162,7 @@
 			 * @param {jqXHR} jqXHR  The jquery XMLHttpRequest object
 			 * @example
 			 
-	instance.bind(&#x27;AfterAjax&#x27;, function(event) {
+	instance.on(&#x27;AfterAjax&#x27;, function(event) {
 		event.jqXHR.done(stopSpinner);	
 	});
 			 
@@ -1192,7 +1204,7 @@
 			for (var i = 0, len = records.length; i &lt; len; i++) {
 				$suggestion = $(this._formatSuggestion(records[i], this._text));
 				$suggestion.data(&#x27;tag-record&#x27;, records[i]);
-				this.$suggList.suggAppend($suggestion);
+				this.$suggList.suggAppendChild($suggestion);
 			}
 			/**
 			 * Modify suggestion box behavior before it opens
@@ -1201,7 +1213,7 @@
 			 * @ifprevented  The suggestion list is built but not displayed
 			 * @example
 
-	instance.bind(&#x27;BeforeSuggest&#x27;, function(event) {
+	instance.on(&#x27;BeforeSuggest&#x27;, function(event) {
 		if (evt.text == &#x27;dont suggest&#x27;) {
 			event.preventDefault(); // suggest box will not open
 		}
@@ -1275,7 +1287,7 @@
 			.removeClass(&#x27;sugg-prompt-shown&#x27;)
 			.removeClass(&#x27;sugg-empty-shown&#x27;);
 			setTimeout(function() {       
-				$document.bind(&#x27;click&#x27;, sugg._closeOnOutsideClick);
+				$document.on(&#x27;click&#x27;, sugg._closeOnOutsideClick);
 			}, 0);
 			this.$suggList.show();
 			/**
@@ -1292,7 +1304,7 @@
 		 * @chainable
 		 */
 		closeSuggestBox: function() {
-			$document.unbind(&#x27;click&#x27;, this._closeOnOutsideClick);
+			$document.off(&#x27;click&#x27;, this._closeOnOutsideClick);
 			/**
 			 * Fired before suggestion box is hidden
 			 * @event BeforeClose
@@ -1354,7 +1366,7 @@
 		 * @return {Array}  Array of Objects of matching records 
 		 */
 		getResults: function(text) {
-			var evt, casedText;
+			var sugg, evt, casedText, results, data, props, value, i, ilen, j, jlen;
 			text = &#x27;&#x27;+text;
 			/**
 			 * Called before the search for results
@@ -1362,46 +1374,70 @@
 			 * @param {String} text  The text to search for
 			 * @example
 
-	instance.bind(&#x27;BeforeFilter&#x27;, function(event) {
+	instance.on(&#x27;BeforeFilter&#x27;, function(event) {
 		// remove all special characters from input text
 		event.text = event.text.replace(/[^\w ]/g, &#x27;&#x27;);
+	});
+
+	instance.on(&#x27;BeforeFilter&#x27;, function(event) {
+		// implement our own search
+		var keywords = event.text.split(/\W+/);
+		var numKeywords = keywords.length;
+		event.results = [];
+		// keywords can match in any order
+		// for example, a search of &quot;software &amp; technology&quot; will match &quot;software technology&quot;
+		$.each(this.getData(), function(record) {
+			for (var i = 0; i &lt; numKeywords; i++) {
+				if (record.value.indexOf(keywords[i]) === -1) {
+					return;
+				}
+			}
+			event.results.push(record);
+		});
 	});
 
 			 */
 			evt = this.publish(&#x27;BeforeFilter&#x27;, {
 				text: text
 			});     
+			if (evt.results) {
+				// if evt.results is an array, BeforeFilter did the filtering for us
+				results = evt.results;
+			}
+			else {
+				// otherwise do our search
 			if (!this.options.caseSensitive) {
 				casedText = evt.text.toLowerCase();
 			}     
-			var sugg = this;
-			var results = [];
-			var data = this.getData();
-			var props = sugg.options.searchProperties;
-			var value, i, ilen, j, jlen = props.length;
-			for (i = 0, ilen = data.length; i &lt; ilen; i++) {
-				if (sugg.options.omitAlreadyChosenItems &amp;&amp; sugg.getTagIndex(data[i][sugg.options.valueProperty]) &gt; -1) {
-					// tag already exists so don&#x27;t suggest it
-					// skip loop
-					continue;
-				}
-				for (j = 0; j &lt; jlen; j++) {
-					value = &#x27;&#x27; + (data[i][props[j]] || &#x27;&#x27;);
-					if (!sugg.options.caseSensitive) {
-						value = value.toLowerCase();
-					}         
-					if (
-						(sugg.options.matchAt == &#x27;anywhere&#x27; &amp;&amp; value.indexOf(casedText) &gt; -1) ||
-						(value.indexOf(casedText) == sugg.options.matchAt) ||
-						(sugg.options.matchAt == &#x27;end&#x27; &amp;&amp; value.indexOf(casedText) == value.length - casedText-length) 
-						) {
-						results.push(data[i]);
+				sugg = this;
+				results = [];
+				data = this.getData();
+				props = sugg.options.searchProperties;
+				jlen = props.length;
+				for (i = 0, ilen = data.length; i &lt; ilen; i++) {
+					if (sugg.options.omitAlreadyChosenItems &amp;&amp; sugg.getTagIndex(data[i][sugg.options.valueProperty]) &gt; -1) {
+						// tag already exists so don&#x27;t suggest it
+						// skip loop
+						continue;
+					}
+					for (j = 0; j &lt; jlen; j++) {
+						value = &#x27;&#x27; + (data[i][props[j]] || &#x27;&#x27;);
+						if (!sugg.options.caseSensitive) {
+							value = value.toLowerCase();
+						}         
+						if (
+							(sugg.options.matchAt == &#x27;anywhere&#x27; &amp;&amp; value.indexOf(casedText) &gt; -1) ||
+							(value.indexOf(casedText) == sugg.options.matchAt) ||
+							(sugg.options.matchAt == &#x27;end&#x27; &amp;&amp; value.indexOf(casedText) == value.length - casedText-length) 
+							) {
+							results.push(data[i]);
+							break;
+						}
+					}
+					if (sugg.options.maxSuggestions &gt; 0 &amp;&amp; results.length &gt;= sugg.options.maxSuggestions) {
+						// exit the loop
 						break;
 					}
-				}
-				if (sugg.options.maxSuggestions &gt; 0 &amp;&amp; results.length &gt;= sugg.options.maxSuggestions) {
-					// exit the loop
-					break;
 				}
 			}
 			/**
@@ -1411,7 +1447,7 @@
 			 * @param {Array} results  The array of records that matched (writeable)
 			 * @example
 
-	instance.bind(&#x27;AfterFilter&#x27;, function(event) {
+	instance.on(&#x27;AfterFilter&#x27;, function(event) {
 		// add a result onto the beginning
 		event.results.unshift({value:&#x27;Search the web for &quot;&#x27; + event.text &#x27;&quot;&#x27;);
 	});
@@ -1780,8 +1816,8 @@
 			// handle various actions associated with keypresses
 			$.Suggester.quickBind(this.$input.get(0), &#x27;keydown&#x27;, $.proxy(this, &#x27;_onKeydown&#x27;));
 			// handle paste into tag field
-			this.$input.bind(&#x27;cut delete&#x27;, $.proxy(this, &#x27;_onCutDelete&#x27;));
-			this.$input.bind(&#x27;paste&#x27;, $.proxy(this, &#x27;_onPaste&#x27;));
+			this.$input.on(&#x27;cut delete&#x27;, $.proxy(this, &#x27;_onCutDelete&#x27;));
+			this.$input.on(&#x27;paste&#x27;, $.proxy(this, &#x27;_onPaste&#x27;));
 			// auto add tags on submit
 			this.$form.submit($.proxy(this, &#x27;_onSubmit&#x27;));
 		},
@@ -1795,9 +1831,29 @@
 			this.$widget.addClass(&#x27;sugg-active&#x27;);
 			this.hidePlaceholder();
 			var currVal = this.$input.suggGetValue();
+			var pubevt;
+			var suggestions;
 			this.unfocusTag();
-			if (this.options.minChars === 0 &amp;&amp; this.data.length &gt; 0) {
-				this.handleSuggestions(this.options.maxSuggestions &gt; 0 ? this.data.slice(0, this.options.maxSuggestions) : this.data);
+			if (this.options.minChars === 0) {
+			/**
+			 * Fired when options.minChars is 0 to allow you to update how default suggestions are displayed. e.g. show the most commonly used values
+			 * @param {Array} suggetions  The suggestions to show by default. Defaults to the first options.maxSuggestions within this.data. Edit value to use your own suggestions.
+			 * @event DefaultSuggestions
+			 * @ifprevented  No default suggestions are displayed
+			 * @example       
+			 
+	instance.on(&#x27;DefaultSuggestions&#x27;, function(event) {
+		event.suggestions = mostRecentChoicesArray;
+	});
+				
+			 */	
+				suggestions = (this.data || []).slice(0, this.options.maxSuggestions || 0);
+				pubevt = this.publish(&#x27;DefaultSuggestions&#x27;, {
+					suggestions: suggestions
+				});
+				if (!pubevt.isDefaultPrevented() &amp;&amp; pubevt.suggestions) {
+					this.handleSuggestions(pubevt.suggestions);
+				}
 			}     
 			else if (currVal === this.options.placeholder) {
 				this._updateInputSize();
@@ -1812,7 +1868,7 @@
 			 * @param {jQuery.Event} event  The focus event
 			 * @example      
 
-	instance.bind(&#x27;AfterFocus&#x27;, function(event) {
+	instance.on(&#x27;AfterFocus&#x27;, function(event) {
 		$searchHints.show();
 	});
 
@@ -1836,7 +1892,7 @@
 			 * @ifprevented  Input box remains focused
 			 * @example      
 
-	instance.bind(&#x27;BeforeBlur&#x27;, function(event) {
+	instance.on(&#x27;BeforeBlur&#x27;, function(event) {
 		if (evt.value.match(/\d{16}/)) {
 			alert(&#x27;Detected a credit card number. Scrubbing...&#x27;);
 			event.value = &#x27;**** &#x27; + evt.value.substring(12);
@@ -1863,7 +1919,7 @@
 			 * @param {jQuery|undefined} newTag  The new tag or undefined if the tag was not added on blur
 			 * @example      
 
-	instance.bind(&#x27;AfterBlur&#x27;, function(event) {
+	instance.on(&#x27;AfterBlur&#x27;, function(event) {
 		if (!event.$newTag) {
 			$history.append(&#x27;&lt;p&gt;You typed &quot;&#x27; + event.value + &#x27;&quot; but did not add it as a tag.&lt;/p&gt;&#x27;);
 		}
@@ -2101,7 +2157,7 @@
 			 * @ifprevented  tags are not added and paste is cancelled
 			 * @example      
 
-	instance.bind(&#x27;BeforePaste&#x27;, function(event) {
+	instance.on(&#x27;BeforePaste&#x27;, function(event) {
 		if (event.tags.length &gt; 1 &amp;&amp; !confirm(&#x27;Did you mean to paste &#x27; + event.tags.length + &#x27; items?\n\nClick OK to continue. Click cancel to treat it as one item.&#x27;)) {
 			this.$input.val(event.value);
 			event.preventDefault();
@@ -2137,7 +2193,7 @@
 			 * @param {Array} tags  The array of tags that were added (if the value was successfully split on tab, semicolon, or comma)
 			 * @example      
 
-	instance.bind(&#x27;AfterPaste&#x27;, function(event) {
+	instance.on(&#x27;AfterPaste&#x27;, function(event) {
 		if (event.tags.length &gt; 1) {
 			alert(&#x27;You pasted &#x27; + event.tags.length + &#x27; tags&#x27;);
 		}
@@ -2296,7 +2352,7 @@
 			 * @ifprevented  Form will not be submitted
 			 * @example      
 
-	instance.bind(&#x27;BeforeSubmit&#x27;, function(event) {
+	instance.on(&#x27;BeforeSubmit&#x27;, function(event) {
 		if (this.$input.val() !== &#x27;&#x27; &amp;&amp; !confirm(&#x27;Are you sure you want to submit this form unfinished?&#x27;)) {
 			event.preventDefault();
 		}
@@ -2339,7 +2395,7 @@
 			 * @ifprevented  XHR is aborted
 			 * @example
 
-	instance.bind(&#x27;BeforeFetch&#x27;, function(event) {
+	instance.on(&#x27;BeforeFetch&#x27;, function(event) {
 		event.jqXHR.setRequestHeader(&#x27;something&#x27;,&#x27;something&#x27;);
 		event.jqXHR.fail(function() {
 			alert(&#x27;ajax call failed&#x27;);
@@ -2374,7 +2430,7 @@
 			 * @ifprevented  Nothing is done with results (i.e. suggestion box is not built and displayed)
 			 * @example
 
-	instance.bind(&#x27;AfterFetch&#x27;, function(event) {
+	instance.on(&#x27;AfterFetch&#x27;, function(event) {
 		event.data.push({value:&#x27;&#x27;, label:&#x27;Adding a test suggestion at the end&#x27;});
 	});
 			
@@ -2422,7 +2478,7 @@
 			 * @param {String} html    If you set event.html, it will be used instead of constructing the HTML
 			 * @example
 
-	instance.bind(&#x27;BeforeFormat&#x27;, function(event) {
+	instance.on(&#x27;BeforeFormat&#x27;, function(event) {
 		event.html = &#x27;&lt;li&gt;&#x27; + event.record.label.toUpperCase() + &#x27;&lt;/li&gt;&#x27;;
 	});              
 
@@ -2458,7 +2514,7 @@
 			 * @param {String} html    Change the HTML before it is put into the dom
 			 * @example
 
-	instance.bind(&#x27;AfterFormat&#x27;, function(event) {
+	instance.on(&#x27;AfterFormat&#x27;, function(event) {
 		event.html; // &lt;li&gt;&lt;strong class=&quot;sugg-match&quot;&gt;Canis&lt;/strong&gt; Major&lt;/li&gt;
 		event.html = event.html.replace(/&lt;\/?strong\b/, &#x27;em&#x27;);
 	});
@@ -2501,7 +2557,7 @@
 			 * @ifcancelled  The original input will not be populated with the new value
 			 * @example
 
-	instance.bind(&#x27;BeforeSave&#x27;, function(event) {
+	instance.on(&#x27;BeforeSave&#x27;, function(event) {
 		event.newValue += &#x27;!&#x27;;
 	});
 
@@ -2525,7 +2581,7 @@
 			 * @param {String} newValue  The value that was written to the original input
 			 * @example
 
-	instance.bind(&#x27;AfterSave&#x27;, function(event) {
+	instance.on(&#x27;AfterSave&#x27;, function(event) {
 		saveToServer(event.newValue);
 	});
       
@@ -2591,7 +2647,7 @@
 			return idx;     
 		},
 		/**
-		 * Setup publish/subscribe system that uses jQuery&#x27;s event system. Allows subscribing this way: instance.bind(&#x27;AfterFilter&#x27;, myhandler)
+		 * Setup publish/subscribe system that uses jQuery&#x27;s event system. Allows subscribing this way: instance.on(&#x27;AfterFilter&#x27;, myhandler)
 		 * @method _setupPubsub
 		 * @private
 		 */
@@ -2607,7 +2663,7 @@
 			// bind listeners passed in the options (e.g. onInitialize)
 			for (var name in this.options) {
 				if (name.match(/^on[A-Z0-9]/) &amp;&amp; typeof this.options[name] == &#x27;function&#x27;) {
-					this.bind(name.slice(2), this.options[name]);
+					this.on(name.slice(2), this.options[name]);
 				}
 			}
 		},

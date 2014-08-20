@@ -124,7 +124,7 @@ $(input).suggester({
 // Register events later
 $(input).suggester({
 	data: myData
-}).suggester('bind', 'BeforeOpen', doStuff);
+}).suggester('on', 'BeforeOpen', doStuff);
 ```
 
 How is data passed to event callbacks?
@@ -236,7 +236,7 @@ var suggester = new $.Suggester('.my-text-input', {
         saveToServer(event.newValue);
     }
 });
-suggester.bind('AfterClose', doStuff);
+suggester.on('AfterClose', doStuff);
 suggester.focus();
 ```
 
@@ -244,6 +244,12 @@ See the source on the [live demos](http://sandbox.kendsnyder.com/jQuery-Suggeste
 
 Changelog
 -
+
+**Version 1.4.0, Aug 2014**
+* new event DefaultSuggestions
+* cite some jsPerf results
+* change 'bind' to 'on' in examples and internal usage
+* fix [Object object] in tag hidden input names
 
 **Version 1.3.1, Apr 2014**
 * Fix to hidePlaceholder()
