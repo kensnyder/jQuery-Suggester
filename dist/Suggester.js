@@ -112,7 +112,7 @@
 		preventDuplicates: true,
 		omitAlreadyChosenItems: true,
 		minChars: 3,
-		keyDelay: 400,
+		keyDelay: 200,
 		addOnComma: true,
 		addOnTab: true,
 		addOnSemicolon: false,
@@ -167,7 +167,7 @@
 		 *   @param {Boolean} [options.preventDuplicates=true]  If true, the first tag will be removed when a duplicate is typed in
 		 *   @param {Boolean} [options.omitAlreadyChosenItems=true]  If true, don't suggest items that have already been chosen as tags. Only applicable when options.data is set
 		 *   @param {Number} [options.minChars=3]  The minimum number of characters a user must type before the suggestion box will appear. If 0, show choices when input is simply focused (like a faux select widget)
-		 *   @param {Number} [options.keyDelay=400]  The number of milliseconds between keystrokes before the suggestion lookup begins
+		 *   @param {Number} [options.keyDelay=200]  The number of milliseconds between keystrokes before the suggestion lookup begins
 		 *   @param {Boolean} [options.addOnComma=true]  If true, typing a comma will add the current text as a tag
 		 *   @param {Boolean} [options.addOnTab=true]  If true, typing a tab will add the current text as a tag
 		 *   @param {Boolean} [options.addOnSemicolon=false]  If true, typing a semicolon will add the current text as a tag
@@ -246,6 +246,10 @@
 	options.listItemTemplate = '<li class="sugg-item">{record.lname}, {record.fname} ({record.email})</li>';	
 	
 		 */
+		/**
+		 * The initialization options. Changing some options (e.g. onChange) have no effect after initialization while others such as keyDelay can be changed after the fact
+		 * @property {Object} options
+		 */		
 		/**
 		 * The input used to make the widget
 		 * @property {jQuery} $originalInput

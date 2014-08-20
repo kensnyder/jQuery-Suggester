@@ -16,8 +16,9 @@ Table of Contents
 	<li><a href="#options">Options</a></li>
 	<li><a href="#events">Events</a></li>
 	<li><a href="#instance-properties">Instance Properties</a></li>
+	<li><a href="#static-properties">Static Properties</a></li>
 	<li><a href="#instance-methods">Instance Methods</a></li>
-	<li><a href="#static-members">Static Members</a></li>
+	<li><a href="#static-methods">Static Methods</a></li>
 	<li><a href="#more-examples">More Examples</a></li>
 	<li><a href="#changelog">Changelog</a></li>
 	<li><a href="#contributing">Contributing</a></li>
@@ -162,7 +163,7 @@ Options
 	<tr>
 		<td>{Number}</td>
 		<td><strong>keyDelay</strong></td>
-		<td>400</td>
+		<td>200</td>
 		<td>The number of milliseconds between keystrokes before the suggestion lookup begins</td>
 	</tr>
 	<tr>
@@ -505,7 +506,12 @@ $(input).suggester({
 	data: myData,
 	onBeforeOpen: doStuff
 });
-// Register events later
+// Register events later (OOP style)
+var instance = new $.Suggester(selector, {
+	data: myData
+});
+instance.on('BeforeOpen', doStuff);
+// Register events later (jQuery style)
 $(input).suggester({
 	data: myData
 }).suggester('on', 'BeforeOpen', doStuff);
@@ -815,12 +821,6 @@ Instance Properties
 		<th>Description</th>
 	<tr>
 	<tr>
-		<td>{Object}</td>
-		<td><strong>defaultOptions</strong></td>
-		<td>Default options. Change these to globally change the default options
-See constructor for documentation on each option</td>
-	</tr>
-	<tr>
 		<td>{jQuery}</td>
 		<td><strong>$originalInput</strong></td>
 		<td>The input used to make the widget</td>
@@ -919,6 +919,24 @@ See constructor for documentation on each option</td>
 		<td>{JqXHR}</td>
 		<td><strong>_jqXHR</strong></td>
 		<td>The jQuery XHR object used initilized for fetching data - http://api.jquery.com/jQuery.ajax/#jqXHR</td>
+	</tr>
+	
+</table>
+			
+Static Properties
+-
+
+<table>
+	<tr>
+		<th>Type</th>
+		<th>Name</th>
+		<th>Description</th>
+	<tr>
+	<tr>
+		<td>{Object}</td>
+		<td><strong>defaultOptions</strong></td>
+		<td>Default options. Change these to globally change the default options
+See constructor for documentation on each option</td>
 	</tr>
 	<tr>
 		<td>{Array}</td>
@@ -1286,10 +1304,9 @@ Note: this happens on blur when this.options.addOnBlur is true
 
 <tr>
 	<td>
-		<strong>setValue</strong>(valueOrValues)<br />
-		Set the tags using an array or a comma-delimited string.
-Commas inside the tag name may be escaped with a backslash.<br />
-		<strong>@param</strong> {String|Array} valueOrValues To clear value, set to empty string, false, null or undefined<br />
+		<strong>_handleEmptyValue</strong>()<br />
+		Helper function for setValue()
+		<br />
 		<strong>@return</strong> {Suggester} 
 	</td>
 </tr>
@@ -1641,6 +1658,23 @@ It attempts to split on tab, then if there are no tabs then semicolons, then if 
 
 <tr>
 	<td>
+		<strong>setValue</strong>(valueOrValues)<br />
+		Set the tags using an array or a comma-delimited string.
+Commas inside the tag name may be escaped with a backslash.<br />
+		<strong>@param</strong> {String|Array} valueOrValues To clear value, set to empty string, false, null or undefined<br />
+		<strong>@return</strong> {Suggester} 
+	</td>
+</tr>
+
+</table>
+
+Static Methods
+-
+
+<table>
+
+<tr>
+	<td>
 		<strong>addData</strong>(data)<br />
 		Add data to all instances<br />
 		<strong>@param</strong> {Object[]} data Add more data to all the registered instances<br />
@@ -1654,15 +1688,6 @@ It attempts to split on tab, then if there are no tabs then semicolons, then if 
 		Create a subclass of Suggester<br />
 		<strong>@param</strong> {String} jQueryMethodName The method name to add to jQuery.fn<strong>@param</strong> {Object} [properties] Additional properties and methods to add to subclass<br />
 		<strong>@return</strong> {Function} The new class object
-	</td>
-</tr>
-
-<tr>
-	<td>
-		<strong>_handleEmptyValue</strong>()<br />
-		Helper function for setValue()
-		<br />
-		<strong>@return</strong> {Suggester} 
 	</td>
 </tr>
 
@@ -1711,7 +1736,8 @@ Changelog
 * new event DefaultSuggestions
 * cite some jsPerf results
 * change 'bind' to 'on' in examples and internal usage
-* fix [Object object] in tag hidden input names
+* change default keyDelay to 200ms
+* fix docs for static properties and methods
 
 **Version 1.3.1, Apr 2014**
 * Fix to hidePlaceholder()

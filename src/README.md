@@ -16,8 +16,9 @@ Table of Contents
 	<li><a href="#options">Options</a></li>
 	<li><a href="#events">Events</a></li>
 	<li><a href="#instance-properties">Instance Properties</a></li>
+	<li><a href="#static-properties">Static Properties</a></li>
 	<li><a href="#instance-methods">Instance Methods</a></li>
-	<li><a href="#static-members">Static Members</a></li>
+	<li><a href="#static-methods">Static Methods</a></li>
 	<li><a href="#more-examples">More Examples</a></li>
 	<li><a href="#changelog">Changelog</a></li>
 	<li><a href="#contributing">Contributing</a></li>
@@ -121,7 +122,12 @@ $(input).suggester({
 	data: myData,
 	onBeforeOpen: doStuff
 });
-// Register events later
+// Register events later (OOP style)
+var instance = new $.Suggester(selector, {
+	data: myData
+});
+instance.on('BeforeOpen', doStuff);
+// Register events later (jQuery style)
 $(input).suggester({
 	data: myData
 }).suggester('on', 'BeforeOpen', doStuff);
@@ -172,6 +178,23 @@ Instance Properties
 	</tr>
 	<% }); %>
 </table>
+			
+Static Properties
+-
+
+<table>
+	<tr>
+		<th>Type</th>
+		<th>Name</th>
+		<th>Description</th>
+	<tr>
+	<% _.forEach(staticProperties, function(prop) { %><tr>
+		<td>{<%- (prop.type || '').replace('JQuery','jQuery')%>}</td>
+		<td><strong><%- prop.name %></strong></td>
+		<td><%- prop.description %></td>
+	</tr>
+	<% }); %>
+</table>
 
 Instance Methods
 -
@@ -195,6 +218,22 @@ instance.methodName(arg1, arg2, argN);
 
 <table>
 <% _.forEach(methods, function(method) { %>
+<tr>
+	<td>
+		<strong><%- method.name %></strong>(<% _.forEach(method.params || [], function(param, i) { %><% if (param.optional) { %>[<% } %><% if (i !== 0) { %>, <% } %><%- param.name %><% if (param.optdefault !== undefined) { %>=<%- param.optdefault %><% } %><% if (param.optional) { %>]<% } %><% }); %>)<br />
+		<%- method.description %><% if (_.size(method.params) > 0) { %><br /><% } %>
+		<% _.forEach(method.params || [], function(param, i) { %><strong>@param</strong> {<%- (param.type || '').replace('JQuery','jQuery') %>} <% if (param.optional) { %>[<% } %><%- param.name %><% if (param.optdefault !== undefined) { %>=<%- param.optdefault %><% } %><% if (param.optional) { %>]<% } %> <%- param.description %><% }); %><br />
+		<strong>@return</strong> <% if (method.return) { %>{<%- (method.return.type || '').replace('JQuery','jQuery') %>} <%- method.return.description %><% } else { %>{undefined}<% } %>
+	</td>
+</tr>
+<% }); %>
+</table>
+
+Static Methods
+-
+
+<table>
+<% _.forEach(staticMethods, function(method) { %>
 <tr>
 	<td>
 		<strong><%- method.name %></strong>(<% _.forEach(method.params || [], function(param, i) { %><% if (param.optional) { %>[<% } %><% if (i !== 0) { %>, <% } %><%- param.name %><% if (param.optdefault !== undefined) { %>=<%- param.optdefault %><% } %><% if (param.optional) { %>]<% } %><% }); %>)<br />
@@ -249,7 +288,8 @@ Changelog
 * new event DefaultSuggestions
 * cite some jsPerf results
 * change 'bind' to 'on' in examples and internal usage
-* fix [Object object] in tag hidden input names
+* change default keyDelay to 200ms
+* fix docs for static properties and methods
 
 **Version 1.3.1, Apr 2014**
 * Fix to hidePlaceholder()

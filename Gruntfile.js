@@ -152,17 +152,17 @@ module.exports = function(grunt) {
 			if (item.itemtype == 'property' && item.name == 'options') {
 				docs.options = item.subprops;
 			}
-			else if (item.itemtype == 'method') {
-				docs.methods.push(item); 
-			}
-			else if (item.itemtype == 'property') {
-				docs.properties.push(item); 
-			}
 			else if (item['static'] && item.itemtype == 'method') {
 				docs.staticMethods.push(item); 
 			}
 			else if (item['static'] && item.itemtype == 'property') {
 				docs.staticProperties.push(item); 
+			}
+			else if (item.itemtype == 'method') {
+				docs.methods.push(item); 
+			}
+			else if (item.itemtype == 'property') {
+				docs.properties.push(item); 
 			}
 			else if (item.itemtype == 'event') {
 				docs.events.push(item); 
